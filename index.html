@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Storybook+</title>
+<link href="sources/css/storybookPlus.css" rel="stylesheet" type="text/css" media="all" />
+<link href="sources/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="sources/browserdetection/browser-detection.css" rel="stylesheet" type="text/css" />
+<link href="sources/audioplayer/mediaelementplayer.css" rel="stylesheet" />
+<link href="sources/videoplayer/videojs.progressTips.min.css" rel="stylesheet" />
+<link href="sources/videoplayer/video-js.min.css" rel="stylesheet" />
+<script src="sources/scripts/jquery.min.js" type="text/javascript"></script>
+<script src="sources/scripts/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
+<script src="sources/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+<script src="sources/browserdetection/browser-detection.js"></script>
+<script src="sources/audioplayer/mediaelement-and-player.min.js"></script>
+<script src="sources/videoplayer/combined.video.js"></script>
+<script src="sources/videoplayer/videojs.progressTips.min.js"></script>
+<script src="sources/scripts/storybookPlus.js" type="text/javascript"></script>
+</head>
+<body>
+
+<!-- display when javascript is disabled -->
+<noscript>
+<h1>JavaScript is disabled.</h1>
+<p>For full functionality of this web page, it is necessary to enable JavaScript.<br /><a href="http://www.enable-javascript.com/" target="_blank">Instructions on how to enable JavaScript in your web browser.</a></p>
+</noscript>
+
+<!-- player wrapper -->
+<div id="storybook_plus_wrapper"> 
+	
+	<!-- display when there is ajax error -->
+	<div id="errorMsg"></div>
+	
+	<!-- splash screen -->
+	<div id="splash_screen"></div>
+	
+	<!-- player itself -->
+	<div id="player">
+	
+		<header><span id="lessonTitle"></span><span id="instructorName"></span><span><a id="info" class="infoIcn" href="#profile"></a></span></header>
+		
+		<!-- content -->
+		<div id="content">
+		
+			<div id="slideNote">
+			
+				<div id="slide"></div>
+				
+				<div id="ap">
+					<audio id="apc" autoplay="autoplay" preload="metadata" controls="controls"></audio>
+				</div>
+				
+				<div id="vp"></div>
+				
+				<div id="note"></div>
+				
+				<div id="control">
+					<span id="leftBtn"></span>
+					<span id="rightBtn"></span>
+					<span id="currentStatus"></span>
+					<span id="fontMinusBtn"></span>
+					<span id="fontSizeIndicator"></span>
+					<span id="fontPlusBtn"></span>
+					<div id="apm">
+						<audio id="apcm" autoplay="autoplay" preload="metadata" controls="controls"></audio>
+					</div>
+				</div>
+				
+			</div>
+			
+			<!-- table of content -->
+			<div id="toc">
+				<ol id="selectable">
+				</ol>
+			</div>
+			<!-- end table of content -->
+			
+		</div> <!-- end content -->
+		
+	</div> <!-- end player -->
+	
+	
+	<!-- profile panel -->
+	<div id="profile">
+		<div class="photo"></div>
+		<div class="bio"></div>
+	</div>
+	<!-- end profile -->
+
+	<div id="download_bar">
+		<ul>
+			
+		</ul>
+	</div>
+	
+</div> <!-- end player wrapper -->
+
+</body>
+</html>
