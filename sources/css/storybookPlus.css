@@ -461,7 +461,8 @@ header .infoIcn:active {
 }
 #fontMinusBtn {
 	background: url(../img/font.png) no-repeat 6px top,
-		url(../img/border_line.png) no-repeat top right;
+		url(../img/border_line.png) no-repeat top right,
+		url(../img/border_line.png) no-repeat top left;
 }
 #fontPlusBtn {
 	background: url(../img/font.png) no-repeat -44px top,
@@ -470,7 +471,8 @@ header .infoIcn:active {
 }
 #fontMinusBtn:active {
 	background: url(../img/font.png) no-repeat 6px -40px,
-		url(../img/border_line.png) no-repeat top right;
+		url(../img/border_line.png) no-repeat top right,
+		url(../img/border_line.png) no-repeat top left;
 }
 #fontPlusBtn:active {
 	background: url(../img/font.png) no-repeat -44px -40px,
