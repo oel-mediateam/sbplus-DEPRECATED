@@ -184,6 +184,8 @@ $(document).ready(function () {
 
         // set the splash screen
         $("#splash_screen").append('<p>' + lessonTitle + '</p><p>' + ((SETUP.find('instructor').text().length <= 0) ? 'Instructor is not specified' : SETUP.find('instructor').text()) + '</p>' + ((length !== 0) ? '<p>' + length + '</p>' : '') + '<p><a id="playBtn" href="#">&#9658</button></a>');
+        
+        $("#splash_screen").css("background-image","url(assets/splash.jpg)");
 
         if (!enabledNote) {
             $("#splash_screen").css({
