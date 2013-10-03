@@ -170,8 +170,8 @@ $(document).ready(function () {
 
         // set the document title to the lesson title
         $(document).attr('title', lessonTitle);
-        /*
-	
+        
+        // add the index.html to the URL
 		try {
 			if (mobile) {
 				var path = window.location.href;
@@ -182,7 +182,6 @@ $(document).ready(function () {
 			console.log(e + ' ---> No HTML history API support!');	
 		}
 
-*/
         // set the splash screen
         $("#splash_screen").append('<p>' + lessonTitle + '</p><p>' + ((SETUP.find('instructor').text().length <= 0) ? 'Instructor is not specified' : SETUP.find('instructor').text()) + '</p>' + ((length !== 0) ? '<p>' + length + '</p>' : '') + '<p><a id="playBtn" href="#">&#9658</button></a>');
 
