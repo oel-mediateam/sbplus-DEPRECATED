@@ -1,3 +1,8 @@
+/* global console */
+/* global videojs */
+/* global MediaElementPlayer */
+/* global alert */
+
 $(document).load(function () {
     $('noscript').hide();
 });
@@ -118,8 +123,8 @@ $(document).ready(function () {
         $('#instructorName').html(instructor);
         $('#profile .bio').html('<p>' + SETUP.find('instructor').text() + '</p>' + profile);
 
-        topicSrc = new Array();
-        quizArray = new Array();
+        topicSrc = [];
+        quizArray = [];
 
         // loop through each topic node to get lesson topics
         // display each topic to web page as well
@@ -179,7 +184,7 @@ $(document).ready(function () {
 				window.history.pushState("", "", path + "index.html");
 			}
 		} catch (e) {
-			console.log(e + ' ---> No HTML history API support!');	
+			console.log(e + ' ---> No HTML history API support!');
 		}
 
         // set the splash screen
@@ -214,7 +219,7 @@ $(document).ready(function () {
 
     function parseSelects(ans) {
         var index = 0;
-        var answerArray = new Array();
+        var answerArray = [];
         var answer = ans,
             answerTemp, position;
 
@@ -861,7 +866,7 @@ $(document).ready(function () {
 
                             while (keepChecking) {
 
-                                if (stuAnswer.toLowerCase() === quizArray[position].answer[i].toLowerCase()) {
+                                if (stuAnswer.toLowerCase() === quizArray[position].answer[index].toLowerCase()) {
                                     quizArray[position].correct = true;
                                     keepChecking = false;
                                 }
@@ -1016,9 +1021,9 @@ $(document).ready(function () {
         var content_type;
         
         if (ext === "pdf") {
-	        content_type = "application/pdf";
+        	content_type = "application/pdf";
         } else {
-	        content_type = "audio/mpeg";
+        	content_type = "audio/mpeg";
         }
         
         $.ajax({
@@ -1038,10 +1043,9 @@ $(document).ready(function () {
                 } else if (ext === "mp3") {
                     $("#download_bar ul").append("<li><a href=\"" + file + "." + ext + "\" target=\"_blank\">MP3</a></li>");
                 }
-                
 
             },
-            error: function (xhr,j,e) {
+            error: function () {
 
                 var string;
 
