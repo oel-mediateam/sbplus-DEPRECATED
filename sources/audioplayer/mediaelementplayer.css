@@ -189,7 +189,7 @@ background: url(background.png);
 
 /* :focus for accessibility */
 .mejs-controls .mejs-button button:focus {
-	outline: solid 1px yellow;
+	outline: none;
 }
 
 /* End: CONTROL BAR */
