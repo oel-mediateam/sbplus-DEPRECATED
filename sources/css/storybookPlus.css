@@ -78,7 +78,7 @@ header .infoIcn:active {
 	padding:200px;
 	text-align:center;
 	background-color:#ffffff;
-	background-position:top left;
+	background-position: left bottom;
 	background-repeat:no-repeat;
 	cursor:pointer;
 }
