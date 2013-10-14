@@ -549,7 +549,7 @@ $(document).ready(function () {
 
             var time = $.now();
 
-            $('#vp').append("<video id=\"vpc" + time + "\" class=\"video-js vjs-default-skin\" controls autoplay preload=\"none\" width=\"640\" height=\"360\" data-setup='{\"controls\":true}'><source type=\"video/mp4\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".mp4\"" + " /><track kind=\"captions\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".vtt\" srclang=\"en\" label=\"English\" default></video>");
+            $('#vp').append("<video id=\"vpc" + time + "\" class=\"video-js vjs-default-skin\" controls autoplay preload=\"none\" width=\"640\" height=\"360\" data-setup='{\"controls\":true}'><source type=\"video/mp4\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".mp4\"" + " /><track kind=\"subtitles\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".vtt\" srclang=\"en\" label=\"English\" default></video>");
 
             if (!videoPlaying) {
                 $("#vp").show();
