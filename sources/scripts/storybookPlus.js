@@ -148,7 +148,7 @@ $(document).ready(function () {
 
             if (topicSrc[topicCount] === "quiz") {
 
-                quiz = new Object();
+                quiz = {};
                 quiz.id = topicCount;
                 quiz.type = XMLData.find('topic:eq(' + topicCount + ')').find('quiz').attr('type');
                 quiz.question = XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('question').text();
@@ -827,7 +827,6 @@ $(document).ready(function () {
 
                 var position = Number($(this).attr('rel'));
                 var stuAnswer;
-                var keepChecking = true;
 
                 if (quizArray[position].type === "t/f") {
 
@@ -860,26 +859,18 @@ $(document).ready(function () {
                 if (stuAnswer !== "") {
 
                     for (var i = 0; i < quizArray[position].answer.length; i++) {
-
+						
+						
+						
                         if (quizArray[position].type === "fib") {
                             var index = 0;
-
-                            while (keepChecking) {
-
-                                if (stuAnswer.toLowerCase() === quizArray[position].answer[index].toLowerCase()) {
-                                    quizArray[position].correct = true;
-                                    keepChecking = false;
-                                }
-
-                                index++;
-
-                                if (index > quizArray[position].answer.length) {
-                                    quizArray[position].correct = false;
-                                    keepChecking = false;
-                                }
-                            }
-
-                            index = 0;
+                            
+						for (index; index < quizArray[position].answer.length; index++) {
+							if (stuAnswer.toLowerCase() === quizArray[position].answer[index].toLowerCase()) {
+								quizArray[position].correct = true;
+								break;
+							}
+						}
 
                         } else if (quizArray[position].type === "t/f") {
 
@@ -1021,9 +1012,9 @@ $(document).ready(function () {
         var content_type;
         
         if (ext === "pdf") {
-        	content_type = "application/pdf";
+			content_type = "application/pdf";
         } else {
-        	content_type = "audio/mpeg";
+			content_type = "audio/mpeg";
         }
         
         $.ajax({
@@ -1031,7 +1022,7 @@ $(document).ready(function () {
             type: 'HEAD',
             dataType: 'text',
             contentType: content_type,
-            async: true,
+            async: false,
             beforeSend: function (xhr) {
                 xhr.overrideMimeType(content_type);
                 xhr.setRequestHeader("Accept", content_type);
@@ -1050,7 +1041,7 @@ $(document).ready(function () {
                 var string;
 
                 if (ext === "pdf") {
-                    string = "PDF";
+                    string = "Transcript";
                 } else if (ext === "mp3") {
                     string = "MP3";
                 }
@@ -1064,7 +1055,6 @@ $(document).ready(function () {
     }
 
     // get query strings
-
     function getParameterByName(name) {
         var regexS = "[\\?&]" + name + "=([^&#]*)";
         var regex = new RegExp(regexS);
