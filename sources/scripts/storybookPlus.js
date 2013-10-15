@@ -1029,11 +1029,21 @@ $(document).ready(function () {
             },
             success: function () {
 
-                if (ext === "pdf") {
-                    $("#download_bar ul").append("<li><a href=\"" + file + "." + ext + "\" target=\"_blank\">Transcript</a></li>");
-                } else if (ext === "mp3") {
-                    $("#download_bar ul").append("<li><a href=\"" + file + "." + ext + "\" target=\"_blank\">MP3</a></li>");
-                }
+                var f = file, downloadBar = $("#download_bar ul");
+                var protocol = window.location.protocol;
+				console.log(protocol);
+				
+				if (protocol !== "http:") {
+					var url = window.location.href;
+					url = url.substr(0,url.lastIndexOf("/")+1).replace("https","http");
+					f = url + file;
+				}
+				
+				if (ext === "pdf") {
+					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Transcript</a></li>");
+				} else if (ext === "mp3") {
+					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">MP3</a></li>");
+				}
 
             },
             error: function () {
