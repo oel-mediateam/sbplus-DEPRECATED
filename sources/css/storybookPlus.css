@@ -555,18 +555,33 @@ header .infoIcn:active {
 #download_bar ul li a,
 #download_bar ul li a:visited {
 	display: block;
+	position: relative;
 	text-decoration: none;
 	padding:5px 20px 5px 28px;
-	color: #333;
-	background-image: url("../img/download_icon.png");
-	background-repeat: no-repeat;
-	background-position: left 2px;
+	color: #ccc;
+	background-color: #fdfdfd;
 	border: #ccc solid 1px;
-	opacity: 0.75;
+}
+#download_bar ul li a:after {
+	content: "";
+	background: url("../img/download_icon.png");
+	opacity: 0.50;
+	top: 2px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+    width: 30px;
+    height: 25px;
 }
 #download_bar ul li a:hover {
 	border: #333 solid 1px;
-	opacity: 1;
+	background-image: url("../img/download_icon.png");
+	background-repeat: no-repeat;
+	background-position: left 2px;
+	background-color: #FFF;
+	color: #333;
 }
 
 
