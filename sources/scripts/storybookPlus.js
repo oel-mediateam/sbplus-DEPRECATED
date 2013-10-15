@@ -1031,7 +1031,6 @@ $(document).ready(function () {
 
                 var f = file, downloadBar = $("#download_bar ul");
                 var protocol = window.location.protocol;
-				console.log(protocol);
 				
 				if (protocol !== "http:") {
 					var url = window.location.href;
