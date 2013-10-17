@@ -558,14 +558,14 @@ header .infoIcn:active {
 	position: relative;
 	text-decoration: none;
 	padding:5px 20px 5px 28px;
-	color: #ccc;
+	color: #818181;
 	background-color: #fdfdfd;
-	border: #ccc solid 1px;
+	border: #939393 solid 1px;
 }
 #download_bar ul li a:after {
 	content: "";
 	background: url("../img/download_icon.png");
-	opacity: 0.50;
+	opacity: 0.75;
 	top: 2px;
     left: 0;
     bottom: 0;
