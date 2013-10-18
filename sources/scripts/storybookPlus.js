@@ -9,6 +9,22 @@ $(document).load(function () {
 
 $(document).ready(function () {
 
+	// get query strings
+    function getParameterByName(name) {
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.href);
+
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+
+        if (results === null) {
+            return "";
+        } else {
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+    } // end getParameterByName
+	
+
     var ua = navigator.userAgent,
         checker = {
             iphone: ua.match(/(iPhone|iPod|iPad)/),
@@ -177,7 +193,8 @@ $(document).ready(function () {
         $(document).attr('title', lessonTitle);
         
         // add the index.html to the URL
-		try {
+		/*
+try {
 			if (mobile) {
 				var path = window.location.href;
 				path = path.replace("index.html","");
@@ -186,6 +203,7 @@ $(document).ready(function () {
 		} catch (e) {
 			console.log(e + ' ---> No HTML history API support!');
 		}
+*/
 
         // set the splash screen
         $("#splash_screen").append('<p>' + lessonTitle + '</p><p>' + ((SETUP.find('instructor').text().length <= 0) ? 'Instructor is not specified' : SETUP.find('instructor').text()) + '</p>' + ((length !== 0) ? '<p>' + length + '</p>' : '') + '<p><a id="playBtn" href="#">&#9658</button></a>');
@@ -240,7 +258,7 @@ $(document).ready(function () {
 
     // initialized player function
 
-    function initializePlayer(lesson) {
+    function initializePlayer() {
 
         $("#player").show();
 
@@ -1062,20 +1080,5 @@ $(document).ready(function () {
             }
         });
     }
-
-    // get query strings
-    function getParameterByName(name) {
-        var regexS = "[\\?&]" + name + "=([^&#]*)";
-        var regex = new RegExp(regexS);
-        var results = regex.exec(window.location.href);
-
-        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-
-        if (results === null) {
-            return "";
-        } else {
-            return decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-    } // end getParameterByName
 
 });
