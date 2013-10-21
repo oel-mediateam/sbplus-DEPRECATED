@@ -1,10 +1,9 @@
 /*
  * Browser Detection
  * © 2010 DevSlide Labs
- *
  * Visit us at: www.devslide.com/labs
  */
-var notSupportedBrowsers = [{'os':'Any',"browser":'MSIE','version':8}];
+var notSupportedBrowsers = [];
 var displayPoweredBy = false;
 var noticeLang = 'professional';
 var noticeLangCustom = null;
@@ -85,8 +84,9 @@ var BrowserDetection = {
 		}
 		noticeEl.style.left = (windowSize.width - noticeSize.width) / 2 + "px";
 
-		var offset = (this.browser === "MSIE" && this.browserVersion < 7) ? (window.document.documentElement.scrollTop !== 0 ? window.document.documentElement.scrollTop : window.document.body.scrollTop) : 0;
-		noticeEl.style.top = (windowSize.height - noticeSize.height - 20 + offset) + "px";
+		/* var offset = (this.browser === "MSIE" && this.browserVersion < 7) ? (window.document.documentElement.scrollTop !== 0 ? window.document.documentElement.scrollTop : window.document.body.scrollTop) : 0; */
+		
+		noticeEl.style.top = (windowSize.height - noticeSize.height - 20) / 2 + "px";
 		this.noticeHeight = noticeSize.height;
 	},
 
@@ -114,9 +114,11 @@ var BrowserDetection = {
 		this.getEl('browser-detection-remind-later').onclick = function () {
 			el.remindMe(false);
 		};
-		this.getEl('browser-detection-never-remind').onclick = function () {
+		/*
+this.getEl('browser-detection-never-remind').onclick = function () {
 			el.remindMe(true);
 		};
+*/
 	},
 
 	remindMe: function (never) {
@@ -162,7 +164,7 @@ var BrowserDetection = {
 		var notice = '';
 		var selectBrowser = '';
 		var remindMeLater = '';
-		var neverRemindAgain = '';
+		/* var neverRemindAgain = ''; */
 
 		var browsersList = null;
 		var code = '<div id="black_overlay"></div><div id="browser-detection"><a href="javascript:;" id="browser-detection-close">Close</a>';
@@ -172,7 +174,7 @@ var BrowserDetection = {
 			notice = noticeLangCustom.notice;
 			selectBrowser = noticeLangCustom.selectBrowser;
 			remindMeLater = noticeLangCustom.remindMeLater;
-			neverRemindAgain = noticeLangCustom.neverRemindAgain;
+			/* neverRemindAgain = noticeLangCustom.neverRemindAgain; */
 		} else {
 			var noticeTextObj = null;
 			eval('noticeTextObj = this.noticeText.' + noticeLang + ';');
@@ -185,7 +187,7 @@ var BrowserDetection = {
 			notice = noticeTextObj.notice;
 			selectBrowser = noticeTextObj.selectBrowser;
 			remindMeLater = noticeTextObj.remindMeLater;
-			neverRemindAgain = noticeTextObj.neverRemindAgain;
+			/* neverRemindAgain = noticeTextObj.neverRemindAgain; */
 		}
 
 		notice = notice.replace("\n", '</p><p class="bd-notice">');
@@ -211,7 +213,7 @@ var BrowserDetection = {
 
 		code += '<ul class="bd-skip-buttons">';
 		code += '<li><button id="browser-detection-remind-later" type="button">' + remindMeLater + '</button></li>';
-		code += '<li><button id="browser-detection-never-remind" type="button">' + neverRemindAgain + '</button></li>';
+		/* code += '<li><button id="browser-detection-never-remind" type="button">' + neverRemindAgain + '</button></li>'; */
 		code += '</ul>';
 		code += '</div>';
 		window.document.body.innerHTML += code;
@@ -264,15 +266,15 @@ var BrowserDetection = {
 	supportedBrowsers: [{
 		'cssClass': 'firefox',
 		'name': 'Mozilla Firefox',
-		'downloadUrl': 'http://www.getfirefox.com/'
+		'downloadUrl': 'https://www.mozilla.org/en-US/'
 	}, {
 		'cssClass': 'chrome',
 		'name': 'Google Chrome',
-		'downloadUrl': 'http://www.google.com/chrome/'
+		'downloadUrl': 'https://www.google.com/intl/en/chrome/browser/'
 	}, {
 		'cssClass': 'msie',
 		'name': 'Internet Explorer',
-		'downloadUrl': 'http://www.getie.com/'
+		'downloadUrl': 'http://windows.microsoft.com/en-us/internet-explorer/browser-ie'
 	}, {
 		'cssClass': 'opera',
 		'name': 'Opera',
@@ -302,43 +304,15 @@ var BrowserDetection = {
 	defaultNotSupportedBrowsers: [{
 		'os': 'Any',
 		'browser': 'MSIE',
-		'version': 6
+		'version': 8
 	}],
 	noticeText: {
 		'professional': {
 			"title": "Outdated Browser Detected",
 			"notice": "Our website has detected that you are using an outdated browser. Using your current browser will prevent you from accessing features on our website. An upgrade is not required, but is strongly recommend to improve your browsing experience on our website.",
 			"selectBrowser": "Use the links below to download a new browser or upgrade your existing browser.",
-			"remindMeLater": "Remind me later",
+			"remindMeLater": "Okay, remind me later",
 			"neverRemindAgain": "No, don't remind me again"
-		},
-		'informal': {
-			"title": "Whoaaa!",
-			"notice": "It appears you're using an outdated browser which prevents access to some of the features on our website. While it's not required, you really should <b>upgrade or install a new browser</b>!",
-			"selectBrowser": "Visit the official sites for popular browsers below:",
-			"remindMeLater": "Not now, but maybe later",
-			"neverRemindAgain": "No, don't remind me again"
-		},
-		'technical': {
-			"title": "Old Browser Alert! <span class='bd-highlight'>DEFCON 5</span>",
-			"notice": "Come on! If you are hitting our site, then you must at least be partially tech savvy. So, why the older browser? We're not asking you to brush off your old Fibonacci Heap and share it with the class. Just upgrade!\nI know, I know. You don't like to be told what to do. But, we're only asking you to upgrade so you can access all the latest, greatest features on our site. It's quick and easy. But, if you still want to skip it, that's cool. We will still welcome you &mdash; and your creepy old browser. :P",
-			"selectBrowser": "Visit the official sites for popular browsers below:",
-			"remindMeLater": "Remind me later",
-			"neverRemindAgain": "No, don't remind me. I like my Commodore 64!"
-		},
-		'goofy': {
-			"title": "Are You Serious?",
-			"notice": "Are you really using <b>{browser_name}</b> as your browser?\nYou're surfing the web on a dinosaur (a dangerous one too &mdash; like a Tyrannosaurus or Pterodactyl or something scary like that). <b>Get with it and upgrade now!</b> If you do, we promise you will enjoy our site a whole lot more. :)",
-			"selectBrowser": "Visit the official sites for popular browsers below:",
-			"remindMeLater": "Maybe Later",
-			"neverRemindAgain": "No, don't remind me again"
-		},
-		'mean': {
-			"title": "Umm, Your Browser Sucks!",
-			"notice": "Get a new one here.",
-			"selectBrowser": "Official sites for popular browsers:",
-			"remindMeLater": "Remind me later, a'hole",
-			"neverRemindAgain": "F' off! My browser rocks!"
 		}
 	}
 };

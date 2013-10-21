@@ -1,11 +1,10 @@
 #browser-detection {
-	background: #FFFFE5;
+	background: #fffff3;
 	color: #333333;
-	position: fixed;
-	_position: absolute;
+	position: absolute;
 	padding: 10px 15px;
 	font-size: 13px;
-	font-family: "Trebuchet MS", "Segoe UI", Arial, Tahoma, sans-serif;
+	font-family: Arial, Tahoma, sans-serif;
 	border-radius: 5px;
 	border: 1px solid #D6D6C1;
 	-moz-border-radius: 5px;
@@ -69,8 +68,8 @@
 	text-decoration: none;
 }
 #browser-detection UL.bd-browsers-list LI A:HOVER {	text-decoration: underline; }
-#browser-detection UL.bd-browsers-list LI.firefox A { background: url(./images/firefox.gif) no-repeat left top; }
-#browser-detection UL.bd-browsers-list LI.chrome A { background: url(./images/chrome.gif) no-repeat left top; }
+#browser-detection UL.bd-browsers-list LI.firefox A { background: url(./images/firefox.png) no-repeat left top; }
+#browser-detection UL.bd-browsers-list LI.chrome A { background: url(./images/chrome.png) no-repeat left top; }
 #browser-detection UL.bd-browsers-list LI.safari A { background: url(./images/safari.gif) no-repeat left top; }
 #browser-detection UL.bd-browsers-list LI.opera A { background: url(./images/opera.gif) no-repeat left top; }
 #browser-detection UL.bd-browsers-list LI.msie A { background: url(./images/msie.gif) no-repeat left top; }
