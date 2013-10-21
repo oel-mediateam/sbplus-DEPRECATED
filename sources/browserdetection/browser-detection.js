@@ -309,7 +309,7 @@ this.getEl('browser-detection-never-remind').onclick = function () {
 	noticeText: {
 		'professional': {
 			"title": "Outdated Browser Detected",
-			"notice": "Our website has detected that you are using an outdated browser. Using your current browser will prevent you from accessing features on our website. An upgrade is not required, but is strongly recommend to improve your browsing experience on our website.",
+			"notice": "Our web application has detected that you are using an outdated browser. Using your current browser will prevent you from accessing and interacting with our web application. An upgrade is strongly recommended.",
 			"selectBrowser": "Use the links below to download a new browser or upgrade your existing browser.",
 			"remindMeLater": "Okay, remind me later",
 			"neverRemindAgain": "No, don't remind me again"

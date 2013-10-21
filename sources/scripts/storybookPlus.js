@@ -59,6 +59,7 @@ $(document).ready(function () {
             h3h4h5h6FontSize = 18,
             h3h4h5h6LineHeight = 22,
             firstList = true,
+            firstAudioLoad = false,
             topicCount = 0,
             counter = 1,
             previousIndex = 0,
@@ -604,13 +605,6 @@ try {
                 $('#slide #img').html(img);
                 $('#slide').append('</a><div id="magnifyIcon"></div>');
 
-                if (enabledNote) {
-                    $('#apc').html('<source type="audio/mpeg" src="assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /><object width="640" height="360" type="application/x-shockwave-flash" data="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/audioplayer/flashmediaelement.swf"><param name="movie" value="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/audioplayer/flashmediaelement.swf" /><param name="flashvars" value="controls=true&file=assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /></object>');
-                } else {
-                    $('#apcm').html('<source type="audio/mpeg" src="assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /><object width="640" height="360" type="application/x-shockwave-flash" data="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/audioplayer/flashmediaelement.swf"><param name="movie" value="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/audioplayer/flashmediaelement.swf" /><param name="flashvars" value="controls=true&file=assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /></object>');
-                }
-
-
                 $(this).fadeIn();
 
                 $('a#img').fancybox({
@@ -627,47 +621,72 @@ try {
                 bindImgMagnify(true);
 
                 if (!audioPlaying) {
+                
+					var sources;
 
                     if (enabledNote) {
 
                         $('#ap').show();
 
-                        audioPlayer = new MediaElementPlayer('#apc', {
-                            audioWidth: 640,
-                            audioHeight: 30,
-                            startVolume: 0.8,
-                            loop: false,
-                            enableAutosize: true,
-                            iPadUseNativeControls: false,
-                            iPhoneUseNativeControls: false,
-                            AndroidUseNativeControls: false,
-                            pauseOtherPlayers: true
-                        });
-
+						if (firstAudioLoad !== true) {
+							audioPlayer = new MediaElementPlayer('#apc', {
+								audioWidth: 640,
+								audioHeight: 30,
+								startVolume: 0.8,
+								loop: false,
+								enableAutosize: true,
+								iPadUseNativeControls: false,
+								iPhoneUseNativeControls: false,
+								AndroidUseNativeControls: false,
+								pauseOtherPlayers: true,
+								type: 'audio/mpeg',
+								success: function(me) {
+									sources = [{src: "assets/audio/" + sn.substring(sn.indexOf(":") + 1) + ".mp3", type: "audio/mpeg"}];
+									me.setSrc(sources);
+									me.load();
+								}
+							});
+							
+							firstAudioLoad = true;
+						} else {
+							sources = [{src: "assets/audio/" + sn.substring(sn.indexOf(":") + 1) + ".mp3", type: "audio/mpeg"}];
+							audioPlayer.setSrc(sources);
+						}
+                        
                         $('#note').height($('#note').height() - 30);
 
                     } else {
 
                         $('#apm').show();
-
-                        audioPlayer = new MediaElementPlayer('#apcm', {
-                            audioWidth: 300,
-                            audioHeight: 30,
-                            startVolume: 0.8,
-                            loop: false,
-                            enableAutosize: true,
-                            iPadUseNativeControls: false,
-                            iPhoneUseNativeControls: false,
-                            AndroidUseNativeControls: false,
-                            pauseOtherPlayers: true
-                        });
-
+                        
+						if (firstAudioLoad !== true) {
+						audioPlayer = new MediaElementPlayer('#apcm', {
+							audioWidth: 300,
+							audioHeight: 30,
+							startVolume: 0.8,
+							loop: false,
+							enableAutosize: true,
+							iPadUseNativeControls: false,
+							iPhoneUseNativeControls: false,
+							AndroidUseNativeControls: false,
+							pauseOtherPlayers: true,
+							type: 'audio/mpeg',
+							success: function(me) {
+								sources = [{src: "assets/audio/" + sn.substring(sn.indexOf(":") + 1) + ".mp3", type: "audio/mpeg"}];
+								me.setSrc(sources);
+								me.load();
+							}
+						});
+						
+							firstAudioLoad = true;
+						} else {
+							sources = [{src: "assets/audio/" + sn.substring(sn.indexOf(":") + 1) + ".mp3", type: "audio/mpeg"}];
+							audioPlayer.setSrc(sources);
+						}
+							
                         $("#currentStatus").css("width", "30%");
 
                     }
-
-                    //audioPlayer.setSrc('assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3');
-                    audioPlayer.play();
 
                     audioPlaying = true;
 
