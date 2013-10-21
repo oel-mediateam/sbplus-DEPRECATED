@@ -605,9 +605,9 @@ try {
                 $('#slide').append('</a><div id="magnifyIcon"></div>');
 
                 if (enabledNote) {
-                    $('#apc').html('<source type="audio/mpeg" src="assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /><object width="640" height="360" type="application/x-shockwave-flash" data="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus/htmlPlayer/flashmediaelement.swf"><param name="movie" value="assets/htmlPlayer/flashmediaelement.swf" /><param name="flashvars" value="controls=true&file=assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /></object>');
+                    $('#apc').html('<source type="audio/mpeg" src="assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /><object width="640" height="360" type="application/x-shockwave-flash" data="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/audioplayer/flashmediaelement.swf"><param name="movie" value="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/audioplayer/flashmediaelement.swf" /><param name="flashvars" value="controls=true&file=assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /></object>');
                 } else {
-                    $('#apcm').html('<source type="audio/mpeg" src="assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /><object width="640" height="360" type="application/x-shockwave-flash" data="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus/htmlPlayer/flashmediaelement.swf"><param name="movie" value="assets/htmlPlayer/flashmediaelement.swf" /><param name="flashvars" value="controls=true&file=assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /></object>');
+                    $('#apcm').html('<source type="audio/mpeg" src="assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /><object width="640" height="360" type="application/x-shockwave-flash" data="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/audioplayer/flashmediaelement.swf"><param name="movie" value="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/audioplayer/flashmediaelement.swf" /><param name="flashvars" value="controls=true&file=assets/audio/' + sn.substring(sn.indexOf(":") + 1) + '.mp3" /></object>');
                 }
 
 
