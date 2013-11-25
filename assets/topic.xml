@@ -6,7 +6,7 @@
 		<length/>
 		<instructor>Demo</instructor>
 		<slideImgFormat /> <!-- default to png if not specified -->
-		<note></note> <!-- disabled on default -->
+		<note>n</note> <!-- disabled on default -->
 	</setup>
 			
 	<!-- instructor or lesson information -->
@@ -18,7 +18,7 @@
 	<topic src="image:slide01" title="Image only">
 		<quiz />
 		<note>
-			<![CDATA[<h1>Demoing Storybook Plus. (Headline 1)</h1><p>Lorem <strong>ipsum</strong> dolor sit <em>amet</em>, consectetur <strong><em>adipiscing</em></strong> elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. <a href="#">Vestibulum</a> quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p><h2>Headline 2</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. Vestibulum quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p><h3>Headline 3</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. Vestibulum quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p>]]>
+			<![CDATA[<h1>Demoing Storybook Plus. (Headline 1)</h1><p>Lorem <strong>ipsum</strong> dolor sit <em>amet</em>, consectetur <strong><em>adipiscing</em></strong> elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. <a href="https://www.google.com">Vestibulum</a> quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p><h2>Headline 2</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. Vestibulum quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p><h3>Headline 3</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="https://www.yahoo.com">Vestibulum</a> Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. Vestibulum quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p>]]>
 		</note>
 	</topic>
 	
@@ -45,7 +45,7 @@
 	<topic src="swf:animations" title="Flash animation">
 		<quiz />
 		<note>
-			<![CDATA[<p>This slide contains a Flash animation.</p>]]>
+			<![CDATA[<p>This slide contains a Flash animation. <a href="https://www.adobe.com">Adobe.</a></p>]]>
 		</note>
 	</topic>
 	
