@@ -1084,9 +1084,11 @@ try {
             },
             error: function () {
 
-                if (ext === "pdf") {
+                /*
+if (ext === "pdf") {
                     $("#download_bar ul").before("<p>Transcript pending...</p>");
                 }
+*/
 
             }
         });
