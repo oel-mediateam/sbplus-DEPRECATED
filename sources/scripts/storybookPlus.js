@@ -568,16 +568,20 @@ try {
 
             var time = $.now();
 
-            $('#vp').append("<video id=\"vpc" + time + "\" class=\"video-js vjs-default-skin\" controls autoplay preload=\"none\" width=\"640\" height=\"360\" data-setup='{\"controls\":true}'><source type=\"video/mp4\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".mp4\"" + " /><track kind=\"subtitles\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".vtt\" srclang=\"en\" label=\"English\" default></video>");
+            $('#vp').append("<video id=\"vpc" + time + "\" class=\"video-js vjs-default-skin\" controls autoplay preload=\"none\" width=\"640\" height=\"360\" data-setup='{\"controls\":true}'>" + ((sbttlExist(sn.substring(sn.indexOf(":") + 1))) ? "<track kind=\"subtitles\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>");
 
             if (!videoPlaying) {
                 $("#vp").show();
 
                 videojs("vpc" + time, {}, function () {
                     this.progressTips();
+                    this.src([
+						{type: "video/mp4", src:"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".mp4"}
+						/* {type: "video/webm", src:"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".webm"} */
+					]);
                 });
                 
-                videojs.options.flash.swf = "https://mediastreamer.doit.wisc.edu/uwli-ltc/sandbox/ethansandbox/StorybookPlus/version2/sources/videoplayer/video-js.swf";
+                videojs.options.flash.swf = "sources/videoplayer/video-js.swf";
 
                 videoPlaying = true;
             }
@@ -1099,6 +1103,29 @@ if (ext === "pdf") {
 
             }
         });
+    }
+    
+    // checking for subtitle existence
+    function sbttlExist(file) {
+		var yes = false;
+		$.ajax({
+			url: "assets/video/" + file + ".vtt",
+			type: 'HEAD',
+			dataType: 'text',
+			contentType: "text/vtt",
+			async: false,
+			beforeSend: function (xhr) {
+				xhr.overrideMimeType("text/vtt");
+				xhr.setRequestHeader("Accept", "text/vtt");
+			},
+			success: function () {
+				yes = true;
+			},
+			error: function () {
+				yes = false;
+			}
+		});
+        return (yes);
     }
 
 });
