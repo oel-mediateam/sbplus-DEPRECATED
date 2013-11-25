@@ -576,8 +576,8 @@ try {
                 videojs("vpc" + time, {}, function () {
                     this.progressTips();
                     this.src([
-						{type: "video/mp4", src:"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".mp4"}
-						/* {type: "video/webm", src:"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".webm"} */
+						{type: "video/mp4", src:"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".mp4"},
+						{type: "video/webm", src:"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".webm"}
 					]);
                 });
                 
