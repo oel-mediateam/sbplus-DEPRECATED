@@ -732,13 +732,13 @@ try {
         var note = XMLData.find('topic:eq(' + num + ')').find('note').text();
 		
         $('#note').html(note);
-        
-        if ($("#note").find("a").length) {
-	        $("#note a").each(function() {
-		        $(this).attr("target","_blank");
-	        });
+			
+			if ($("#note").find("a").length) {
+				$("#note a").each(function() {
+					$(this).attr("target","_blank");
+			});
+			
         }
-        
 
     } // end loadNote
 
