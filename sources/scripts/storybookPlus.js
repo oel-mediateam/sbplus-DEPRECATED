@@ -1078,23 +1078,15 @@ try {
 				if (ext === "pdf") {
 					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Transcript</a></li>");
 				} else if (ext === "mp3") {
-					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">MP3</a></li>");
+					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Audio</a></li>");
 				}
 
             },
             error: function () {
 
-                var string;
-
                 if (ext === "pdf") {
-                    string = "Transcript";
-                } else if (ext === "mp3") {
-                    string = "MP3";
+                    $("#download_bar ul").before("<p>Transcript pending...</p>");
                 }
-
-                string += " pending...";
-
-                $("#download_bar ul").before("<p>" + string + "</p>");
 
             }
         });
