@@ -228,11 +228,11 @@ try {
         });
 
         // set up download bar
-        lessonTitle = lessonTitle.toLowerCase().replace("-", "_").replace(/\s+/g, "");
+        lessonTitle = lessonTitle.toLowerCase().replace("-", "_").replace(" ","_");
 
         // download files
-        fileExist(lessonTitle, "mp3");
-        fileExist(lessonTitle, "pdf");
+        fileExist(getSource(), "mp3");
+        fileExist(getSource(), "pdf");
 
     } // end setupXML
 
@@ -1127,5 +1127,15 @@ if (ext === "pdf") {
 		});
         return (yes);
     }
+    
+    function getSource() {
+		var urlToParse = window.location.href, src;
+		
+		/* console.log("URL to parse: " + urlToParse); */
+		src = urlToParse.split("?");
+		src = src[0].split("/");
+		src = src[src.length-2];
+		return src;
+	}
 
 });
