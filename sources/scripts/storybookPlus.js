@@ -982,7 +982,7 @@ try {
         }
 
         $('#quiz').append('<div class="question">' + quizArray[position].question + '</div>');
-        $('#quiz').append('<div class="feedback"><p><strong>Your anwser</strong>: ' + quizArray[position].stuAnswer + '</p>');
+        $('#quiz').append('<div class="feedback"><p><strong>Your answer</strong>: ' + quizArray[position].stuAnswer + '</p>');
 
         for (var i = 0; i < quizArray[position].answer.length; i++) {
 
@@ -994,7 +994,7 @@ try {
 
         }
 
-        $('.feedback').append('<p><strong>Correct anwser</strong>: ' + correctAnswer + '</p></div>');
+        $('.feedback').append('<p><strong>Correct answer</strong>: ' + correctAnswer + '</p></div>');
 
         if (quizArray[position].type !== "sa") {
 
