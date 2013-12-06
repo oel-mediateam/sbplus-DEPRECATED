@@ -520,6 +520,9 @@ header .infoIcn:active {
 	margin-left:10px;
 	padding-right:10px;
 	overflow:auto;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height: 1.25;
+	font-size: 14px;
 }
 
 
