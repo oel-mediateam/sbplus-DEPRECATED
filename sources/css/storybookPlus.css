@@ -190,9 +190,10 @@ header .infoIcn:active {
 	height:360px;
 	background-image:url(../img/noisy-texture.png);
 	background-color:#EBEBEB;
+	overflow-y: scroll;
 }
 #quiz .header{
-	width:622px;
+	/* width:622px; */
 	height:15px;
 	max-height:17px;
 	padding:9px 9px;
@@ -237,7 +238,7 @@ header .infoIcn:active {
 #quiz .submitArea {
 	position:absolute;
 	bottom:0;
-	width:622px;
+	width:607px;
 	height:32px;
 	text-align:right;
 	padding:9px;
