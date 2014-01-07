@@ -9,6 +9,8 @@ $(document).load(function () {
 
 $(document).ready(function () {
 
+	var media = "Slide";
+
 	// get query strings
     function getParameterByName(name) {
         var regexS = "[\\?&]" + name + "=([^&#]*)";
@@ -262,7 +264,17 @@ try {
     function initializePlayer() {
 
         $("#player").show();
-
+		
+		jQuery.each(topicSrc,function(i) {
+			var tSrc = topicSrc[i].substring(0, topicSrc[i].indexOf(":") +1);
+			if (tSrc === "video:" || tSrc === "youtube:") {
+				media = "Video";
+			} else {
+				media = "Slide";
+				return false;
+			}
+		});
+		
         loadSlide(topicSrc[0], counter);
         $('#selectable li:first').addClass('ui-selected');
 
@@ -781,7 +793,7 @@ try {
         });
 
         $('#selectable li:nth-child(' + Number(num) + ')').addClass('ui-selected');
-        $("#currentStatus").html('Slide ' + num + ' of ' + ((topicCount < 10) ? "0" + topicCount : topicCount));
+        $("#currentStatus").html(media + ' ' + num + ' of ' + ((topicCount < 10) ? "0" + topicCount : topicCount));
 
     } // end updateSlideNum
 
