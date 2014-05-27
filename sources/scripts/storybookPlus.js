@@ -580,7 +580,7 @@ try {
 
             var time = $.now();
 
-            $('#vp').append("<video id=\"vpc" + time + "\" class=\"video-js vjs-default-skin\" controls autoplay preload=\"none\" width=\"640\" height=\"360\" data-setup='{\"controls\":true}'>" + ((sbttlExist(sn.substring(sn.indexOf(":") + 1))) ? "<track kind=\"subtitles\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>");
+            $('#vp').append("<video id=\"vpc" + time + "\" class=\"video-js vjs-default-skin\" controls autoplay preload=\"metadata\" width=\"640\" height=\"360\" data-setup='{\"controls\":true}'>" + ((sbttlExist(sn.substring(sn.indexOf(":") + 1))) ? "<track kind=\"subtitles\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>");
 
             if (!videoPlaying) {
                 $("#vp").show();
@@ -1115,6 +1115,7 @@ if (ext === "pdf") {
 
             }
         });
+
     }
     
     // checking for subtitle existence
