@@ -5784,6 +5784,9 @@ vjs.TextTrack.prototype.parseCues = function(srcContent) {
       // Timing line
       time = line.split(' --> ');
       cue.startTime = this.parseCueTime(time[0]);
+      if ( time[1].indexOf(" ") !== -1 ) {
+          time[1] = time[1].substr(0, time[1].indexOf(" "));
+      }
       cue.endTime = this.parseCueTime(time[1]);
 
       // Additional lines - Cue Text

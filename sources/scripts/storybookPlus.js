@@ -579,13 +579,14 @@ try {
             bindImgMagnify(false);
 
             var time = $.now();
+            var playerID = "vpc" + time;
 
-            $('#vp').append("<video id=\"vpc" + time + "\" class=\"video-js vjs-default-skin\" controls autoplay preload=\"metadata\" width=\"640\" height=\"360\" data-setup='{\"controls\":true}'>" + ((sbttlExist(sn.substring(sn.indexOf(":") + 1))) ? "<track kind=\"subtitles\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>");
+            $('#vp').append("<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" controls autoplay width=\"640\" height=\"360\">" + ((sbttlExist(sn.substring(sn.indexOf(":") + 1))) ? "<track kind=\"subtitles\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>");
 
             if (!videoPlaying) {
                 $("#vp").show();
 
-                videojs("vpc" + time, {}, function () {
+                videojs(playerID, {}, function () {
                     this.progressTips();
                     this.src([
 						{type: "video/mp4", src:"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".mp4"},
