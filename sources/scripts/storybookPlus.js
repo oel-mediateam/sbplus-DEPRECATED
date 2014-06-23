@@ -214,13 +214,7 @@ try {
         $("#splash_screen").css("background-image","url(assets/splash.jpg)");
 
         if (!enabledNote) {
-            $("#splash_screen").css({
-                "height": "230px",
-                "padding-top": "100px",
-                "padding-bottom": "100px",
-                "padding-right": "200px",
-                "padding-left": "200px"
-            });
+            $("#splash_screen").addClass("noteDisabled");
         }
 
         $('#splash_screen, #playBtn').on("click", function () {
@@ -499,7 +493,7 @@ try {
         noteNum = Number(sNum) - 1;
 
         $("#slide").html("<div id=\"progressing\"></div>");
-        $('#progressing').fadeIn();
+        $('#progressing').show();
 
         // if video is playing
         if (videoPlaying) {
@@ -884,7 +878,7 @@ $('a#img, #magnifyIcon').on('mouseenter', function () {
 
             }
 
-            $('#quiz').append('<div class="submitArea"><button id="check" rel="' + qNum + '">SUBMIT</button></div>');
+            $('#quiz').append('<div class="submitArea"><a id="check" rel="' + qNum + '" href="javascript:void(0)">SUBMIT</a></div>');
 
             $('#check').click(function () {
 
@@ -989,9 +983,9 @@ $('a#img, #magnifyIcon').on('mouseenter', function () {
         if (quizArray[position].type !== "sa") {
 
             if (quizArray[position].correct) {
-                $('#quiz').append('<p class="quizCorrect">Correct!</p>');
+                $('#quiz').append('<p class="quizCorrect"><span class="icon-checkmark"></span> CORRECT</p>');
             } else {
-                $('#quiz').append('<p class="quizIncorrect">Incorrect!</p>');
+                $('#quiz').append('<p class="quizIncorrect"><span class="icon-notification"></span> INCORRECT</p>');
             }
 
         }

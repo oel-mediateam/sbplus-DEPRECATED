@@ -34,9 +34,20 @@
     @include sbplusFonts;
     content: "\e385";
 }
+
 .magnifyIcon:before {
     @include sbplusFonts;
     content: "\e1bc";
+}
+
+.icon-notification:before {
+    @include sbplusFonts;
+	content: "\e358";
+}
+
+.icon-checkmark:before {
+    @include sbplusFonts;
+	content: "\e368";
 }
 
 // old
