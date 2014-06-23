@@ -209,7 +209,7 @@ try {
 */
 
         // set the splash screen
-        $("#splash_screen").append('<p>' + lessonTitle + '</p><p>' + ((SETUP.find('instructor').text().length <= 0) ? 'Instructor is not specified' : SETUP.find('instructor').text()) + '</p>' + ((length !== 0) ? '<p>' + length + '</p>' : '') + '<p><a id="playBtn" href="#">&#9658</button></a>');
+        $("#splash_screen").append('<p>' + lessonTitle + '</p><p>' + ((SETUP.find('instructor').text().length <= 0) ? 'Instructor is not specified' : SETUP.find('instructor').text()) + '</p>' + ((length !== 0) ? '<p><small>' + length + '</small></p>' : '') + '<a class="playBtn" href="#"></a>');
         
         $("#splash_screen").css("background-image","url(assets/splash.jpg)");
 
@@ -538,7 +538,7 @@ try {
                 $(this).hide();
                 $('#slide').append('<a id="img" title="' + imgCaption + '"href="' + imgPath + '">');
                 $('#slide #img').html(img);
-                $('#slide').append('</a><div id="magnifyIcon"></div>');
+                $('#slide').append('</a><div class="magnifyIcon"></div>');
 
                 $(this).fadeIn();
 
@@ -620,7 +620,7 @@ try {
 
                 $('#slide').append('<a id="img" title="' + imgCaption + '"href="' + imgPath + '">');
                 $('#slide #img').html(img);
-                $('#slide').append('</a><div id="magnifyIcon"></div>');
+                $('#slide').append('</a><div class="magnifyIcon"></div>');
 
                 $(this).fadeIn();
 
@@ -803,13 +803,15 @@ try {
 
     function bindImgMagnify(t) {
         if (t) {
-            $('a#img, #magnifyIcon').on('mouseenter', function () {
+            /*
+$('a#img, #magnifyIcon').on('mouseenter', function () {
                 $("#magnifyIcon").show();
             });
             $('a#img, #magnifyIcon').on('mouseleave', function () {
                 $("#magnifyIcon").hide();
             });
-            $("#magnifyIcon").on('click', function () {
+*/
+            $(".magnifyIcon").on('click', function () {
                 $.fancybox.open({
                     href: imgPath,
                     title: imgCaption,

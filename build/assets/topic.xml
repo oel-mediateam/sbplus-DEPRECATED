@@ -3,7 +3,7 @@
 
 	<setup>
 		<lesson>PSAS350 - Chapter Three, part 2</lesson>
-		<length/>
+		<length>25 Minutes</length>
 		<instructor>Demo</instructor>
 		<slideImgFormat /> <!-- default to png if not specified -->
 		<note>n</note> <!-- disabled on default -->
