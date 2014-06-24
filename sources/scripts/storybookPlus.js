@@ -3,243 +3,61 @@
 /* global MediaElementPlayer */
 /* global alert */
 
-$(document).load(function () {
-    $('noscript').hide();
-});
+// global variable declarations
+var media = "Slide",
+    pFontSize = 14,
+    pLineHeight = 18,
+    h1FontSize = 22,
+    h1LineHeight = 26,
+    h2FontSize = 20,
+    h2LineHeight = 24,
+    h3h4h5h6FontSize = 18,
+    h3h4h5h6LineHeight = 22,
+    firstAudioLoad = false,
+    topicCount = 0,
+    counter = 1,
+    previousIndex = 0,
+    tocIndex = 0,
+    audioPlaying = false,
+    videoPlaying = false,
+    XMLData,
+    topicSrc,
+    slideImgFormat = "png",
+    imgPath,
+    audioPlayer,
+    enabledNote = false,
+    imgCaption, quiz, quizArray, found = false,
+    qNum = 0;
 
-$(document).ready(function () {
-
-	var media = "Slide";
-
-	// get query strings
-    function getParameterByName(name) {
-        var regexS = "[\\?&]" + name + "=([^&#]*)";
-        var regex = new RegExp(regexS);
-        var results = regex.exec(window.location.href);
-
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-
-        if (results === null) {
-            return "";
-        } else {
-            return decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-    } // end getParameterByName
+$( document ).ready( function() {
 	
-
     var ua = navigator.userAgent,
         checker = {
-            iphone: ua.match(/(iPhone|iPod|iPad)/),
-            blackberry: ua.match(/BlackBerry/),
-            android: ua.match(/Android/)
+            iphone: ua.match( /(iPhone|iPod|iPad)/ ),
+            blackberry: ua.match( /BlackBerry/ ),
+            android: ua.match( /Android/ )
         };
 
-    var mobile = (getParameterByName("m") === "0") ? false : true;
+    var mobile = ( $( this ).getParameterByName( "m" ) === "0" ) ? false : true;
 
-    if ((checker.iphone || checker.ipod || checker.ipad || checker.blackberry || checker.android) && mobile) {
+    if ( ( checker.iphone || checker.ipod || checker.ipad || checker.blackberry || checker.android ) && mobile ) {
 
         var location = window.location.href,
-            locTemp,
-            locIndex = location.indexOf(".");
+            locIndex = location.indexOf( "." ),
+            locTemp;
 
-        locTemp = location.substr(locIndex);
-        location = "http://webstreamer" + locTemp + "?m=0";
+        locTemp = location.substr( locIndex );
+        location = "http://mediastreamer" + locTemp + "?m=0";
 
-        $("#player").hide();
-
-        $('body').html('<div style="text-align:center; width:450px; height:315px;"><a href="' + location + '" target="_blank"><img src="https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus/img/view_on_full_site.png" width="450px" height="315px" alt="Launch Presentation in New Window" border="0" /></a></div>');
-
-    } else {
-
-        // global variable declarations
-        var pFontSize = 14,
-            pLineHeight = 18,
-            h1FontSize = 22,
-            h1LineHeight = 26,
-            h2FontSize = 20,
-            h2LineHeight = 24,
-            h3h4h5h6FontSize = 18,
-            h3h4h5h6LineHeight = 22,
-            firstList = true,
-            firstAudioLoad = false,
-            topicCount = 0,
-            counter = 1,
-            previousIndex = 0,
-            tocIndex = 0,
-            audioPlaying = false,
-            videoPlaying = false,
-            XMLData,
-            topicSrc,
-            slideImgFormat,
-            imgPath,
-            audioPlayer,
-            enabledNote = false,
-            imgCaption, quiz, quizArray, found = false,
-            qNum = 0;
-
-        // AJAX setup
-        $.ajaxSetup({
-            url: 'assets/topic.xml',
-            type: 'GET',
-            dataType: 'xml',
-            accepts: 'xml',
-            content: 'xml',
-            contentType: 'xml; charset="utf-8"',
-            cache: false
-        });
-
-        // Encoding XML data
-        $.ajax({
-            encoding: 'UTF-8',
-            beforeSend: function (xhr) {
-                xhr.overrideMimeType("xml; charset=utf-8");
-                xhr.setRequestHeader("Accept", "text/xml");
-            },
-            success: function (xml) {
-
-                setupXML(xml);
-
-            },
-            error: function (xhr, exception) {
-                displayError(xhr.status, exception);
-            }
-        });
+        $( "body" ).html( "<div style=\"text-align:center; width:450px; height:315px;\"><a href=\"" + location + "\" target=\"_blank\"><img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus/img/view_on_full_site.png\" width=\"450px\" height=\"315px\" alt=\"Launch Presentation in New Window\" border=\"0\" /></a></div>" );
+        
+        return false;
 
     }
 
-    // XML Setup function
-
-    function setupXML(xml) {
-
-        var SETUP = $(xml).find('setup');
-        var TOPIC = $(xml).find('topic');
-        var profile = $(xml).find('profile').text();
-        var lessonTitle = (SETUP.find('lesson').text().length <= 0) ? 'Lesson name is not specified' : SETUP.find('lesson').text();
-        var instructor = (SETUP.find('instructor').text().length <= 0) ? 'Instructor is not specified' : '<a class="instructorP" href="#profile">' + SETUP.find('instructor').text() + '</a>';
-        var length = (SETUP.find('length').text().length <= 0) ? '' : SETUP.find('length').text();
-
-        enabledNote = (SETUP.find('note').text().length <= 0) ? false : SETUP.find('note').text();
-
-        // set flag for note availabity
-        if (enabledNote === 'yes' || enabledNote === 'y') {
-            enabledNote = true;
-        } else {
-            enabledNote = false;
-        }
-
-        if (!enabledNote) {
-            $("#storybook_plus_wrapper").addClass("noteDisabled");
-        }
-
-        slideImgFormat = (SETUP.find('slideImgFormat').text().length <= 0) ? 'png' : SETUP.find('slideImgFormat').text();
-        XMLData = $(xml);
-
-        $('#lessonTitle').html(lessonTitle);
-        $('#instructorName').html(instructor);
-        $('#profile .bio').html('<p>' + SETUP.find('instructor').text() + '</p>' + profile);
-
-        topicSrc = [];
-        quizArray = [];
-
-        // loop through each topic node to get lesson topics
-        // display each topic to web page as well
-        TOPIC.each(function () {
-
-            var topicTitle = $(this).attr('title');
-
-            topicSrc[topicCount] = $(this).attr('src');
-
-            if (firstList === true) {
-
-                $('#selectable').html('<li class="ui-widget-content" title="' + topicTitle + '">' + '<div class="slideNum">' + (((topicCount + 1) < 10) ? '0' + (topicCount + 1) : (topicCount + 1)) + '.</div><div class="title">' + topicTitle + '</div></li>');
-
-                firstList = false;
-
-            } else {
-
-                $('#selectable').append('<li class="ui-widget-content" title="' + topicTitle + '">' + '<div class="slideNum">' + (((topicCount + 1) < 10) ? '0' + (topicCount + 1) : (topicCount + 1)) + '.</div><div class="title">' + topicTitle + '</div></li>');
-
-            }
-
-            if (topicSrc[topicCount] === "quiz") {
-
-                quiz = {};
-                quiz.id = topicCount;
-                quiz.type = XMLData.find('topic:eq(' + topicCount + ')').find('quiz').attr('type');
-                quiz.question = XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('question').text();
-
-                if (XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('choice').text() !== "") {
-                    quiz.choice = parseSelects(XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('choice').text());
-                    quiz.wrongFeedback = parseSelects(XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('wrongFeedback').text());
-                } else {
-                    quiz.wrongFeedback = XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('wrongFeedback').text();
-                }
-
-                quiz.answer = parseSelects(XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('answer').text());
-                quiz.stuAnswer = "";
-                quiz.correct = false;
-                quiz.correctFeedback = XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('correctFeedback').text();
-                quiz.taken = false;
-                quizArray.push(quiz);
-
-            }
-
-            topicCount++;
-
-        });
-
-        // set the document title to the lesson title
-        $(document).attr('title', lessonTitle);
-
-        // set the splash screen
-        $("#splash_screen").append('<p>' + lessonTitle + '</p><p>' + ((SETUP.find('instructor').text().length <= 0) ? 'Instructor is not specified' : SETUP.find('instructor').text()) + '</p>' + ((length !== 0) ? '<p><small>' + length + '</small></p>' : '') + '<a class="playBtn" href="#"></a>');
-        
-        $("#splash_screen").css("background-image","url(assets/splash.jpg)");
-
-        /*
-if (!enabledNote) {
-            $("#splash_screen").addClass("noteDisabled");
-        }
-*/
-
-        $('#splash_screen, #playBtn').on("click", function () {
-            initializePlayer(lessonTitle);
-            $("#splash_screen").hide();
-            return false;
-        });
-
-        // set up download bar
-        lessonTitle = lessonTitle.toLowerCase().replace("-", "_").replace(" ","_");
-
-        // download files
-        fileExist(getSource(), "mp3");
-        fileExist(getSource(), "pdf");
-
-    } // end setupXML
-
-    function parseSelects(ans) {
-        var index = 0;
-        var answerArray = [];
-        var answer = ans,
-            answerTemp, position;
-
-        answer += "|";
-        position = answer.indexOf('|');
-
-        while (answer.indexOf('|') !== -1) {
-            answerTemp = answer.substring(0, position);
-            answer = answer.substring(position + 1);
-            position = answer.indexOf('|');
-            answerArray[index] = answerTemp;
-            index++;
-        }
-
-        return answerArray;
-    } // end parseSelect
-
+    $( this ).ajaxCall();
 
     // initialized player function
-
     function initializePlayer() {
 
         $("#player").show();
@@ -285,7 +103,7 @@ if (!enabledNote) {
         loadProfilePhoto();
 
         // enable fancy box for profile panel
-        $("a#info, a.instructorP").fancybox({
+        $("a#info, a.instructorName").fancybox({
             helpers: {
                 overlay: {
                     css: {
@@ -1123,3 +941,222 @@ if (ext === "pdf") {
 	}
 
 });
+
+/* FUNCTIONS
+***************************************************************/
+
+/**
+ * Parse the URL query parameter from the current page location
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param string, the parameter to parse
+ * @return string, the value of the parameter
+ *
+ */
+$.fn.getParameterByName = function( param ) {
+
+    var regexS = "[\\?&]" + param + "=([^&#]*)",
+        regex = new RegExp( regexS ),
+        results = regex.exec( window.location.href );
+
+    param = param.replace( /[\[]/, "\\[" ).replace( /[\]]/, "\\]" );
+
+    if ( results === null ) {
+        return "";
+    } else {
+        return decodeURIComponent( results[1].replace( /\+/g, " " ) );
+    }
+    
+};
+
+$.fn.ajaxCall = function() {
+    
+    $.ajaxSetup( {
+        url: 'assets/topic.xml',
+        type: 'GET',
+        dataType: 'xml',
+        accepts: 'xml',
+        content: 'xml',
+        contentType: 'xml; charset="utf-8"',
+        cache: false
+    } );
+
+    $.ajax( {
+        encoding: 'UTF-8',
+        beforeSend: function ( xhr ) {
+            xhr.overrideMimeType( "xml; charset=utf-8" );
+            xhr.setRequestHeader( "Accept", "text/xml" );
+        },
+        success: function ( xml ) {
+            $( this ).setupXML( xml );
+        },
+        error: function ( xhr, exception ) {
+            $( this ).displayError( xhr.status, exception );
+        }
+    } );
+    
+};
+
+// XML Setup function
+$.fn.setupXML = function( xml ) {
+
+    var SETUP = $( xml ).find( "setup" ),
+        TOPIC = $( xml ).find( "topic" ),
+        LESSON = $.trim( SETUP.find( "lesson" ).text() ),
+        PROFILE = $.trim( $( xml ).find( "profile" ).text() ),
+        INSTRUCTOR = $.trim( SETUP.find( "instructor" ).text() ),
+        LENGTH = $.trim( SETUP.find( "length" ).text() ),
+        NOTE = $.trim( SETUP.find( "note" ).text() ),
+        SLIDEFORMAT = $.trim( SETUP.find('slideImgFormat').text() ),
+        lessonTitle = "Lesson name is not specified.",
+        instructor = "Instructor name is not specified.",
+        length = '',
+        firstList = true;
+    
+    // lesson title
+    if ( LESSON.length ) {
+        lessonTitle = LESSON;
+    }
+    
+    // instructor name
+    if ( INSTRUCTOR.length ) {
+        instructor = "<a class=\"instructorName\" href=\"#profile\">" + INSTRUCTOR + "</a>"
+    }
+    
+    // length
+    if ( LENGTH.length ) {
+        length = LENGTH;
+    }
+    
+    // check note presence
+    if ( NOTE.length ) {
+        if ( NOTE === "yes" || NOTE === 'y' ) {
+            enabledNote = true;
+        }
+    }
+
+    // check image file format
+    if ( SLIDEFORMAT.length ) {
+        slideImgFormat = SLIDEFORMAT;
+    }
+    
+    // assign values to variables
+    XMLData = $( xml );
+    topicSrc = [];
+    quizArray = [];
+
+    // loop through each topic node to get lesson topics
+    // display each topic to web page as well
+    TOPIC.each( function() {
+        
+        var topicTitle = $( this ).attr( 'title' );
+
+        topicSrc[topicCount] = $(this).attr('src');
+
+        if ( firstList === true ) {
+        
+            $( "#selectable" ).html( "<li class=\"ui-widget-content\" title=\"" + topicTitle + "\">" + "<div class=\"slideNum\">" + ( ( ( topicCount + 1 ) < 10 ) ? "0" + ( topicCount + 1 ) : ( topicCount + 1 ) ) + ".</div><div class=\"title\">" + topicTitle + "</div></li>" );
+            firstList = false;
+            
+        } else {
+        
+            $( "#selectable" ).append( "<li class=\"ui-widget-content\" title=\"" + topicTitle + "\">" + "<div class=\"slideNum\">" + ( ( ( topicCount + 1 ) < 10 ) ? "0" + ( topicCount + 1 ) : ( topicCount + 1 ) ) + ".</div><div class=\"title\">" + topicTitle + "</div></li>" );
+            
+        }
+
+        if ( topicSrc[topicCount] === "quiz" ) {
+            
+            var questionNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).text() ),
+                choiceNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).text() ),
+                wrongFeedbackNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "wrongFeedback" ).text() ),
+                correctFeedbackNode = $.trim( XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('correctFeedback').text() ),
+                quizTypeAttr = XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).attr( "type" ),
+                answerNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "answer" ).text() );
+            
+            quiz = {};
+            quiz.id = topicCount;
+            quiz.type = quizTypeAttr;
+            quiz.question = questionNode;
+
+            if ( choiceNode ) {
+                quiz.choice = $( this ).parseSelects( choiceNode );
+                quiz.wrongFeedback = $( this ).parseSelects( wrongFeedbackNode );
+            } else {
+                quiz.wrongFeedback = wrongFeedbackNode;
+            }
+
+            quiz.answer = $( this ).parseSelects( answerNode );
+            quiz.stuAnswer = "";
+            quiz.correct = false;
+            quiz.correctFeedback = correctFeedbackNode;
+            quiz.taken = false;
+            
+            quizArray.push( quiz );
+
+        }
+
+        topicCount++;
+
+    });
+    
+    if ( !enabledNote ) {
+        $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
+    }
+    
+    $( "#lessonTitle" ).html( lessonTitle );
+    $( "#instructorName" ).html( instructor );
+    $( "#profile .bio" ).html( '<p>' + instructor + '</p>' + PROFILE );
+    
+    // set the document title to the lesson title
+    $( document ).attr( "title", lessonTitle );
+
+    // set the splash screen
+    $("#splash_screen").append('<p>' + lessonTitle + '</p><p>' + ((SETUP.find('instructor').text().length <= 0) ? 'Instructor is not specified' : SETUP.find('instructor').text()) + '</p>' + ((length !== 0) ? '<p><small>' + length + '</small></p>' : '') + '<a class="playBtn" href="#"></a>');
+    
+    $("#splash_screen").css("background-image","url(assets/splash.jpg)");
+
+    $('#splash_screen, #playBtn').on("click", function () {
+        initializePlayer(lessonTitle);
+        $("#splash_screen").hide();
+        return false;
+    });
+
+    // set up download bar
+    lessonTitle = lessonTitle.toLowerCase().replace( "-", "_" ).replace( " ", "_" );
+
+    // download files
+    fileExist( getSource(), "mp3" );
+    fileExist( getSource(), "pdf" );
+
+}; // end setupXML
+
+$.fn.parseSelects = function( arg ) {
+
+    var index = 0;
+    var answerArray = [];
+    var answer = arg,
+        answerTemp, position;
+    
+    answer += "|";
+    position = answer.indexOf( '|' );
+    
+    while ( answer.indexOf( '|' ) !== -1 ) {
+        answerTemp = answer.substring( 0, position );
+        answer = answer.substring( position + 1 );
+        position = answer.indexOf( '|' );
+        answerArray[index] = answerTemp;
+        index++;
+    }
+    
+    return answerArray;
+    
+}; // end parseSelect
+
+
+
+
+
+
+
+

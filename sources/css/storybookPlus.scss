@@ -20,7 +20,7 @@ $gutter: 15px;
 @import "compass/css3/opacity";
 @import "compass/css3/transition";
 
-/* GENERAL */
+// GENERAL
 html {
     font-size: $font-size;
     margin: 0;
@@ -78,6 +78,7 @@ p {
 
 // SPLASH SCREEN
 #splash_screen {
+
 	width: rem( 900px );
 	height: rem( 630px );
 	padding: rem( 200px );
@@ -353,8 +354,8 @@ p {
     	border-top: #ccc solid 1px;
     	padding: 0 rem( 5px );
     	background-color: #fff;
-    	overflow:auto;
-    	float:left;
+    	overflow: auto;
+    	float: left;
     	@include box-sizing( "border-box" );
     	
     	a, a:visited {
@@ -538,10 +539,12 @@ p {
 	
 } // #toc
 
-@-moz-document url-prefix() { 
+@-moz-document url-prefix() {
+
   #toc {
      width: 28.76%;
   }
+  
 }
 
 // PROFILE PANEL
@@ -589,7 +592,7 @@ p {
 	
 } // #profile
 
-/* DOWNLOAD BAR */
+// DOWNLOAD BAR
 #download_bar {
 
 	width: 100%;
