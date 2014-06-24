@@ -128,11 +128,7 @@ $(document).ready(function () {
         }
 
         if (!enabledNote) {
-            $("#note").hide();
-            $("#fontMinusBtn").hide();
-            $("#fontPlusBtn").hide();
-            $("#fontSizeIndicator").hide();
-            $("#toc").css("height","399px");
+            $("#storybook_plus_wrapper").addClass("noteDisabled");
         }
 
         slideImgFormat = (SETUP.find('slideImgFormat').text().length <= 0) ? 'png' : SETUP.find('slideImgFormat').text();
@@ -155,13 +151,13 @@ $(document).ready(function () {
 
             if (firstList === true) {
 
-                $('#selectable').html('<li class="ui-widget-content" title="' + topicTitle + '">' + '<div style="width:10%;padding:0px 1%;text-align:right;float:left;">' + (((topicCount + 1) < 10) ? '0' + (topicCount + 1) : (topicCount + 1)) + '.</div><div class="title" style="width:86%;padding:0px 1%;float:left;">' + topicTitle + '</div></li>');
+                $('#selectable').html('<li class="ui-widget-content" title="' + topicTitle + '">' + '<div class="slideNum">' + (((topicCount + 1) < 10) ? '0' + (topicCount + 1) : (topicCount + 1)) + '.</div><div class="title">' + topicTitle + '</div></li>');
 
                 firstList = false;
 
             } else {
 
-                $('#selectable').append('<li class="ui-widget-content" title="' + topicTitle + '">' + '<div style="width:10%;padding:0px 1%;text-align:right;float:left;">' + (((topicCount + 1) < 10) ? '0' + (topicCount + 1) : (topicCount + 1)) + '.</div><div class="title" style="width:86%;padding:0px 1%;float:left;">' + topicTitle + '</div></li>');
+                $('#selectable').append('<li class="ui-widget-content" title="' + topicTitle + '">' + '<div class="slideNum">' + (((topicCount + 1) < 10) ? '0' + (topicCount + 1) : (topicCount + 1)) + '.</div><div class="title">' + topicTitle + '</div></li>');
 
             }
 
@@ -194,28 +190,17 @@ $(document).ready(function () {
 
         // set the document title to the lesson title
         $(document).attr('title', lessonTitle);
-        
-        // add the index.html to the URL
-		/*
-try {
-			if (mobile) {
-				var path = window.location.href;
-				path = path.replace("index.html","");
-				window.history.pushState("", "", path + "index.html");
-			}
-		} catch (e) {
-			console.log(e + ' ---> No HTML history API support!');
-		}
-*/
 
         // set the splash screen
         $("#splash_screen").append('<p>' + lessonTitle + '</p><p>' + ((SETUP.find('instructor').text().length <= 0) ? 'Instructor is not specified' : SETUP.find('instructor').text()) + '</p>' + ((length !== 0) ? '<p><small>' + length + '</small></p>' : '') + '<a class="playBtn" href="#"></a>');
         
         $("#splash_screen").css("background-image","url(assets/splash.jpg)");
 
-        if (!enabledNote) {
+        /*
+if (!enabledNote) {
             $("#splash_screen").addClass("noteDisabled");
         }
+*/
 
         $('#splash_screen, #playBtn').on("click", function () {
             initializePlayer(lessonTitle);
@@ -514,7 +499,6 @@ try {
                 $('#note').height($('#note').height() + 30);
             } else {
                 $('#apm').hide();
-                $("#currentStatus").css("width", "76.85%");
             }
 
         }
@@ -673,7 +657,6 @@ try {
 						if (firstAudioLoad !== true) {
 						audioPlayer = new MediaElementPlayer('#apcm', {
 							audioWidth: 300,
-							audioHeight: 30,
 							startVolume: 0.8,
 							loop: false,
 							enableAutosize: true,
@@ -694,8 +677,6 @@ try {
 							sources = [{src: "assets/audio/" + sn.substring(sn.indexOf(":") + 1) + ".mp3", type: "audio/mpeg"}];
 							audioPlayer.setSrc(sources);
 						}
-							
-                        $("#currentStatus").css("width", "30%");
 
                     }
 
@@ -797,14 +778,7 @@ try {
 
     function bindImgMagnify(t) {
         if (t) {
-            /*
-$('a#img, #magnifyIcon').on('mouseenter', function () {
-                $("#magnifyIcon").show();
-            });
-            $('a#img, #magnifyIcon').on('mouseleave', function () {
-                $("#magnifyIcon").hide();
-            });
-*/
+
             $(".magnifyIcon").on('click', function () {
                 $.fancybox.open({
                     href: imgPath,
@@ -1096,9 +1070,9 @@ $('a#img, #magnifyIcon').on('mouseenter', function () {
 				}
 				
 				if (ext === "pdf") {
-					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Transcript</a></li>");
+					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Transcript</a></li>");
 				} else if (ext === "mp3") {
-					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\">Audio</a></li>");
+					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Audio</a></li>");
 				}
 
             },

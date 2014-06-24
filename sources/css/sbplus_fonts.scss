@@ -40,6 +40,26 @@
     content: "\e1bc";
 }
 
+#leftBtn:before {
+    @include sbplusFonts;
+    content: "\e3b3";
+}
+
+#rightBtn:before {
+    @include sbplusFonts;
+    content: "\e3b1";
+}
+
+#fontMinusBtn:before {
+    @include sbplusFonts;
+    content: "\e375";
+}
+
+#fontPlusBtn:before {
+    @include sbplusFonts;
+    content: "\e376";
+}
+
 .icon-notification:before {
     @include sbplusFonts;
 	content: "\e358";
@@ -50,28 +70,12 @@
 	content: "\e368";
 }
 
-// old
 .icon-assessement:before {
+    @include sbplusFonts;
 	content: "\e083";
 }
-.icon-zoomin:before {
-	content: "\e1bc";
-}
-.icon-info:before {
-	content: "\e363";
-}
-.icon-minus:before {
-	content: "\e375";
-}
-.icon-plus:before {
-	content: "\e376";
-}
-.icon-arrow-right:before {
-	content: "\e3b1";
-}
-.icon-arrow-left:before {
-	content: "\e3b3";
-}
+
 .icon-arrow-down:before {
+    @include sbplusFonts;
 	content: "\e416";
 }
