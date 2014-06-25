@@ -5,12 +5,13 @@ Author: Ethan S. Lin
 Organization: University of Wisconsin-Extension division of Continuing Education, Outreach & E-Learning
 
 ### Minimum Supported Web Browsers
-*latest stable version is recommended*  
 * Internet Explorer 9+
 * Mozilla Firefox 30+
 * Google Chrome 33+
 * Apple Safari 5+
 * Opera 20+
+
+*Latest stable version is recommended.*
 
 For documentation, please visit: https://mediastreamer.doit.wisc.edu/uwli-ltc/media/documentation/sbplus/v2/
 
