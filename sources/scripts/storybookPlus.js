@@ -55,7 +55,7 @@ $( document ).ready( function() {
 
     }
 
-    $( this ).ajaxCall();
+    $( this ).ajaxCall( "assets/topic.xml" );
 
     // initialized player function
     function initializePlayer() {
@@ -818,94 +818,6 @@ $( document ).ready( function() {
         }
 
     } // end showFeedback
-
-
-    // error handling function
-
-    function displayError(status, exception) {
-
-        var statusMsg, exceptionMsg;
-
-        if (status === 0) {
-            statusMsg = '<strong>Error 0</strong> - Not connect. Please verify network.';
-        } else if (status === 404) {
-            statusMsg = '<strong>Error 404</strong> - Requested page not found.';
-        } else if (status === 406) {
-            statusMsg = '<strong>Error 406</strong> - Not acceptable error.';
-        } else if (status === 500) {
-            statusMsg = '<strong>Error 500</strong> - Internal Server Error.';
-        } else {
-            statusMsg = 'Unknow error';
-        }
-
-        if (exception === 'parsererror') {
-            exceptionMsg = 'Requested XML parse failed.';
-        } else if (exception === 'timeout') {
-            exceptionMsg = 'Time out error.';
-        } else if (exception === 'abort') {
-            exceptionMsg = 'Ajax request aborted.';
-        } else if (exception === "error") {
-            exceptionMsg = 'HTTP / URL Error (most likely a 404 or 406).';
-        } else {
-            exceptionMsg = ('Uncaught Error.\n' + status.responseText);
-        }
-
-        $('#player').hide();
-        $('#errorMsg').html('<p>' + statusMsg + '<br />' + exceptionMsg + '</p>');
-
-    } // end displayError
-
-	// checking for download file existence
-    function fileExist(file, ext) {
-        
-        var content_type;
-        
-        if (ext === "pdf") {
-			content_type = "application/pdf";
-        } else {
-			content_type = "audio/mpeg";
-        }
-        
-        $.ajax({
-            url: file + "." + ext,
-            type: 'HEAD',
-            dataType: 'text',
-            contentType: content_type,
-            async: false,
-            beforeSend: function (xhr) {
-                xhr.overrideMimeType(content_type);
-                xhr.setRequestHeader("Accept", content_type);
-            },
-            success: function () {
-
-                var f = file, downloadBar = $("#download_bar ul");
-                var protocol = window.location.protocol;
-				
-				if (protocol !== "http:") {
-					var url = window.location.href;
-					url = url.substr(0,url.lastIndexOf("/")+1).replace("https","http");
-					f = url + file;
-				}
-				
-				if (ext === "pdf") {
-					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Transcript</a></li>");
-				} else if (ext === "mp3") {
-					downloadBar.append("<li><a href=\"" + f + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Audio</a></li>");
-				}
-
-            },
-            error: function () {
-
-                /*
-if (ext === "pdf") {
-                    $("#download_bar ul").before("<p>Transcript pending...</p>");
-                }
-*/
-
-            }
-        });
-
-    }
     
     // checking for subtitle existence
     function sbttlExist(file) {
@@ -930,15 +842,7 @@ if (ext === "pdf") {
         return (yes);
     }
     
-    function getSource() {
-		var urlToParse = window.location.href, src;
-		
-		/* console.log("URL to parse: " + urlToParse); */
-		src = urlToParse.split("?");
-		src = src[0].split("/");
-		src = src[src.length-2];
-		return src;
-	}
+    
 
 });
 
@@ -970,10 +874,19 @@ $.fn.getParameterByName = function( param ) {
     
 };
 
-$.fn.ajaxCall = function() {
+/**
+ * Using AJAX to request the topic XML file
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param string, the XML file
+ * @return void
+ *
+ */
+$.fn.ajaxCall = function( file ) {
     
     $.ajaxSetup( {
-        url: 'assets/topic.xml',
+        url: file,
         type: 'GET',
         dataType: 'xml',
         accepts: 'xml',
@@ -989,7 +902,7 @@ $.fn.ajaxCall = function() {
             xhr.setRequestHeader( "Accept", "text/xml" );
         },
         success: function ( xml ) {
-            $( this ).setupXML( xml );
+            $( this ).parseXML( xml );
         },
         error: function ( xhr, exception ) {
             $( this ).displayError( xhr.status, exception );
@@ -998,8 +911,16 @@ $.fn.ajaxCall = function() {
     
 };
 
-// XML Setup function
-$.fn.setupXML = function( xml ) {
+/**
+ * Parse the topic XML file for contents
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param string, the XML file
+ * @return void
+ *
+ */
+$.fn.parseXML = function( xml ) {
 
     var SETUP = $( xml ).find( "setup" ),
         TOPIC = $( xml ).find( "topic" ),
@@ -1021,7 +942,7 @@ $.fn.setupXML = function( xml ) {
     
     // instructor name
     if ( INSTRUCTOR.length ) {
-        instructor = "<a class=\"instructorName\" href=\"#profile\">" + INSTRUCTOR + "</a>"
+        instructor = "<a class=\"instructorName\" href=\"#profile\">" + INSTRUCTOR + "</a>";
     }
     
     // length
@@ -1080,13 +1001,13 @@ $.fn.setupXML = function( xml ) {
             quiz.question = questionNode;
 
             if ( choiceNode ) {
-                quiz.choice = $( this ).parseSelects( choiceNode );
-                quiz.wrongFeedback = $( this ).parseSelects( wrongFeedbackNode );
+                quiz.choice = $( this ).splitSelections( choiceNode );
+                quiz.wrongFeedback = $( this ).splitSelections( wrongFeedbackNode );
             } else {
                 quiz.wrongFeedback = wrongFeedbackNode;
             }
 
-            quiz.answer = $( this ).parseSelects( answerNode );
+            quiz.answer = $( this ).splitSelections( answerNode );
             quiz.stuAnswer = "";
             quiz.correct = false;
             quiz.correctFeedback = correctFeedbackNode;
@@ -1099,6 +1020,8 @@ $.fn.setupXML = function( xml ) {
         topicCount++;
 
     });
+    
+    var directory = $( this ).getDirectory();
     
     if ( !enabledNote ) {
         $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
@@ -1116,7 +1039,7 @@ $.fn.setupXML = function( xml ) {
     
     $("#splash_screen").css("background-image","url(assets/splash.jpg)");
 
-    $('#splash_screen, #playBtn').on("click", function () {
+    $('#splash_screen, #playBtn').on("click", function() {
         initializePlayer(lessonTitle);
         $("#splash_screen").hide();
         return false;
@@ -1126,34 +1049,145 @@ $.fn.setupXML = function( xml ) {
     lessonTitle = lessonTitle.toLowerCase().replace( "-", "_" ).replace( " ", "_" );
 
     // download files
-    fileExist( getSource(), "mp3" );
-    fileExist( getSource(), "pdf" );
+    $( this ).fileExist( directory, "mp3" );
+    $( this ).fileExist( directory, "pdf" );
 
-}; // end setupXML
+};
 
-$.fn.parseSelects = function( arg ) {
+/**
+ * Handling AJAX and XML parsing error
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param strings, header and exception 
+ * @return void
+ *
+ */
+$.fn.displayError = function( status, exception ) {
 
-    var index = 0;
-    var answerArray = [];
-    var answer = arg,
-        answerTemp, position;
+    var statusMsg, exceptionMsg;
     
-    answer += "|";
-    position = answer.indexOf( '|' );
-    
-    while ( answer.indexOf( '|' ) !== -1 ) {
-        answerTemp = answer.substring( 0, position );
-        answer = answer.substring( position + 1 );
-        position = answer.indexOf( '|' );
-        answerArray[index] = answerTemp;
-        index++;
+    switch ( status ) {
+        
+        case 0:
+            statusMsg = "<strong>Error 0</strong> - Not connect. Please verify network.";
+        break;
+        case 404:
+            statusMsg = "<strong>Error 404</strong> - Requested page not found.";
+        break;
+        case 406:
+            statusMsg = "<strong>Error 406</strong> - Not acceptable error.";
+        break;
+        case 500:
+            statusMsg = "<strong>Error 500</strong> - Internal Server Error.";
+        break;
+        default:
+            statusMsg = "Unknow error ... " + status;
+        break;
+        
     }
     
-    return answerArray;
+    switch ( exception ) {
+        
+        case "parsererror":
+            exceptionMsg = "Invalid XML. XML parse failed.";
+        break;
+        case "timeout":
+            exceptionMsg = "XML parsing timed out.";
+        break;
+        case "abort":
+            exceptionMsg = "Ajax request aborted.";
+        break;
+        case "error":
+            exceptionMsg = "Failed to get requested source. Most likely a 404 or 406.";
+        break;
+        default:
+            exceptionMsg = 'Uncaught Error ... ' + status.responseText;
+        break;
+        
+    }
+
+    $('#splash_screen, #player').hide();
+    $('#errorMsg').html('<p>' + statusMsg + '<br />' + exceptionMsg + '</p>');
+
+};
+
+/**
+ * Split a string with the | character as the delimiter 
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param string, the string to split
+ * @return array, array of selections
+ *
+ */
+$.fn.splitSelections = function( arg ) {
+
+    var selectionArray = arg.split("|");
+    return selectionArray;
     
-}; // end parseSelect
+};
 
+// checking for download file existence
+$.fn.fileExist = function( file, ext ) {
+    
+    var content_type = "audio/mpeg";
+    
+    if (ext === "pdf") {
+		content_type = "application/pdf";
+    }
+        
+    $.ajax( {
+    
+        url: file + "." + ext,
+        type: 'HEAD',
+        dataType: 'text',
+        contentType: content_type,
+        async: false,
+        beforeSend: function( xhr ) {
+            xhr.overrideMimeType( content_type );
+            xhr.setRequestHeader( "Accept", content_type );
+        },
+        success: function() {
 
+            var newURL = file,
+                fileType = "Audio",
+                downloadBar = $( "#download_bar ul" ),
+                protocol = window.location.protocol;
+			
+			if ( protocol !== "http:" ) {
+				var url = window.location.href;
+				url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ).replace( "https", "http" );
+				newURL = url + file;
+			}
+			
+			if ( ext === "pdf" ) {
+				fileType = "Transcript";
+			}
+			
+			downloadBar.append("<li><a href=\"" + newURL + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> " + fileType + "</a></li>");
+
+        },
+        error: function() {
+            
+        }
+        
+    } );
+
+};
+
+$.fn.getDirectory = function() {
+
+	var urlToParse = window.location.href,
+	    src;
+	
+	src = urlToParse.split("?");
+	src = src[0].split("/");
+	src = src[src.length-2];
+	
+	return src;
+	
+};
 
 
 
