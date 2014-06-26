@@ -641,7 +641,14 @@ p {
 
 // AJAX ERROR
 #errorMsg {
+
 	color: #f00;
+	padding: 0 rem( 10px );
+	
+	p:first-child {
+    	font-size: rem( 18px );
+	}
+	
 }
 
 // NO JAVASCRIPT ERROR

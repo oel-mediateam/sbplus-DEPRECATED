@@ -790,19 +790,24 @@ p {
 /* line 643, ../../../sources/css/storybookPlus.scss */
 #errorMsg {
   color: #f00;
+  padding: 0 0.71429rem;
+}
+/* line 648, ../../../sources/css/storybookPlus.scss */
+#errorMsg p:first-child {
+  font-size: 1.28571rem;
 }
 
-/* line 648, ../../../sources/css/storybookPlus.scss */
+/* line 655, ../../../sources/css/storybookPlus.scss */
 noscript {
   display: block;
   margin: 1.07143rem;
 }
-/* line 653, ../../../sources/css/storybookPlus.scss */
+/* line 660, ../../../sources/css/storybookPlus.scss */
 noscript h1 {
   font-size: 1.71429rem;
   color: #900;
 }
-/* line 658, ../../../sources/css/storybookPlus.scss */
+/* line 665, ../../../sources/css/storybookPlus.scss */
 noscript p {
   font-size: 1.14286rem;
   line-height: 1.42857rem;

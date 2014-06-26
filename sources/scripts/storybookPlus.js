@@ -4,30 +4,37 @@
 /* global alert */
 
 // global variable declarations
-var media = "Slide",
-    pFontSize = 14,
+var pFontSize = 14,
     pLineHeight = 18,
     h1FontSize = 22,
     h1LineHeight = 26,
     h2FontSize = 20,
     h2LineHeight = 24,
     h3h4h5h6FontSize = 18,
-    h3h4h5h6LineHeight = 22,
-    firstAudioLoad = false,
-    topicCount = 0,
+    h3h4h5h6LineHeight = 22;
+    
+var topicCount = 0,
     counter = 1,
     previousIndex = 0,
     tocIndex = 0,
-    audioPlaying = false,
-    videoPlaying = false,
     XMLData,
     topicSrc,
     slideImgFormat = "png",
     imgPath,
-    audioPlayer,
+    media = "Slide",
     enabledNote = false,
     imgCaption, quiz, quizArray, found = false,
     qNum = 0;
+    
+var SETUP, TOPIC, LESSON, PROFILE, INSTRUCTOR,
+    LENGTH, NOTE, SLIDEFORMAT, lessonTitle, instructor,
+    duration;
+        
+var audioPlayer,
+    firstAudioLoad = false,
+    audioPlaying = false,
+    videoPlaying = false,
+    sources;
 
 $( document ).ready( function() {
 	
@@ -56,565 +63,6 @@ $( document ).ready( function() {
     }
 
     $( this ).ajaxCall( "assets/topic.xml" );
-
-    // initialized player function
-    function initializePlayer() {
-
-        $("#player").show();
-		
-		jQuery.each(topicSrc,function(i) {
-			var tSrc = topicSrc[i].substring(0, topicSrc[i].indexOf(":") +1);
-			if (tSrc === "video:" || tSrc === "youtube:") {
-				media = "Video";
-			} else {
-				media = "Slide";
-				return false;
-			}
-		});
-		
-        loadSlide(topicSrc[0], counter);
-        $('#selectable li:first').addClass('ui-selected');
-
-        // hide error message div tag
-        $('#errorMsg').hide();
-
-        // enable table of content selection
-        $('#selectable').selectable({
-
-            stop: function () {
-
-                $(".ui-selected", this).each(function () {
-
-                    tocIndex = $("#selectable li").index(this) + 1;
-
-                });
-
-                if (tocIndex !== previousIndex) {
-
-                    loadSlide(topicSrc[tocIndex - 1], tocIndex);
-                    previousIndex = tocIndex;
-
-                }
-            }
-
-        });
-
-        // load and set the instructor picture
-        loadProfilePhoto();
-
-        // enable fancy box for profile panel
-        $("a#info, a.instructorName").fancybox({
-            helpers: {
-                overlay: {
-                    css: {
-                        'background': 'rgba(250, 250, 250, 0.85)'
-                    }
-                }
-            },
-            padding: 0
-        });
-
-        // note is enabled
-        if (enabledNote) {
-
-            // display current font size
-            $('#fontSizeIndicator').html(pFontSize);
-
-            // binding increasing and decreasing font size buttons
-            $('#fontMinusBtn').on('click', function () {
-
-                pFontSize -= 2;
-                pLineHeight -= 2;
-
-                h1FontSize -= 2;
-                h1LineHeight -= 2;
-
-                h2FontSize -= 2;
-                h2LineHeight -= 2;
-
-                h3h4h5h6FontSize -= 2;
-                h3h4h5h6LineHeight -= 2;
-
-                if (pFontSize <= 12) {
-
-                    pFontSize = 12;
-                    pLineHeight = 16;
-
-                }
-
-                if (h3h4h5h6FontSize <= 16) {
-
-                    h3h4h5h6FontSize = 16;
-                    h3h4h5h6LineHeight = 20;
-
-                }
-
-                if (h2FontSize <= 18) {
-
-                    h2FontSize = 18;
-                    h2LineHeight = 22;
-
-                }
-
-                if (h1FontSize <= 20) {
-
-                    h1FontSize = 20;
-                    h1LineHeight = 24;
-
-                }
-
-                $('#note, #note p').css({
-                    'font-size': pFontSize,
-                    'line-height': pLineHeight + 'px'
-                });
-
-                $('#note h1').css({
-                    'font-size': h1FontSize,
-                    'line-height': h2LineHeight + 'px'
-                });
-
-                $('#note h2').css({
-                    'font-size': h2FontSize,
-                    'line-height': h2LineHeight + 'px'
-                });
-
-                $('#note h3, #note h4, #note h5, #note h6').css({
-                    'font-size': h3h4h5h6FontSize,
-                    'line-height': h3h4h5h6LineHeight + 'px'
-                });
-
-                $('#fontSizeIndicator').html(pFontSize);
-
-            });
-
-            // font plus button
-            $('#fontPlusBtn').on('click', function () {
-
-                pFontSize += 2;
-                pLineHeight += 2;
-
-                h1FontSize += 2;
-                h1LineHeight += 2;
-
-                h2FontSize += 2;
-                h2LineHeight += 2;
-
-                h3h4h5h6FontSize += 2;
-                h3h4h5h6LineHeight += 2;
-
-                if (pFontSize >= 28) {
-
-                    pFontSize = 28;
-                    pLineHeight = 32;
-
-                }
-
-                if (h3h4h5h6FontSize >= 30) {
-
-                    h3h4h5h6FontSize = 30;
-                    h3h4h5h6LineHeight = 34;
-
-                }
-
-                if (h2FontSize >= 32) {
-
-                    h2FontSize = 32;
-                    h2LineHeight = 36;
-
-                }
-
-                if (h1FontSize >= 34) {
-
-                    h1FontSize = 34;
-                    h1LineHeight = 38;
-
-                }
-
-                $('#note, #note p').css({
-                    'font-size': pFontSize,
-                    'line-height': pLineHeight + 'px'
-                });
-
-                $('#note h1').css({
-                    'font-size': h1FontSize,
-                    'line-height': h1LineHeight + 'px'
-                });
-
-                $('#note h2').css({
-                    'font-size': h2FontSize,
-                    'line-height': h2LineHeight + 'px'
-                });
-
-                $('#note h3, #note h4, #note h5, #note h6').css({
-                    'font-size': h3h4h5h6FontSize,
-                    'line-height': h3h4h5h6LineHeight + 'px'
-                });
-
-                $('#fontSizeIndicator').html(pFontSize);
-
-            });
-
-        } // end if
-
-        // binding left and right click event
-        $('#leftBtn').on('click', function () {
-
-            counter--;
-
-            if (counter <= 0) {
-                counter = topicCount;
-            }
-
-            loadSlide(topicSrc[counter - 1], counter);
-
-        });
-
-        $('#rightBtn').on('click', function () {
-
-            counter++;
-
-            if (counter > topicCount) {
-                counter = 1;
-            }
-
-            loadSlide(topicSrc[counter - 1], counter);
-
-        });
-
-    } // end init
-
-
-
-    // load current selected slide
-
-    function loadSlide(sn, sNum) {
-
-        var currentNum, noteNum, img;
-
-        sNum = (sNum < 10) ? '0' + sNum : sNum;
-        currentNum = Number(sNum) - 1;
-        noteNum = Number(sNum) - 1;
-
-        $("#slide").html("<div id=\"progressing\"></div>");
-        $('#progressing').show();
-
-        // if video is playing
-        if (videoPlaying) {
-            $("#vp").html("");
-            $('#vp').hide();
-            videoPlaying = false;
-        }
-        
-        // if audio is playing
-        if (audioPlaying) {
-
-            audioPlayer.setCurrentTime(0);
-            audioPlayer.pause();
-            audioPlaying = false;
-
-            if (enabledNote) {
-                $('#ap').hide();
-                $('#note').height($('#note').height() + 30);
-            } else {
-                $('#apm').hide();
-            }
-
-        }
-
-        // if is an image
-        if (sn.substring(0, sn.indexOf(":") + 1) === "image:") {
-
-            img = new Image();
-
-            imgPath = 'assets/slides/' + sn.substring(sn.indexOf(":") + 1) + '.' + slideImgFormat;
-            imgCaption = $('#selectable li .title').get(currentNum).innerHTML;
-
-            $(img).load(function () {
-
-                $(this).hide();
-                $('#slide').append('<a id="img" title="' + imgCaption + '"href="' + imgPath + '">');
-                $('#slide #img').html(img);
-                $('#slide').append('</a><div class="magnifyIcon"></div>');
-
-                $(this).fadeIn();
-
-                $('a#img').fancybox({
-                    helpers: {
-                        overlay: {
-                            css: {
-                                'background': 'rgba(250, 250, 250, 0.85)'
-                            }
-                        }
-                    },
-                    padding: 0
-                });
-
-                bindImgMagnify(true);
-
-            }).error(function (error) {
-
-                $('#slide').html('<p><strong>Error</strong>: image not found. Image path: ' + imgPath + '</p><p>Total number of slides: ' + topicCount + '</p><p>' + error + '</p>');
-
-            }).attr({
-                'src': imgPath,
-                'border': 0
-            });
-
-
-            // youtube
-        } else if (sn.substring(0, sn.indexOf(":") + 1) === "youtube:") {
-
-            bindImgMagnify(false);
-
-            $('#slide').append('<iframe width="640" height="360" src="https://www.youtube.com/embed/' + sn.substring(sn.indexOf(":") + 1) + '?autoplay=1&rel=0" frameborder="0" allowfullscreen></iframe>');
-
-
-            // video
-        } else if (sn.substring(0, sn.indexOf(":") + 1) === "video:") {
-
-            bindImgMagnify(false);
-
-            var time = $.now();
-            var playerID = "vpc" + time;
-
-            $('#vp').append("<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" controls autoplay width=\"640\" height=\"360\">" + ((sbttlExist(sn.substring(sn.indexOf(":") + 1))) ? "<track kind=\"subtitles\" src=\"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>");
-
-            if (!videoPlaying) {
-                $("#vp").show();
-
-                videojs(playerID, {}, function () {
-                    this.progressTips();
-                    this.src([
-						{type: "video/mp4", src:"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".mp4"},
-						{type: "video/webm", src:"assets/video/" + sn.substring(sn.indexOf(":") + 1) + ".webm"}
-					]);
-                });
-                
-                videojs.options.flash.swf = "sources/videoplayer/video-js.swf";
-
-                videoPlaying = true;
-            }
-
-            // swf or interactive objects
-        } else if (sn.substring(0, sn.indexOf(":") + 1) === "swf:") {
-
-            bindImgMagnify(false);
-
-            $('#slide').append('<object width="640" height="360" type="application/x-shockwave-flash" data="assets/swf/' + sn.substring(sn.indexOf(":") + 1) + '.swf"><param name="movie" value="assets/swf/' + sn + '.swf" /><p>Your web browser does not support Adobe Flash.</p></object>');
-
-            // image slide with audio
-        } else if (sn.substring(0, sn.indexOf(":") + 1) === "image-audio:") {
-
-            img = new Image();
-
-            imgPath = 'assets/slides/' + sn.substring(sn.indexOf(":") + 1) + '.' + slideImgFormat;
-            imgCaption = $('#selectable li .title').get(currentNum).innerHTML;
-
-            $(img).load(function () {
-
-                $(this).hide();
-
-                $('#slide').append('<a id="img" title="' + imgCaption + '"href="' + imgPath + '">');
-                $('#slide #img').html(img);
-                $('#slide').append('</a><div class="magnifyIcon"></div>');
-
-                $(this).fadeIn();
-
-                $('a#img').fancybox({
-                    helpers: {
-                        overlay: {
-                            css: {
-                                'background': 'rgba(250, 250, 250, 0.85)'
-                            }
-                        }
-                    },
-                    padding: 0
-                });
-
-                bindImgMagnify(true);
-
-                if (!audioPlaying) {
-                
-					var sources;
-
-                    if (enabledNote) {
-
-                        $('#ap').show();
-
-						if (firstAudioLoad !== true) {
-							audioPlayer = new MediaElementPlayer('#apc', {
-								audioWidth: 640,
-								audioHeight: 30,
-								startVolume: 0.8,
-								loop: false,
-								enableAutosize: true,
-								iPadUseNativeControls: false,
-								iPhoneUseNativeControls: false,
-								AndroidUseNativeControls: false,
-								pauseOtherPlayers: true,
-								type: 'audio/mpeg',
-								success: function(me) {
-									sources = [{src: "assets/audio/" + sn.substring(sn.indexOf(":") + 1) + ".mp3", type: "audio/mpeg"}];
-									me.setSrc(sources);
-									me.load();
-								}
-							});
-							
-							firstAudioLoad = true;
-						} else {
-							sources = [{src: "assets/audio/" + sn.substring(sn.indexOf(":") + 1) + ".mp3", type: "audio/mpeg"}];
-							audioPlayer.setSrc(sources);
-						}
-                        
-                        $('#note').height($('#note').height() - 30);
-
-                    } else {
-
-                        $('#apm').show();
-                        
-						if (firstAudioLoad !== true) {
-						audioPlayer = new MediaElementPlayer('#apcm', {
-							audioWidth: 300,
-							startVolume: 0.8,
-							loop: false,
-							enableAutosize: true,
-							iPadUseNativeControls: false,
-							iPhoneUseNativeControls: false,
-							AndroidUseNativeControls: false,
-							pauseOtherPlayers: true,
-							type: 'audio/mpeg',
-							success: function(me) {
-								sources = [{src: "assets/audio/" + sn.substring(sn.indexOf(":") + 1) + ".mp3", type: "audio/mpeg"}];
-								me.setSrc(sources);
-								me.load();
-							}
-						});
-						
-							firstAudioLoad = true;
-						} else {
-							sources = [{src: "assets/audio/" + sn.substring(sn.indexOf(":") + 1) + ".mp3", type: "audio/mpeg"}];
-							audioPlayer.setSrc(sources);
-						}
-
-                    }
-
-                    audioPlaying = true;
-
-                }
-
-            }).error(function (error) {
-
-                $('#slide').html('<p><strong>Error</strong>: image not found. Image path: ' + imgPath + '</p><p>' + error + '</p>');
-
-            }).attr({
-                'src': imgPath,
-                'border': 0
-            });
-
-        } else if (sn === "quiz") {
-
-            try {
-                setupQuiz(currentNum);
-            } catch (e) {
-                // for debug console purposes
-                console.append('<li>' + e + '</li>');
-            }
-
-        } else {
-
-            $('#slide').html("<p>ERROR!</p>");
-
-        }
-
-        // load current slide note and update the slide number
-        loadNote(noteNum);
-        updateSlideNum(sNum);
-
-        $('#progressing').hide();
-
-    } // end loadSlide
-
-
-    // load current slide note
-
-    function loadNote(num) {
-
-        var note = XMLData.find('topic:eq(' + num + ')').find('note').text();
-		
-        $('#note').html(note);
-			
-			if ($("#note").find("a").length) {
-				$("#note a").each(function() {
-					$(this).attr("target","_blank");
-			});
-			
-        }
-
-    } // end loadNote
-
-
-    // loading the photo in the profile panel
-
-    function loadProfilePhoto() {
-
-        var img = new Image(),
-            imgPath = 'assets/pic.jpg';
-
-        $(img).load(function () {
-
-            $('#profile .photo').html('<img src="' + imgPath + '" alt="Instructor Photo" border="0" />');
-
-        }).error(function () {
-
-            $('#profile .photo').html('<img src="assets/img/profile.png" width="200" height="300" alt="No Profile Photo" border="0" />');
-
-        }).attr({
-            'src': imgPath,
-            'border': 0
-        });
-
-    } // end loadProfilePhoto
-
-
-    // updating table of content selection
-
-    function updateSlideNum(num) {
-
-        counter = num;
-
-        $('#selectable li').each(function () {
-            $(this).removeClass('ui-selected');
-        });
-
-        $('#selectable li:nth-child(' + Number(num) + ')').addClass('ui-selected');
-        $("#currentStatus").html(media + ' ' + num + ' of ' + ((topicCount < 10) ? "0" + topicCount : topicCount));
-
-    } // end updateSlideNum
-
-
-    // function to bind magnify icon
-
-    function bindImgMagnify(t) {
-        if (t) {
-
-            $(".magnifyIcon").on('click', function () {
-                $.fancybox.open({
-                    href: imgPath,
-                    title: imgCaption,
-                    helpers: {
-                        overlay: {
-                            css: {
-                                'background': 'rgba(250, 250, 250, 0.85)'
-                            }
-                        }
-                    },
-                    padding: 0
-                });
-            });
-        }
-
-    } // end bindImgMagnify
-
 
     // setup quiz
 
@@ -841,38 +289,11 @@ $( document ).ready( function() {
 		});
         return (yes);
     }
-    
-    
 
 });
 
 /* FUNCTIONS
 ***************************************************************/
-
-/**
- * Parse the URL query parameter from the current page location
- * @since 2.0.0
- *
- * @author Ethan S. Lin
- * @param string, the parameter to parse
- * @return string, the value of the parameter
- *
- */
-$.fn.getParameterByName = function( param ) {
-
-    var regexS = "[\\?&]" + param + "=([^&#]*)",
-        regex = new RegExp( regexS ),
-        results = regex.exec( window.location.href );
-
-    param = param.replace( /[\[]/, "\\[" ).replace( /[\]]/, "\\]" );
-
-    if ( results === null ) {
-        return "";
-    } else {
-        return decodeURIComponent( results[1].replace( /\+/g, " " ) );
-    }
-    
-};
 
 /**
  * Using AJAX to request the topic XML file
@@ -921,19 +342,19 @@ $.fn.ajaxCall = function( file ) {
  *
  */
 $.fn.parseXML = function( xml ) {
-
-    var SETUP = $( xml ).find( "setup" ),
-        TOPIC = $( xml ).find( "topic" ),
-        LESSON = $.trim( SETUP.find( "lesson" ).text() ),
-        PROFILE = $.trim( $( xml ).find( "profile" ).text() ),
-        INSTRUCTOR = $.trim( SETUP.find( "instructor" ).text() ),
-        LENGTH = $.trim( SETUP.find( "length" ).text() ),
-        NOTE = $.trim( SETUP.find( "note" ).text() ),
-        SLIDEFORMAT = $.trim( SETUP.find('slideImgFormat').text() ),
-        lessonTitle = "Lesson name is not specified.",
-        instructor = "Instructor name is not specified.",
-        length = '',
-        firstList = true;
+    
+    SETUP = $( xml ).find( "setup" );
+    TOPIC = $( xml ).find( "topic" );
+    LESSON = $.trim( SETUP.find( "lesson" ).text() );
+    PROFILE = $.trim( $( xml ).find( "profile" ).text() );
+    INSTRUCTOR = $.trim( SETUP.find( "instructor" ).text() );
+    LENGTH = $.trim( SETUP.find( "length" ).text() );
+    NOTE = $.trim( SETUP.find( "note" ).text() );
+    SLIDEFORMAT = $.trim( SETUP.find('slideImgFormat').text() );
+    lessonTitle = "Lesson name is not specified.";
+    instructor = "Instructor name is not specified.";
+    duration = '';
+    
     
     // lesson title
     if ( LESSON.length ) {
@@ -942,12 +363,12 @@ $.fn.parseXML = function( xml ) {
     
     // instructor name
     if ( INSTRUCTOR.length ) {
-        instructor = "<a class=\"instructorName\" href=\"#profile\">" + INSTRUCTOR + "</a>";
+        instructor = INSTRUCTOR;
     }
     
     // length
     if ( LENGTH.length ) {
-        length = LENGTH;
+        duration = LENGTH;
     }
     
     // check note presence
@@ -972,19 +393,8 @@ $.fn.parseXML = function( xml ) {
     TOPIC.each( function() {
         
         var topicTitle = $( this ).attr( 'title' );
-
-        topicSrc[topicCount] = $(this).attr('src');
-
-        if ( firstList === true ) {
         
-            $( "#selectable" ).html( "<li class=\"ui-widget-content\" title=\"" + topicTitle + "\">" + "<div class=\"slideNum\">" + ( ( ( topicCount + 1 ) < 10 ) ? "0" + ( topicCount + 1 ) : ( topicCount + 1 ) ) + ".</div><div class=\"title\">" + topicTitle + "</div></li>" );
-            firstList = false;
-            
-        } else {
-        
-            $( "#selectable" ).append( "<li class=\"ui-widget-content\" title=\"" + topicTitle + "\">" + "<div class=\"slideNum\">" + ( ( ( topicCount + 1 ) < 10 ) ? "0" + ( topicCount + 1 ) : ( topicCount + 1 ) ) + ".</div><div class=\"title\">" + topicTitle + "</div></li>" );
-            
-        }
+        topicSrc[topicCount] = $( this ).attr( 'src' );
 
         if ( topicSrc[topicCount] === "quiz" ) {
             
@@ -1013,44 +423,729 @@ $.fn.parseXML = function( xml ) {
             quiz.correctFeedback = correctFeedbackNode;
             quiz.taken = false;
             
+            // add current quiz to array
             quizArray.push( quiz );
 
         }
+        
+        // populate table of content
+        $( "#selectable" ).append( "<li class=\"ui-widget-content\" title=\"" + topicTitle + "\">" + "<div class=\"slideNum\">" + ( ( ( topicCount + 1 ) < 10 ) ? "0" + ( topicCount + 1 ) : ( topicCount + 1 ) ) + ".</div><div class=\"title\">" + topicTitle + "</div></li>" );
 
         topicCount++;
 
     });
     
+    // call to setup the player
+    $( this ).setupPlayer();
+    
+};
+
+/**
+ * Set up the player
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @return void
+ *
+ */
+$.fn.setupPlayer = function() {
+    
     var directory = $( this ).getDirectory();
+    
+    $( document ).attr( "title", lessonTitle );
     
     if ( !enabledNote ) {
         $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
     }
     
-    $( "#lessonTitle" ).html( lessonTitle );
-    $( "#instructorName" ).html( instructor );
-    $( "#profile .bio" ).html( '<p>' + instructor + '</p>' + PROFILE );
+    $( "#errorMsg" ).hide();
     
-    // set the document title to the lesson title
-    $( document ).attr( "title", lessonTitle );
-
-    // set the splash screen
-    $("#splash_screen").append('<p>' + lessonTitle + '</p><p>' + ((SETUP.find('instructor').text().length <= 0) ? 'Instructor is not specified' : SETUP.find('instructor').text()) + '</p>' + ((length !== 0) ? '<p><small>' + length + '</small></p>' : '') + '<a class="playBtn" href="#"></a>');
+    // set up the splash screen
+    $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
+    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a class=\"playBtn\" href=\"#\"></a>" );
     
-    $("#splash_screen").css("background-image","url(assets/splash.jpg)");
-
-    $('#splash_screen, #playBtn').on("click", function() {
-        initializePlayer(lessonTitle);
-        $("#splash_screen").hide();
+    // bind click event to splash screen
+    $( "#splash_screen, #playBtn" ).on( "click", function() {
+        $.fn.initializePlayer();
         return false;
+    } );
+    
+    // download files
+    $( this ).getDownloadableFile( directory, "mp3" );
+    $( this ).getDownloadableFile( directory, "pdf" );
+    
+};
+
+/**
+ * Initialize the player
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @return void
+ *
+ */
+$.fn.initializePlayer = function() {
+    
+    $.each( topicSrc, function( i ) {
+	
+		var tSrc = topicSrc[i].substring( 0, topicSrc[i].indexOf( ":" ) + 1 );
+		
+		if ( tSrc === "video:" || tSrc === "youtube:" ) {
+			media = "Video";
+		} else {
+			media = "Slide";
+			return false;
+		}
+		
+	} );
+    
+    // hide the error msg and splash screen
+    $( "#splash_screen" ).hide();
+    
+    // setup up player header
+    $( "#lessonTitle" ).html( lessonTitle );
+    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#profile\">" + instructor + "</a>" );
+    
+    // setup profile panel
+    $( "#profile .bio" ).html( "<p>" + instructor + "</p>" + PROFILE );
+	
+	// enable fancy box for profile panel
+    $( "#info, a.instructorName" ).fancybox({
+        helpers: {
+            overlay: {
+                css: {
+                    'background': 'rgba(250, 250, 250, 0.85)'
+                }
+            }
+        },
+        padding: 0
+    });
+	
+	// setup toc selectable items
+	$( "#selectable li:first" ).addClass( "ui-selected" );
+    $( "#selectable" ).selectable( {
+    
+        stop: function() {
+
+            $( ".ui-selected", this ).each( function() {
+                tocIndex = $( "#selectable li" ).index( this ) + 1;
+            });
+
+            if ( tocIndex !== previousIndex ) {
+                $( this ).loadSlide( topicSrc[tocIndex - 1], tocIndex );
+                previousIndex = tocIndex;
+            }
+        }
+
+    } );
+    
+    // bind left click event
+    $( "#leftBtn" ).on( "click", function() {
+
+        counter--;
+
+        if ( counter <= 0 ) {
+            counter = topicCount;
+        }
+
+        $( this ).loadSlide( topicSrc[counter - 1], counter );
+
+    } );
+    
+    // bind right click event
+    $( "#rightBtn" ).on( "click", function() {
+    
+        counter++;
+        
+        if ( counter > topicCount ) {
+            counter = 1;
+        }
+
+        $( this ).loadSlide( topicSrc[counter - 1], counter );
+
+    });
+    
+    // note is enabled
+    if (enabledNote) {
+
+        // display current font size
+        $('#fontSizeIndicator').html(pFontSize);
+
+        // binding increasing and decreasing font size buttons
+        $('#fontMinusBtn').on('click', function () {
+
+            $.fn.adjustFontSize( "minus" );
+
+        });
+
+        // font plus button
+        $('#fontPlusBtn').on('click', function () {
+
+            $.fn.adjustFontSize( "plus" );
+
+        });
+
+    }
+    
+    // call to load the first slide
+    $( this ).loadSlide( topicSrc[0], counter );
+
+    // load and set the instructor picture
+    $( this ).loadProfilePhoto();
+    
+    // display the player
+    $( "#player" ).show();
+    
+};
+
+// load current selected slide
+$.fn.loadSlide = function( sn, sNum ) {
+
+    var currentNum, noteNum, img;
+    var slideType = sn;
+    var srcName = sn.substring( sn.indexOf( ":" ) + 1 ) ;
+    
+    if ( slideType !== "quiz" ) {
+        slideType = sn.substring( 0, sn.indexOf( ":" ) + 1 );
+    }
+
+    sNum = ( sNum < 10 ) ? '0' + sNum : sNum;
+    currentNum = Number( sNum ) - 1;
+    noteNum = Number( sNum ) - 1;
+
+    $( "#slide" ).html( "<div id=\"progressing\"></div>" );
+
+    // if video is playing
+    if ( videoPlaying ) {
+        $( "#vp" ).html( "" );
+        $( '#vp' ).hide();
+        videoPlaying = false;
+    }
+    
+    // if audio is playing
+    if ( audioPlaying ) {
+        
+        try {
+            audioPlayer.pause();
+        } catch(e) { }
+        
+        if ( enabledNote ) {
+        
+            $( "#ap" ).hide();
+            $( "#note" ).height( $( "#note" ).height() + 30 );
+            
+        } else {
+        
+            $( "#apm" ).hide();
+            
+        }
+        
+        audioPlaying = false;
+
+    }
+    
+    switch ( slideType ) {
+        
+        case "image:":
+        
+            img = new Image();
+
+            imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
+            imgCaption = $( "#selectable li .title" ).get( currentNum ).innerHTML;
+    
+            $( img ).load( function() {
+    
+                $( this ).hide();
+                $( "#slide" ).append( "<a id=\"img\" title=\"" + imgCaption + "\" href=\"" + imgPath + "\">" );
+                $( "#slide #img" ).html( img );
+                $( "#slide" ).append( "</a><div class=\"magnifyIcon\"></div>" );
+                $( this ).fadeIn();
+                $( this ).bindImgMagnify();
+    
+            } ).error( function() {
+    
+                $( "#slide" ).html( "<div id=\"errorMsg\"><p><strong>Error</strong>: image not found!</p><p>Expected image: " + imgPath + "</p></div>" );
+    
+            } ).attr( {
+                'src': imgPath,
+                'border': 0
+            } );
+        
+        break;
+        
+        case "image-audio:":
+        
+            img = new Image();
+
+            imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
+            imgCaption = $( "#selectable li .title" ).get( currentNum ).innerHTML;
+    
+            $( img ).load( function() {
+    
+                $( this ).hide();
+                $('#slide').append('<a id="img" title="' + imgCaption + '"href="' + imgPath + '">');
+                $('#slide #img').html(img);
+                $('#slide').append('</a><div class="magnifyIcon"></div>');
+                $(this).fadeIn();
+                $( this ).bindImgMagnify();
+    
+                if ( !audioPlaying ) {
+    
+                    if ( enabledNote ) {
+    					
+    					if ( $.fn.fileExists( srcName + ".mp3", "audio/mpeg" ) ) {
+                            
+                            $( "#ap").show();
+                            
+                            if (firstAudioLoad !== true) {
+    					    
+                    		    $( this ).loadAudioPlayer( "#apc", srcName );
+                                firstAudioLoad = true;
+        						
+        					} else {
+        					    
+        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
+        						audioPlayer.setSrc( sources );
+        						
+        					}
+                            
+                        } else {
+                        
+                            $( "#ap" ).hide();
+                            $( "#slide" ).html( "<div id=\"errorMsg\"><p>Error: Audio file not found!</p><p>Expected file: assets/audio/" + srcName + ".mp3</div>" );
+                            
+                        }
+                        
+                        $( "#note" ).height( $( "#note" ).height() - 30 );
+    
+                    } else {
+    
+                        if ( $.fn.fileExists( srcName + ".mp3", "audio/mpeg" ) ) {
+                            
+                            $( "#apm" ).show();
+                            
+                            if (firstAudioLoad !== true) {
+    					    
+                    		    $( this ).loadAudioPlayer( "#apcm", srcName );
+                                firstAudioLoad = true;
+        						
+        					} else {
+        					    
+        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
+        						audioPlayer.setSrc( sources );
+        						
+        					}
+                            
+                        } else {
+                        
+                            $( "#apm" ).hide();
+                            $( "#slide" ).html( "<div id=\"errorMsg\"><p>Error: Audio file not found!</p><p>Expected file: assets/audio/" + srcName + ".mp3</div>" );
+                            
+                        }
+    
+                    }
+    
+                    audioPlaying = true;
+    
+                }
+    
+            } ).error( function() {
+    
+                $( "#slide" ).html( "<div id=\"errorMsg\"><p><strong>Error</strong>: image not found!</p><p>Expected image: " + imgPath + "</p></div>" );
+    
+            }).attr({
+            
+                'src': imgPath,
+                'border': 0
+                
+            });
+        
+        break;
+        
+        case "video:":
+        
+            var time = $.now();
+            var playerID = "vpc" + time;
+    
+            $( "#vp" ).append("<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" controls autoplay width=\"640\" height=\"360\">" + ((sbttlExist(srcName)) ? "<track kind=\"subtitles\" src=\"assets/video/" + srcName + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>");
+    
+            if ( !videoPlaying ) {
+            
+                $( "#vp" ).show();
+    
+                videojs( playerID, {}, function() {
+                    this.progressTips();
+                    this.src( [
+    					{type: "video/mp4", src:"assets/video/" + srcName + ".mp4"},
+    					{type: "video/webm", src:"assets/video/" + srcName + ".webm"}
+    				] );
+                } );
+                
+                videojs.options.flash.swf = "sources/videoplayer/video-js.swf";
+    
+                videoPlaying = true;
+            
+            }
+        
+        break;
+                
+        case "youtube:":
+        
+            $( "#slide" ).append( "<iframe width=\"640\" height=\"360\" src=\"http://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&html5=1&autohide=1&rel=0\" frameborder=\"0\" allowfullscreen></iframe>" );
+        
+        break;
+        
+        case "swf:":
+        
+            $( "#slide" ).append( "<object width=\"640\" height=\"360\" type=\"application/x-shockwave-flash\" data=\"assets/swf/" + srcName + ".swf\"><param name=\"movie\" value=\"assets/swf/" + sn + ".swf\" /><div id=\"errorMsg\"><p>Error: Adobe Flash Player is not enabled or installed!</p><p>Adobe Flash Player is required to view this slide. Please enable or <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">install Adobe Flash Player</a>.</p></div></object>" );
+        
+        break;
+        
+        case "quiz":
+        
+            setupQuiz( currentNum );
+        
+        break;
+        
+        default:
+        
+            $( "#slide" ).html( "<div id=\"errorMsg\"><p><strong>Error:</strong>Error: Unknow slide type!</p><p>Please double check the XML file.</p></div>" );
+        
+        break;
+        
+    }
+    
+    $( "#progressing" ).hide();
+    
+    // load current slide note and update the slide number
+    $( this ).loadNote( noteNum );
+    $( this ).updateSlideNum( sNum );
+
+};
+
+/**
+ * Load audio player
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param strings, id and source name
+ * @return void
+ *
+ */
+$.fn.loadAudioPlayer = function( id, srcName ) {
+    
+    var width = 640, height = 30;
+    
+    if ( id === "#apcm" ) {
+        width = 300;
+        height = 0;
+    }
+    
+    audioPlayer = new MediaElementPlayer( id, {
+    
+		audioWidth: width,
+		audioHeight: height,
+		startVolume: 0.8,
+		loop: false,
+		enableAutosize: true,
+		iPadUseNativeControls: false,
+		iPhoneUseNativeControls: false,
+		AndroidUseNativeControls: false,
+		pauseOtherPlayers: true,
+		type: "audio/mpeg",
+		success: function( me ) {
+		    
+			sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
+			me.setSrc( sources );
+			me.load();
+			
+		}
+		
+	} );
+    
+};
+
+/**
+ * Load notes for the current slide
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param int, current topic number
+ * @return void
+ *
+ */
+$.fn.loadNote = function( num ) {
+
+    var note = XMLData.find( "topic:eq(" + num + ")" ).find( "note" ).text();
+	
+    $( "#note" ).html( note );
+		
+	if ( $( "#note" ).find( "a" ).length ) {
+	
+		$( "#note a" ).each( function() {
+			$( this ).attr( "target", "_blank" );
+			
+        });
+	
+    }
+
+};
+
+/**
+ * Update the current slide number indicator
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param int, current topic number
+ * @return void
+ *
+ */
+$.fn.updateSlideNum = function( num ) {
+
+    counter = num;
+
+    $( "#selectable li" ).each( function() {
+        $( this ).removeClass( "ui-selected" );
     });
 
-    // set up download bar
-    lessonTitle = lessonTitle.toLowerCase().replace( "-", "_" ).replace( " ", "_" );
+    $( "#selectable li:nth-child(" + Number(num) + ")" ).addClass( "ui-selected" );
+    $( "#currentStatus" ).html( media + " " + num + " of " + ( ( topicCount < 10 ) ? "0" + topicCount : topicCount ) );
 
-    // download files
-    $( this ).fileExist( directory, "mp3" );
-    $( this ).fileExist( directory, "pdf" );
+};
+
+/**
+ * Open the current slide image in fancybox
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @return void
+ *
+ */
+$.fn.bindImgMagnify = function() {
+
+    $( ".magnifyIcon" ).on( "click", function() {
+    
+        $.fancybox.open( {
+        
+            href: imgPath,
+            title: imgCaption,
+            helpers: {
+                overlay: {
+                    css: {
+                        'background': 'rgba(250, 250, 250, 0.85)'
+                    }
+                }
+            },
+            padding: 0
+            
+        } );
+        
+    } );
+    
+    $('a#img').fancybox( {
+    
+        helpers: {
+            overlay: {
+                css: {
+                    'background': 'rgba(250, 250, 250, 0.85)'
+                }
+            }
+        },
+        padding: 0
+        
+    } );
+
+};
+
+/**
+ * Loading the instructor profile image 
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @return void
+ *
+ */
+$.fn.loadProfilePhoto = function() {
+
+    var img = new Image(),
+        imgPath = "assets/pic.jpg";
+
+    $( img ).load( function() {
+
+        $( "#profile .photo" ).html( "<img src=\"" + imgPath + "\" alt=\"Instructor Photo\" border=\"0\" />" );
+
+    } ).error( function() {
+
+        $( "#profile .photo" ).html( "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus/img/profile.png\" width=\"200\" height=\"300\" alt=\"No Profile Photo\" border=\"0\" />" );
+
+    } ).attr( {
+    
+        "src": imgPath,
+        "border": 0
+        
+    } );
+
+};
+
+/**
+ * Adjusting the notes font size
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param string, minus or plus
+ * @return void
+ *
+ */
+$.fn.adjustFontSize = function( arg ) {
+    
+    var size = 2;
+    
+    if ( arg === "minus" ) {
+    
+        pFontSize -= size;
+        pLineHeight -= size;
+        h1FontSize -= size;
+        h1LineHeight -= size;
+        h2FontSize -= size;
+        h2LineHeight -= size;
+        h3h4h5h6FontSize -= size;
+        h3h4h5h6LineHeight -= size;
+        
+    } else if ( arg === "plus" ) {
+        
+        pFontSize += size;
+        pLineHeight += size;
+        h1FontSize += size;
+        h1LineHeight += size;
+        h2FontSize += size;
+        h2LineHeight += size;
+        h3h4h5h6FontSize += size;
+        h3h4h5h6LineHeight += size;
+        
+    }
+
+    if (pFontSize <= 12) {
+
+        pFontSize = 12;
+        pLineHeight = 16;
+
+    } else if (pFontSize >= 28) {
+
+        pFontSize = 28;
+        pLineHeight = 32;
+
+    }
+
+    if (h3h4h5h6FontSize <= 16) {
+
+        h3h4h5h6FontSize = 16;
+        h3h4h5h6LineHeight = 20;
+
+    } else if (h3h4h5h6FontSize >= 30) {
+
+        h3h4h5h6FontSize = 30;
+        h3h4h5h6LineHeight = 34;
+
+    }
+
+    if (h2FontSize <= 18) {
+
+        h2FontSize = 18;
+        h2LineHeight = 22;
+
+    } else if (h2FontSize >= 32) {
+
+        h2FontSize = 32;
+        h2LineHeight = 36;
+
+    }
+
+    if (h1FontSize <= 20) {
+
+        h1FontSize = 20;
+        h1LineHeight = 24;
+
+    } else if (h1FontSize >= 34) {
+
+        h1FontSize = 34;
+        h1LineHeight = 38;
+
+    }
+
+    $('#note, #note p').css({
+        'font-size': pFontSize,
+        'line-height': pLineHeight + 'px'
+    });
+
+    $('#note h1').css({
+        'font-size': h1FontSize,
+        'line-height': h2LineHeight + 'px'
+    });
+
+    $('#note h2').css({
+        'font-size': h2FontSize,
+        'line-height': h2LineHeight + 'px'
+    });
+
+    $('#note h3, #note h4, #note h5, #note h6').css({
+        'font-size': h3h4h5h6FontSize,
+        'line-height': h3h4h5h6LineHeight + 'px'
+    });
+
+    $('#fontSizeIndicator').html(pFontSize);
+    
+};
+
+/**
+ * Request downloadable files 
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param strings, file name and extension
+ * @return void
+ *
+ */
+$.fn.getDownloadableFile = function( file, ext ) {
+    
+    var content_type = "audio/mpeg";
+    
+    if (ext === "pdf") {
+		content_type = "application/pdf";
+    }
+        
+    $.ajax( {
+    
+        url: file + "." + ext,
+        type: 'HEAD',
+        dataType: 'text',
+        contentType: content_type,
+        async: false,
+        beforeSend: function( xhr ) {
+            xhr.overrideMimeType( content_type );
+            xhr.setRequestHeader( "Accept", content_type );
+        },
+        success: function() {
+
+            var newURL = file,
+                fileType = "Audio",
+                downloadBar = $( "#download_bar ul" ),
+                protocol = window.location.protocol;
+			
+			if ( protocol !== "http:" ) {
+				var url = window.location.href;
+				url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ).replace( "https", "http" );
+				newURL = url + file;
+			}
+			
+			if ( ext === "pdf" ) {
+				fileType = "Transcript";
+			}
+			
+			downloadBar.append("<li><a href=\"" + newURL + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> " + fileType + "</a></li>");
+
+        }
+        
+    } );
 
 };
 
@@ -1128,54 +1223,14 @@ $.fn.splitSelections = function( arg ) {
     
 };
 
-// checking for download file existence
-$.fn.fileExist = function( file, ext ) {
-    
-    var content_type = "audio/mpeg";
-    
-    if (ext === "pdf") {
-		content_type = "application/pdf";
-    }
-        
-    $.ajax( {
-    
-        url: file + "." + ext,
-        type: 'HEAD',
-        dataType: 'text',
-        contentType: content_type,
-        async: false,
-        beforeSend: function( xhr ) {
-            xhr.overrideMimeType( content_type );
-            xhr.setRequestHeader( "Accept", content_type );
-        },
-        success: function() {
-
-            var newURL = file,
-                fileType = "Audio",
-                downloadBar = $( "#download_bar ul" ),
-                protocol = window.location.protocol;
-			
-			if ( protocol !== "http:" ) {
-				var url = window.location.href;
-				url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ).replace( "https", "http" );
-				newURL = url + file;
-			}
-			
-			if ( ext === "pdf" ) {
-				fileType = "Transcript";
-			}
-			
-			downloadBar.append("<li><a href=\"" + newURL + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> " + fileType + "</a></li>");
-
-        },
-        error: function() {
-            
-        }
-        
-    } );
-
-};
-
+/**
+ * Get the course directory name 
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @return string, the directory name
+ *
+ */
 $.fn.getDirectory = function() {
 
 	var urlToParse = window.location.href,
@@ -1189,7 +1244,58 @@ $.fn.getDirectory = function() {
 	
 };
 
+$.fn.fileExists = function( file, content_type ) {
 
+    var exists;
+    
+    $.ajax( {
+    
+        url: "assets/audio/" + file,
+        type: 'HEAD',
+        dataType: 'text',
+        contentType: content_type,
+        async: false,
+        beforeSend: function( xhr ) {
+            xhr.overrideMimeType( content_type );
+            xhr.setRequestHeader( "Accept", content_type );
+        },
+        success: function() {
+            exists = true;
+        },
+        error: function() {
+            exists = false;
+        }
+        
+    } );
+    
+    return exists;
+    
+};
+
+/**
+ * Parse the URL query parameter from the current page location
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ * @param string, the parameter to parse
+ * @return string, the value of the parameter
+ *
+ */
+$.fn.getParameterByName = function( param ) {
+
+    var regexS = "[\\?&]" + param + "=([^&#]*)",
+        regex = new RegExp( regexS ),
+        results = regex.exec( window.location.href );
+
+    param = param.replace( /[\[]/, "\\[" ).replace( /[\]]/, "\\]" );
+
+    if ( results === null ) {
+        return "";
+    } else {
+        return decodeURIComponent( results[1].replace( /\+/g, " " ) );
+    }
+    
+};
 
 
 
