@@ -62,10 +62,9 @@ $( document ).ready( function() {
 
     }
 
-    $( this ).ajaxCall( "assets/topic.xml" );
+    $( this ).getLessonContent( "assets/topic.xml" );
 
     // setup quiz
-
     function setupQuiz(num) {
 
         // loop to find the question
@@ -266,33 +265,10 @@ $( document ).ready( function() {
         }
 
     } // end showFeedback
-    
-    // checking for subtitle existence
-    function sbttlExist(file) {
-		var yes = false;
-		$.ajax({
-			url: "assets/video/" + file + ".vtt",
-			type: 'HEAD',
-			dataType: 'text',
-			contentType: "text/vtt",
-			async: false,
-			beforeSend: function (xhr) {
-				xhr.overrideMimeType("text/vtt");
-				xhr.setRequestHeader("Accept", "text/vtt");
-			},
-			success: function () {
-				yes = true;
-			},
-			error: function () {
-				yes = false;
-			}
-		});
-        return (yes);
-    }
 
 });
 
-/* FUNCTIONS
+/* MAIN CORE FUNCTIONS
 ***************************************************************/
 
 /**
@@ -304,7 +280,7 @@ $( document ).ready( function() {
  * @return void
  *
  */
-$.fn.ajaxCall = function( file ) {
+$.fn.getLessonContent = function( file ) {
     
     $.ajaxSetup( {
         url: file,
@@ -323,10 +299,10 @@ $.fn.ajaxCall = function( file ) {
             xhr.setRequestHeader( "Accept", "text/xml" );
         },
         success: function ( xml ) {
-            $( this ).parseXML( xml );
+            $( this ).parseContent( xml );
         },
         error: function ( xhr, exception ) {
-            $( this ).displayError( xhr.status, exception );
+            $( this ).displayGetLessonError( xhr.status, exception );
         }
     } );
     
@@ -341,7 +317,7 @@ $.fn.ajaxCall = function( file ) {
  * @return void
  *
  */
-$.fn.parseXML = function( xml ) {
+$.fn.parseContent = function( xml ) {
     
     SETUP = $( xml ).find( "setup" );
     TOPIC = $( xml ).find( "topic" );
@@ -458,6 +434,7 @@ $.fn.setupPlayer = function() {
         $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
     }
     
+    // initialy hide error message container
     $( "#errorMsg" ).hide();
     
     // set up the splash screen
@@ -471,8 +448,8 @@ $.fn.setupPlayer = function() {
     } );
     
     // download files
-    $( this ).getDownloadableFile( directory, "mp3" );
-    $( this ).getDownloadableFile( directory, "pdf" );
+    $( this ).getDownloadableFile( directory, "mp3", "audio/mpeg" );
+    $( this ).getDownloadableFile( directory, "pdf", "application/pdf" );
     
 };
 
@@ -598,7 +575,16 @@ $.fn.initializePlayer = function() {
     
 };
 
-// load current selected slide
+/**
+ * Load current slide
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param string and int, slide type and slide number
+ * @return void
+ *
+ */
 $.fn.loadSlide = function( sn, sNum ) {
 
     var currentNum, noteNum, img;
@@ -609,7 +595,7 @@ $.fn.loadSlide = function( sn, sNum ) {
         slideType = sn.substring( 0, sn.indexOf( ":" ) + 1 );
     }
 
-    sNum = ( sNum < 10 ) ? '0' + sNum : sNum;
+    sNum = ( sNum < 10 ) ? "0" + sNum : sNum;
     currentNum = Number( sNum ) - 1;
     noteNum = Number( sNum ) - 1;
 
@@ -617,9 +603,11 @@ $.fn.loadSlide = function( sn, sNum ) {
 
     // if video is playing
     if ( videoPlaying ) {
+    
         $( "#vp" ).html( "" );
-        $( '#vp' ).hide();
+        $( "#vp" ).hide();
         videoPlaying = false;
+        
     }
     
     // if audio is playing
@@ -632,7 +620,12 @@ $.fn.loadSlide = function( sn, sNum ) {
         if ( enabledNote ) {
         
             $( "#ap" ).hide();
-            $( "#note" ).height( $( "#note" ).height() + 30 );
+            
+            if ( $( "#note" ).hasClass( "cropped" ) ) {
+            
+                $( "#note" ).removeClass( "cropped" );
+                
+            }
             
         } else {
         
@@ -664,7 +657,7 @@ $.fn.loadSlide = function( sn, sNum ) {
     
             } ).error( function() {
     
-                $( "#slide" ).html( "<div id=\"errorMsg\"><p><strong>Error</strong>: image not found!</p><p>Expected image: " + imgPath + "</p></div>" );
+                $.fn.displayErrorMsg( "image not found!", "Expected image: " + imgPath );
     
             } ).attr( {
                 'src': imgPath,
@@ -693,7 +686,7 @@ $.fn.loadSlide = function( sn, sNum ) {
     
                     if ( enabledNote ) {
     					
-    					if ( $.fn.fileExists( srcName + ".mp3", "audio/mpeg" ) ) {
+    					if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
                             
                             $( "#ap").show();
                             
@@ -708,19 +701,24 @@ $.fn.loadSlide = function( sn, sNum ) {
         						audioPlayer.setSrc( sources );
         						
         					}
+        					
+        					$( "#note" ).addClass( "cropped" );
                             
                         } else {
                         
-                            $( "#ap" ).hide();
-                            $( "#slide" ).html( "<div id=\"errorMsg\"><p>Error: Audio file not found!</p><p>Expected file: assets/audio/" + srcName + ".mp3</div>" );
+                            if ( $( "#note" ).hasClass( "cropped" ) ) {
+            
+                                $( "#note" ).removeClass( "cropped" );
+                                
+                            }
+                            
+                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
                             
                         }
-                        
-                        $( "#note" ).height( $( "#note" ).height() - 30 );
     
                     } else {
     
-                        if ( $.fn.fileExists( srcName + ".mp3", "audio/mpeg" ) ) {
+                        if ( $.fn.fileExists( "assets/aduio/" + srcName, "mp3", "audio/mpeg" ) ) {
                             
                             $( "#apm" ).show();
                             
@@ -738,8 +736,7 @@ $.fn.loadSlide = function( sn, sNum ) {
                             
                         } else {
                         
-                            $( "#apm" ).hide();
-                            $( "#slide" ).html( "<div id=\"errorMsg\"><p>Error: Audio file not found!</p><p>Expected file: assets/audio/" + srcName + ".mp3</div>" );
+                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
                             
                         }
     
@@ -751,7 +748,7 @@ $.fn.loadSlide = function( sn, sNum ) {
     
             } ).error( function() {
     
-                $( "#slide" ).html( "<div id=\"errorMsg\"><p><strong>Error</strong>: image not found!</p><p>Expected image: " + imgPath + "</p></div>" );
+                $.fn.displayErrorMsg( "image not found!", "Expected image: " + imgPath );
     
             }).attr({
             
@@ -764,21 +761,23 @@ $.fn.loadSlide = function( sn, sNum ) {
         
         case "video:":
         
-            var time = $.now();
-            var playerID = "vpc" + time;
+            var time = $.now(),
+                playerID = "vpc" + time;
     
-            $( "#vp" ).append("<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" controls autoplay width=\"640\" height=\"360\">" + ((sbttlExist(srcName)) ? "<track kind=\"subtitles\" src=\"assets/video/" + srcName + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>");
+            $( "#vp" ).append( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" controls autoplay width=\"640\" height=\"360\">" + ( ( $.fn.fileExists( "assets/video/" + srcName, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + srcName + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>" );
     
             if ( !videoPlaying ) {
             
                 $( "#vp" ).show();
     
                 videojs( playerID, {}, function() {
+                
                     this.progressTips();
                     this.src( [
     					{type: "video/mp4", src:"assets/video/" + srcName + ".mp4"},
     					{type: "video/webm", src:"assets/video/" + srcName + ".webm"}
     				] );
+    				
                 } );
                 
                 videojs.options.flash.swf = "sources/videoplayer/video-js.swf";
@@ -809,7 +808,7 @@ $.fn.loadSlide = function( sn, sNum ) {
         
         default:
         
-            $( "#slide" ).html( "<div id=\"errorMsg\"><p><strong>Error:</strong>Error: Unknow slide type!</p><p>Please double check the XML file.</p></div>" );
+            $.fn.displayErrorMsg( "unknow slide type!", "Please double check the XML file." );
         
         break;
         
@@ -878,8 +877,8 @@ $.fn.loadNote = function( num ) {
 
     var note = XMLData.find( "topic:eq(" + num + ")" ).find( "note" ).text();
 	
-    $( "#note" ).html( note );
-		
+	$( "#note" ).html( note );
+	
 	if ( $( "#note" ).find( "a" ).length ) {
 	
 		$( "#note a" ).each( function() {
@@ -1105,47 +1104,28 @@ $.fn.adjustFontSize = function( arg ) {
  * @return void
  *
  */
-$.fn.getDownloadableFile = function( file, ext ) {
+$.fn.getDownloadableFile = function( file, ext, contentType ) {
     
-    var content_type = "audio/mpeg";
+    var newURL = file,
+        fileType = "Audio",
+        downloadBar = $( "#download_bar ul" ),
+        protocol = window.location.protocol;
+	
+	if ( protocol !== "http:" ) {
+		var url = window.location.href;
+		url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ).replace( "https", "http" );
+		newURL = url + file;
+	}
+	
+	if ( ext === "pdf" ) {
+		fileType = "Transcript";
+	}
     
-    if (ext === "pdf") {
-		content_type = "application/pdf";
+    if ( $( this ).fileExists( file, ext, contentType ) ) {
+    
+        downloadBar.append("<li><a href=\"" + newURL + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> " + fileType + "</a></li>");
+        
     }
-        
-    $.ajax( {
-    
-        url: file + "." + ext,
-        type: 'HEAD',
-        dataType: 'text',
-        contentType: content_type,
-        async: false,
-        beforeSend: function( xhr ) {
-            xhr.overrideMimeType( content_type );
-            xhr.setRequestHeader( "Accept", content_type );
-        },
-        success: function() {
-
-            var newURL = file,
-                fileType = "Audio",
-                downloadBar = $( "#download_bar ul" ),
-                protocol = window.location.protocol;
-			
-			if ( protocol !== "http:" ) {
-				var url = window.location.href;
-				url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ).replace( "https", "http" );
-				newURL = url + file;
-			}
-			
-			if ( ext === "pdf" ) {
-				fileType = "Transcript";
-			}
-			
-			downloadBar.append("<li><a href=\"" + newURL + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> " + fileType + "</a></li>");
-
-        }
-        
-    } );
 
 };
 
@@ -1158,7 +1138,7 @@ $.fn.getDownloadableFile = function( file, ext ) {
  * @return void
  *
  */
-$.fn.displayError = function( status, exception ) {
+$.fn.displayGetLessonError = function( status, exception ) {
 
     var statusMsg, exceptionMsg;
     
@@ -1207,9 +1187,12 @@ $.fn.displayError = function( status, exception ) {
 
 };
 
+/* MISC. HELPER FUNCTIONS
+***************************************************************/
+
 /**
  * Split a string with the | character as the delimiter 
- * @since 2.0.0
+ * @since 2.1.0
  *
  * @author Ethan S. Lin
  * @param string, the string to split
@@ -1225,7 +1208,21 @@ $.fn.splitSelections = function( arg ) {
 
 /**
  * Get the course directory name 
- * @since 2.0.0
+ * @since 2.1.0
+ *
+ * @author Ethan S. Lin
+ * @return string, the directory name
+ *
+ */
+$.fn.displayErrorMsg = function( lineOne, lineTwo ) {
+
+	$( "#slide" ).html( "<div id=\"errorMsg\"><p><strong>Error:</strong> " + lineOne + "</p><p>" + lineTwo + "</p></div>" );
+	
+};
+
+/**
+ * Get the course directory name 
+ * @since 2.1.0
  *
  * @author Ethan S. Lin
  * @return string, the directory name
@@ -1236,28 +1233,47 @@ $.fn.getDirectory = function() {
 	var urlToParse = window.location.href,
 	    src;
 	
-	src = urlToParse.split("?");
-	src = src[0].split("/");
-	src = src[src.length-2];
+	src = urlToParse.split( "?" );
+	src = src[0].split( "/" );
+	src = src[src.length - 2];
 	
 	return src;
 	
 };
 
-$.fn.fileExists = function( file, content_type ) {
+/**
+ * Check for file exisitance 
+ * @since 2.1.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param strings, file path, extension, and content type
+ * @return bool
+ *
+ */
+$.fn.fileExists = function( file, ext, content_type ) {
 
-    var exists;
+    var exists,
+        cType = content_type;
+    
+    switch ( ext ) {
+        
+        case "pdf":
+            cType = "application/pdf";
+        break;
+        
+    }
     
     $.ajax( {
     
-        url: "assets/audio/" + file,
-        type: 'HEAD',
-        dataType: 'text',
-        contentType: content_type,
+        url: file + "." + ext,
+        type: "HEAD",
+        dataType: "text",
+        contentType: cType,
         async: false,
         beforeSend: function( xhr ) {
-            xhr.overrideMimeType( content_type );
-            xhr.setRequestHeader( "Accept", content_type );
+            xhr.overrideMimeType( cType );
+            xhr.setRequestHeader( "Accept", cType );
         },
         success: function() {
             exists = true;

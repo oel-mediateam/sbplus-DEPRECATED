@@ -351,7 +351,7 @@ p {
     
     	width: 100%;
     	height: rem( 200px );
-    	border-top: #ccc solid 1px;
+    	border-top: #ccc solid rem( 1px );
     	padding: 0 rem( 5px );
     	background-color: #fff;
     	overflow: auto;
@@ -392,6 +392,10 @@ p {
         }
     	
     } // #note
+    
+    #note.cropped {
+        height: 170px;
+    }
 	
 	// PLAYER CONTROLS
     #control {
