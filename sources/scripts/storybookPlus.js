@@ -810,8 +810,12 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     
     $( "#progressing" ).hide();
     
-    // load current slide note and update the slide number
-    $( this ).loadNote( sNum );
+    if ( enabledNote ) {
+    
+        $( this ).loadNote( sNum );
+        
+    }
+    
     $( this ).updateSlideNum( sNum );
 
 };
