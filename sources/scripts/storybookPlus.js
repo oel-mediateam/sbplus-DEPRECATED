@@ -39,7 +39,7 @@ $( document ).ready( function() {
             android: ua.match( /Android/ )
         };
 
-    var mobile = ( $( this ).getParameterByName( "m" ) === "0" ) ? false : true;
+    var mobile = ( $.fn.getParameterByName( "m" ) === "0" ) ? false : true;
 
     if ( ( checker.iphone || checker.ipod || checker.ipad || checker.blackberry || checker.android ) && mobile ) {
 
@@ -56,209 +56,7 @@ $( document ).ready( function() {
 
     }
 
-    $( this ).getLessonContent( "assets/topic.xml" );
-
-    // setup quiz
-    function setupQuiz(num) {
-
-        // loop to find the question
-        while (!found || qNum === quizArray.length) {
-
-            if (quizArray[qNum].id === num) {
-                found = true;
-            } else {
-                qNum++;
-            }
-
-        }
-
-        // build the question
-        $('#slide').append('<div id="quiz"><div class="header">Quiz ' + (qNum + 1) + ' of ' + quizArray.length + '</div>');
-
-        // give the quiz a second to build up
-        $('#quiz').hide();
-        $('#quiz').fadeIn();
-
-        if (!quizArray[qNum].taken) {
-
-            $('#quiz').append('<div class="question">' + quizArray[qNum].question + '</div>');
-
-            if (quizArray[qNum].type === "t/f") {
-
-                $('#quiz').append('<div class="answerArea"><label for="t"><input id="t" type="radio" name="tf" value="true" /> True</label><label for="f"><input type="radio" id="f" name="tf" value="false" /> False</label></div>');
-
-            } else if (quizArray[qNum].type === "fib") {
-
-                $('#quiz').append('<div class="answerArea"><textarea id="saAns"></textArea></div>');
-
-            } else if (quizArray[qNum].type === "mc") {
-
-                $('#quiz').append('<div class="answerArea">');
-
-                for (var i = 0; i < quizArray[qNum].choice.length; i++) {
-                    $('.answerArea').append('<label for="' + i + '"><input id="' + i + '" type="radio" name="mc" value="' + quizArray[qNum].choice[i] + '" /> ' + quizArray[qNum].choice[i] + '</label>');
-                }
-
-                $('#quiz').append('</div>');
-
-            } else if (quizArray[qNum].type === "sa") {
-
-                $('#quiz').append('<div class="answerArea"><textarea id="saAns"></textArea></div>');
-
-            } else {
-
-                $('#quiz').append('<div class="answerArea">ERROR!</div>');
-
-            }
-
-            $('#quiz').append('<div class="submitArea"><a id="check" rel="' + qNum + '" href="javascript:void(0)">SUBMIT</a></div>');
-
-            $('#check').click(function () {
-
-                var position = Number($(this).attr('rel'));
-                var stuAnswer;
-
-                if (quizArray[position].type === "t/f") {
-
-                    stuAnswer = $('input:radio[name=tf]:checked').val();
-                    if (stuAnswer === undefined) {
-                        stuAnswer = "";
-                    }
-
-                } else if (quizArray[position].type === "fib") {
-
-                    stuAnswer = $.trim($('#saAns').val());
-
-                } else if (quizArray[position].type === "mc") {
-
-                    stuAnswer = $('input:radio[name=mc]:checked').val();
-                    quizArray[position].incorrectIndex = $('input:radio[name=mc]').index($('input:radio[name=mc]').filter(":checked"));
-
-                    if (stuAnswer === undefined) {
-                        stuAnswer = "";
-                    }
-
-                } else if (quizArray[position].type === "sa") {
-
-                    stuAnswer = $.trim($('#saAns').val());
-
-                } else {
-                    $.trim(stuAnswer);
-                }
-
-                if (stuAnswer !== "") {
-
-                    for (var i = 0; i < quizArray[position].answer.length; i++) {
-						
-						
-						
-                        if (quizArray[position].type === "fib") {
-                            var index = 0;
-                            
-						for (index; index < quizArray[position].answer.length; index++) {
-							if (stuAnswer.toLowerCase() === quizArray[position].answer[index].toLowerCase()) {
-								quizArray[position].correct = true;
-								break;
-							}
-						}
-
-                        } else if (quizArray[position].type === "t/f") {
-
-                            if (stuAnswer.toLowerCase() === quizArray[position].answer[i].toLowerCase()) {
-                                quizArray[position].correct = true;
-                            } else {
-                                quizArray[position].correct = false;
-                            }
-
-                        } else if (quizArray[position].type === "mc") {
-                            if (stuAnswer.toLowerCase() === quizArray[position].answer[i].toLowerCase()) {
-                                quizArray[position].correct = true;
-                            } else {
-                                quizArray[position].correct = false;
-                            }
-
-                        }
-
-                    }
-
-                    quizArray[position].stuAnswer = stuAnswer;
-                    quizArray[position].taken = true;
-
-                    showFeedback(position);
-
-                } else {
-                    alert("Please answer the question before submitting.");
-                }
-
-            });
-
-        } else {
-            showFeedback(qNum);
-        }
-
-        $('#slide').append('</div>');
-
-        // reset counter and flag for next quextion
-        qNum = 0;
-        found = false;
-
-    } // end setupQuiz
-
-
-    // display quiz feedback
-
-    function showFeedback(position) {
-
-        var correctAnswer = "";
-
-        $('#slide').html('<div id="quiz"><div class="header">Quiz ' + (position + 1) + ' of ' + quizArray.length + ' Feedback</div>');
-
-        if (quizArray[position].type !== "sa") {
-
-            if (quizArray[position].correct) {
-                $('#quiz').append('<p class="quizCorrect"><span class="icon-checkmark"></span> CORRECT</p>');
-            } else {
-                $('#quiz').append('<p class="quizIncorrect"><span class="icon-notification"></span> INCORRECT</p>');
-            }
-
-        }
-
-        $('#quiz').append('<div class="question">' + quizArray[position].question + '</div>');
-        $('#quiz').append('<div class="feedback"><p><strong>Your answer</strong>: ' + quizArray[position].stuAnswer + '</p>');
-
-        for (var i = 0; i < quizArray[position].answer.length; i++) {
-
-            if (i === quizArray[position].answer.length - 1) {
-                correctAnswer += quizArray[position].answer[i];
-            } else {
-                correctAnswer += quizArray[position].answer[i] + ", ";
-            }
-
-        }
-
-        $('.feedback').append('<p><strong>Correct answer</strong>: ' + correctAnswer + '</p></div>');
-
-        if (quizArray[position].type !== "sa") {
-
-            if (quizArray[position].correct) {
-                $('.feedback').append('<p><strong>Feedback:</strong> ' + quizArray[position].correctFeedback + '</p>');
-            } else {
-                if (quizArray[position].type === "mc") {
-
-                    var feedback = quizArray[position].wrongFeedback[quizArray[position].incorrectIndex];
-                    if (typeof feedback === 'undefined') {
-                        feedback = "";
-                    }
-
-                    $('.feedback').append('<p><strong>Feedback:</strong> ' + feedback + '</p>');
-                } else {
-                    $('.feedback').append('<p><strong>Feedback:</strong> ' + quizArray[position].wrongFeedback + '</p>');
-                }
-            }
-
-        }
-
-    } // end showFeedback
+    $.fn.getLessonContent( "assets/topic.xml" );
 
 });
 
@@ -293,10 +91,10 @@ $.fn.getLessonContent = function( file ) {
             xhr.setRequestHeader( "Accept", "text/xml" );
         },
         success: function ( xml ) {
-            $( this ).parseContent( xml );
+            $.fn.parseContent( xml );
         },
         error: function ( xhr, exception ) {
-            $( this ).displayGetLessonError( xhr.status, exception );
+            $.fn.displayGetLessonError( xhr.status, exception );
         }
     } );
     
@@ -346,14 +144,20 @@ $.fn.parseContent = function( xml ) {
     
     // check note presence
     if ( NOTE.length ) {
-        if ( NOTE === "yes" || NOTE === 'y' ) {
+    
+        if ( NOTE === "yes" || NOTE === "y" ) {
+        
             enabledNote = true;
+            
         }
+        
     }
 
     // check image file format
     if ( SLIDEFORMAT.length ) {
+    
         slideImgFormat = SLIDEFORMAT;
+        
     }
     
     // assign values to variables
@@ -390,13 +194,13 @@ $.fn.parseContent = function( xml ) {
             quiz.question = questionNode;
 
             if ( choiceNode ) {
-                quiz.choice = $( this ).splitSelections( choiceNode );
-                quiz.wrongFeedback = $( this ).splitSelections( wrongFeedbackNode );
+                quiz.choice = $.fn.splitSelections( choiceNode );
+                quiz.wrongFeedback = $.fn.splitSelections( wrongFeedbackNode );
             } else {
                 quiz.wrongFeedback = wrongFeedbackNode;
             }
 
-            quiz.answer = $( this ).splitSelections( answerNode );
+            quiz.answer = $.fn.splitSelections( answerNode );
             quiz.stuAnswer = "";
             quiz.correct = false;
             quiz.correctFeedback = correctFeedbackNode;
@@ -410,12 +214,12 @@ $.fn.parseContent = function( xml ) {
         ++topicCount;
         
         // populate table of content
-        $( "#selectable" ).append( "<li class=\"ui-widget-content\" title=\"" + topicTitle + "\">" + "<div class=\"slideNum\">" + ( ( ( topicCount ) < 10 ) ? "0" + ( topicCount ) : ( topicCount ) ) + ".</div><div class=\"title\">" + topicTitle + "</div></li>" );
+        $( "#selectable" ).append( "<li class=\"ui-widget-content\" title=\"" + topicTitle + "\">" + "<div class=\"slideNum\">" + $.fn.addLeadingZero( topicCount ) + ".</div><div class=\"title\">" + topicTitle + "</div></li>" );
 
     });
     
     // call to setup the player
-    $( this ).setupPlayer();
+    $.fn.setupPlayer();
     
 };
 
@@ -429,7 +233,7 @@ $.fn.parseContent = function( xml ) {
  */
 $.fn.setupPlayer = function() {
     
-    var directory = $( this ).getDirectory();
+    var directory = $.fn.getDirectory();
     
     $( document ).attr( "title", lessonTitle );
     
@@ -446,13 +250,15 @@ $.fn.setupPlayer = function() {
     
     // bind click event to splash screen
     $( "#splash_screen, #playBtn" ).on( "click", function() {
+    
         $.fn.initializePlayer();
         return false;
+        
     } );
     
     // download files
-    $( this ).getDownloadableFile( directory, "mp3", "audio/mpeg" );
-    $( this ).getDownloadableFile( directory, "pdf", "application/pdf" );
+    $.fn.getDownloadableFile( directory, "mp3", "audio/mpeg" );
+    $.fn.getDownloadableFile( directory, "pdf", "application/pdf" );
     
 };
 
@@ -471,10 +277,14 @@ $.fn.initializePlayer = function() {
 		var tSrc = topicSrc[i].substring( 0, topicSrc[i].indexOf( ":" ) + 1 );
 		
 		if ( tSrc === "video:" || tSrc === "youtube:" ) {
+		
 			media = "Video";
+			
 		} else {
+		
 			media = "Slide";
 			return false;
+			
 		}
 		
 	} );
@@ -490,7 +300,8 @@ $.fn.initializePlayer = function() {
     $( "#profile .bio" ).html( "<p>" + instructor + "</p>" + PROFILE );
 	
 	// enable fancy box for profile panel
-    $( "#info, a.instructorName" ).fancybox({
+    $( "#info, a.instructorName" ).fancybox( {
+    
         helpers: {
             overlay: {
                 css: {
@@ -499,7 +310,8 @@ $.fn.initializePlayer = function() {
             }
         },
         padding: 0
-    });
+        
+    } );
 	
 	// setup toc selectable items
 	$( "#selectable li:first" ).addClass( "ui-selected" );
@@ -508,12 +320,16 @@ $.fn.initializePlayer = function() {
         stop: function() {
 
             $( ".ui-selected", this ).each( function() {
+            
                 tocIndex = $( "#selectable li" ).index( this );
-            });
+                
+            } );
 
             if ( tocIndex !== previousIndex ) {
-                $( this ).loadSlide( topicSrc[tocIndex], tocIndex );
+            
+                $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
                 previousIndex = tocIndex;
+                
             }
         }
 
@@ -528,7 +344,7 @@ $.fn.initializePlayer = function() {
             counter = topicCount;
         }
 
-        $( this ).loadSlide( topicSrc[counter], counter );
+        $.fn.loadSlide( topicSrc[counter], counter );
 
     } );
     
@@ -541,7 +357,7 @@ $.fn.initializePlayer = function() {
             counter = 1;
         }
 
-        $( this ).loadSlide( topicSrc[counter], counter );
+        $.fn.loadSlide( topicSrc[counter], counter );
 
     });
     
@@ -552,14 +368,14 @@ $.fn.initializePlayer = function() {
         $('#fontSizeIndicator').html( defaultFontSize );
 
         // binding increasing and decreasing font size buttons
-        $('#fontMinusBtn').on('click', function () {
+        $('#fontMinusBtn').on('click', function() {
 
             $.fn.adjustFontSize( "minus" );
 
         });
 
         // font plus button
-        $('#fontPlusBtn').on('click', function () {
+        $('#fontPlusBtn').on('click', function() {
 
             $.fn.adjustFontSize( "plus" );
 
@@ -568,11 +384,11 @@ $.fn.initializePlayer = function() {
     }
     
     // call to load the first slide
-    $( this ).loadSlide( topicSrc[0], counter );
+    $.fn.loadSlide( topicSrc[0], counter );
     
     
     // load and set the instructor picture
-    $( this ).loadProfilePhoto();
+    $.fn.loadProfilePhoto();
     
     // display the player
     $( "#player" ).show();
@@ -595,7 +411,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 ) ;
     
     if ( slideSource !== "quiz" ) {
+    
         slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 );
+        
     }
 
     $( "#slide" ).html( "<div id=\"progressing\"></div>" );
@@ -613,7 +431,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     if ( audioPlaying ) {
         
         try {
+        
             audioPlayer.pause();
+            
         } catch(e) { }
         
         if ( enabledNote ) {
@@ -675,10 +495,10 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             $( img ).load( function() {
     
                 $( this ).hide();
-                $('#slide').append('<a id="img" title="' + imgCaption + '"href="' + imgPath + '">');
-                $('#slide #img').html(img);
-                $('#slide').append('</a><div class="magnifyIcon"></div>');
-                $(this).fadeIn();
+                $( "#slide" ).append( "<a id=\"img\" title=\"" + imgCaption + "\"href=\"" + imgPath + "\">" );
+                $( "#slide #img" ).html( img );
+                $( "#slide" ).append( "</a><div class=\"magnifyIcon\"></div>" );
+                $( this ).fadeIn();
                 $( this ).bindImgMagnify();
     
                 if ( !audioPlaying ) {
@@ -691,7 +511,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                             
                             if (firstAudioLoad !== true) {
     					    
-                    		    $( this ).loadAudioPlayer( "#apc", srcName );
+                    		    $.fn.loadAudioPlayer( "#apc", srcName );
                                 firstAudioLoad = true;
         						
         					} else {
@@ -723,7 +543,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                             
                             if (firstAudioLoad !== true) {
     					    
-                    		    $( this ).loadAudioPlayer( "#apcm", srcName );
+                    		    $.fn.loadAudioPlayer( "#apcm", srcName );
                                 firstAudioLoad = true;
         						
         					} else {
@@ -749,12 +569,12 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     
                 $.fn.displayErrorMsg( "image not found!", "Expected image: " + imgPath );
     
-            }).attr({
+            } ).attr( {
             
                 'src': imgPath,
                 'border': 0
                 
-            });
+            } );
         
         break;
         
@@ -789,7 +609,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 
         case "youtube:":
         
-            $( "#slide" ).append( "<iframe width=\"640\" height=\"360\" src=\"http://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&html5=1&autohide=1&rel=0\" frameborder=\"0\" allowfullscreen></iframe>" );
+            $( "#slide" ).append( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&html5=1&autohide=1&rel=0\" frameborder=\"0\" allowfullscreen></iframe>" );
         
         break;
         
@@ -801,7 +621,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "quiz":
         
-            setupQuiz( sNum );
+            $.fn.setupQuiz( sNum );
         
         break;
         
@@ -825,9 +645,209 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
 };
 
+// setup quiz
+$.fn.setupQuiz = function( num ) {
+
+    // loop to find the question
+    while ( !found || qNum === quizArray.length ) {
+
+        if ( quizArray[qNum].id === num ) {
+            found = true;
+        } else {
+            qNum++;
+        }
+
+    }
+
+    // build the question
+    $('#slide').append('<div id="quiz"><div class="header">Quiz ' + (qNum + 1) + ' of ' + quizArray.length + '</div>');
+
+    // give the quiz a second to build up
+    $('#quiz').hide();
+    $('#quiz').fadeIn();
+
+    if (!quizArray[qNum].taken) {
+
+        $('#quiz').append('<div class="question">' + quizArray[qNum].question + '</div>');
+
+        if (quizArray[qNum].type === "t/f") {
+
+            $('#quiz').append('<div class="answerArea"><label for="t"><input id="t" type="radio" name="tf" value="true" /> True</label><label for="f"><input type="radio" id="f" name="tf" value="false" /> False</label></div>');
+
+        } else if (quizArray[qNum].type === "fib") {
+
+            $('#quiz').append('<div class="answerArea"><textarea id="saAns"></textArea></div>');
+
+        } else if (quizArray[qNum].type === "mc") {
+
+            $('#quiz').append('<div class="answerArea">');
+
+            for (var i = 0; i < quizArray[qNum].choice.length; i++) {
+                $('.answerArea').append('<label for="' + i + '"><input id="' + i + '" type="radio" name="mc" value="' + quizArray[qNum].choice[i] + '" /> ' + quizArray[qNum].choice[i] + '</label>');
+            }
+
+            $('#quiz').append('</div>');
+
+        } else if (quizArray[qNum].type === "sa") {
+
+            $('#quiz').append('<div class="answerArea"><textarea id="saAns"></textArea></div>');
+
+        } else {
+
+            $('#quiz').append('<div class="answerArea">ERROR!</div>');
+
+        }
+
+        $('#quiz').append('<div class="submitArea"><a id="check" rel="' + qNum + '" href="javascript:void(0)">SUBMIT</a></div>');
+
+        $('#check').click(function () {
+
+            var position = Number($(this).attr('rel'));
+            var stuAnswer;
+
+            if (quizArray[position].type === "t/f") {
+
+                stuAnswer = $('input:radio[name=tf]:checked').val();
+                if (stuAnswer === undefined) {
+                    stuAnswer = "";
+                }
+
+            } else if (quizArray[position].type === "fib") {
+
+                stuAnswer = $.trim($('#saAns').val());
+
+            } else if (quizArray[position].type === "mc") {
+
+                stuAnswer = $('input:radio[name=mc]:checked').val();
+                quizArray[position].incorrectIndex = $('input:radio[name=mc]').index($('input:radio[name=mc]').filter(":checked"));
+
+                if (stuAnswer === undefined) {
+                    stuAnswer = "";
+                }
+
+            } else if (quizArray[position].type === "sa") {
+
+                stuAnswer = $.trim($('#saAns').val());
+
+            } else {
+                $.trim(stuAnswer);
+            }
+
+            if (stuAnswer !== "") {
+
+                for (var i = 0; i < quizArray[position].answer.length; i++) {
+					
+					
+					
+                    if (quizArray[position].type === "fib") {
+                        var index = 0;
+                        
+					for (index; index < quizArray[position].answer.length; index++) {
+						if (stuAnswer.toLowerCase() === quizArray[position].answer[index].toLowerCase()) {
+							quizArray[position].correct = true;
+							break;
+						}
+					}
+
+                    } else if (quizArray[position].type === "t/f") {
+
+                        if (stuAnswer.toLowerCase() === quizArray[position].answer[i].toLowerCase()) {
+                            quizArray[position].correct = true;
+                        } else {
+                            quizArray[position].correct = false;
+                        }
+
+                    } else if (quizArray[position].type === "mc") {
+                        if (stuAnswer.toLowerCase() === quizArray[position].answer[i].toLowerCase()) {
+                            quizArray[position].correct = true;
+                        } else {
+                            quizArray[position].correct = false;
+                        }
+
+                    }
+
+                }
+
+                quizArray[position].stuAnswer = stuAnswer;
+                quizArray[position].taken = true;
+
+                $.fn.showFeedback(position);
+
+            } else {
+                alert("Please answer the question before submitting.");
+            }
+
+        });
+
+    } else {
+        $.fn.showFeedback(qNum);
+    }
+
+    $('#slide').append('</div>');
+
+    // reset counter and flag for next quextion
+    qNum = 0;
+    found = false;
+
+};
+
+// display quiz feedback
+$.fn.showFeedback = function( position ) {
+
+    var correctAnswer = "";
+
+    $('#slide').html('<div id="quiz"><div class="header">Quiz ' + (position + 1) + ' of ' + quizArray.length + ' Feedback</div>');
+
+    if (quizArray[position].type !== "sa") {
+
+        if (quizArray[position].correct) {
+            $('#quiz').append('<p class="quizCorrect"><span class="icon-checkmark"></span> CORRECT</p>');
+        } else {
+            $('#quiz').append('<p class="quizIncorrect"><span class="icon-notification"></span> INCORRECT</p>');
+        }
+
+    }
+
+    $('#quiz').append('<div class="question">' + quizArray[position].question + '</div>');
+    $('#quiz').append('<div class="feedback"><p><strong>Your answer</strong>: ' + quizArray[position].stuAnswer + '</p>');
+
+    for (var i = 0; i < quizArray[position].answer.length; i++) {
+
+        if (i === quizArray[position].answer.length - 1) {
+            correctAnswer += quizArray[position].answer[i];
+        } else {
+            correctAnswer += quizArray[position].answer[i] + ", ";
+        }
+
+    }
+
+    $('.feedback').append('<p><strong>Correct answer</strong>: ' + correctAnswer + '</p></div>');
+
+    if (quizArray[position].type !== "sa") {
+
+        if (quizArray[position].correct) {
+            $('.feedback').append('<p><strong>Feedback:</strong> ' + quizArray[position].correctFeedback + '</p>');
+        } else {
+            if (quizArray[position].type === "mc") {
+
+                var feedback = quizArray[position].wrongFeedback[quizArray[position].incorrectIndex];
+                if (typeof feedback === 'undefined') {
+                    feedback = "";
+                }
+
+                $('.feedback').append('<p><strong>Feedback:</strong> ' + feedback + '</p>');
+            } else {
+                $('.feedback').append('<p><strong>Feedback:</strong> ' + quizArray[position].wrongFeedback + '</p>');
+            }
+        }
+
+    }
+
+};
+
 /**
  * Load audio player
- * @since 2.0.0
+ * @since 2.1.0
  *
  * @author Ethan S. Lin
  * @param strings, id and source name
@@ -869,7 +889,7 @@ $.fn.loadAudioPlayer = function( id, srcName ) {
 
 /**
  * Load notes for the current slide
- * @since 2.0.0
+ * @since 2.1.0
  *
  * @author Ethan S. Lin
  * @param int, current topic number
@@ -895,7 +915,7 @@ $.fn.loadNote = function( num ) {
 
 /**
  * Update the current slide number indicator
- * @since 2.0.0
+ * @since 2.1.0
  *
  * @author Ethan S. Lin
  * @param int, current topic number
@@ -909,7 +929,7 @@ $.fn.updateSlideNum = function( num ) {
 
     $( "#selectable li" ).each( function() {
         $( this ).removeClass( "ui-selected" );
-    });
+    } );
 
     $( "#selectable li:nth-child(" + currentNum + ")" ).addClass( "ui-selected" );
     $( "#currentStatus" ).html( media + " " + currentNum + " of " + topicCount );
@@ -992,7 +1012,7 @@ $.fn.loadProfilePhoto = function() {
 
 /**
  * Adjusting the notes font size
- * @since 2.0.0
+ * @since 2.1.0
  *
  * @author Ethan S. Lin
  * @param string, minus or plus
@@ -1049,7 +1069,7 @@ $.fn.adjustFontSize = function( arg ) {
 
 /**
  * Request downloadable files 
- * @since 2.0.0
+ * @since 2.1.0
  *
  * @author Ethan S. Lin
  * @param strings, file name and extension
@@ -1073,7 +1093,7 @@ $.fn.getDownloadableFile = function( file, ext, contentType ) {
 		fileType = "Transcript";
 	}
     
-    if ( $( this ).fileExists( file, ext, contentType ) ) {
+    if ( $.fn.fileExists( file, ext, contentType ) ) {
     
         downloadBar.append("<li><a href=\"" + newURL + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> " + fileType + "</a></li>");
         
@@ -1138,6 +1158,8 @@ $.fn.displayGetLessonError = function( status, exception ) {
     $('#errorMsg').html('<p>' + statusMsg + '<br />' + exceptionMsg + '</p>');
 
 };
+
+
 
 /* MISC. HELPER FUNCTIONS
 ***************************************************************/
@@ -1265,6 +1287,17 @@ $.fn.getParameterByName = function( param ) {
     
 };
 
+/**
+ * Add leading zero to single digit
+ * @since 2.1.0
+ *
+ * @author Ethan S. Lin
+ * @param int, the digit
+ * @return string/int
+ *
+ */
+$.fn.addLeadingZero = function( num ) {
 
-
-
+    return num < 10  ? "0" + ( num ) : ( num );
+    
+};
