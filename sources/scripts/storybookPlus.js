@@ -368,7 +368,12 @@ $.fn.parseContent = function( xml ) {
         var topicTitle = $( this ).attr( 'title' );
         
         topicSrc[topicCount] = $( this ).attr( 'src' );
-        noteArray[topicCount] = $( this ).find( "note" ).text();
+        
+        if ( enabledNote ) {
+        
+            noteArray[topicCount] = $( this ).find( "note" ).text();
+            
+        }
 
         if ( topicSrc[topicCount] === "quiz" ) {
             
@@ -712,7 +717,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     
                     } else {
     
-                        if ( $.fn.fileExists( "assets/aduio/" + srcName, "mp3", "audio/mpeg" ) ) {
+                        if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
                             
                             $( "#apm" ).show();
                             
