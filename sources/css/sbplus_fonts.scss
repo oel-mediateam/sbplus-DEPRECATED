@@ -1,7 +1,3 @@
-@function rem( $px, $base: $font-size ) {
-    @return ( $px / $base ) * 1rem;
-}
-
 @mixin sbplusFonts() {
     font-family: 'sbplus';
 	speak: none;

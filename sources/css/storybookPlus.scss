@@ -348,7 +348,7 @@ p {
     
     // NOTE STYLES
     #note {
-    
+        
     	width: 100%;
     	height: rem( 200px );
     	border-top: #ccc solid rem( 1px );
@@ -373,17 +373,17 @@ p {
     	
     	h1 {
         	font-size: rem( 20px );
-        	line-height: rem( 24px );
+        	line-height: rem( 26px );
     	}
     	
     	h2 {
         	font-size: rem( 18px );
-            line-height: rem( 22px );
+            line-height: rem( 24px );
     	}
     	
     	h3, h4, h5, h6 {
         	font-size: rem( 16px );
-        	line-height: rem( 20px );
+        	line-height: rem( 22px );
         }
     	
     	p {
@@ -392,6 +392,101 @@ p {
         }
     	
     } // #note
+    
+    #note.size12 {
+        
+        h1 {
+        	font-size: rem( 18px );
+        	line-height: rem( 24px );
+    	}
+    	
+    	h2 {
+        	font-size: rem( 16px );
+            line-height: rem( 22px );
+    	}
+    	
+    	h3, h4, h5, h6 {
+        	font-size: rem( 14px );
+        	line-height: rem( 20px );
+        }
+    	
+    	p {
+        	font-size: rem( 12px );
+        	line-height: rem( 18px );
+        }
+        
+    }
+    
+    #note.size16 {
+        
+        h1 {
+        	font-size: rem( 22px );
+        	line-height: rem( 28px );
+    	}
+    	
+    	h2 {
+        	font-size: rem( 20px );
+            line-height: rem( 26px );
+    	}
+    	
+    	h3, h4, h5, h6 {
+        	font-size: rem( 18px );
+        	line-height: rem( 24px );
+        }
+    	
+    	p {
+        	font-size: rem( 16px );
+        	line-height: rem( 22px );
+        }
+    }
+        
+    #note.size18 {
+        
+        h1 {
+        	font-size: rem( 24px );
+        	line-height: rem( 30px );
+    	}
+    	
+    	h2 {
+        	font-size: rem( 22px );
+            line-height: rem( 28px );
+    	}
+    	
+    	h3, h4, h5, h6 {
+        	font-size: rem( 20px );
+        	line-height: rem( 26px );
+        }
+    	
+    	p {
+        	font-size: rem( 18px );
+        	line-height: rem( 24px );
+        }
+        
+    }
+    
+    #note.size20 {
+        
+        h1 {
+        	font-size: rem( 26px );
+        	line-height: rem( 32px );
+    	}
+    	
+    	h2 {
+        	font-size: rem( 24px );
+            line-height: rem( 30px );
+    	}
+    	
+    	h3, h4, h5, h6 {
+        	font-size: rem( 22px );
+        	line-height: rem( 28px );
+        }
+    	
+    	p {
+        	font-size: rem( 20px );
+        	line-height: rem( 26px );
+        }
+        
+    }
     
     #note.cropped {
         height: 170px;
