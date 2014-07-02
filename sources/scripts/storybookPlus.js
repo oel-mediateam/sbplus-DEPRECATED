@@ -12,12 +12,14 @@ var topicCount = 0,
     tocIndex = 0,
     noteArray,
     topicSrc,
+    topicTitle,
     imgPath,
     slideImgFormat = "png",
     media = "Slide",
     enabledNote = false,
-    imgCaption, quiz, quizArray, found = false,
-    qNum = 0;
+    imgCaption;
+    
+var questions;
     
 var PROFILE,
     lessonTitle,
@@ -162,15 +164,15 @@ $.fn.parseContent = function( xml ) {
     
     // assign values to variables
     topicSrc = [];
+    topicTitle = [];
     noteArray = [];
-    quizArray = [];
+    questions = [];
 
     // loop through each topic node to get lesson topics
     // display each topic to web page as well
     TOPIC.each( function() {
         
-        var topicTitle = $( this ).attr( 'title' );
-        
+        topicTitle[topicCount] = $( this ).attr( 'title' );
         topicSrc[topicCount] = $( this ).attr( 'src' );
         
         if ( enabledNote ) {
@@ -188,16 +190,21 @@ $.fn.parseContent = function( xml ) {
                 quizTypeAttr = XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).attr( "type" ),
                 answerNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "answer" ).text() );
             
-            quiz = {};
+            var quiz = {};
+            
             quiz.id = topicCount;
             quiz.type = quizTypeAttr;
             quiz.question = questionNode;
 
             if ( choiceNode ) {
+            
                 quiz.choice = $.fn.splitSelections( choiceNode );
                 quiz.wrongFeedback = $.fn.splitSelections( wrongFeedbackNode );
+                
             } else {
+            
                 quiz.wrongFeedback = wrongFeedbackNode;
+                
             }
 
             quiz.answer = $.fn.splitSelections( answerNode );
@@ -207,14 +214,11 @@ $.fn.parseContent = function( xml ) {
             quiz.taken = false;
             
             // add current quiz to array
-            quizArray.push( quiz );
+            questions.push( quiz );
 
         }
         
         ++topicCount;
-        
-        // populate table of content
-        $( "#selectable" ).append( "<li class=\"ui-widget-content\" title=\"" + topicTitle + "\">" + "<div class=\"slideNum\">" + $.fn.addLeadingZero( topicCount ) + ".</div><div class=\"title\">" + topicTitle + "</div></li>" );
 
     });
     
@@ -234,6 +238,7 @@ $.fn.parseContent = function( xml ) {
 $.fn.setupPlayer = function() {
     
     var directory = $.fn.getDirectory();
+    var selfAssessmentIcon;
     
     $( document ).attr( "title", lessonTitle );
     
@@ -244,7 +249,42 @@ $.fn.setupPlayer = function() {
     // initialy hide error message container
     $( "#errorMsg" ).hide();
     
-    // set up the splash screen
+    // loop to check whether all topics are video or mixed
+    $.each( topicSrc, function( i ) {
+	
+		var tSrc = topicSrc[i].substring( 0, topicSrc[i].indexOf( ":" ) + 1 );
+		
+		if ( tSrc === "video:" || tSrc === "youtube:" ) {
+		
+			media = "Video";
+			
+		} else {
+
+			media = "Slide";
+			return false;
+			
+		}
+		
+	} );
+	
+	// loop to populate the table of contents
+    $.each( topicTitle, function( i ) {
+		
+		if ( topicSrc[i] === "quiz" ) {
+		    
+		    selfAssessmentIcon = " <span class=\"icon-assessement light\"></span>";
+    		
+		} else {
+		
+    		selfAssessmentIcon = "";
+    		
+		}
+		
+		$( "#selectable" ).append( "<li class=\"ui-widget-content\" title=\"" + topicTitle[i] + "\">" + "<div class=\"slideNum\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\">" + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
+		
+	} );
+	
+	// set up the splash screen
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
     $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a class=\"playBtn\" href=\"#\"></a>" );
     
@@ -271,24 +311,7 @@ $.fn.setupPlayer = function() {
  *
  */
 $.fn.initializePlayer = function() {
-    
-    $.each( topicSrc, function( i ) {
-	
-		var tSrc = topicSrc[i].substring( 0, topicSrc[i].indexOf( ":" ) + 1 );
-		
-		if ( tSrc === "video:" || tSrc === "youtube:" ) {
-		
-			media = "Video";
-			
-		} else {
-		
-			media = "Slide";
-			return false;
-			
-		}
-		
-	} );
-    
+        
     // hide the error msg and splash screen
     $( "#splash_screen" ).hide();
     
@@ -647,198 +670,292 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
 // setup quiz
 $.fn.setupQuiz = function( num ) {
-
+    
+    var index = 0, found = false, error = false;
+    
     // loop to find the question
-    while ( !found || qNum === quizArray.length ) {
+    while ( !found || index >= questions.length ) {
 
-        if ( quizArray[qNum].id === num ) {
+        if ( questions[index].id === num ) {
+        
             found = true;
+            
         } else {
-            qNum++;
+        
+            index++;
+            
         }
 
     }
 
     // build the question
-    $('#slide').append('<div id="quiz"><div class="header">Quiz ' + (qNum + 1) + ' of ' + quizArray.length + '</div>');
+    $( "#slide" ).append( "<div id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment</div>" );
 
-    // give the quiz a second to build up
-    $('#quiz').hide();
-    $('#quiz').fadeIn();
+    if ( !questions[index].taken ) {
 
-    if (!quizArray[qNum].taken) {
+        $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "</div>" );
+        
+        switch( questions[index].type ) {
+            
+            case "t/f":
+                
+                $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
+                
+            break;
+            
+            case "fib":
+            
+                $( "#quiz" ).append( "<div class=\"answerArea\"><input type=\"text\" id=\"saAns\" /></div>" );
+            
+            break;
+            
+            case "mc":
+            
+                $( "#quiz" ).append( "<div class=\"answerArea\">" );
 
-        $('#quiz').append('<div class="question">' + quizArray[qNum].question + '</div>');
-
-        if (quizArray[qNum].type === "t/f") {
-
-            $('#quiz').append('<div class="answerArea"><label for="t"><input id="t" type="radio" name="tf" value="true" /> True</label><label for="f"><input type="radio" id="f" name="tf" value="false" /> False</label></div>');
-
-        } else if (quizArray[qNum].type === "fib") {
-
-            $('#quiz').append('<div class="answerArea"><textarea id="saAns"></textArea></div>');
-
-        } else if (quizArray[qNum].type === "mc") {
-
-            $('#quiz').append('<div class="answerArea">');
-
-            for (var i = 0; i < quizArray[qNum].choice.length; i++) {
-                $('.answerArea').append('<label for="' + i + '"><input id="' + i + '" type="radio" name="mc" value="' + quizArray[qNum].choice[i] + '" /> ' + quizArray[qNum].choice[i] + '</label>');
-            }
-
-            $('#quiz').append('</div>');
-
-        } else if (quizArray[qNum].type === "sa") {
-
-            $('#quiz').append('<div class="answerArea"><textarea id="saAns"></textArea></div>');
-
-        } else {
-
-            $('#quiz').append('<div class="answerArea">ERROR!</div>');
-
+                for ( var i = 0; i < questions[index].choice.length; i++ ) {
+                
+                    $( ".answerArea" ).append( "<label for=\"" + i + "\"><input id=\"" + i + "\" type=\"radio\" name=\"mc\" value=\"" + questions[index].choice[i] + "\" /> " + questions[index].choice[i] + "</label>" );
+                    
+                }
+    
+                $( "#quiz" ).append( "</div>" );
+            
+            break;
+            
+            case "sa":
+                
+                $( "#quiz" ).append( "<div class=\"answerArea\"><textarea id=\"saAns\"></textArea></div>" );
+                
+            break;
+            
+            default:
+            
+                error = true;
+                $.fn.displayErrorMsg( "unknow question type!", "Please double check the topic XML file." );
+            
+            break;
+            
         }
-
-        $('#quiz').append('<div class="submitArea"><a id="check" rel="' + qNum + '" href="javascript:void(0)">SUBMIT</a></div>');
-
-        $('#check').click(function () {
-
-            var position = Number($(this).attr('rel'));
-            var stuAnswer;
-
-            if (quizArray[position].type === "t/f") {
-
-                stuAnswer = $('input:radio[name=tf]:checked').val();
-                if (stuAnswer === undefined) {
-                    stuAnswer = "";
-                }
-
-            } else if (quizArray[position].type === "fib") {
-
-                stuAnswer = $.trim($('#saAns').val());
-
-            } else if (quizArray[position].type === "mc") {
-
-                stuAnswer = $('input:radio[name=mc]:checked').val();
-                quizArray[position].incorrectIndex = $('input:radio[name=mc]').index($('input:radio[name=mc]').filter(":checked"));
-
-                if (stuAnswer === undefined) {
-                    stuAnswer = "";
-                }
-
-            } else if (quizArray[position].type === "sa") {
-
-                stuAnswer = $.trim($('#saAns').val());
-
-            } else {
-                $.trim(stuAnswer);
-            }
-
-            if (stuAnswer !== "") {
-
-                for (var i = 0; i < quizArray[position].answer.length; i++) {
-					
-					
-					
-                    if (quizArray[position].type === "fib") {
-                        var index = 0;
-                        
-					for (index; index < quizArray[position].answer.length; index++) {
-						if (stuAnswer.toLowerCase() === quizArray[position].answer[index].toLowerCase()) {
-							quizArray[position].correct = true;
-							break;
-						}
-					}
-
-                    } else if (quizArray[position].type === "t/f") {
-
-                        if (stuAnswer.toLowerCase() === quizArray[position].answer[i].toLowerCase()) {
-                            quizArray[position].correct = true;
-                        } else {
-                            quizArray[position].correct = false;
-                        }
-
-                    } else if (quizArray[position].type === "mc") {
-                        if (stuAnswer.toLowerCase() === quizArray[position].answer[i].toLowerCase()) {
-                            quizArray[position].correct = true;
-                        } else {
-                            quizArray[position].correct = false;
-                        }
-
-                    }
-
-                }
-
-                quizArray[position].stuAnswer = stuAnswer;
-                quizArray[position].taken = true;
-
-                $.fn.showFeedback(position);
-
-            } else {
-                alert("Please answer the question before submitting.");
-            }
-
-        });
-
+        
+        if ( !error ) {
+        
+            $( "#quiz" ).append( "<div class=\"submitArea\"><a id=\"check\" rel=\"" + index + "\" href=\"javascript:void(0)\">SUBMIT</a></div>" );
+            
+        }
+        
     } else {
-        $.fn.showFeedback(qNum);
+    
+        $.fn.showFeedback( index );
+        
     }
-
-    $('#slide').append('</div>');
-
-    // reset counter and flag for next quextion
-    qNum = 0;
-    found = false;
+    
+    if ( !error ) {
+    
+        $( "#slide" ).append( "</div>" );
+        
+        // give the quiz a second to build up
+        $( "#quiz" ).hide().fadeIn();
+        
+        // click event to check answer
+        $( "#check" ).on( "click", function() {
+    
+            var index = Number( $( this ).attr( "rel" ) ),
+                stuAnswer;
+                
+            switch( questions[index].type ) {
+                
+                case "t/f":
+                
+                    stuAnswer = $( "input:radio[name=tf]:checked" ).val();
+                
+                    if (stuAnswer === undefined) {
+                    
+                        stuAnswer = "";
+                        
+                    }
+                
+                break;
+                
+                case "fib":
+                    
+                    stuAnswer = $.trim( $( "#saAns" ).val() );
+                    
+                break;
+                
+                case "mc":
+                
+                    stuAnswer = $( "input:radio[name=mc]:checked" ).val();
+                    questions[index].incorrectIndex = $( "input:radio[name=mc]" ).index( $( "input:radio[name=mc]" ).filter( ":checked" ) );
+        
+                    if (stuAnswer === undefined) {
+                    
+                        stuAnswer = "";
+                        
+                    }
+                    
+                break;
+                
+                case "sa":
+                    
+                    stuAnswer = $.trim( $( "#saAns" ).val() );
+                    
+                break;
+                
+                default:
+                
+                    stuAnswer = "";
+                    
+                break;
+                
+                
+            }
+    
+            if (stuAnswer !== "") {
+            
+                switch( questions[index].type ) {
+                
+                    case "fib":
+                    
+                        for ( var i = 0; i < questions[index].answer.length; i++ ) {
+                            
+        					if ( stuAnswer.toLowerCase() === questions[index].answer[i].toLowerCase() ) {
+        					
+        						questions[index].correct = true;
+        						break;
+        						
+        					}
+        					
+        				}
+                        
+                    break;
+                    
+                    case "t/f":
+                    
+                        if ( stuAnswer === String ( questions[index].answer ) ) {
+                    
+                            questions[index].correct = true;
+                            
+                        } else {
+                        
+                            questions[index].correct = false;
+                            
+                        }
+                    
+                    break;
+                    
+                    case "mc":
+                    
+                        if ( stuAnswer === questions[index].answer[index] ) {
+                    
+                            questions[index].correct = true;
+                            
+                        } else {
+                        
+                            questions[index].correct = false;
+                            
+                        }
+                    
+                    break;
+                    
+                    default:
+                        
+                        questions[index].correct = false;
+                        
+                    break;
+                    
+                }
+    
+                questions[index].stuAnswer = stuAnswer;
+                questions[index].taken = true;
+    
+                $.fn.showFeedback( index );
+    
+            } else {
+            
+                alert( "Please answer the question before submitting." );
+                
+            }
+    
+        } ); // end click event
+        
+    }
 
 };
 
 // display quiz feedback
-$.fn.showFeedback = function( position ) {
+$.fn.showFeedback = function( index ) {
 
     var correctAnswer = "";
 
-    $('#slide').html('<div id="quiz"><div class="header">Quiz ' + (position + 1) + ' of ' + quizArray.length + ' Feedback</div>');
+    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
 
-    if (quizArray[position].type !== "sa") {
+    if ( questions[index].type !== "sa" ) {
 
-        if (quizArray[position].correct) {
-            $('#quiz').append('<p class="quizCorrect"><span class="icon-checkmark"></span> CORRECT</p>');
+        if ( questions[index].correct ) {
+        
+            $( "#quiz" ).append( "<p class=\"quizCorrect\"><span class=\"icon-checkmark\"></span> CORRECT</p>" );
+            
         } else {
-            $('#quiz').append('<p class="quizIncorrect"><span class="icon-notification"></span> INCORRECT</p>');
+        
+            $( "#quiz" ).append( "<p class=\"quizIncorrect\"><span class=\"icon-notification\"></span> INCORRECT</p>" );
+            
         }
 
     }
 
-    $('#quiz').append('<div class="question">' + quizArray[position].question + '</div>');
-    $('#quiz').append('<div class="feedback"><p><strong>Your answer</strong>: ' + quizArray[position].stuAnswer + '</p>');
+    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "</div><div class=\"feedback\"><p><strong>Your answer</strong>: " + questions[index].stuAnswer + "</p>" );
 
-    for (var i = 0; i < quizArray[position].answer.length; i++) {
+    for (var i = 0; i < questions[index].answer.length; i++) {
 
-        if (i === quizArray[position].answer.length - 1) {
-            correctAnswer += quizArray[position].answer[i];
+        if (i === questions[index].answer.length - 1) {
+        
+            correctAnswer += questions[index].answer[i];
+            
         } else {
-            correctAnswer += quizArray[position].answer[i] + ", ";
+        
+            correctAnswer += questions[index].answer[i] + ", ";
+            
         }
 
     }
 
     $('.feedback').append('<p><strong>Correct answer</strong>: ' + correctAnswer + '</p></div>');
 
-    if (quizArray[position].type !== "sa") {
+    if ( questions[index].type !== "sa" ) {
 
-        if (quizArray[position].correct) {
-            $('.feedback').append('<p><strong>Feedback:</strong> ' + quizArray[position].correctFeedback + '</p>');
+        if ( questions[index].correct ) {
+            
+            if ( String( questions[index].correctFeedback ) !== "" ) {
+                
+                $('.feedback').append('<p><strong>Feedback:</strong> ' + questions[index].correctFeedback + '</p>');
+                
+            }
+            
         } else {
-            if (quizArray[position].type === "mc") {
+        
+            if (questions[index].type === "mc") {
 
-                var feedback = quizArray[position].wrongFeedback[quizArray[position].incorrectIndex];
+                var feedback = questions[index].wrongFeedback[questions[index].incorrectIndex];
+                
                 if (typeof feedback === 'undefined') {
                     feedback = "";
                 }
 
                 $('.feedback').append('<p><strong>Feedback:</strong> ' + feedback + '</p>');
+                
             } else {
-                $('.feedback').append('<p><strong>Feedback:</strong> ' + quizArray[position].wrongFeedback + '</p>');
+            
+                if ( String( questions[index].wrongFeedback ) !== "" ) {
+            
+                    $('.feedback').append('<p><strong>Feedback:</strong> ' + questions[index].wrongFeedback + '</p>');
+                    
+                }
+                
             }
+            
+            
+            
         }
 
     }

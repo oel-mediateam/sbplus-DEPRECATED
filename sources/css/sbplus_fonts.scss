@@ -21,6 +21,10 @@
 	font-style: normal;
 }
 
+.light {
+    @include opacity( .4 );
+}
+
 .infoIcn:before {
     @include sbplusFonts;
     content: "\e363";

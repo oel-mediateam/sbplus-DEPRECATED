@@ -14,11 +14,11 @@ $gutter: 15px;
 }
 
 // imports
-@import "sbplus_fonts";
 @import "compass/css3/box-sizing";
 @import "compass/css3/border-radius";
 @import "compass/css3/opacity";
 @import "compass/css3/transition";
+@import "sbplus_fonts";
 
 // GENERAL
 html {
@@ -271,13 +271,13 @@ p {
         	font-size: rem( $font-size );
         	font-weight: bold;
         	text-transform: uppercase;
-        	padding: rem( 10px ) rem( 20px );
+        	padding: rem( 10px ) rem( $gutter );
         	background-image: url( "../img/quiz_bg.png" );
         	background-color: #e8e8e8;
     	}
     	
     	.question {
-        	padding: rem( 16px ) rem( 20px ) rem( 20px );
+        	padding: rem( 16px ) rem( $gutter ) rem( 20px );
         	font-size: rem( 18px );
         	line-height: rem( 24px );
         	font-weight: bold;
@@ -303,12 +303,20 @@ p {
         	font-size: rem( $font-size );
         	color: #000;
         	resize: none;
+        	outline: none;
+    	}
+    	
+    	input[type=text] {
+    	    @extend textarea;
+        	width: rem( 590px );
+        	height: rem( 25px );
+        	padding: rem( 5px );
     	}
     	
     	.submitArea {
     	
-        	text-align: center;
-            padding: rem( 20px ) 0;
+        	text-align: right;
+            padding: rem( 20px ) rem( $gutter );
             
             a, a:visited, a:hover {
                 display: inline-block;
@@ -321,6 +329,10 @@ p {
             	padding: rem( 10px ) rem( 20px ) rem( 8px );
             	background-color: #5bb75b;
             	@include border-radius( rem( 3px ) );
+            }
+            
+            a:hover {
+            	background-color: #4ba14b;
             }
     
     	} // .submitArea
@@ -621,17 +633,31 @@ p {
     	}
     	
     	li:hover {
+    	
         	background-color: #59a8dc;
         	color: #fff;
+        	
+        	.light {
+            	@include opacity( 1 );
+        	}
+        	
         }
     	
     	.ui-selecting {
+    	
         	background-color: #0099ff;
+        	
         }
         
         .ui-selected {
+        
         	background-color: #0099ff;
         	color: #fff;
+        	
+        	.light {
+            	@include opacity( 1 );
+        	}
+        	
         }
     	
     } // #selectable

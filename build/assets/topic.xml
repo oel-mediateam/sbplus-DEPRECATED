@@ -29,7 +29,7 @@
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="QUIZ: Fill-in-the-blank">
+	<topic src="quiz" title="Fill-in-the-blank">
 		<quiz type="fib">
 			<question>_____ enables the operating system to automatically detect newly installed hardware.</question>
 			<choice />
@@ -49,7 +49,7 @@
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="QUIZ: Short answer">
+	<topic src="quiz" title="Short answer">
 		<quiz type="sa">
 			<question>Describe Garfield.</question>
 			<choice />
@@ -69,7 +69,7 @@
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="QUIZ: True or False">
+	<topic src="quiz" title="True or False">
 		<quiz type="t/f">
 			<question>It is wise to stay home on snow day.</question>
 			<choice />
@@ -110,7 +110,7 @@
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="QUIZ: Multiple choice">
+	<topic src="quiz" title="Multiple choice">
 		<quiz type="mc">
 			<question>What enables the operating system to automatically detect newly installed hardware?</question>
 			<choice>ReadyBoost|PnP|Hyper-V|AutoConnect</choice>
@@ -130,7 +130,7 @@
 		</note>
 	</topic>
 		
-	<topic src="quiz" title="QUIZ: True or False">
+	<topic src="quiz" title="True or False">
 		<quiz type="t/f">
 			<question>Dinosaurs make good pets.</question>
 			<choice />
