@@ -40,6 +40,13 @@ p {
     margin: rem( $font-size ) 0;
 }
 
+// MOBILE DEVICE VIEW ON FULL SITE
+.mobile {
+    width: rem( 450px );
+    height: rem( 315px );
+    text-align: center;
+}
+
 // PLAYER WRAPPER
 #storybook_plus_wrapper {
 	width: rem( 900px );
@@ -164,6 +171,20 @@ p {
         }
     	
     } // header
+    
+    /* SLIDE LOADING SPINNER */
+    #progressing {
+        position: absolute;
+        top: rem( 200px );
+        left: rem( 315px );
+        width: rem( 30px );
+        height: rem( 30px );
+        background-image: url( "../img/spinner.gif" );
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-color: rgba( 255, 255, 255, .75);
+        @include border-radius( 50% );
+    }
 	
 } // #player
 
@@ -172,16 +193,6 @@ p {
 #content {
 
 	@include clear;
-	
-	/* SLIDE LOADING SPINNER */
-    #progressing {
-        position: absolute;
-        top: rem( 155px );
-        left: rem( 295px );
-        width: rem( 50px );
-        height: rem( 50px );
-        background: url( "../img/spinner.gif" ) no-repeat center center, #fff;
-    }
 	
 	// SLIDE NOTE AREA
     #slideNote {

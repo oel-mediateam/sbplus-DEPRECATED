@@ -36,23 +36,24 @@ $( document ).ready( function() {
 	
     var ua = navigator.userAgent,
         checker = {
-            iphone: ua.match( /(iPhone|iPod|iPad)/ ),
-            blackberry: ua.match( /BlackBerry/ ),
-            android: ua.match( /Android/ )
+        
+            ios: ua.match( /(iPhone|iPod|iPad)/i ),
+            android: ua.match( /Android/i ),
+            blackberry: ua.match( /BlackBerry/i )
+            
         };
 
     var mobile = ( $.fn.getParameterByName( "m" ) === "0" ) ? false : true;
 
-    if ( ( checker.iphone || checker.ipod || checker.ipad || checker.blackberry || checker.android ) && mobile ) {
+    if ( ( checker.ios || checker.blackberry || checker.android ) && mobile ) {
 
         var location = window.location.href,
-            locIndex = location.indexOf( "." ),
             locTemp;
 
-        locTemp = location.substr( locIndex );
+        locTemp = location.substr( location.indexOf( "." ) );
         location = "http://mediastreamer" + locTemp + "?m=0";
 
-        $( "body" ).html( "<div style=\"text-align:center; width:450px; height:315px;\"><a href=\"" + location + "\" target=\"_blank\"><img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus/img/view_on_full_site.png\" width=\"450px\" height=\"315px\" alt=\"Launch Presentation in New Window\" border=\"0\" /></a></div>" );
+        $( "body" ).html( "<div class=\"mobile\"><a href=\"" + location + "\" target=\"_blank\"><img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus/img/view_on_full_site.png\" width=\"450px\" height=\"315px\" alt=\"Launch Presentation in New Window\" border=\"0\" /></a></div>" );
         
         return false;
 
@@ -77,6 +78,7 @@ $( document ).ready( function() {
 $.fn.getLessonContent = function( file ) {
     
     $.ajaxSetup( {
+    
         url: file,
         type: 'GET',
         dataType: 'xml',
@@ -84,20 +86,29 @@ $.fn.getLessonContent = function( file ) {
         content: 'xml',
         contentType: 'xml; charset="utf-8"',
         cache: false
+        
     } );
 
     $.ajax( {
+    
         encoding: 'UTF-8',
         beforeSend: function ( xhr ) {
+        
             xhr.overrideMimeType( "xml; charset=utf-8" );
             xhr.setRequestHeader( "Accept", "text/xml" );
+            
         },
         success: function ( xml ) {
+        
             $.fn.parseContent( xml );
+            
         },
         error: function ( xhr, exception ) {
+        
             $.fn.displayGetLessonError( xhr.status, exception );
+            
         }
+        
     } );
     
 };
@@ -243,7 +254,9 @@ $.fn.setupPlayer = function() {
     $( document ).attr( "title", lessonTitle );
     
     if ( !enabledNote ) {
+    
         $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
+        
     }
     
     // initialy hide error message container
@@ -321,6 +334,8 @@ $.fn.initializePlayer = function() {
     
     // setup profile panel
     $( "#profile .bio" ).html( "<p>" + instructor + "</p>" + PROFILE );
+    
+    $( "#player" ).append( "<div id=\"progressing\"></div>" );
 	
 	// enable fancy box for profile panel
     $( "#info, a.instructorName" ).fancybox( {
@@ -363,11 +378,13 @@ $.fn.initializePlayer = function() {
 
         counter--;
 
-        if ( counter <= 0 ) {
-            counter = topicCount;
+        if ( counter < 0 ) {
+            counter = topicCount - 1;
         }
 
         $.fn.loadSlide( topicSrc[counter], counter );
+        
+        return false;
 
     } );
     
@@ -376,11 +393,13 @@ $.fn.initializePlayer = function() {
     
         counter++;
         
-        if ( counter > topicCount ) {
-            counter = 1;
+        if ( counter > topicCount - 1 ) {
+            counter = 0;
         }
-
+        
         $.fn.loadSlide( topicSrc[counter], counter );
+        
+        return false;
 
     });
     
@@ -394,6 +413,7 @@ $.fn.initializePlayer = function() {
         $('#fontMinusBtn').on('click', function() {
 
             $.fn.adjustFontSize( "minus" );
+            return false;
 
         });
 
@@ -401,6 +421,7 @@ $.fn.initializePlayer = function() {
         $('#fontPlusBtn').on('click', function() {
 
             $.fn.adjustFontSize( "plus" );
+            return false;
 
         });
 
@@ -438,9 +459,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 );
         
     }
-
-    $( "#slide" ).html( "<div id=\"progressing\"></div>" );
-
+    
+    $( "#progressing" ).fadeIn();
+    
     // if video is playing
     if ( videoPlaying ) {
     
@@ -482,20 +503,21 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     switch ( slideSource ) {
         
         case "image:":
-        
+            
             img = new Image();
 
             imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
             imgCaption = $( "#selectable li .title" ).get( sNum ).innerHTML;
     
             $( img ).load( function() {
-    
+                
                 $( this ).hide();
-                $( "#slide" ).append( "<a id=\"img\" title=\"" + imgCaption + "\" href=\"" + imgPath + "\">" );
+                $( "#slide" ).html( "<a id=\"img\" title=\"" + imgCaption + "\" href=\"" + imgPath + "\">" );
                 $( "#slide #img" ).html( img );
                 $( "#slide" ).append( "</a><div class=\"magnifyIcon\"></div>" );
                 $( this ).fadeIn();
                 $( this ).bindImgMagnify();
+                $( "#progressing" ).fadeOut();
     
             } ).error( function() {
     
@@ -518,11 +540,12 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             $( img ).load( function() {
     
                 $( this ).hide();
-                $( "#slide" ).append( "<a id=\"img\" title=\"" + imgCaption + "\"href=\"" + imgPath + "\">" );
+                $( "#slide" ).html( "<a id=\"img\" title=\"" + imgCaption + "\"href=\"" + imgPath + "\">" );
                 $( "#slide #img" ).html( img );
                 $( "#slide" ).append( "</a><div class=\"magnifyIcon\"></div>" );
                 $( this ).fadeIn();
                 $( this ).bindImgMagnify();
+                $( "#progressing" ).fadeOut();
     
                 if ( !audioPlaying ) {
     
@@ -606,7 +629,11 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             var time = $.now(),
                 playerID = "vpc" + time;
     
-            $( "#vp" ).append( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" controls autoplay width=\"640\" height=\"360\">" + ( ( $.fn.fileExists( "assets/video/" + srcName, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + srcName + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>" );
+            $( "#vp" ).append( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" controls autoplay width=\"640\" height=\"360\">" + ( ( $.fn.fileExists( "assets/video/" + srcName, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + srcName + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>" ).promise().done( function() {
+                
+                $( "#progressing" ).fadeOut();
+                
+            } );
     
             if ( !videoPlaying ) {
             
@@ -632,19 +659,28 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 
         case "youtube:":
         
-            $( "#slide" ).append( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&html5=1&autohide=1&rel=0\" frameborder=\"0\" allowfullscreen></iframe>" );
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&html5=1&autohide=1&rel=0\" frameborder=\"0\" allowfullscreen></iframe>" ).promise().done( function() {
+                
+                $( "#progressing" ).fadeOut();
+                
+            } );
         
         break;
         
         case "swf:":
         
-            $( "#slide" ).append( "<object width=\"640\" height=\"360\" type=\"application/x-shockwave-flash\" data=\"assets/swf/" + srcName + ".swf\"><param name=\"movie\" value=\"assets/swf/" + srcName + ".swf\" /><div id=\"errorMsg\"><p>Error: Adobe Flash Player is not enabled or installed!</p><p>Adobe Flash Player is required to view this slide. Please enable or <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">install Adobe Flash Player</a>.</p></div></object>" );
+            $( "#slide" ).html( "<object width=\"640\" height=\"360\" type=\"application/x-shockwave-flash\" data=\"assets/swf/" + srcName + ".swf\"><param name=\"movie\" value=\"assets/swf/" + srcName + ".swf\" /><div id=\"errorMsg\"><p>Error: Adobe Flash Player is not enabled or installed!</p><p>Adobe Flash Player is required to view this slide. Please enable or <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">install Adobe Flash Player</a>.</p></div></object>" ).promise().done( function() {
+                
+                $( "#progressing" ).fadeOut();
+                
+            } );
         
         break;
         
         case "quiz":
         
             $.fn.setupQuiz( sNum );
+            $( "#progressing" ).fadeOut();
         
         break;
         
@@ -655,8 +691,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
         
     }
-    
-    $( "#progressing" ).hide();
     
     if ( enabledNote ) {
     
@@ -689,7 +723,7 @@ $.fn.setupQuiz = function( num ) {
     }
 
     // build the question
-    $( "#slide" ).append( "<div id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment</div>" );
+    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment</div>" );
 
     if ( !questions[index].taken ) {
 

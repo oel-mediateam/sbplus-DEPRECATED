@@ -135,12 +135,12 @@
 			<question>Dinosaurs make good pets.</question>
 			<choice />
 			<answer>false</answer>
-			<!--
-<wrongFeedback>Dinosaurs are gigantic. They no longer exist, but if you like bones...</wrongFeedback>
+			<wrongFeedback>Dinosaurs are gigantic. They no longer exist, but if you like bones...</wrongFeedback>
 			<correctFeedback>Yep. You do not want them as pets. Imagine what you need to do to clean up after them. Yuck!</correctFeedback>
--->
+            <!--
 <wrongFeedback />
 			<correctFeedback />
+-->
 		</quiz>
 		<note>
 			<![CDATA[<p>This is a true or false question.</p>]]>
