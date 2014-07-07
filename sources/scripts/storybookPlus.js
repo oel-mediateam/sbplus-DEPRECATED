@@ -19,7 +19,8 @@ var topicCount = 0,
     enabledNote = false,
     imgCaption;
     
-var questions;
+var questions,
+    quizDetected = false;
     
 var PROFILE,
     lessonTitle,
@@ -191,7 +192,8 @@ $.fn.parseContent = function( xml ) {
             noteArray[topicCount] = $( this ).find( "note" ).text();
             
         }
-
+        
+        
         if ( topicSrc[topicCount] === "quiz" ) {
             
             var questionNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).text() ),
@@ -202,6 +204,8 @@ $.fn.parseContent = function( xml ) {
                 answerNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "answer" ).text() );
             
             var quiz = {};
+            
+            quizDetected = true;
             
             quiz.id = topicCount;
             quiz.type = quizTypeAttr;
@@ -217,7 +221,7 @@ $.fn.parseContent = function( xml ) {
                 quiz.wrongFeedback = wrongFeedbackNode;
                 
             }
-
+            
             quiz.answer = $.fn.splitSelections( answerNode );
             quiz.stuAnswer = "";
             quiz.correct = false;
@@ -253,12 +257,6 @@ $.fn.setupPlayer = function() {
     
     $( document ).attr( "title", lessonTitle );
     
-    if ( !enabledNote ) {
-    
-        $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
-        
-    }
-    
     // initialy hide error message container
     $( "#errorMsg" ).hide();
     
@@ -279,6 +277,16 @@ $.fn.setupPlayer = function() {
 		}
 		
 	} );
+	
+    if ( enabledNote === false && quizDetected === false ) {
+    
+        $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
+        
+    } else if ( enabledNote === false && quizDetected === true ) {
+    
+        $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
+        
+    }
 	
 	// loop to populate the table of contents
     $.each( topicTitle, function( i ) {
@@ -358,11 +366,11 @@ $.fn.initializePlayer = function() {
         stop: function() {
 
             $( ".ui-selected", this ).each( function() {
-            
+                
                 tocIndex = $( "#selectable li" ).index( this );
                 
             } );
-
+            
             if ( tocIndex !== previousIndex ) {
             
                 $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
@@ -383,6 +391,7 @@ $.fn.initializePlayer = function() {
         }
 
         $.fn.loadSlide( topicSrc[counter], counter );
+        previousIndex = counter;
         
         return false;
 
@@ -398,6 +407,7 @@ $.fn.initializePlayer = function() {
         }
         
         $.fn.loadSlide( topicSrc[counter], counter );
+        previousIndex = counter;
         
         return false;
 
@@ -461,6 +471,12 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     }
     
     $( "#progressing" ).fadeIn();
+    
+    if ( $( "#slideNote" ).hasClass( "quizSlide" ) ) {
+        
+        $( "#slideNote" ).removeClass( "quizSlide" );
+        
+    }
     
     // if video is playing
     if ( videoPlaying ) {
@@ -678,7 +694,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
         
         case "quiz":
-        
+            
+            $( "#slideNote" ).addClass( "quizSlide" );
             $.fn.setupQuiz( sNum );
             $( "#progressing" ).fadeOut();
         
@@ -702,10 +719,20 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
 };
 
-// setup quiz
+/**
+ * Setup self-assessment question
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param int, topic slide index
+ * @return void
+ *
+ */
 $.fn.setupQuiz = function( num ) {
     
     var index = 0, found = false, error = false;
+    var answerLength;
     
     // loop to find the question
     while ( !found || index >= questions.length ) {
@@ -744,12 +771,23 @@ $.fn.setupQuiz = function( num ) {
             break;
             
             case "mc":
-            
-                $( "#quiz" ).append( "<div class=\"answerArea\">" );
-
-                for ( var i = 0; i < questions[index].choice.length; i++ ) {
                 
-                    $( ".answerArea" ).append( "<label for=\"" + i + "\"><input id=\"" + i + "\" type=\"radio\" name=\"mc\" value=\"" + questions[index].choice[i] + "\" /> " + questions[index].choice[i] + "</label>" );
+                var type = "radio";
+                var name = "mc";
+                answerLength = questions[index].answer.length;
+                
+                $( "#quiz" ).append( "<div class=\"answerArea\">" );
+                
+                if ( answerLength > 1 ) {
+                    
+                    type = "checkbox";
+                    name = "ma";
+                    
+                }
+                
+                for ( var i = 0; i < questions[index].choice.length; i++ ) {
+                    
+                    $( ".answerArea" ).append( "<label for=\"" + i + "\"><input id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + questions[index].choice[i] + "\" /> " + questions[index].choice[i] + "</label>" );
                     
                 }
     
@@ -818,11 +856,24 @@ $.fn.setupQuiz = function( num ) {
                 break;
                 
                 case "mc":
-                
-                    stuAnswer = $( "input:radio[name=mc]:checked" ).val();
-                    questions[index].incorrectIndex = $( "input:radio[name=mc]" ).index( $( "input:radio[name=mc]" ).filter( ":checked" ) );
-        
-                    if (stuAnswer === undefined) {
+                    
+                    if ( answerLength > 1) {
+                        
+                        stuAnswer = [];
+                        $( "input:checkbox[name=ma]:checked" ).each( function() {
+                            stuAnswer.push( $( this ).val() );
+                        } );
+                        
+                        questions[index].incorrectIndex = 0;
+                        
+                    } else {
+                        
+                        stuAnswer = $( "input:radio[name=mc]:checked" ).val();
+                        questions[index].incorrectIndex = $( "input:radio[name=mc]" ).index( $( "input:radio[name=mc]" ).filter( ":checked" ) );
+                        
+                    }
+                    
+                    if ( stuAnswer === undefined || stuAnswer.length <= 0 ) {
                     
                         stuAnswer = "";
                         
@@ -840,8 +891,7 @@ $.fn.setupQuiz = function( num ) {
                 
                     stuAnswer = "";
                     
-                break;
-                
+                break; 
                 
             }
     
@@ -879,17 +929,46 @@ $.fn.setupQuiz = function( num ) {
                     break;
                     
                     case "mc":
-                    
-                        if ( stuAnswer === questions[index].answer[index] ) {
-                    
-                            questions[index].correct = true;
+                        
+                        var answerCount = 0;
+                        
+                        if ( answerLength > 1 ) {
+                            
+                            for ( answerCount = 0; answerCount < stuAnswer.length; answerCount++ ) {
+                            
+                                if ( $.inArray( stuAnswer[answerCount], questions[index].answer ) >= 0 ) {
+                                
+                                    questions[index].correct = true;
+                                    
+                                } else {
+                                
+                                    questions[index].correct = false;
+                                    break;
+                                    
+                                }
+                                
+                            }
+                            
+                            if ( answerCount < questions[index].answer.length ) {
+                            
+                                questions[index].correct = false;
+                                
+                            }
                             
                         } else {
-                        
-                            questions[index].correct = false;
+                            
+                            if ( stuAnswer === questions[index].answer[0] ) {
+                                
+                                questions[index].correct = true;
+                                
+                            } else {
+                            
+                                questions[index].correct = false;
+                                
+                            }
                             
                         }
-                    
+                        
                     break;
                     
                     default:
@@ -917,10 +996,17 @@ $.fn.setupQuiz = function( num ) {
 
 };
 
-// display quiz feedback
+/**
+ * Display current self-assessment feedback
+ * @since 2.0.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param int, current question index
+ * @return void
+ *
+ */
 $.fn.showFeedback = function( index ) {
-
-    var correctAnswer = "";
 
     $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
 
@@ -938,23 +1024,9 @@ $.fn.showFeedback = function( index ) {
 
     }
 
-    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "</div><div class=\"feedback\"><p><strong>Your answer</strong>: " + questions[index].stuAnswer + "</p>" );
+    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "</div><div class=\"result\"><p><strong>Your answer</strong>: " + $.fn.parseArray( questions[index].stuAnswer ) + "</p>" );
 
-    for (var i = 0; i < questions[index].answer.length; i++) {
-
-        if (i === questions[index].answer.length - 1) {
-        
-            correctAnswer += questions[index].answer[i];
-            
-        } else {
-        
-            correctAnswer += questions[index].answer[i] + ", ";
-            
-        }
-
-    }
-
-    $('.feedback').append('<p><strong>Correct answer</strong>: ' + correctAnswer + '</p></div>');
+    $('.result').append('<p><strong>Correct answer</strong>: ' + $.fn.parseArray( questions[index].answer ) + '</p></div>');
 
     if ( questions[index].type !== "sa" ) {
 
@@ -962,7 +1034,7 @@ $.fn.showFeedback = function( index ) {
             
             if ( String( questions[index].correctFeedback ) !== "" ) {
                 
-                $('.feedback').append('<p><strong>Feedback:</strong> ' + questions[index].correctFeedback + '</p>');
+                $('.result').append('<p><strong>Feedback:</strong> ' + questions[index].correctFeedback + '</p>');
                 
             }
             
@@ -972,23 +1044,25 @@ $.fn.showFeedback = function( index ) {
 
                 var feedback = questions[index].wrongFeedback[questions[index].incorrectIndex];
                 
-                if (typeof feedback === 'undefined') {
+                if (typeof feedback === undefined) {
                     feedback = "";
                 }
 
-                $('.feedback').append('<p><strong>Feedback:</strong> ' + feedback + '</p>');
+                if ( String( feedback ) !== "" ) {
+            
+                    $('.result').append('<p><strong>Feedback:</strong> ' + feedback + '</p>');
+                    
+                }
                 
             } else {
             
                 if ( String( questions[index].wrongFeedback ) !== "" ) {
             
-                    $('.feedback').append('<p><strong>Feedback:</strong> ' + questions[index].wrongFeedback + '</p>');
+                    $('.result').append('<p><strong>Feedback:</strong> ' + questions[index].wrongFeedback + '</p>');
                     
                 }
                 
             }
-            
-            
             
         }
 
@@ -1051,7 +1125,15 @@ $.fn.loadNote = function( num ) {
 
     var note = noteArray[num];
 	
-	$( "#note" ).html( note ).hide().fadeIn( "fast" );
+	if ( !$( "#slideNote" ).hasClass( "quizSlide" ) ) {
+
+    	$( "#note" ).html( note ).hide().fadeIn( "fast" );
+    	
+	} else {
+	
+    	$( "#note" ).hide();
+    	
+	}
 	
 	if ( $( "#note" ).find( "a" ).length ) {
 	
@@ -1270,6 +1352,9 @@ $.fn.displayGetLessonError = function( status, exception ) {
         case 0:
             statusMsg = "<strong>Error 0</strong> - Not connect. Please verify network.";
         break;
+        case 200:
+            statusMsg = "<strong>Error 200</strong> - Invalid characters in XML.";
+        break;
         case 404:
             statusMsg = "<strong>Error 404</strong> - Requested page not found.";
         break;
@@ -1288,10 +1373,10 @@ $.fn.displayGetLessonError = function( status, exception ) {
     switch ( exception ) {
         
         case "parsererror":
-            exceptionMsg = "Invalid XML. XML parse failed.";
+            exceptionMsg = "XML parse failed. Please double-check the <strong>topic.xml</strong> file in the <strong>assets</strong> directory. All node values must be wrapped inside <code>&lt;![CDATA[ ... ]]&gt;</code> or use HTML entity for special characters.";
         break;
         case "timeout":
-            exceptionMsg = "XML parsing timed out.";
+            exceptionMsg = "XML parsing timed out. It is taking too long for the browser.";
         break;
         case "abort":
             exceptionMsg = "Ajax request aborted.";
@@ -1306,7 +1391,7 @@ $.fn.displayGetLessonError = function( status, exception ) {
     }
 
     $('#splash_screen, #player').hide();
-    $('#errorMsg').html('<p>' + statusMsg + '<br />' + exceptionMsg + '</p>');
+    $('#errorMsg').html('<p>' + statusMsg + '</p><p>' + exceptionMsg + '</p>');
 
 };
 
@@ -1450,5 +1535,52 @@ $.fn.getParameterByName = function( param ) {
 $.fn.addLeadingZero = function( num ) {
 
     return num < 10  ? "0" + ( num ) : ( num );
+    
+};
+
+/**
+ * Display elements from array properly
+ * @since 2.1.0
+ *
+ * @author Ethan S. Lin
+ * @param array and int, the array to parse and 1 for "and" and 0 for "or"
+ * @return string
+ *
+ */
+$.fn.parseArray = function( arr ) {
+    
+    var result = "";
+    
+    if ( $.isArray( arr ) ) {
+        
+        for ( var i = 0; i < arr.length; i++ ) {
+        
+            if ( arr.length === 1 ) {
+                
+                result += arr[0];
+                
+            } else {
+            
+                if (i === arr.length - 1 ) {
+                
+                    result += arr[i];
+                    
+                } else {
+                
+                    result += arr[i] + ", ";
+                    
+                }
+                
+            }
+    
+        }
+        
+    } else {
+        
+        result = arr;
+    
+    }
+    
+    return result;
     
 };

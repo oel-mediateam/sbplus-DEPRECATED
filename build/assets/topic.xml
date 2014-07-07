@@ -137,14 +137,19 @@
 			<answer>false</answer>
 			<wrongFeedback>Dinosaurs are gigantic. They no longer exist, but if you like bones...</wrongFeedback>
 			<correctFeedback>Yep. You do not want them as pets. Imagine what you need to do to clean up after them. Yuck!</correctFeedback>
-            <!--
-<wrongFeedback />
-			<correctFeedback />
--->
 		</quiz>
-		<note>
-			<![CDATA[<p>This is a true or false question.</p>]]>
-		</note>
+		<note />
+	</topic>
+	
+	<topic src="quiz" title="Multiple answers">
+		<quiz type="mc">
+			<question>What are the colors of the American flag?</question>
+			<choice>Red|Green|Blue|White|Yellow|Gold</choice>
+			<answer>Red|Blue|White</answer>
+			<wrongFeedback>Uh-oh!</wrongFeedback>
+			<correctFeedback><![CDATA["The colors,” Thomson said at the time, “are those used in the flag of the United States of America. White signifies purity and innocence. Red, hardiness & valour, and Blue… signifies vigilance, perseverance & justice.”]]></correctFeedback>
+		</quiz>
+		<note />
 	</topic>
 	
 	<!--

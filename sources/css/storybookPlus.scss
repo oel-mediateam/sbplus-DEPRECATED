@@ -83,6 +83,27 @@ p {
     
 }
 
+#storybook_plus_wrapper.withQuiz {
+    
+    #note {
+        background-color: #ebebeb;
+    }
+    
+    #control {
+        
+        #currentStatus {
+            width: rem( 212px );
+            border-right: none;
+        }
+        
+        #fontMinusBtn, #fontPlusBtn, #fontSizeIndicator {
+            display: none;
+        }
+        
+    }
+    
+}
+
 // SPLASH SCREEN
 #splash_screen {
 
@@ -199,6 +220,19 @@ p {
     	width: rem( 640px );
     	border-right: #ccc solid rem( 1px );
     	float: left;
+    }
+    
+    #slideNote.quizSlide {
+        
+        
+        #slide, #quiz {
+            height: rem( 560px );
+        }
+        
+        #note {
+            display: none;
+        }
+        
     }
 	
 	// SLIDE
@@ -363,7 +397,7 @@ p {
         	background-color: #b0092d;
     	}
     	
-    	.feedback {
+    	.result {
         	padding: 0 rem( 20px );
         }
     	
@@ -777,12 +811,13 @@ p {
 
 // AJAX ERROR
 #errorMsg {
-
-	color: #f00;
+    
+    color: #000;
 	padding: 0 rem( 10px );
 	
 	p:first-child {
     	font-size: rem( 18px );
+    	color: #f00;
 	}
 	
 }
