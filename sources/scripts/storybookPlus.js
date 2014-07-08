@@ -128,13 +128,13 @@ $.fn.parseContent = function( xml ) {
     var XMLData = $( xml ),
         SETUP = XMLData.find( "setup" ),
         TOPIC = XMLData.find( "topic" ),
-        LESSON = $.trim( SETUP.find( "lesson" ).text() ),
+        LESSON = $.fn.stripScript( SETUP.find( "lesson" ).text() ),
         INSTRUCTOR = $.trim( SETUP.find( "instructor" ).text() ),
-        LENGTH = $.trim( SETUP.find( "length" ).text() ),
-        NOTE = $.trim( SETUP.find( "note" ).text() ),
-        SLIDEFORMAT = $.trim( SETUP.find('slideImgFormat').text() );
+        LENGTH = $.fn.stripScript( SETUP.find( "length" ).text() ),
+        NOTE = $.fn.stripScript( SETUP.find( "note" ).text() ),
+        SLIDEFORMAT = $.fn.stripScript( SETUP.find('slideImgFormat').text() );
        
-    PROFILE = $.trim( XMLData.find( "profile" ).text() );
+    PROFILE = $.fn.stripScript( XMLData.find( "profile" ).text() );
     
     lessonTitle = "Lesson name is not specified.";
     instructor = "Instructor name is not specified.";
@@ -184,24 +184,24 @@ $.fn.parseContent = function( xml ) {
     // display each topic to web page as well
     TOPIC.each( function() {
         
-        topicTitle[topicCount] = $( this ).attr( 'title' );
-        topicSrc[topicCount] = $( this ).attr( 'src' );
+        topicTitle[topicCount] = $.trim( $( this ).attr( 'title' ) );
+        topicSrc[topicCount] = $.trim( $( this ).attr( 'src' ) );
         
         if ( enabledNote ) {
         
-            noteArray[topicCount] = $( this ).find( "note" ).text();
+            noteArray[topicCount] = $.fn.stripScript( $( this ).find( "note" ).text() );
             
         }
         
         
         if ( topicSrc[topicCount] === "quiz" ) {
             
-            var questionNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).text() ),
-                choiceNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).text() ),
-                wrongFeedbackNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "wrongFeedback" ).text() ),
-                correctFeedbackNode = $.trim( XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('correctFeedback').text() ),
-                quizTypeAttr = XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).attr( "type" ),
-                answerNode = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "answer" ).text() );
+            var questionNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).text() ),
+                choiceNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).text() ),
+                wrongFeedbackNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "wrongFeedback" ).text() ),
+                correctFeedbackNode = $.fn.stripScript( XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('correctFeedback').text() ),
+                quizTypeAttr = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).attr( "type" ) ),
+                answerNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "answer" ).text() );
             
             var quiz = {};
             
@@ -282,9 +282,11 @@ $.fn.setupPlayer = function() {
     
         $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
         
+        
     } else if ( enabledNote === false && quizDetected === true ) {
     
         $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
+        $( "#note" ).html( "<div class=\"noNotes\">NOTES DISABLED</div>" );
         
     }
 	
@@ -496,7 +498,11 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             
         } catch(e) { }
         
-        if ( enabledNote ) {
+        if ( enabledNote === false && quizDetected === false ) {
+        
+            $( "#apm" ).hide();
+            
+        } else {
         
             $( "#ap" ).hide();
             
@@ -505,10 +511,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 $( "#note" ).removeClass( "cropped" );
                 
             }
-            
-        } else {
-        
-            $( "#apm" ).hide();
             
         }
         
@@ -565,9 +567,33 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     
                 if ( !audioPlaying ) {
     
-                    if ( enabledNote ) {
+                    if ( enabledNote === false && quizDetected === false ) {
     					
     					if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
+                            
+                            $( "#apm" ).show();
+                            
+                            if (firstAudioLoad !== true) {
+    					    
+                    		    $.fn.loadAudioPlayer( "#apcm", srcName );
+                                firstAudioLoad = true;
+        						
+        					} else {
+        					    
+        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
+        						audioPlayer.setSrc( sources );
+        						
+        					}
+                            
+                        } else {
+                        
+                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
+                            
+                        }
+    
+                    } else {
+                        
+                        if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
                             
                             $( "#ap").show();
                             
@@ -593,30 +619,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                                 
                             }
                             
-                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
-                            
-                        }
-    
-                    } else {
-    
-                        if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
-                            
-                            $( "#apm" ).show();
-                            
-                            if (firstAudioLoad !== true) {
-    					    
-                    		    $.fn.loadAudioPlayer( "#apcm", srcName );
-                                firstAudioLoad = true;
-        						
-        					} else {
-        					    
-        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-        						audioPlayer.setSrc( sources );
-        						
-        					}
-                            
-                        } else {
-                        
                             $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
                             
                         }
@@ -1584,3 +1586,28 @@ $.fn.parseArray = function( arr ) {
     return result;
     
 };
+
+/**
+ * Strips script tags from string
+ * @since 2.1.0
+ *
+ * @author Ethan S. Lin
+ * @param string, the string to strip script tags
+ * @return string
+ *
+ */
+ $.fn.stripScript = function ( str ) {
+   
+   if ( str !== "" || str !== undefined ) {
+   
+       var results = $( "<span>" +  $.trim( str ) + "</span>" );
+       
+       results.find( "script,noscript,style" ).remove().end();
+       
+       return results.html();
+       
+   }
+   
+   return str;
+   
+ };

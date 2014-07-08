@@ -415,6 +415,15 @@ p {
     	float: left;
     	@include box-sizing( "border-box" );
     	
+    	.noNotes {
+        	font-size: rem( 32px );
+        	line-height: rem( 38px );
+        	color: #d4d4d4;
+        	text-align: center;
+        	padding: rem( 75px ) 0 0 0;
+        	cursor: default;
+    	}
+    	
     	a, a:visited {
         	color: #00f;
             text-decoration: underline;
@@ -547,6 +556,11 @@ p {
     
     #note.cropped {
         height: 170px;
+        
+        .noNotes {
+            padding-top: rem( 65px );
+        }
+        
     }
 	
 	// PLAYER CONTROLS

@@ -29,17 +29,6 @@
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="Fill-in-the-blank">
-		<quiz type="fib">
-			<question>_____ enables the operating system to automatically detect newly installed hardware.</question>
-			<choice />
-			<answer>PnP|Plug and Play</answer>
-			<wrongFeedback>What? Wrong! Please go over the presentation again.</wrongFeedback>
-			<correctFeedback>Ding! Ding! Ding! You're correct! Good job!</correctFeedback>
-		</quiz>
-		<note />
-	</topic>
-	
 	<topic src="swf:animations" title="Flash animation">
 		<quiz />
 		<note>
@@ -47,33 +36,11 @@
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="Short answer">
-		<quiz type="sa">
-			<question>Describe Garfield.</question>
-			<choice />
-			<answer>You are on the right path if you mention the words "cat" and "cute" in your answer.</answer>
-			<wrongFeedback />
-			<correctFeedback />
-		</quiz>
-		<note />
-	</topic>
-	
 	<topic src="image-audio:slide04" title="Image and audio">
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contains an image and a audio.</p>]]>
 		</note>
-	</topic>
-	
-	<topic src="quiz" title="True or False">
-		<quiz type="t/f">
-			<question>It is wise to stay home on snow day.</question>
-			<choice />
-			<answer>true</answer>
-			<wrongFeedback>You must love snow and shoveling.</wrongFeedback>
-			<correctFeedback>Right, your safety comes first.</correctFeedback>
-		</quiz>
-		<note />
 	</topic>
 	
 	<topic src="image-audio:slide21" title="Another image with audio">
@@ -97,22 +64,11 @@
 		</note>
 	</topic>
 	
-	<topic src="image:slide10" title="Another Image Only">
+	<topic src="image:slide10" title="Image only with link">
 		<quiz />
 		<note>
-			<![CDATA[<script type="text/javascript">alert( "hack hack script injection!" );</script>]]>
+			<![CDATA[<p>Another definition from <a href="http://en.wiktionary.org/wiki/discrete_variable" target="_blank">http://en.wiktionary.org/wiki/discrete_variable</a></p>]]>
 		</note>
-	</topic>
-	
-	<topic src="quiz" title="Multiple choice">
-		<quiz type="mc">
-			<question>What enables the operating system to automatically detect newly installed hardware?</question>
-			<choice>ReadyBoost|PnP|Hyper-V|AutoConnect</choice>
-			<answer>PnP</answer>
-			<wrongFeedback>ReadyBoost is technology that instantly add RAM to your PC.|PnP stands for plug-and-play.|Hyper-V is a server technology for virtualization.|AutoConnect is made up.</wrongFeedback>
-			<correctFeedback>Right on! PnP or plug-and-play is awesome.</correctFeedback>
-		</quiz>
-		<note />
 	</topic>
 	
 	<topic src="image:slide08" title="A really really really long long long title which cannot fit into one line">
@@ -121,33 +77,5 @@
 			<![CDATA[<p>This slide have a very long title.</p>]]>
 		</note>
 	</topic>
-		
-	<topic src="quiz" title="True or False">
-		<quiz type="t/f">
-			<question>Dinosaurs make good pets.</question>
-			<choice />
-			<answer>false</answer>
-			<wrongFeedback>Dinosaurs are gigantic. They no longer exist, but if you like bones...</wrongFeedback>
-			<correctFeedback>Yep. You do not want them as pets. Imagine what you need to do to clean up after them. Yuck!</correctFeedback>
-		</quiz>
-		<note />
-	</topic>
-	
-	<topic src="quiz" title="Multiple answers">
-		<quiz type="mc">
-			<question>What are the colors of the American flag?</question>
-			<choice>Red|Green|Blue|White|Yellow|Gold</choice>
-			<answer>Red|Blue|White</answer>
-			<wrongFeedback>Uh-oh!</wrongFeedback>
-			<correctFeedback><![CDATA["The colors,” Thomson said at the time, “are those used in the flag of the United States of America. White signifies purity and innocence. Red, hardiness & valour, and Blue… signifies vigilance, perseverance & justice.”]]></correctFeedback>
-		</quiz>
-		<note />
-	</topic>
-	
-	<!--
-		- use "tf" in the type attribute for true or false question
-		- use "mc" for multiple choice question
-		- use "sa" for fill in the blank or short answer question
-	-->
 				
 </course>

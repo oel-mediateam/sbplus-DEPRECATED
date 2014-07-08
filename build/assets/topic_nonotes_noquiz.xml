@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<course>
+
+	<setup>
+		<lesson>PSAS350 - Chapter Three, part 2</lesson>
+		<length>25 Minutes</length>
+		<instructor>Demo</instructor>
+		<slideImgFormat /> <!-- default to png if not specified -->
+		<note>n</note> <!-- disabled on default -->
+	</setup>
+			
+	<!-- instructor or lesson information -->
+	<profile>
+		<![CDATA[<p>Oh, hello! Hey! Hi! This is a demo of the Storyboard Player (SBP). Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut purus augue.</p>]]>
+	</profile>
+	
+	<!-- topic list -->
+	<topic src="image:slide01" title="Image only">
+		<quiz />
+		<note />
+	</topic>
+	
+	<topic src="video:smgt370_course_intro" title="Video (from webstreamer)">
+		<quiz />
+		<note />
+	</topic>
+	
+	<topic src="swf:animations" title="Flash animation">
+		<quiz />
+		<note />
+	</topic>
+	
+	<topic src="image-audio:slide04" title="Image and audio">
+		<quiz />
+		<note />
+	</topic>
+	
+	<topic src="image-audio:slide21" title="Another image with audio">
+		<quiz />
+		<note />
+	</topic>
+	
+	<topic src="swf:interactive" title="Interactive Flash piece">
+		<quiz />
+		<note />
+	</topic>
+
+	<topic src="youtube:UaWN7gObv-c" title="Embedded YouTube Video">
+		<quiz />
+		<note />
+	</topic>
+	
+	<topic src="image:slide10" title="Image only with link">
+		<quiz />
+		<note />
+	</topic>
+	
+	<topic src="image:slide08" title="A really really really long long long title which cannot fit into one line">
+		<quiz />
+		<note />
+	</topic>
+				
+</course>
