@@ -1,7 +1,5 @@
-/* global console */
 /* global videojs */
 /* global MediaElementPlayer */
-/* global alert */
 
 // global variable declarations
 var defaultFontSize = 14;
@@ -20,7 +18,8 @@ var topicCount = 0,
     imgCaption;
     
 var questions,
-    quizDetected = false;
+    quizDetected = false,
+    quizError = false;
     
 var PROFILE,
     lessonTitle,
@@ -197,6 +196,7 @@ $.fn.parseContent = function( xml ) {
         if ( topicSrc[topicCount] === "quiz" ) {
             
             var questionNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).text() ),
+                questionImg = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).attr( "img" ) ),
                 choiceNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).text() ),
                 wrongFeedbackNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "wrongFeedback" ).text() ),
                 correctFeedbackNode = $.fn.stripScript( XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('correctFeedback').text() ),
@@ -210,6 +210,17 @@ $.fn.parseContent = function( xml ) {
             quiz.id = topicCount;
             quiz.type = quizTypeAttr;
             quiz.question = questionNode;
+            
+            if ( questionImg !== "" ) {
+            
+                quiz.img = questionImg;
+                
+            } else {
+            
+                quiz.img = "";
+                
+            }
+            
 
             if ( choiceNode ) {
             
@@ -733,8 +744,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  */
 $.fn.setupQuiz = function( num ) {
     
-    var index = 0, found = false, error = false;
-    var answerLength;
+    var index = 0, found = false;
     
     // loop to find the question
     while ( !found || index >= questions.length ) {
@@ -755,66 +765,34 @@ $.fn.setupQuiz = function( num ) {
     $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment</div>" );
 
     if ( !questions[index].taken ) {
+        
+        if ( questions[index].img !== "") {
+        
+            var img = new Image();
 
-        $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "</div>" );
-        
-        switch( questions[index].type ) {
-            
-            case "t/f":
-                
-                $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
-                
-            break;
-            
-            case "fib":
-            
-                $( "#quiz" ).append( "<div class=\"answerArea\"><input type=\"text\" id=\"saAns\" /></div>" );
-            
-            break;
-            
-            case "mc":
-                
-                var type = "radio";
-                var name = "mc";
-                answerLength = questions[index].answer.length;
-                
-                $( "#quiz" ).append( "<div class=\"answerArea\">" );
-                
-                if ( answerLength > 1 ) {
-                    
-                    type = "checkbox";
-                    name = "ma";
-                    
-                }
-                
-                for ( var i = 0; i < questions[index].choice.length; i++ ) {
-                    
-                    $( ".answerArea" ).append( "<label for=\"" + i + "\"><input id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + questions[index].choice[i] + "\" /> " + questions[index].choice[i] + "</label>" );
-                    
-                }
+            imgPath = "assets/img/" + questions[index].img;
     
-                $( "#quiz" ).append( "</div>" );
-            
-            break;
-            
-            case "sa":
+            $( img ).load( function() {
                 
-                $( "#quiz" ).append( "<div class=\"answerArea\"><textarea id=\"saAns\"></textArea></div>" );
+                $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "</div>" );
+                $( ".question" ).append( img );
                 
-            break;
+               $.fn.displayAnswerChoices( index );
+    
+            } ).error( function() {
+    
+                $.fn.displayErrorMsg( "image not found!", "Expected image: " + imgPath );
+    
+            } ).attr( {
+                'src': imgPath,
+                'alt': questions[index].question,
+                'border': 0
+            } );
             
-            default:
+        } else {
             
-                error = true;
-                $.fn.displayErrorMsg( "unknow question type!", "Please double check the topic XML file." );
-            
-            break;
-            
-        }
-        
-        if ( !error ) {
-        
-            $( "#quiz" ).append( "<div class=\"submitArea\"><a id=\"check\" rel=\"" + index + "\" href=\"javascript:void(0)\">SUBMIT</a></div>" );
+            $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "</div>" );
+            $.fn.displayAnswerChoices( index );
             
         }
         
@@ -823,9 +801,81 @@ $.fn.setupQuiz = function( num ) {
         $.fn.showFeedback( index );
         
     }
+
+};
+
+/**
+ * Display current self-assessment answer choice or types
+ * @since 2.1.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param int, current question index
+ * @return void
+ *
+ */
+$.fn.displayAnswerChoices = function( index ) {
     
-    if ( !error ) {
+    var answerLength;
     
+    switch( questions[index].type ) {
+            
+        case "t/f":
+            
+            $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
+            
+        break;
+        
+        case "fib":
+        
+            $( "#quiz" ).append( "<div class=\"answerArea\"><input type=\"text\" id=\"saAns\" /></div>" );
+        
+        break;
+        
+        case "mc":
+            
+            var type = "radio";
+            var name = "mc";
+            
+            answerLength = questions[index].answer.length;
+            
+            $( "#quiz" ).append( "<div class=\"answerArea\">" );
+            
+            if ( answerLength > 1 ) {
+                
+                type = "checkbox";
+                name = "ma";
+                
+            }
+            
+            for ( var i = 0; i < questions[index].choice.length; i++ ) {
+                
+                $( ".answerArea" ).append( "<label for=\"" + i + "\"><input id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + questions[index].choice[i] + "\" /> " + questions[index].choice[i] + "</label>" );
+                
+            }
+    
+            $( "#quiz" ).append( "</div>" );
+        
+        break;
+        
+        case "sa":
+            
+            $( "#quiz" ).append( "<div class=\"answerArea\"><textarea id=\"saAns\"></textArea></div>" );
+            
+        break;
+        
+        default:
+        
+            quizError = true;
+            $.fn.displayErrorMsg( "unknow question type!", "Please double check the topic XML file." );
+        
+        break;
+        
+    }
+    
+    if ( !quizError ) {
+        
+        $( "#quiz" ).append( "<div class=\"submitArea\"><a id=\"check\" rel=\"" + index + "\" href=\"javascript:void(0)\">SUBMIT</a></div>" );
         $( "#slide" ).append( "</div>" );
         
         // give the quiz a second to build up
@@ -843,7 +893,7 @@ $.fn.setupQuiz = function( num ) {
                 
                     stuAnswer = $( "input:radio[name=tf]:checked" ).val();
                 
-                    if (stuAnswer === undefined) {
+                    if ( stuAnswer === undefined ) {
                     
                         stuAnswer = "";
                         
@@ -859,7 +909,7 @@ $.fn.setupQuiz = function( num ) {
                 
                 case "mc":
                     
-                    if ( answerLength > 1) {
+                    if ( answerLength > 1 ) {
                         
                         stuAnswer = [];
                         $( "input:checkbox[name=ma]:checked" ).each( function() {
@@ -988,14 +1038,19 @@ $.fn.setupQuiz = function( num ) {
     
             } else {
             
-                alert( "Please answer the question before submitting." );
+                $( ".question" ).before( "<p class=\"quizIncorrect\"><span class=\"icon-notification\"></span> Please answer the question before submitting!</p>" );
+                $( ".quizIncorrect" ).delay( 6000 ).slideUp( "slow", function() {
+                
+                    $( ".question" ).prev().remove();
+                    
+                } );
                 
             }
     
         } ); // end click event
         
     }
-
+    
 };
 
 /**
@@ -1025,8 +1080,16 @@ $.fn.showFeedback = function( index ) {
         }
 
     }
+    
+    var questionImg = "";
+        
+    if ( questions[index].img !== "" ) {
+        
+        questionImg = "<br /><img src=\"assets/img/" + questions[index].img + "\" alt=\"" + questions[index].question + "\" border=\"0\" />";
+        
+    }
 
-    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "</div><div class=\"result\"><p><strong>Your answer</strong>: " + $.fn.parseArray( questions[index].stuAnswer ) + "</p>" );
+    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + questionImg + "</div><div class=\"result\"><p><strong>Your answer</strong>: " + $.fn.parseArray( questions[index].stuAnswer ) + "</p>" );
 
     $('.result').append('<p><strong>Correct answer</strong>: ' + $.fn.parseArray( questions[index].answer ) + '</p></div>');
 
@@ -1046,8 +1109,8 @@ $.fn.showFeedback = function( index ) {
 
                 var feedback = questions[index].wrongFeedback[questions[index].incorrectIndex];
                 
-                if (typeof feedback === undefined) {
-                    feedback = "";
+                if ( feedback === undefined ) {
+                    feedback = questions[index].wrongFeedback;
                 }
 
                 if ( String( feedback ) !== "" ) {

@@ -322,11 +322,28 @@ p {
     	}
     	
     	.question {
+    	
         	padding: rem( 16px ) rem( $gutter ) rem( 20px );
         	font-size: rem( 18px );
         	line-height: rem( 24px );
         	font-weight: bold;
         	margin: 0;
+        	
+        	img {
+        	    display: block;
+            	max-width: rem( 610px );
+            	padding-right: rem( $gutter );
+            	height: auto;
+            	float: left;
+        	}
+        	
+        	small {
+        	    display: block;
+            	font-size: rem( 14px );
+                line-height: rem( 20px );
+                font-weight: normal;
+        	}
+        	
     	}
     	
     	.answerArea {
@@ -344,7 +361,7 @@ p {
         textarea {
         	width: rem( 590px );
         	height: rem( 110px );
-        	padding: rem( 5px );
+        	padding: rem( 5px ) rem( $gutter );
         	font-size: rem( $font-size );
         	color: #000;
         	resize: none;
@@ -360,7 +377,7 @@ p {
     	
     	.submitArea {
     	
-        	text-align: right;
+        	text-align: left;
             padding: rem( 20px ) rem( $gutter );
             
             a, a:visited, a:hover {
