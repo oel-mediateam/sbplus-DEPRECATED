@@ -197,6 +197,7 @@ $.fn.parseContent = function( xml ) {
             
             var questionNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).text() ),
                 questionImg = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).attr( "img" ) ),
+                questionAudio = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).attr( "audio" ) ),
                 choiceNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).text() ),
                 wrongFeedbackNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "wrongFeedback" ).text() ),
                 correctFeedbackNode = $.fn.stripScript( XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('correctFeedback').text() ),
@@ -218,6 +219,16 @@ $.fn.parseContent = function( xml ) {
             } else {
             
                 quiz.img = "";
+                
+            }
+            
+            if ( questionAudio !== "" ) {
+            
+                quiz.audio = questionAudio;
+                
+            } else {
+            
+                quiz.audio = "";
                 
             }
             
@@ -777,6 +788,15 @@ $.fn.setupQuiz = function( num ) {
                 $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "</div>" );
                 $( ".question" ).append( img );
                 
+                var audio = "";
+        
+                if ( questions[index].audio !== "") {
+                
+                    audio = "<audio controls autoplay><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
+                    $( "#quiz" ).append( audio );
+                    
+                }
+                
                $.fn.displayAnswerChoices( index );
     
             } ).error( function() {
@@ -791,7 +811,13 @@ $.fn.setupQuiz = function( num ) {
             
         } else {
             
-            $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "</div>" );
+            var audio = "";
+            
+            if ( questions[index].audio !== "") {
+                audio = "<audio controls autoplay><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
+            }
+            
+            $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "<br />" + audio + "</div>" );
             $.fn.displayAnswerChoices( index );
             
         }
@@ -1065,6 +1091,9 @@ $.fn.displayAnswerChoices = function( index ) {
  */
 $.fn.showFeedback = function( index ) {
 
+    var questionImg = "";
+    var audio = "";
+
     $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
 
     if ( questions[index].type !== "sa" ) {
@@ -1080,16 +1109,18 @@ $.fn.showFeedback = function( index ) {
         }
 
     }
-    
-    var questionImg = "";
         
     if ( questions[index].img !== "" ) {
         
-        questionImg = "<br /><img src=\"assets/img/" + questions[index].img + "\" alt=\"" + questions[index].question + "\" border=\"0\" />";
+        questionImg = "<img src=\"assets/img/" + questions[index].img + "\" alt=\"" + questions[index].question + "\" border=\"0\" />";
         
     }
+            
+    if ( questions[index].audio !== "") {
+        audio = "<br /><audio controls><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
+    }
 
-    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + questionImg + "</div><div class=\"result\"><p><strong>Your answer</strong>: " + $.fn.parseArray( questions[index].stuAnswer ) + "</p>" );
+    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + questionImg + audio + "</div><div class=\"result\"><p><strong>Your answer</strong>: " + $.fn.parseArray( questions[index].stuAnswer ) + "</p>" );
 
     $('.result').append('<p><strong>Correct answer</strong>: ' + $.fn.parseArray( questions[index].answer ) + '</p></div>');
 

@@ -90,7 +90,7 @@
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="Surprise!">
+	<topic src="quiz" title="Who's that pokémon!?">
 		<quiz type="mc">
 			<question img="mrmime.png"><![CDATA[Who's that pokémon?<small>A bipedal, humanoid Pokémon with a round, white body with a red spot in the middle. Its light pink arms and legs are connected to its body by red spheres. Its knees have small, white coverings. There are red pads on the tips of its white fingers, and its black feet curl upward at the tips. Blue growths extend from the sides of its pale pink head, and there are red circles on its cheeks.</small>]]></question>
 			<choice>Slowpoke|Kakuna|Mr. Mime|Arbok|Clefable</choice>
@@ -106,6 +106,28 @@
 		<note>
 			<![CDATA[<p>This slide contains an embedded YouTube video. <a href="https://www.youtube.com/embed/UaWN7gObv-c?autoplay=1&rel=0" target="_blank">YouTube video</a></p>]]>
 		</note>
+	</topic>
+	
+	<topic src="quiz" title="What sound is that?">
+		<quiz type="mc">
+			<question audio="lugia.mp3"><![CDATA[Who's cry does it belong to?]]></question>
+			<choice>Pickachu|Mewtwo|Mr. Mime|Lugia|Jigglypuff</choice>
+			<answer>Lugia</answer>
+			<wrongFeedback>Oooo... tricky, tricky!</wrongFeedback>
+			<correctFeedback><![CDATA[<img src="assets/img/lugia.png" alt="lugia" border="0" />]]></correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="quiz" title="Sound and Image">
+		<quiz type="t/f">
+			<question img="mrmime.png" audio="lugia.mp3"><![CDATA[Do this pokémon make this cry?]]></question>
+			<choice></choice>
+			<answer>false</answer>
+			<wrongFeedback>Play more pokémon games!</wrongFeedback>
+			<correctFeedback>You must be a pokémon fan!</correctFeedback>
+		</quiz>
+		<note />
 	</topic>
 	
 	<topic src="image:slide10" title="Another Image Only">
