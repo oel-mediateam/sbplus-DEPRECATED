@@ -463,11 +463,11 @@ p {
 }
 /* line 324, ../../../sources/css/storybookPlus.scss */
 #content #quiz .question {
-  padding: 1.14286rem 1.07143rem 1.42857rem;
+  padding: 0 1.07143rem;
   font-size: 1.28571rem;
   line-height: 1.71429rem;
   font-weight: bold;
-  margin: 0;
+  margin: 1.07143rem 0;
 }
 /* line 332, ../../../sources/css/storybookPlus.scss */
 #content #quiz .question img {
@@ -483,41 +483,68 @@ p {
   font-size: 1rem;
   line-height: 1.42857rem;
   font-weight: normal;
+  margin: 0.35714rem 0;
 }
-/* line 349, ../../../sources/css/storybookPlus.scss */
-#content #quiz .answerArea {
-  padding: 0 1.42857rem;
-  margin: 0;
-}
-/* line 354, ../../../sources/css/storybookPlus.scss */
-#content #quiz label {
+/* line 348, ../../../sources/css/storybookPlus.scss */
+#content #quiz .question audio {
   display: block;
+  margin: 1.07143rem 0;
+  outline: none;
+}
+/* line 356, ../../../sources/css/storybookPlus.scss */
+#content #quiz .answerArea {
+  padding: 0 1.07143rem;
+  margin: 1.07143rem 0;
+}
+/* line 361, ../../../sources/css/storybookPlus.scss */
+#content #quiz .answerArea label {
+  display: block;
+  position: relative;
   margin: 0 0 0.42857rem;
   font-size: 1rem;
   color: #000;
+  cursor: pointer;
 }
-/* line 361, ../../../sources/css/storybookPlus.scss */
-#content #quiz textarea, #content #quiz input[type=text] {
-  width: 42.14286rem;
+/* line 370, ../../../sources/css/storybookPlus.scss */
+#content #quiz .answerArea .img_choice {
+  display: inline-block;
+  margin: 0 1.07143rem 1.07143rem 0;
+}
+/* line 375, ../../../sources/css/storybookPlus.scss */
+#content #quiz .answerArea .img_choice input[type=radio], #content #quiz .answerArea .img_choice input[type=checkbox] {
+  position: absolute;
+}
+/* line 379, ../../../sources/css/storybookPlus.scss */
+#content #quiz .answerArea .img_choice img {
+  outline: red;
+}
+/* line 385, ../../../sources/css/storybookPlus.scss */
+#content #quiz .answerArea textarea, #content #quiz .answerArea input[type=text] {
+  width: 42.85714rem;
   height: 7.85714rem;
-  padding: 0.35714rem 1.07143rem;
+  padding: 0.35714rem;
   font-size: 1rem;
   color: #000;
   resize: none;
   outline: none;
 }
-/* line 371, ../../../sources/css/storybookPlus.scss */
-#content #quiz input[type=text] {
-  width: 42.14286rem;
+/* line 395, ../../../sources/css/storybookPlus.scss */
+#content #quiz .answerArea input[type=text] {
+  width: 42.85714rem;
   height: 1.78571rem;
   padding: 0.35714rem;
 }
-/* line 378, ../../../sources/css/storybookPlus.scss */
+/* line 402, ../../../sources/css/storybookPlus.scss */
+#content #quiz .answerArea input[type=text] {
+  height: 1.78571rem;
+}
+/* line 409, ../../../sources/css/storybookPlus.scss */
 #content #quiz .submitArea {
   text-align: left;
-  padding: 1.42857rem 1.07143rem;
+  padding: 0 1.07143rem;
+  margin: 1.07143rem 0;
 }
-/* line 383, ../../../sources/css/storybookPlus.scss */
+/* line 415, ../../../sources/css/storybookPlus.scss */
 #content #quiz .submitArea a, #content #quiz .submitArea a:visited, #content #quiz .submitArea a:hover {
   display: inline-block;
   color: #fff;
@@ -532,11 +559,11 @@ p {
   -webkit-border-radius: 0.21429rem;
   border-radius: 0.21429rem;
 }
-/* line 396, ../../../sources/css/storybookPlus.scss */
+/* line 428, ../../../sources/css/storybookPlus.scss */
 #content #quiz .submitArea a:hover {
   background-color: #4ba14b;
 }
-/* line 402, ../../../sources/css/storybookPlus.scss */
+/* line 434, ../../../sources/css/storybookPlus.scss */
 #content #quiz .quizCorrect, #content #quiz .quizIncorrect {
   font-size: 1rem;
   text-align: center;
@@ -546,15 +573,15 @@ p {
   background-color: #08b108;
   margin: 0;
 }
-/* line 412, ../../../sources/css/storybookPlus.scss */
+/* line 444, ../../../sources/css/storybookPlus.scss */
 #content #quiz .quizIncorrect {
   background-color: #b0092d;
 }
-/* line 417, ../../../sources/css/storybookPlus.scss */
+/* line 449, ../../../sources/css/storybookPlus.scss */
 #content #quiz .result {
   padding: 0 1.42857rem;
 }
-/* line 424, ../../../sources/css/storybookPlus.scss */
+/* line 456, ../../../sources/css/storybookPlus.scss */
 #content #note {
   width: 100%;
   height: 14.28571rem;
@@ -567,7 +594,7 @@ p {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 435, ../../../sources/css/storybookPlus.scss */
+/* line 467, ../../../sources/css/storybookPlus.scss */
 #content #note .noNotes {
   font-size: 2.28571rem;
   line-height: 2.71429rem;
@@ -576,128 +603,128 @@ p {
   padding: 5.35714rem 0 0 0;
   cursor: default;
 }
-/* line 444, ../../../sources/css/storybookPlus.scss */
+/* line 476, ../../../sources/css/storybookPlus.scss */
 #content #note a, #content #note a:visited {
   color: #00f;
   text-decoration: underline;
 }
-/* line 449, ../../../sources/css/storybookPlus.scss */
+/* line 481, ../../../sources/css/storybookPlus.scss */
 #content #note a:hover {
   text-decoration: none;
 }
-/* line 453, ../../../sources/css/storybookPlus.scss */
+/* line 485, ../../../sources/css/storybookPlus.scss */
 #content #note h1, #content #note h2, #content #note h3, #content #note h4, #content #note h5, #content #note h6, #content #note p {
   margin: 0.42857rem 0;
 }
-/* line 457, ../../../sources/css/storybookPlus.scss */
+/* line 489, ../../../sources/css/storybookPlus.scss */
 #content #note h1 {
   font-size: 1.42857rem;
   line-height: 1.85714rem;
 }
-/* line 462, ../../../sources/css/storybookPlus.scss */
+/* line 494, ../../../sources/css/storybookPlus.scss */
 #content #note h2 {
   font-size: 1.28571rem;
   line-height: 1.71429rem;
 }
-/* line 467, ../../../sources/css/storybookPlus.scss */
+/* line 499, ../../../sources/css/storybookPlus.scss */
 #content #note h3, #content #note h4, #content #note h5, #content #note h6 {
   font-size: 1.14286rem;
   line-height: 1.57143rem;
 }
-/* line 472, ../../../sources/css/storybookPlus.scss */
+/* line 504, ../../../sources/css/storybookPlus.scss */
 #content #note p {
   font-size: 1rem;
   line-height: 1.42857rem;
 }
-/* line 481, ../../../sources/css/storybookPlus.scss */
+/* line 513, ../../../sources/css/storybookPlus.scss */
 #content #note.size12 h1 {
   font-size: 1.28571rem;
   line-height: 1.71429rem;
 }
-/* line 486, ../../../sources/css/storybookPlus.scss */
+/* line 518, ../../../sources/css/storybookPlus.scss */
 #content #note.size12 h2 {
   font-size: 1.14286rem;
   line-height: 1.57143rem;
 }
-/* line 491, ../../../sources/css/storybookPlus.scss */
+/* line 523, ../../../sources/css/storybookPlus.scss */
 #content #note.size12 h3, #content #note.size12 h4, #content #note.size12 h5, #content #note.size12 h6 {
   font-size: 1rem;
   line-height: 1.42857rem;
 }
-/* line 496, ../../../sources/css/storybookPlus.scss */
+/* line 528, ../../../sources/css/storybookPlus.scss */
 #content #note.size12 p {
   font-size: 0.85714rem;
   line-height: 1.28571rem;
 }
-/* line 505, ../../../sources/css/storybookPlus.scss */
+/* line 537, ../../../sources/css/storybookPlus.scss */
 #content #note.size16 h1 {
   font-size: 1.57143rem;
   line-height: 2rem;
 }
-/* line 510, ../../../sources/css/storybookPlus.scss */
+/* line 542, ../../../sources/css/storybookPlus.scss */
 #content #note.size16 h2 {
   font-size: 1.42857rem;
   line-height: 1.85714rem;
 }
-/* line 515, ../../../sources/css/storybookPlus.scss */
+/* line 547, ../../../sources/css/storybookPlus.scss */
 #content #note.size16 h3, #content #note.size16 h4, #content #note.size16 h5, #content #note.size16 h6 {
   font-size: 1.28571rem;
   line-height: 1.71429rem;
 }
-/* line 520, ../../../sources/css/storybookPlus.scss */
+/* line 552, ../../../sources/css/storybookPlus.scss */
 #content #note.size16 p {
   font-size: 1.14286rem;
   line-height: 1.57143rem;
 }
-/* line 528, ../../../sources/css/storybookPlus.scss */
+/* line 560, ../../../sources/css/storybookPlus.scss */
 #content #note.size18 h1 {
   font-size: 1.71429rem;
   line-height: 2.14286rem;
 }
-/* line 533, ../../../sources/css/storybookPlus.scss */
+/* line 565, ../../../sources/css/storybookPlus.scss */
 #content #note.size18 h2 {
   font-size: 1.57143rem;
   line-height: 2rem;
 }
-/* line 538, ../../../sources/css/storybookPlus.scss */
+/* line 570, ../../../sources/css/storybookPlus.scss */
 #content #note.size18 h3, #content #note.size18 h4, #content #note.size18 h5, #content #note.size18 h6 {
   font-size: 1.42857rem;
   line-height: 1.85714rem;
 }
-/* line 543, ../../../sources/css/storybookPlus.scss */
+/* line 575, ../../../sources/css/storybookPlus.scss */
 #content #note.size18 p {
   font-size: 1.28571rem;
   line-height: 1.71429rem;
 }
-/* line 552, ../../../sources/css/storybookPlus.scss */
+/* line 584, ../../../sources/css/storybookPlus.scss */
 #content #note.size20 h1 {
   font-size: 1.85714rem;
   line-height: 2.28571rem;
 }
-/* line 557, ../../../sources/css/storybookPlus.scss */
+/* line 589, ../../../sources/css/storybookPlus.scss */
 #content #note.size20 h2 {
   font-size: 1.71429rem;
   line-height: 2.14286rem;
 }
-/* line 562, ../../../sources/css/storybookPlus.scss */
+/* line 594, ../../../sources/css/storybookPlus.scss */
 #content #note.size20 h3, #content #note.size20 h4, #content #note.size20 h5, #content #note.size20 h6 {
   font-size: 1.57143rem;
   line-height: 2rem;
 }
-/* line 567, ../../../sources/css/storybookPlus.scss */
+/* line 599, ../../../sources/css/storybookPlus.scss */
 #content #note.size20 p {
   font-size: 1.42857rem;
   line-height: 1.85714rem;
 }
-/* line 574, ../../../sources/css/storybookPlus.scss */
+/* line 606, ../../../sources/css/storybookPlus.scss */
 #content #note.cropped {
   height: 170px;
 }
-/* line 577, ../../../sources/css/storybookPlus.scss */
+/* line 609, ../../../sources/css/storybookPlus.scss */
 #content #note.cropped .noNotes {
   padding-top: 4.64286rem;
 }
-/* line 584, ../../../sources/css/storybookPlus.scss */
+/* line 616, ../../../sources/css/storybookPlus.scss */
 #content #control {
   width: 100%;
   height: 2.71429rem;
@@ -706,7 +733,7 @@ p {
   background-color: #f7f7f7;
   float: left;
 }
-/* line 593, ../../../sources/css/storybookPlus.scss */
+/* line 625, ../../../sources/css/storybookPlus.scss */
 #content #control .btn, #content #control #leftBtn, #content #control #rightBtn, #content #control #fontMinusBtn, #content #control #fontPlusBtn {
   display: block;
   width: 10%;
@@ -726,7 +753,7 @@ p {
   -webkit-transition-delay: 0.6s;
   transition: color ease-out 0.6s;
 }
-/* line 607, ../../../sources/css/storybookPlus.scss */
+/* line 639, ../../../sources/css/storybookPlus.scss */
 #content #control .btn:hover, #content #control #leftBtn:hover, #content #control #rightBtn:hover, #content #control #fontMinusBtn:hover, #content #control #fontPlusBtn:hover {
   color: #59a8dc;
   -moz-transition: color ease-in 0.3s;
@@ -735,11 +762,11 @@ p {
   -webkit-transition-delay: 0.3s;
   transition: color ease-in 0.3s;
 }
-/* line 616, ../../../sources/css/storybookPlus.scss */
+/* line 648, ../../../sources/css/storybookPlus.scss */
 #content #control #rightBtn {
   padding: 0.78571rem 0 0 1.42857rem;
 }
-/* line 621, ../../../sources/css/storybookPlus.scss */
+/* line 653, ../../../sources/css/storybookPlus.scss */
 #content #control #currentStatus {
   display: block;
   width: 56%;
@@ -755,14 +782,14 @@ p {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 635, ../../../sources/css/storybookPlus.scss */
+/* line 667, ../../../sources/css/storybookPlus.scss */
 #content #control #fontMinusBtn {
   width: 8%;
   font-size: 1.14286rem;
   line-height: 1.14286rem;
   padding: 0.85714rem 0 0 1.21429rem;
 }
-/* line 643, ../../../sources/css/storybookPlus.scss */
+/* line 675, ../../../sources/css/storybookPlus.scss */
 #content #control #fontSizeIndicator {
   display: block;
   width: 8%;
@@ -777,7 +804,7 @@ p {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 656, ../../../sources/css/storybookPlus.scss */
+/* line 688, ../../../sources/css/storybookPlus.scss */
 #content #control #fontPlusBtn {
   width: 8%;
   font-size: 1.14286rem;
@@ -786,7 +813,7 @@ p {
   border-right: none;
 }
 
-/* line 670, ../../../sources/css/storybookPlus.scss */
+/* line 702, ../../../sources/css/storybookPlus.scss */
 #toc {
   width: 18.5rem;
   height: 42.85714rem;
@@ -799,7 +826,7 @@ p {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 681, ../../../sources/css/storybookPlus.scss */
+/* line 713, ../../../sources/css/storybookPlus.scss */
 #toc #selectable {
   list-style: none;
   margin: 0;
@@ -808,7 +835,7 @@ p {
   float: left;
   clear: both;
 }
-/* line 689, ../../../sources/css/storybookPlus.scss */
+/* line 721, ../../../sources/css/storybookPlus.scss */
 #toc #selectable li {
   width: 100%;
   margin: 0;
@@ -817,51 +844,51 @@ p {
   float: left;
   clear: both;
 }
-/* line 696, ../../../sources/css/storybookPlus.scss */
+/* line 728, ../../../sources/css/storybookPlus.scss */
 #toc #selectable li .slideNum {
   width: 10%;
   padding: 0 1%;
   text-align: right;
   float: left;
 }
-/* line 703, ../../../sources/css/storybookPlus.scss */
+/* line 735, ../../../sources/css/storybookPlus.scss */
 #toc #selectable li .title {
   width: 86%;
   padding: 0 1%;
   float: left;
 }
-/* line 711, ../../../sources/css/storybookPlus.scss */
+/* line 743, ../../../sources/css/storybookPlus.scss */
 #toc #selectable li:hover {
   background-color: #59a8dc;
   color: #fff;
 }
-/* line 716, ../../../sources/css/storybookPlus.scss */
+/* line 748, ../../../sources/css/storybookPlus.scss */
 #toc #selectable li:hover .light {
   filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
   opacity: 1;
 }
-/* line 722, ../../../sources/css/storybookPlus.scss */
+/* line 754, ../../../sources/css/storybookPlus.scss */
 #toc #selectable .ui-selecting {
   background-color: #0099ff;
 }
-/* line 728, ../../../sources/css/storybookPlus.scss */
+/* line 760, ../../../sources/css/storybookPlus.scss */
 #toc #selectable .ui-selected {
   background-color: #0099ff;
   color: #fff;
 }
-/* line 733, ../../../sources/css/storybookPlus.scss */
+/* line 765, ../../../sources/css/storybookPlus.scss */
 #toc #selectable .ui-selected .light {
   filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
   opacity: 1;
 }
 
 @-moz-document url-prefix() {
-  /* line 745, ../../../sources/css/storybookPlus.scss */
+  /* line 777, ../../../sources/css/storybookPlus.scss */
   #toc {
     width: 28.76%;
   }
 }
-/* line 752, ../../../sources/css/storybookPlus.scss */
+/* line 784, ../../../sources/css/storybookPlus.scss */
 #profile {
   display: none;
   width: 42.85714rem;
@@ -872,13 +899,13 @@ p {
   float: left;
   clear: both;
 }
-/* line 762, ../../../sources/css/storybookPlus.scss */
+/* line 794, ../../../sources/css/storybookPlus.scss */
 #profile .photo {
   width: 14.28571rem;
   height: 21.42857rem;
   float: left;
 }
-/* line 768, ../../../sources/css/storybookPlus.scss */
+/* line 800, ../../../sources/css/storybookPlus.scss */
 #profile .photo img {
   display: block;
   margin: 0 auto;
@@ -886,7 +913,7 @@ p {
   max-height: 21.42857rem;
   max-width: 14.28571rem;
 }
-/* line 778, ../../../sources/css/storybookPlus.scss */
+/* line 810, ../../../sources/css/storybookPlus.scss */
 #profile .bio {
   width: 27.14286rem;
   height: 21.42857rem;
@@ -895,13 +922,13 @@ p {
   overflow: auto;
   float: left;
 }
-/* line 787, ../../../sources/css/storybookPlus.scss */
+/* line 819, ../../../sources/css/storybookPlus.scss */
 #profile .bio p:first-child {
   font-weight: bold;
   font-size: 1.28571rem;
 }
 
-/* line 797, ../../../sources/css/storybookPlus.scss */
+/* line 829, ../../../sources/css/storybookPlus.scss */
 #download_bar {
   width: 100%;
   margin: 0.71429rem 0;
@@ -909,19 +936,19 @@ p {
   float: left;
   clear: both;
 }
-/* line 804, ../../../sources/css/storybookPlus.scss */
+/* line 836, ../../../sources/css/storybookPlus.scss */
 #download_bar ul {
   display: inline-block;
   margin: 0 0 0 2.14286rem;
   padding: 0;
   list-style: none;
 }
-/* line 811, ../../../sources/css/storybookPlus.scss */
+/* line 843, ../../../sources/css/storybookPlus.scss */
 #download_bar ul li {
   display: inline-block;
   margin-left: 0.71429rem;
 }
-/* line 816, ../../../sources/css/storybookPlus.scss */
+/* line 848, ../../../sources/css/storybookPlus.scss */
 #download_bar ul li a, #download_bar ul li a:visited {
   display: block;
   color: #818181;
@@ -942,7 +969,7 @@ p {
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
-/* line 828, ../../../sources/css/storybookPlus.scss */
+/* line 860, ../../../sources/css/storybookPlus.scss */
 #download_bar ul li a:hover {
   color: #333;
   border-color: #333;
@@ -961,28 +988,28 @@ p {
   transition-timing-function: ease-in;
 }
 
-/* line 844, ../../../sources/css/storybookPlus.scss */
+/* line 876, ../../../sources/css/storybookPlus.scss */
 #errorMsg {
   color: #000;
   padding: 0 0.71429rem;
 }
-/* line 849, ../../../sources/css/storybookPlus.scss */
+/* line 881, ../../../sources/css/storybookPlus.scss */
 #errorMsg p:first-child {
   font-size: 1.28571rem;
   color: #f00;
 }
 
-/* line 857, ../../../sources/css/storybookPlus.scss */
+/* line 889, ../../../sources/css/storybookPlus.scss */
 noscript {
   display: block;
   margin: 1.07143rem;
 }
-/* line 862, ../../../sources/css/storybookPlus.scss */
+/* line 894, ../../../sources/css/storybookPlus.scss */
 noscript h1 {
   font-size: 1.71429rem;
   color: #900;
 }
-/* line 867, ../../../sources/css/storybookPlus.scss */
+/* line 899, ../../../sources/css/storybookPlus.scss */
 noscript p {
   font-size: 1.14286rem;
   line-height: 1.42857rem;

@@ -83,6 +83,17 @@
 		</note>
 	</topic>
 	
+	<topic src="quiz" title="Image Answer Choices">
+		<quiz type="mc">
+			<question><![CDATA[Which pokémon is Ethan's favorite?<small>Ethan is a pokémon fan ... sort of.</small>]]></question>
+			<choice useImg="true">pikachu.gif|mewtwo.gif|mew.gif|rattata.gif|krabby.gif|rayquaza.gif</choice>
+			<answer>mewtwo.gif|pikachu.gif</answer>
+			<wrongFeedback><![CDATA[Ethan's is going to blast you and then dance!]]></wrongFeedback>
+			<correctFeedback><![CDATA[Ethan thinks you are stalking him...]]></correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
 	<topic src="swf:interactive" title="Interactive Flash piece">
 		<quiz />
 		<note>
@@ -121,7 +132,7 @@
 	
 	<topic src="quiz" title="Sound and Image">
 		<quiz type="t/f">
-			<question img="mrmime.png" audio="lugia.mp3"><![CDATA[Do this pokémon make this cry?]]></question>
+			<question img="mrmime.png" audio="lugia.mp3"><![CDATA[Does this pokémon make this cry?]]></question>
 			<choice></choice>
 			<answer>false</answer>
 			<wrongFeedback>Play more pokémon games!</wrongFeedback>

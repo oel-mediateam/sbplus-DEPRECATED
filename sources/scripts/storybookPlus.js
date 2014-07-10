@@ -18,8 +18,7 @@ var topicCount = 0,
     imgCaption;
     
 var questions,
-    quizDetected = false,
-    quizError = false;
+    quizDetected = false;
     
 var PROFILE,
     lessonTitle,
@@ -199,6 +198,7 @@ $.fn.parseContent = function( xml ) {
                 questionImg = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).attr( "img" ) ),
                 questionAudio = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).attr( "audio" ) ),
                 choiceNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).text() ),
+                choiceImg = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).attr( "useImg" ) ),
                 wrongFeedbackNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "wrongFeedback" ).text() ),
                 correctFeedbackNode = $.fn.stripScript( XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('correctFeedback').text() ),
                 quizTypeAttr = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).attr( "type" ) ),
@@ -229,6 +229,16 @@ $.fn.parseContent = function( xml ) {
             } else {
             
                 quiz.audio = "";
+                
+            }
+            
+            if ( choiceImg !== "" ) {
+                
+                quiz.choiceImg = choiceImg;
+                
+            } else {
+                
+                quiz.choiceImg = "";
                 
             }
             
@@ -817,7 +827,7 @@ $.fn.setupQuiz = function( num ) {
                 audio = "<audio controls autoplay><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
             }
             
-            $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + "<br />" + audio + "</div>" );
+            $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + audio + "</div>" );
             $.fn.displayAnswerChoices( index );
             
         }
@@ -842,7 +852,8 @@ $.fn.setupQuiz = function( num ) {
  */
 $.fn.displayAnswerChoices = function( index ) {
     
-    var answerLength;
+    var answerLength,
+        quizError = false;
     
     switch( questions[index].type ) {
             
@@ -874,11 +885,25 @@ $.fn.displayAnswerChoices = function( index ) {
                 
             }
             
-            for ( var i = 0; i < questions[index].choice.length; i++ ) {
+            if ( questions[index].choiceImg === "true" ) {
                 
-                $( ".answerArea" ).append( "<label for=\"" + i + "\"><input id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + questions[index].choice[i] + "\" /> " + questions[index].choice[i] + "</label>" );
+                for ( var i = 0; i < questions[index].choice.length; i++ ) {
+                
+                    $( ".answerArea" ).append( "<label class=\"img_choice\"for=\"" + i + "\"><input id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + questions[index].choice[i] + "\" /> <img src=\"assets/img/" + questions[index].choice[i] + "\" /></label>" );
+                    
+                }
+                
+            } else {
+                
+                for ( var j = 0; j < questions[index].choice.length; j++ ) {
+                
+                    $( ".answerArea" ).append( "<label for=\"" + j + "\"><input id=\"" + j + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + questions[index].choice[j] + "\" /> " + questions[index].choice[j] + "</label>" );
+                    
+                }
                 
             }
+            
+            
     
             $( "#quiz" ).append( "</div>" );
         
@@ -1117,12 +1142,22 @@ $.fn.showFeedback = function( index ) {
     }
             
     if ( questions[index].audio !== "") {
-        audio = "<br /><audio controls><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
+        audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
     }
 
-    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + questionImg + audio + "</div><div class=\"result\"><p><strong>Your answer</strong>: " + $.fn.parseArray( questions[index].stuAnswer ) + "</p>" );
-
-    $('.result').append('<p><strong>Correct answer</strong>: ' + $.fn.parseArray( questions[index].answer ) + '</p></div>');
+    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + questionImg + audio + "</div>" );
+    
+    if ( questions[index].choiceImg === "true" ) {
+        
+        $( "#quiz" ).append( "<div class=\"result\"><p><strong>Your answer</strong>:<br />" + $.fn.parseArrayImg( questions[index].stuAnswer ) + "</p></div>" );
+        $('.result').append('<p><strong>Correct answer</strong>:<br />' + $.fn.parseArrayImg( questions[index].answer ) + '</p>');
+        
+    } else {
+        
+        $( "#quiz" ).append( "<div class=\"result\"><p><strong>Your answer</strong>: " + $.fn.parseArray( questions[index].stuAnswer ) + "</p></div>" );
+        $('.result').append('<p><strong>Correct answer</strong>: ' + $.fn.parseArray( questions[index].answer ) + '</p>');
+        
+    }
 
     if ( questions[index].type !== "sa" ) {
 
@@ -1639,7 +1674,7 @@ $.fn.addLeadingZero = function( num ) {
  * @since 2.1.0
  *
  * @author Ethan S. Lin
- * @param array and int, the array to parse and 1 for "and" and 0 for "or"
+ * @param array, the array to parse
  * @return string
  *
  */
@@ -1675,6 +1710,37 @@ $.fn.parseArray = function( arr ) {
         
         result = arr;
     
+    }
+    
+    return result;
+    
+};
+
+/**
+ * Display elements from array properly as images
+ * @since 2.1.0
+ *
+ * @author Ethan S. Lin
+ * @param array, the array to parse
+ * @return string
+ *
+ */
+$.fn.parseArrayImg = function( arr ) {
+    
+    var result = "";
+    
+    if ( $.isArray( arr ) ) {
+        
+        for ( var i = 0; i < arr.length; i++ ) {
+            
+            result += "<img src=\"assets/img/"+ arr[i] +"\" /> ";
+            
+        }
+        
+    } else {
+    
+        result = "<img src=\"assets/img/"+ arr +"\" /> ";
+        
     }
     
     return result;

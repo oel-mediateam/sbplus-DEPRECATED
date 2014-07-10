@@ -323,11 +323,11 @@ p {
     	
     	.question {
     	
-        	padding: rem( 16px ) rem( $gutter ) rem( 20px );
+        	padding: 0 rem( $gutter );
         	font-size: rem( 18px );
         	line-height: rem( 24px );
         	font-weight: bold;
-        	margin: 0;
+        	margin: rem( $gutter ) 0;
         	
         	img {
         	    display: block;
@@ -342,43 +342,75 @@ p {
             	font-size: rem( 14px );
                 line-height: rem( 20px );
                 font-weight: normal;
+                margin: rem( 5px ) 0;
+        	}
+        	
+        	audio {
+            	display: block;
+            	margin: rem( $gutter ) 0;
+            	outline: none;
         	}
         	
     	}
     	
     	.answerArea {
-        	padding: 0 rem( 20px );
-        	margin: 0;
+    	
+        	padding: 0 rem( $gutter );
+        	margin: rem( $gutter ) 0;
+        	
+        	label {
+            	display: block;
+            	position: relative;
+            	margin: 0 0 rem( 6px );
+            	font-size: rem( $font-size );
+            	color: #000;
+            	cursor: pointer;
+            }
+            
+            .img_choice {
+                	
+            	display: inline-block;
+            	margin: 0 rem( $gutter ) rem( $gutter ) 0;
+            	
+            	input[type=radio], input[type=checkbox] {
+                	position: absolute;
+            	}            	
+            	
+            	img {
+                	outline: red;
+            	}
+            	
+        	}
+            
+            textarea {
+            	width: rem( 600px );
+            	height: rem( 110px );
+            	padding: rem( 5px );
+            	font-size: rem( $font-size );
+            	color: #000;
+            	resize: none;
+            	outline: none;
+        	}
+        	
+        	input[type=text] {
+        	    @extend textarea;
+            	width: rem( 600px );
+            	height: rem( 25px );
+            	padding: rem( 5px );
+        	}
+        	
+        	input[type=text] {
+        	    @extend textarea;
+            	height: rem( 25px );
+        	}
+        	
         }
         
-        label {
-        	display: block;
-        	margin: 0 0 rem( 6px );
-        	font-size: rem( $font-size );
-        	color: #000;
-        }
-        
-        textarea {
-        	width: rem( 590px );
-        	height: rem( 110px );
-        	padding: rem( 5px ) rem( $gutter );
-        	font-size: rem( $font-size );
-        	color: #000;
-        	resize: none;
-        	outline: none;
-    	}
-    	
-    	input[type=text] {
-    	    @extend textarea;
-        	width: rem( 590px );
-        	height: rem( 25px );
-        	padding: rem( 5px );
-    	}
-    	
     	.submitArea {
     	
         	text-align: left;
-            padding: rem( 20px ) rem( $gutter );
+            padding: 0 rem( $gutter );
+            margin: rem( $gutter ) 0;
             
             a, a:visited, a:hover {
                 display: inline-block;
