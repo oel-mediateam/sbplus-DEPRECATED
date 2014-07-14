@@ -9,8 +9,8 @@ images_dir = "build/sources/img/"
 javascripts_dir = "sources/scripts/"
 fonts_dir = "sources/fonts/"
 
-output_style = :expanded
-environment = :development
+output_style = :compressed
+environment = :production
 
 relative_assets = true
 
