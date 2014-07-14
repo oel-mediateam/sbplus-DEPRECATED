@@ -70,8 +70,8 @@
 			<question>It is wise to stay home on snow day.</question>
 			<choice />
 			<answer>true</answer>
-			<wrongFeedback>You must love snow and shoveling.</wrongFeedback>
-			<correctFeedback>Right, your safety comes first.</correctFeedback>
+			<wrongFeedback></wrongFeedback>
+			<correctFeedback></correctFeedback>
 		</quiz>
 		<note />
 	</topic>
@@ -116,6 +116,20 @@
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contains an embedded YouTube video. <a href="https://www.youtube.com/embed/UaWN7gObv-c?autoplay=1&rel=0" target="_blank">YouTube video</a></p>]]>
+		</note>
+	</topic>
+	
+	<topic src="vimeo:90640415" title="Embedded Vimeo Video">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains an embedded Vimeo video.</p>]]>
+		</note>
+	</topic>
+	
+	<topic src="kaltura:1_88byq1sd" title="Embedded Kaltura Video">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains an embedded Kaltura video.</p>]]>
 		</note>
 	</topic>
 	

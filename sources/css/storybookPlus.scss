@@ -271,16 +271,21 @@ p {
         	background-color: #131313;
         	@include border-radius( rem( 3px ) );
         	@include box-sizing( "border-box" );
-        	@include opacity( .25 );
+        	@include opacity( 0 );
         	@include single-transition( opacity, ease-out, .3s );
-        }
-        
-        .magnifyIcon:hover {
-            @include opacity( .75 );
-            @include single-transition( opacity, ease-in, .3s );
         }
     	
     } // #slide
+    
+    #slide:hover {
+        
+        .magnifyIcon {
+            display: block;
+            @include opacity( .75 );
+            @include single-transition( opacity, ease-in, .3s );
+        }
+        
+    }
     
     // AUDIO PLAYER
     #ap {

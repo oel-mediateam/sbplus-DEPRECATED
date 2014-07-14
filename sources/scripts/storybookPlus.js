@@ -297,7 +297,7 @@ $.fn.setupPlayer = function() {
 	
 		var tSrc = topicSrc[i].substring( 0, topicSrc[i].indexOf( ":" ) + 1 );
 		
-		if ( tSrc === "video:" || tSrc === "youtube:" ) {
+		if ( tSrc === "video:" || tSrc === "youtube:" || tSrc === "vimeo:" || tSrc === "kaltura:" ) {
 		
 			media = "Video";
 			
@@ -709,7 +709,27 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 
         case "youtube:":
         
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&html5=1&autohide=1&rel=0\" frameborder=\"0\" allowfullscreen></iframe>" ).promise().done( function() {
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
+                
+                $( "#progressing" ).fadeOut();
+                
+            } );
+        
+        break;
+        
+        case "vimeo:":
+                
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
+                
+                $( "#progressing" ).fadeOut();
+                
+            } );
+        
+        break;
+        
+        case "kaltura:":
+                
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/24641251/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1405368331&entry_id=" + srcName + "&flashvars[akamaiHD.loadingPolicy]=preInitialize&flashvars[akamaiHD.asyncInit]=true&flashvars[streamerType]=hdnetwork&flashvars[autoPlay]=true\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 
@@ -802,7 +822,7 @@ $.fn.setupQuiz = function( num ) {
         
                 if ( questions[index].audio !== "") {
                 
-                    audio = "<audio controls autoplay><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
+                    audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
                     $( "#quiz" ).append( audio );
                     
                 }
@@ -824,7 +844,7 @@ $.fn.setupQuiz = function( num ) {
             var audio = "";
             
             if ( questions[index].audio !== "") {
-                audio = "<audio controls autoplay><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
+                audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
             }
             
             $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + audio + "</div>" );
