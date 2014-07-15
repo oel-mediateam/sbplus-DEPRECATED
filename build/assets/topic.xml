@@ -135,7 +135,7 @@
 	
 	<topic src="quiz" title="What sound is that?">
 		<quiz type="mc">
-			<question audio="lugia.mp3"><![CDATA[Who's cry does it belong to?]]></question>
+			<question audio="lugia"><![CDATA[Who's cry does it belong to?]]></question>
 			<choice>Pickachu|Mewtwo|Mr. Mime|Lugia|Jigglypuff</choice>
 			<answer>Lugia</answer>
 			<wrongFeedback>Oooo... tricky, tricky!</wrongFeedback>

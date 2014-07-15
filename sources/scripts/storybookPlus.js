@@ -822,7 +822,7 @@ $.fn.setupQuiz = function( num ) {
         
                 if ( questions[index].audio !== "") {
                 
-                    audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
+                    audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
                     $( "#quiz" ).append( audio );
                     
                 }
@@ -844,7 +844,7 @@ $.fn.setupQuiz = function( num ) {
             var audio = "";
             
             if ( questions[index].audio !== "") {
-                audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
+                audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
             }
             
             $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + audio + "</div>" );
@@ -1162,7 +1162,7 @@ $.fn.showFeedback = function( index ) {
     }
             
     if ( questions[index].audio !== "") {
-        audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + "\" type=\"audio/mpeg\" /></audio>";
+        audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
     }
 
     $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + questionImg + audio + "</div>" );
