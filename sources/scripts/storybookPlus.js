@@ -318,7 +318,7 @@ $.fn.setupPlayer = function() {
     } else if ( enabledNote === false && quizDetected === true ) {
     
         $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
-        $( "#note" ).html( "<div class=\"noNotes\">NOTES DISABLED</div>" );
+        $( "#note" ).html( "<div class=\"noNotes\">&bull;&bull;&bull;</div>" );
         
     }
 	

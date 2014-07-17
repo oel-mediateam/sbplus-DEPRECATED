@@ -213,6 +213,7 @@ p {
 // PLAYER CONTENT
 #content {
 
+    width: 100%;
 	@include clear;
 	
 	// SLIDE NOTE AREA
@@ -466,11 +467,11 @@ p {
     	@include box-sizing( "border-box" );
     	
     	.noNotes {
-        	font-size: rem( 32px );
-        	line-height: rem( 38px );
+        	font-size: rem( 82px );
+        	line-height: rem( 82px );
         	color: #d4d4d4;
         	text-align: center;
-        	padding: rem( 75px ) 0 0 0;
+        	padding: rem( 60px ) 0 0 0;
         	cursor: default;
     	}
     	
@@ -608,7 +609,7 @@ p {
         height: 170px;
         
         .noNotes {
-            padding-top: rem( 65px );
+            padding-top: rem( 50px );
         }
         
     }
