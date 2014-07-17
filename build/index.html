@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Storybook+</title>
-<link href="sources/css/storybookplus.min.css" rel="stylesheet" type="text/css" media="all" />
+<link href="sources/css/storybookplus.css" rel="stylesheet" type="text/css" media="all" />
 <link href="sources/fancybox/jquery.fancybox.pack.css" rel="stylesheet" type="text/css" media="screen" />
 <link href="sources/browserdetection/browser-detection.min.css" rel="stylesheet" type="text/css" />
 <link href="sources/audioplayer/mediaelementplayer.min.css" rel="stylesheet" />
@@ -12,37 +12,43 @@
 <script src="sources/scripts/jquery.min.js" type="text/javascript"></script>
 <script src="sources/scripts/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
 <script src="sources/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
-<script src="sources/browserdetection/browser-detection.min.js"></script>
-<script src="sources/audioplayer/mediaelement-and-player.min.js"></script>
-<script src="sources/videoplayer/combined.video.min.js"></script>
-<script src="sources/videoplayer/videojs.progressTips.min.js"></script>
+<script src="sources/browserdetection/browser-detection.min.js" type="text/javascript"></script>
+<script src="sources/audioplayer/mediaelement-and-player.min.js" type="text/javascript"></script>
+<script src="sources/videoplayer/combined.video.min.js" type="text/javascript"></script>
+<script src="sources/videoplayer/videojs.progressTips.min.js" type="text/javascript"></script>
 <script src="sources/scripts/storybookplus.min.js" type="text/javascript"></script>
 </head>
 <body>
-
+<!-- 7/1/2014 4:37 PM -->
 <!-- display when javascript is disabled -->
 <noscript>
-<h1>JavaScript is disabled.</h1>
-<p>For full functionality of this web page, it is necessary to enable JavaScript.<br /><a href="http://www.enable-javascript.com/" target="_blank">Instructions on how to enable JavaScript in your web browser.</a></p>
+<h1>JavaScript is disabled!</h1>
+<p>Javascript is required for this web application. <a href="http://www.enable-javascript.com/" target="_blank">Please enable JavaScript.</a></p>
 </noscript>
 
 <!-- player wrapper -->
 <div id="storybook_plus_wrapper"> 
 	
-	<!-- display when there is ajax error -->
+	<!-- display when there is an error -->
 	<div id="errorMsg"></div>
 	
 	<!-- splash screen -->
 	<div id="splash_screen"></div>
 	
-	<!-- player itself -->
+	<!-- player -->
 	<div id="player">
-	
-		<header><span id="lessonTitle"></span><span id="instructorName"></span><span><a id="info" class="infoIcn" href="#profile"></a></span></header>
+	    
+	    <!-- black header bar -->
+        <header>
+            <span id="lessonTitle"></span>
+            <span id="instructorName"></span>
+            <a id="info" class="infoIcn" href="#profile"></a>
+        </header>
 		
 		<!-- content -->
 		<div id="content">
-		
+		    
+		    <!-- slide and note container -->
 			<div id="slideNote">
 			
 				<div id="slide"></div>
@@ -71,14 +77,12 @@
 			
 			<!-- table of content -->
 			<div id="toc">
-				<ol id="selectable">
-				</ol>
+				<ol id="selectable"></ol>
 			</div>
-			<!-- end table of content -->
 			
-		</div> <!-- end content -->
+		</div>
 		
-	</div> <!-- end player -->
+	</div>
 	
 	
 	<!-- profile panel -->
@@ -86,15 +90,14 @@
 		<div class="photo"></div>
 		<div class="bio"></div>
 	</div>
-	<!-- end profile -->
-
+    
+    <!-- download bar -->
 	<div id="download_bar">
-		<ul>
-			
-		</ul>
+		<ul></ul>
 	</div>
 	
-</div> <!-- end player wrapper -->
+</div>
+<!-- end #storybook_plus_wrapper div -->
 
 </body>
 </html>

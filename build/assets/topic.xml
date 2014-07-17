@@ -3,10 +3,10 @@
 
 	<setup>
 		<lesson>PSAS350 - Chapter Three, part 2</lesson>
-		<length/>
+		<length>25 Minutes</length>
 		<instructor>Demo</instructor>
 		<slideImgFormat /> <!-- default to png if not specified -->
-		<note>n</note> <!-- disabled on default -->
+		<note>y</note> <!-- disabled on default -->
 	</setup>
 			
 	<!-- instructor or lesson information -->
@@ -29,7 +29,7 @@
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="QUIZ: Fill-in-the-blank">
+	<topic src="quiz" title="Fill-in-the-blank">
 		<quiz type="fib">
 			<question>_____ enables the operating system to automatically detect newly installed hardware.</question>
 			<choice />
@@ -37,9 +37,7 @@
 			<wrongFeedback>What? Wrong! Please go over the presentation again.</wrongFeedback>
 			<correctFeedback>Ding! Ding! Ding! You're correct! Good job!</correctFeedback>
 		</quiz>
-		<note>
-			<![CDATA[<p>This is a fill-in-blank question.</p>]]>
-		</note>
+		<note />
 	</topic>
 	
 	<topic src="swf:animations" title="Flash animation">
@@ -49,7 +47,7 @@
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="QUIZ: Short answer">
+	<topic src="quiz" title="Short answer">
 		<quiz type="sa">
 			<question>Describe Garfield.</question>
 			<choice />
@@ -57,9 +55,7 @@
 			<wrongFeedback />
 			<correctFeedback />
 		</quiz>
-		<note>
-			<![CDATA[<p>This is a short answer question.</p>]]>
-		</note>
+		<note />
 	</topic>
 	
 	<topic src="image-audio:slide04" title="Image and audio">
@@ -69,17 +65,15 @@
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="QUIZ: True or False">
+	<topic src="quiz" title="True or False">
 		<quiz type="t/f">
 			<question>It is wise to stay home on snow day.</question>
 			<choice />
 			<answer>true</answer>
-			<wrongFeedback>You must love snow and shoveling.</wrongFeedback>
-			<correctFeedback>Right, your safety comes first.</correctFeedback>
+			<wrongFeedback></wrongFeedback>
+			<correctFeedback></correctFeedback>
 		</quiz>
-		<note>
-			<![CDATA[<p>This is a true or false question.</p>]]>
-		</note>
+		<note />
 	</topic>
 	
 	<topic src="image-audio:slide21" title="Another image with audio">
@@ -89,11 +83,33 @@
 		</note>
 	</topic>
 	
+	<topic src="quiz" title="Image Answer Choices">
+		<quiz type="mc">
+			<question><![CDATA[Which pokémon is Ethan's favorite?<small>Ethan is a pokémon fan ... sort of.</small>]]></question>
+			<choice useImg="true">pikachu.gif|mewtwo.gif|mew.gif|rattata.gif|krabby.gif|rayquaza.gif</choice>
+			<answer>mewtwo.gif|pikachu.gif</answer>
+			<wrongFeedback><![CDATA[Ethan's is going to blast you and then dance!]]></wrongFeedback>
+			<correctFeedback><![CDATA[Ethan thinks you are stalking him...]]></correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
 	<topic src="swf:interactive" title="Interactive Flash piece">
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contains a Flash interactive object.</p>]]>
 		</note>
+	</topic>
+	
+	<topic src="quiz" title="Who's that pokémon!?">
+		<quiz type="mc">
+			<question img="mrmime.png"><![CDATA[Who's that pokémon?<small>A bipedal, humanoid Pokémon with a round, white body with a red spot in the middle. Its light pink arms and legs are connected to its body by red spheres. Its knees have small, white coverings. There are red pads on the tips of its white fingers, and its black feet curl upward at the tips. Blue growths extend from the sides of its pale pink head, and there are red circles on its cheeks.</small>]]></question>
+			<choice>Slowpoke|Kakuna|Mr. Mime|Arbok|Clefable</choice>
+			<answer>Mr. Mime</answer>
+			<wrongFeedback>How can you not know!? It is the only clown in pokémon.</wrongFeedback>
+			<correctFeedback>Gotta catch 'em all!</correctFeedback>
+		</quiz>
+		<note />
 	</topic>
 
 	<topic src="youtube:UaWN7gObv-c" title="Embedded YouTube Video">
@@ -103,14 +119,50 @@
 		</note>
 	</topic>
 	
-	<topic src="image:slide10" title="Image only with link">
+	<topic src="vimeo:90640415" title="Embedded Vimeo Video">
 		<quiz />
 		<note>
-			<![CDATA[<p>Another definition from <a href="http://en.wiktionary.org/wiki/discrete_variable" target="_blank">http://en.wiktionary.org/wiki/discrete_variable</a></p>]]>
+			<![CDATA[<p>This slide contains an embedded Vimeo video. Please excuse this strange video... It was randomly grabbed from Vimeo.</p>]]>
 		</note>
 	</topic>
 	
-	<topic src="quiz" title="QUIZ: Multiple choice">
+	<topic src="kaltura:1_88byq1sd" title="Embedded Kaltura Video">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains an embedded Kaltura video.</p>]]>
+		</note>
+	</topic>
+	
+	<topic src="quiz" title="What sound is that?">
+		<quiz type="mc">
+			<question audio="lugia"><![CDATA[Who's cry does it belong to?]]></question>
+			<choice>Pickachu|Mewtwo|Mr. Mime|Lugia|Jigglypuff</choice>
+			<answer>Lugia</answer>
+			<wrongFeedback>Oooo... tricky, tricky!</wrongFeedback>
+			<correctFeedback><![CDATA[<img src="assets/img/lugia.png" alt="lugia" border="0" />]]></correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="quiz" title="Sound and Image">
+		<quiz type="t/f">
+			<question img="mrmime.png" audio="lugia.mp3"><![CDATA[Does this pokémon make this cry?]]></question>
+			<choice></choice>
+			<answer>false</answer>
+			<wrongFeedback>Play more pokémon games!</wrongFeedback>
+			<correctFeedback>You must be a pokémon fan!</correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="image:slide10" title="Another Image Only">
+		<quiz />
+		<note>
+			<![CDATA[<script type="text/javascript">alert( "hack hack script injection!" );</script>]]>
+		</note>
+	</topic>
+	
+	<topic src="quiz" title="Multiple choice">
 		<quiz type="mc">
 			<question>What enables the operating system to automatically detect newly installed hardware?</question>
 			<choice>ReadyBoost|PnP|Hyper-V|AutoConnect</choice>
@@ -118,9 +170,7 @@
 			<wrongFeedback>ReadyBoost is technology that instantly add RAM to your PC.|PnP stands for plug-and-play.|Hyper-V is a server technology for virtualization.|AutoConnect is made up.</wrongFeedback>
 			<correctFeedback>Right on! PnP or plug-and-play is awesome.</correctFeedback>
 		</quiz>
-		<note>
-			<![CDATA[<p>This is a multiple choice question.</p>]]>
-		</note>
+		<note />
 	</topic>
 	
 	<topic src="image:slide08" title="A really really really long long long title which cannot fit into one line">
@@ -130,21 +180,26 @@
 		</note>
 	</topic>
 		
-	<topic src="quiz" title="QUIZ: True or False">
+	<topic src="quiz" title="True or False">
 		<quiz type="t/f">
 			<question>Dinosaurs make good pets.</question>
 			<choice />
 			<answer>false</answer>
-			<!--
-<wrongFeedback>Dinosaurs are gigantic. They no longer exist, but if you like bones...</wrongFeedback>
+			<wrongFeedback>Dinosaurs are gigantic. They no longer exist, but if you like bones...</wrongFeedback>
 			<correctFeedback>Yep. You do not want them as pets. Imagine what you need to do to clean up after them. Yuck!</correctFeedback>
--->
-<wrongFeedback />
-			<correctFeedback />
 		</quiz>
-		<note>
-			<![CDATA[<p>This is a true or false question.</p>]]>
-		</note>
+		<note />
+	</topic>
+	
+	<topic src="quiz" title="Multiple answers">
+		<quiz type="mc">
+			<question>What are the colors of the American flag?</question>
+			<choice>Red|Green|Blue|White|Yellow|Gold</choice>
+			<answer>Red|Blue|White</answer>
+			<wrongFeedback>Uh-oh!</wrongFeedback>
+			<correctFeedback><![CDATA["The colors,” Thomson said at the time, “are those used in the flag of the United States of America. White signifies purity and innocence. Red, hardiness & valour, and Blue… signifies vigilance, perseverance & justice.”]]></correctFeedback>
+		</quiz>
+		<note />
 	</topic>
 	
 	<!--

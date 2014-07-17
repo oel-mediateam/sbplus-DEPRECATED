@@ -1,7 +1,17 @@
 # Storybook Plus
-######version 2.0.0
+**_version 2.1.0_**
+
 Author: Ethan S. Lin  
 Organization: University of Wisconsin-Extension division of Continuing Education, Outreach & E-Learning
+
+### Minimum Supported Web Browsers
+* Internet Explorer 9+
+* Mozilla Firefox 30+
+* Google Chrome 33+
+* Apple Safari 5+
+* Opera 20+
+
+*Latest stable version is recommended.*
 
 For documentation, please visit: https://mediastreamer.doit.wisc.edu/uwli-ltc/media/documentation/sbplus/v2/
 
