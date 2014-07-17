@@ -395,18 +395,14 @@ p {
             	color: #000;
             	resize: none;
             	outline: none;
+            	@include box-sizing( border-box );
         	}
         	
         	input[type=text] {
         	    @extend textarea;
             	width: rem( 600px );
-            	height: rem( 25px );
+            	height: rem( 30px );
             	padding: rem( 5px );
-        	}
-        	
-        	input[type=text] {
-        	    @extend textarea;
-            	height: rem( 25px );
         	}
         	
         }
@@ -717,6 +713,7 @@ p {
 	
 	#selectable {
 	    
+	    width: 100%;
 	    list-style: none;
     	margin: 0;
     	padding: 0;
