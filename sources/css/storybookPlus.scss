@@ -220,6 +220,7 @@ p {
     #slideNote {
     	width: rem( 640px );
     	border-right: #ccc solid rem( 1px );
+    	border-left: #ccc solid rem( 1px );
     	float: left;
     }
     
@@ -376,7 +377,7 @@ p {
             .img_choice {
                 	
             	display: inline-block;
-            	margin: 0 rem( $gutter ) rem( $gutter ) 0;
+            	margin: 0 rem( 10px ) rem( 10px ) 0;
             	
             	input[type=radio], input[type=checkbox] {
                 	position: absolute;
@@ -703,7 +704,7 @@ p {
 // TABLE OF CONTENT
 #toc {
 
-	width: rem( 259px );
+	width: rem( 258px );
 	height: rem( 600px );
 	border-bottom: #ccc solid rem( 1px );
 	border-right: #ccc solid rem( 1px );
