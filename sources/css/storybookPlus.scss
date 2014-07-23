@@ -369,6 +369,8 @@ p {
             	display: block;
             	position: relative;
             	margin: 0 0 rem( 6px );
+            	padding-left: rem( 20px );
+                text-indent: rem( -22px );
             	font-size: rem( $font-size );
             	color: #000;
             	cursor: pointer;
