@@ -16,6 +16,6 @@ Organization: University of Wisconsin-Extension division of Continuing Education
 For documentation, please visit: https://mediastreamer.doit.wisc.edu/uwli-ltc/media/documentation/sbplus/v2/
 
 ### Bug Reporting and Questions
-If any bugs/glitches are found in this Storybook Plus application, please report them under the "**Issues**" page. When reporting a bug, please write the report as detailed and specifically as possible. Note the steps to reproduce the bug and include screen captures if possible.
+If any bugs/glitches are found in this Storybook Plus application, please report them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub. When reporting a bug, please write the report as detailed and specifically as possible. Note the steps to reproduce the bug and include screen captures if possible.
 
-For questions, please also post them under the "**Issues**" page.
+For questions, please also post them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub.
