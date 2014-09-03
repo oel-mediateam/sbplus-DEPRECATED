@@ -31,6 +31,7 @@ var audioPlayer,
     videoPlaying = false,
     sources;
 
+// when document finished loading and ready
 $( document ).ready( function() {
 	
     var ua = navigator.userAgent,
@@ -371,7 +372,12 @@ $.fn.initializePlayer = function() {
     $( "#splash_screen" ).hide();
     
     // setup up player header
+    $( "#lessonTitle" ).attr( "title", lessonTitle );
+    if ( lessonTitle.length > 50 ) {
+        lessonTitle = lessonTitle.substr(0, 46) + "...";
+    }
     $( "#lessonTitle" ).html( lessonTitle );
+    
     $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#profile\">" + instructor + "</a>" );
     
     // setup profile panel
