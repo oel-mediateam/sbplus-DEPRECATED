@@ -391,12 +391,10 @@ $.fn.initializePlayer = function() {
         
         if ( $( "#profile" ).is(":visible") ) {
         
-            console.log( "profile clicky-click close" );
             $( "#profile" ).fadeOut( 300 );
             
         } else {
         
-            console.log( "profile clicky-click open" );
             $( "#profile" ).fadeIn( 300 );
             
         }
@@ -484,7 +482,7 @@ $.fn.initializePlayer = function() {
     }
     
     // add the zoom boutton to the control after the slide status
-    $( "#currentStatus" ).after( "<span id=\"magnifyIcon\"></span>" );
+    $( "#currentStatus" ).after( "<span id=\"magnifyBtn\"><span class=\"magnifyIcon\"></span></span>" );
     $.fn.bindImgMagnify();
     
     // call to load the first slide
@@ -565,15 +563,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
     
-    if ( slideSource !== "quiz") {
-        
-        $( "#magnifyIcon" ).removeClass( "disabled" );
-        
-    } else {
-    
-        $( "#magnifyIcon" ).addClass( "disabled" );
-        
-    }
+    $( "#slide" ).html( "" );
     
     switch ( slideSource ) {
         
@@ -1351,13 +1341,20 @@ $.fn.updateSlideNum = function( num ) {
  */
 $.fn.bindImgMagnify = function() {
 
-    $( "#magnifyIcon" ).on( "click", function() {
-    
-        if ( !$(this).hasClass( "disabled" ) ) {
-            console.log( "clicky-click" );
+    $( "#magnifyBtn" ).on( "click", function() {
+ 
+        if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
+        
+            $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
+            $( this ).html( "<span class=\"magnifyIcon\"></span>" );
+            
+        } else {
+            
+            $( "#storybook_plus_wrapper" ).addClass( "magnified" );
+            $( this ).html( "<span class=\"magnifyOut\"></span>" );
+            
         }
     
-        
     } );
 
 };

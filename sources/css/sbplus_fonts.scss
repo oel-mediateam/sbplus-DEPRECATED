@@ -37,9 +37,14 @@
     content: "\e385";
 }
 
-#magnifyIcon:before {
+.magnifyIcon:before {
     @extend .defaultFontSettings;
     content: "\e1bc";
+}
+
+.magnifyOut:before {
+    @extend .defaultFontSettings;
+    content: "\e600";
 }
 
 #leftBtn:before {

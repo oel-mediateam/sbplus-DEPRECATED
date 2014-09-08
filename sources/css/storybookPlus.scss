@@ -93,7 +93,11 @@ p {
     #control {
         
         #currentStatus {
-            width: rem( 212px );
+            width: rem( 461px );
+        }
+        
+        #magnifyBtn {
+            width: rem( 51px );
             border-right: none;
         }
         
@@ -101,6 +105,91 @@ p {
             display: none;
         }
         
+    }
+    
+}
+
+#storybook_plus_wrapper.magnified {
+    
+    #slideNote {
+        
+        border-left: none;
+        
+        #slide {
+    	    
+    	    width: rem( 900px );
+    	    
+        	#img {
+        	
+            	position: absolute;
+                top: rem( 30px );
+            	left: 0;
+            	z-index: 10;
+            	
+            	img {
+                    height: rem( 506px );
+            	}
+            	
+            }
+            
+            object {
+                position: absolute;
+                width: rem( 900px ) !important;
+                height: rem( 506px ) !important;
+                position: absolute;
+                top: rem( 30px );
+            	left: 0;
+            	z-index: 10;
+            	border-left: 1px solid #ccc;
+            	border-right: 1px solid #ccc;
+            	@include box-sizing( border-box );
+            }
+        	
+        }
+        
+    }
+    
+    #control {
+        
+        width: rem( 900px );
+        
+        #currentStatus {
+        	width: 72%;
+        }
+        
+        #leftBtn {
+            border-left: 1px solid #ccc;
+        }
+        
+        #fontMinusBtn,
+        #fontSizeIndicator,
+        #fontPlusBtn {
+            display: none;
+        }
+        
+    }
+    
+    #vp {
+    	
+    	position: relative;
+    
+    	.video-js {
+    	    position: absolute;
+        	width: rem( 900px ) !important;
+            height: rem( 506px ) !important;
+            top: 0;
+            left: 0;
+            z-index: 10;
+    	}
+    	
+    }
+    
+    #note.cropped {
+        /* height: rem( 146px ); */
+    }
+    
+    #toc {
+        display: none;
     }
     
 }
@@ -229,7 +318,7 @@ p {
         
         
         #slide, #quiz {
-            height: rem( 560px );
+            height: rem( 506px );
         }
         
         #note {
@@ -260,16 +349,6 @@ p {
     	
     } // #slide
     
-    #slide:hover {
-        
-        .magnifyIcon {
-            display: block;
-            @include opacity( .75 );
-            @include single-transition( opacity, ease-in, .3s );
-        }
-        
-    }
-    
     // AUDIO PLAYER
     #ap {
     	display: none;
@@ -288,6 +367,8 @@ p {
     // VIDEO PLAYER
     #vp {
     	display: none;
+    	width: rem( 640px );
+    	height: rem( 360px );
     	margin-top: rem( -360px );
     }
     
@@ -439,7 +520,7 @@ p {
     #note {
         
     	width: 100%;
-    	height: rem( 200px );
+    	height: rem( 146px );
     	border-top: #ccc solid rem( 1px );
     	padding: 0 rem( 5px );
     	background-color: #fff;
@@ -448,11 +529,11 @@ p {
     	@include box-sizing( "border-box" );
     	
     	.noNotes {
-        	font-size: rem( 82px );
-        	line-height: rem( 82px );
+        	font-size: rem( 55px );
+        	line-height: rem( 55px );
         	color: #d4d4d4;
         	text-align: center;
-        	padding: rem( 60px ) 0 0 0;
+        	padding: rem( 50px ) 0 0 0;
         	cursor: default;
     	}
     	
@@ -587,10 +668,11 @@ p {
     }
     
     #note.cropped {
-        height: 170px;
+    
+        height: rem( 116px );
         
         .noNotes {
-            padding-top: rem( 50px );
+            padding-top: rem( 30px );
         }
         
     }
@@ -611,8 +693,9 @@ p {
             height: rem( 38px );
             font-size: rem( 22px );
     	    line-height: rem( 22px );
-    	    padding: rem( 11px ) 0 0 rem( 18px );
+    	    padding: rem( 11px ) 0 0;
             cursor: pointer;
+            text-align: center;
             float: left;
             border-right: #ccc solid rem( 1px );
             @include box-sizing( "border-box" );
@@ -630,7 +713,7 @@ p {
     	
     	#rightBtn {
     	    @extend .btn;
-    	    padding: rem( 11px ) 0 0 rem( 20px );
+    	    padding: rem( 11px ) 0 0;
     	}
     	
     	#currentStatus {
@@ -647,17 +730,12 @@ p {
         	@include box-sizing( "border-box" );
         }
         
-        #magnifyIcon {
+        #magnifyBtn {
         	@extend .btn;
         	width: 8%;
             font-size: rem( 16px );
             line-height: rem( 16px );
-            padding: rem( 12px ) 0 0 rem( 17px );
-        }
-        
-        #magnifyIcon.disabled {
-            color: #c3c3c3;
-            cursor: default;
+            padding: rem( 12px ) 0 0;
         }
         
         #fontMinusBtn {
@@ -665,7 +743,7 @@ p {
             width: 8%;
             font-size: rem( 16px );
             line-height: rem( 16px );
-            padding: rem( 12px ) 0 0 rem( 17px );
+            padding: rem( 12px ) 0 0;
         }
         
         #fontSizeIndicator {
@@ -686,7 +764,7 @@ p {
             width: 8%;
             font-size: rem( 16px );
             line-height: rem( 16px );
-            padding: rem( 11px ) 0 0 rem( 17px );
+            padding: rem( 11px ) 0 0;
             border-right: none;
         }
     	
@@ -698,7 +776,7 @@ p {
 #toc {
 
 	width: rem( 258px );
-	height: rem( 600px );
+	height: rem( 546px );
 	border-bottom: #ccc solid rem( 1px );
 	border-right: #ccc solid rem( 1px );
 	background-color: #fff;
