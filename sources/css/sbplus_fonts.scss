@@ -37,7 +37,7 @@
     content: "\e385";
 }
 
-.magnifyIcon:before {
+#magnifyIcon:before {
     @extend .defaultFontSettings;
     content: "\e1bc";
 }

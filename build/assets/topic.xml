@@ -146,7 +146,7 @@
 	
 	<topic src="quiz" title="Sound and Image">
 		<quiz type="t/f">
-			<question img="mrmime.png" audio="lugia.mp3"><![CDATA[Does this pokémon make this cry?]]></question>
+			<question img="mrmime.png" audio="lugia"><![CDATA[Does this pokémon make this cry?]]></question>
 			<choice></choice>
 			<answer>false</answer>
 			<wrongFeedback>Play more pokémon games!</wrongFeedback>

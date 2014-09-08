@@ -477,9 +477,12 @@ $.fn.initializePlayer = function() {
 
     }
     
+    // add the zoom boutton to the control after the slide status
+    $( "#currentStatus" ).after( "<span id=\"magnifyIcon\"></span>" );
+    $.fn.bindImgMagnify();
+    
     // call to load the first slide
     $.fn.loadSlide( topicSrc[0], counter );
-    
     
     // load and set the instructor picture
     $.fn.loadProfilePhoto();
@@ -556,6 +559,16 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
     
+    if ( slideSource !== "quiz") {
+        
+        $( "#magnifyIcon" ).removeClass( "disabled" );
+        
+    } else {
+    
+        $( "#magnifyIcon" ).addClass( "disabled" );
+        
+    }
+    
     switch ( slideSource ) {
         
         case "image:":
@@ -568,11 +581,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             $( img ).load( function() {
                 
                 $( this ).hide();
-                $( "#slide" ).html( "<a id=\"img\" title=\"" + imgCaption + "\" href=\"" + imgPath + "\">" );
+                $( "#slide" ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
-                $( "#slide" ).append( "</a><div class=\"magnifyIcon\"></div>" );
                 $( this ).fadeIn();
-                $( this ).bindImgMagnify();
                 $( "#progressing" ).fadeOut();
     
             } ).error( function() {
@@ -596,11 +607,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             $( img ).load( function() {
     
                 $( this ).hide();
-                $( "#slide" ).html( "<a id=\"img\" title=\"" + imgCaption + "\"href=\"" + imgPath + "\">" );
+                $( "#slide" ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
-                $( "#slide" ).append( "</a><div class=\"magnifyIcon\"></div>" );
                 $( this ).fadeIn();
-                $( this ).bindImgMagnify();
                 $( "#progressing" ).fadeOut();
     
                 if ( !audioPlaying ) {
@@ -1336,9 +1345,10 @@ $.fn.updateSlideNum = function( num ) {
  */
 $.fn.bindImgMagnify = function() {
 
-    $( ".magnifyIcon" ).on( "click", function() {
+    $( "#magnifyIcon" ).on( "click", function() {
     
-        $.fancybox.open( {
+        /*
+$.fancybox.open( {
         
             href: imgPath,
             title: imgCaption,
@@ -1352,10 +1362,17 @@ $.fn.bindImgMagnify = function() {
             padding: 0
             
         } );
+*/
+    
+        if ( !$(this).hasClass( "disabled" ) ) {
+            console.log( "clicky-click" );
+        }
+    
         
     } );
     
-    $('a#img').fancybox( {
+    /*
+$('a#img').fancybox( {
     
         helpers: {
             overlay: {
@@ -1367,6 +1384,7 @@ $.fn.bindImgMagnify = function() {
         padding: 0
         
     } );
+*/
 
 };
 

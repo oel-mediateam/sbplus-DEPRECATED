@@ -239,43 +239,23 @@ p {
 	
 	// SLIDE
     #slide {
-    
-    	position: relative;
+
     	width: 100%;
     	height: rem( 360px );
     	background: #fff;
     	overflow: hidden;
     	
     	#img {
-    	
+    	    
     	    display: block;
     	    line-height: 0;
-        	
-        	img {
+    	    
+    	    img {
             	width: 100%;
                 height: rem( 360px );
         	}
         	
-    	} // #img
-    	
-    	.magnifyIcon {
-        	position: absolute;
-        	width: rem( 30px );
-        	height: rem( 30px );
-        	font-size: rem( 20px );
-        	line-height: rem( 20px );
-        	color: #fff;
-        	text-align: center;
-        	padding-top: rem( 7px );
-        	bottom: rem( 6px );
-        	right: rem( 6px );
-        	cursor: pointer;
-        	background-color: #131313;
-        	@include border-radius( rem( 3px ) );
-        	@include box-sizing( "border-box" );
-        	@include opacity( 0 );
-        	@include single-transition( opacity, ease-out, .3s );
-        }
+    	}
     	
     } // #slide
     
@@ -338,7 +318,7 @@ p {
         	
         	img {
         	    display: block;
-            	max-width: rem( 610px );
+            	max-width: rem( 360px );
             	padding-right: rem( $gutter );
             	height: auto;
             	float: left;
@@ -384,16 +364,12 @@ p {
             	
             	input[type=radio], input[type=checkbox] {
                 	position: absolute;
-            	}            	
-            	
-            	img {
-                	outline: red;
             	}
             	
         	}
             
             textarea {
-            	width: rem( 600px );
+            	width: rem( 595px );
             	height: rem( 110px );
             	padding: rem( 5px );
             	font-size: rem( $font-size );
@@ -404,10 +380,10 @@ p {
         	}
         	
         	input[type=text] {
-        	    @extend textarea;
-            	width: rem( 600px );
+            	width: rem( 595px );
             	height: rem( 30px );
             	padding: rem( 5px );
+            	@include box-sizing( border-box );
         	}
         	
         }
@@ -658,7 +634,7 @@ p {
     	
     	#currentStatus {
         	display: block;
-        	width: 56%;
+        	width: 48%;
         	height: rem( 38px );
         	font-size: rem( 16px );
         	font-weight: bold;
@@ -668,6 +644,19 @@ p {
         	float: left;
         	cursor: default;
         	@include box-sizing( "border-box" );
+        }
+        
+        #magnifyIcon {
+        	@extend .btn;
+        	width: 8%;
+            font-size: rem( 16px );
+            line-height: rem( 16px );
+            padding: rem( 12px ) 0 0 rem( 17px );
+        }
+        
+        #magnifyIcon.disabled {
+            color: #c3c3c3;
+            cursor: default;
         }
         
         #fontMinusBtn {
@@ -870,6 +859,8 @@ p {
     } // ul
 	
 } // #download_bar
+
+// mediaelement audio player
 
 // AJAX ERROR
 #errorMsg {
