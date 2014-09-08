@@ -1,5 +1,5 @@
 # Storybook Plus
-**_version 2.1.0_**
+**_version 2.2.0_**
 
 Author: Ethan S. Lin  
 Organization: University of Wisconsin-Extension division of Continuing Education, Outreach & E-Learning

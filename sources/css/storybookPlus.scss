@@ -49,6 +49,7 @@ p {
 
 // PLAYER WRAPPER
 #storybook_plus_wrapper {
+    position: relative;
 	width: rem( 900px );
 	@include clear;
 }
@@ -109,7 +110,7 @@ p {
 
 	width: rem( 900px );
 	height: rem( 630px );
-	padding: rem( 200px );
+	padding: rem( 180px ) rem( 200px ) rem( 200px );
 	text-align: center;
 	background-color: #fff;
 	background-position: left bottom;
@@ -772,21 +773,26 @@ p {
 #profile {
 
 	display: none;
-	width: rem( 600px );
-	height: rem( 300px );
+	position: absolute;
+	width: 100%;
+	height: rem( 600px );
 	padding: rem( 10px );
 	color: #fff;
-	background-color: #131313;
+	background-color: #fafafa;
+	border: 1px solid #ccc;
+	top: rem( 30px );
+	left: 0;
 	@include clear;
+	@include box-sizing( border-box );
 	
 	.photo {
 	
     	width: rem( 200px );
     	height: rem( 300px );
-    	float:left;
+    	margin-right: rem( 10px );
+    	float: left;
     	
     	img{
-        	display: block;
         	margin: 0 auto;
         	padding: 0;
         	max-height: rem( 300px );
@@ -797,18 +803,35 @@ p {
 	
 	.bio {
     	
-    	width: rem( 380px );
-    	height: rem( 300px );
-    	margin-left: rem( 10px );
-    	padding-right: rem( 10px );
+    	display: inline;
+    	color: #000;
+    	line-height: rem( 20px );
     	overflow: auto;
-    	float: left;
     	
-    	p:first-child {
-        	font-weight: bold;
-        	font-size: rem( 18px );
+    	h2 {
+        	margin: 0 0 rem( 14px );
     	}
     	
+    }
+    
+    .profileCloseBtn {
+    
+        position: absolute;
+        font-size: rem( 12px );
+        line-height: rem( 12px );
+        top: rem( 8px );
+        right: rem( 10px );
+        @include clear;
+        
+        a, a:link, a:visited, a:hover {
+            display: block;
+            padding: rem( 5px );
+            text-decoration: none;
+            color: #fafafa;
+            background-color: #696969;
+            @include border-radius( rem( 5px ) );
+        }
+        
     }
 	
 } // #profile

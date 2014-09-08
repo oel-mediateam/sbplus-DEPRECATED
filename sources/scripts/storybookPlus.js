@@ -381,21 +381,27 @@ $.fn.initializePlayer = function() {
     $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#profile\">" + instructor + "</a>" );
     
     // setup profile panel
-    $( "#profile .bio" ).html( "<p>" + instructor + "</p>" + PROFILE );
+    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a id=\"profileClose\" href=\"#\">close</a></div>" );
+    $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
     
     $( "#player" ).append( "<div id=\"progressing\"></div>" );
 	
-	// enable fancy box for profile panel
-    $( "#info, a.instructorName" ).fancybox( {
-    
-        helpers: {
-            overlay: {
-                css: {
-                    'background': 'rgba(250, 250, 250, 0.85)'
-                }
-            }
-        },
-        padding: 0
+	// bind for profile panel open/close toggle
+    $( "#info, a.instructorName, #profileClose" ).on( "click", function() {
+        
+        if ( $( "#profile" ).is(":visible") ) {
+        
+            console.log( "profile clicky-click close" );
+            $( "#profile" ).fadeOut( 300 );
+            
+        } else {
+        
+            console.log( "profile clicky-click open" );
+            $( "#profile" ).fadeIn( 300 );
+            
+        }
+        
+        return false;
         
     } );
 	
@@ -1336,7 +1342,7 @@ $.fn.updateSlideNum = function( num ) {
 };
 
 /**
- * Open the current slide image in fancybox
+ * Magnify the current slide image and video
  * @since 2.0.0
  *
  * @author Ethan S. Lin
@@ -1347,44 +1353,12 @@ $.fn.bindImgMagnify = function() {
 
     $( "#magnifyIcon" ).on( "click", function() {
     
-        /*
-$.fancybox.open( {
-        
-            href: imgPath,
-            title: imgCaption,
-            helpers: {
-                overlay: {
-                    css: {
-                        'background': 'rgba(250, 250, 250, 0.85)'
-                    }
-                }
-            },
-            padding: 0
-            
-        } );
-*/
-    
         if ( !$(this).hasClass( "disabled" ) ) {
             console.log( "clicky-click" );
         }
     
         
     } );
-    
-    /*
-$('a#img').fancybox( {
-    
-        helpers: {
-            overlay: {
-                css: {
-                    'background': 'rgba(250, 250, 250, 0.85)'
-                }
-            }
-        },
-        padding: 0
-        
-    } );
-*/
 
 };
 
