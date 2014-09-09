@@ -482,7 +482,7 @@ $.fn.initializePlayer = function() {
     }
     
     // add the zoom boutton to the control after the slide status
-    $( "#currentStatus" ).after( "<span id=\"magnifyBtn\"><span class=\"magnifyIcon\"></span></span>" );
+    $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"magnifyIcon\"></span></span>" );
     $.fn.bindImgMagnify();
     
     // call to load the first slide
@@ -510,6 +510,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     var img;
     var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 ) ;
+    
+    var magnified = $( "#storybook_plus_wrapper" ).hasClass( "magnified" );
     
     if ( slideSource !== "quiz" ) {
     
@@ -551,11 +553,13 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
             $( "#ap" ).hide();
             
-            if ( $( "#note" ).hasClass( "cropped" ) ) {
+            /*
+if ( $( "#note" ).hasClass( "cropped" ) ) {
             
                 $( "#note" ).removeClass( "cropped" );
                 
             }
+*/
             
         }
         
@@ -563,7 +567,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
     
-    $( "#slide" ).html( "" );
+    $( "#slide" ).html( "" ).show();
     
     switch ( slideSource ) {
         
@@ -594,7 +598,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
         
         case "image-audio:":
-        
+            
             img = new Image();
 
             imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
@@ -610,10 +614,11 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     
                 if ( !audioPlaying ) {
     
-                    if ( enabledNote === false && quizDetected === false ) {
+                    if ( ( enabledNote === false && quizDetected === false ) ) {
     					
     					if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
                             
+                            $( "#currentStatus" ).removeClass( "noPlayer" );
                             $( "#apm" ).show();
                             
                             if (firstAudioLoad !== true) {
@@ -638,7 +643,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                         
                         if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
                             
-                            $( "#ap").show();
+                            $( "#ap" ).show();
                             
                             if (firstAudioLoad !== true) {
     					    
@@ -652,15 +657,19 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         						
         					}
         					
-        					$( "#note" ).addClass( "cropped" );
+        					$.fn.bindAudioPlayerFadeInOut();
+        					
+        					/* $( "#note" ).addClass( "cropped" ); */
                             
                         } else {
                         
-                            if ( $( "#note" ).hasClass( "cropped" ) ) {
+                            /*
+if ( $( "#note" ).hasClass( "cropped" ) ) {
             
                                 $( "#note" ).removeClass( "cropped" );
                                 
                             }
+*/
                             
                             $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
                             
@@ -695,6 +704,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 $( "#progressing" ).fadeOut();
                 
             } );
+            
+            $( "#slide" ).hide();
     
             if ( !videoPlaying ) {
             
@@ -740,7 +751,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "kaltura:":
                 
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/24641251/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1405368331&entry_id=" + srcName + "&flashvars[akamaiHD.loadingPolicy]=preInitialize&flashvars[akamaiHD.asyncInit]=true&flashvars[streamerType]=hdnetwork&flashvars[autoPlay]=true\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/25820941/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1410288619&entry_id=" + srcName + "&flashvars[akamaiHD.loadingPolicy]=preInitialize&flashvars[akamaiHD.asyncInit]=true&flashvars[streamerType]=hdnetwork&flashvars[autoPlay]=true\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 
@@ -1246,8 +1257,10 @@ $.fn.loadAudioPlayer = function( id, srcName ) {
     var width = 640, height = 30;
     
     if ( id === "#apcm" ) {
+    
         width = 300;
         height = 0;
+        
     }
     
     audioPlayer = new MediaElementPlayer( id, {
@@ -1274,6 +1287,24 @@ $.fn.loadAudioPlayer = function( id, srcName ) {
     
 };
 
+$.fn.bindAudioPlayerFadeInOut = function() {
+    
+    $( "#ap" ).delay( 3000 ).fadeOut( "slow" );
+    
+    $( "#img, #ap" ).on( "mouseenter", function() {
+        
+        $( "#ap" ).stop(true,true).fadeIn( "slow" );
+        
+    } );
+    
+    $( "#img, #ap" ).on( "mouseleave", function() {
+        
+        $( "#ap" ).stop(false,true).delay( 1000 ).fadeOut( "slow" );
+        
+    } );
+    
+};
+
 /**
  * Load notes for the current slide
  * @since 2.1.0
@@ -1287,7 +1318,7 @@ $.fn.loadNote = function( num ) {
 
     var note = noteArray[num];
 	
-	if ( !$( "#slideNote" ).hasClass( "quizSlide" ) ) {
+	if ( !$( "#slideNote" ).hasClass( "quizSlide" ) && !$( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
 
     	$( "#note" ).html( note ).hide().fadeIn( "fast" );
     	
@@ -1344,17 +1375,19 @@ $.fn.bindImgMagnify = function() {
     $( "#magnifyBtn" ).on( "click", function() {
  
         if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
-        
+            
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"magnifyIcon\"></span>" );
+            $( "#note" ).show(); 
             
         } else {
             
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
             $( this ).html( "<span class=\"magnifyOut\"></span>" );
+            $( "#note" ).hide();
             
         }
-    
+            
     } );
 
 };
@@ -1401,6 +1434,7 @@ $.fn.loadProfilePhoto = function() {
 $.fn.adjustFontSize = function( arg ) {
     
     var size = 2;
+    /* var cropped = false; */
     
     if ( arg === "minus" ) {
     
@@ -1422,6 +1456,14 @@ $.fn.adjustFontSize = function( arg ) {
         
     }
     
+    /*
+if ( $( "#note" ).hasClass( "cropped" ) ) {
+        
+        cropped = true;
+        
+    }
+*/
+    
     $( "#note" ).removeClass();
 
     if ( defaultFontSize === 12 ) {
@@ -1441,6 +1483,13 @@ $.fn.adjustFontSize = function( arg ) {
         $( "#note" ).addClass( "size20" );
         
     }
+    
+    /*
+if ( cropped ) {
+        
+        $( "#note" ).addClass( "cropped" );
+    }
+*/
 
     $( '#fontSizeIndicator' ).html( defaultFontSize );
     
@@ -1540,8 +1589,6 @@ $.fn.displayGetLessonError = function( status, exception ) {
     $('#errorMsg').html('<p>' + statusMsg + '</p><p>' + exceptionMsg + '</p>');
 
 };
-
-
 
 /* MISC. HELPER FUNCTIONS
 ***************************************************************/

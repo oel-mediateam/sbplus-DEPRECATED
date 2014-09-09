@@ -113,18 +113,21 @@ p {
     
     #slideNote {
         
-        border-left: none;
+        width: rem( 900px );
+        height: rem( 546px );
+        border: none;
         
         #slide {
     	    
+    	    position: relative;
     	    width: rem( 900px );
+    	    height: rem( 506px );
+    	    overflow: hidden;
     	    
         	#img {
         	
             	position: absolute;
-                top: rem( 30px );
-            	left: 0;
-            	z-index: 10;
+            	/* z-index: 10; */
             	
             	img {
                     height: rem( 506px );
@@ -136,17 +139,27 @@ p {
                 position: absolute;
                 width: rem( 900px ) !important;
                 height: rem( 506px ) !important;
-                position: absolute;
-                top: rem( 30px );
-            	left: 0;
             	z-index: 10;
             	border-left: 1px solid #ccc;
             	border-right: 1px solid #ccc;
             	@include box-sizing( border-box );
             }
+            
+            iframe {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            	z-index: 10;
+            }
         	
         }
         
+    }
+    
+    #progressing {
+        top: 46%;
+        left: 48%;
+        z-index: 20;
     }
     
     #control {
@@ -167,25 +180,32 @@ p {
             display: none;
         }
         
+        #magnifyBtn {
+            border-right: 1px solid #ccc;
+            border-left: none;
+        }
+        
+    }
+    
+    #ap {  
+        width: rem( 900px );
+    	top: rem( 506px );
     }
     
     #vp {
     	
     	position: relative;
+    	width: rem( 900px );
+        height: rem( 506px );
+        margin: 0;
     
     	.video-js {
     	    position: absolute;
         	width: rem( 900px ) !important;
             height: rem( 506px ) !important;
-            top: 0;
-            left: 0;
             z-index: 10;
     	}
     	
-    }
-    
-    #note.cropped {
-        /* height: rem( 146px ); */
     }
     
     #toc {
@@ -352,7 +372,10 @@ p {
     // AUDIO PLAYER
     #ap {
     	display: none;
-    	background-color: rgba(7,20,30,0.7);
+    	position: absolute;
+    	height: rem( 30px );
+    	top: rem( 360px );
+    	background-color: #7e7e7e;
     }
     
     #apm {
@@ -360,7 +383,7 @@ p {
     	width: rem( 300px );
     	height: rem( 34px );
     	padding-top: rem( 4px );
-    	background-color: rgba(7,20,30,0.7);
+    	background-color: #7e7e7e;
     	float: left;
     }
     
@@ -369,7 +392,6 @@ p {
     	display: none;
     	width: rem( 640px );
     	height: rem( 360px );
-    	margin-top: rem( -360px );
     }
     
     // QUIZ
@@ -667,7 +689,8 @@ p {
         
     }
     
-    #note.cropped {
+    /*
+#note.cropped {
     
         height: rem( 116px );
         
@@ -676,6 +699,7 @@ p {
         }
         
     }
+*/
 	
 	// PLAYER CONTROLS
     #control {
@@ -735,6 +759,8 @@ p {
         	width: 8%;
             font-size: rem( 16px );
             line-height: rem( 16px );
+            border-left: 1px solid #ccc;
+            border-right: none;
             padding: rem( 12px ) 0 0;
         }
         
