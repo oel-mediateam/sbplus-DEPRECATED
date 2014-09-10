@@ -713,6 +713,7 @@ if ( $( "#note" ).hasClass( "cropped" ) ) {
     
                 videojs( playerID, {}, function() {
                 
+                    this.removeChild('FullscreenToggle');
                     this.progressTips();
                     this.src( [
     					{type: "video/mp4", src:"assets/video/" + srcName + ".mp4"},
@@ -731,7 +732,7 @@ if ( $( "#note" ).hasClass( "cropped" ) ) {
                 
         case "youtube:":
         
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&fs=0&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 

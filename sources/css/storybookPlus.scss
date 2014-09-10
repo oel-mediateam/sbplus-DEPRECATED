@@ -987,7 +987,15 @@ p {
 	
 } // #download_bar
 
-// mediaelement audio player
+// video js
+.vjs-default-skin {
+
+    .vjs-volume-control {
+        
+        margin-left: rem( 10px ) !important;
+        margin-right: rem( 20px ) !important;
+    }
+}
 
 // AJAX ERROR
 #errorMsg {
