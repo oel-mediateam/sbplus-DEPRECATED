@@ -85,7 +85,7 @@
 	
 	<topic src="quiz" title="Image Answer Choices">
 		<quiz type="mc">
-			<question><![CDATA[Which pokémon is Ethan's favorite?<small>Ethan is a pokémon fan ... sort of.</small>]]></question>
+			<question><![CDATA[Which pokémon are Ethan's favorites?<small>Ethan is a pokémon fan ... sort of.</small>]]></question>
 			<choice useImg="true">pikachu.gif|mewtwo.gif|mew.gif|rattata.gif|krabby.gif|rayquaza.gif</choice>
 			<answer>mewtwo.gif|pikachu.gif</answer>
 			<wrongFeedback><![CDATA[Ethan's is going to blast you and then dance!]]></wrongFeedback>
