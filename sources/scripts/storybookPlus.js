@@ -1268,6 +1268,15 @@ $.fn.loadAudioPlayer = function( id, srcName ) {
     
 };
 
+/**
+ * Fade in and out audio player
+ * @since 2.2.0
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
 $.fn.bindAudioPlayerFadeInOut = function() {
     
     $( "#ap" ).delay( 3000 ).fadeOut( "slow" );
