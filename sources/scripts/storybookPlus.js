@@ -712,7 +712,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 
         case "youtube:":
         
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&fs=0&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&fs=0&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\"></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 
@@ -722,7 +722,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "vimeo:":
                 
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 
@@ -732,7 +732,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "kaltura:":
                 
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/25820941/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1410288619&entry_id=" + srcName + "&flashvars[akamaiHD.loadingPolicy]=preInitialize&flashvars[akamaiHD.asyncInit]=true&flashvars[streamerType]=hdnetwork&flashvars[autoPlay]=true\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/25820941/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1410288619&entry_id=" + srcName + "&flashvars[akamaiHD.loadingPolicy]=preInitialize&flashvars[akamaiHD.asyncInit]=true&flashvars[streamerType]=hdnetwork&flashvars[autoPlay]=true\" frameborder=\"0\"></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 
