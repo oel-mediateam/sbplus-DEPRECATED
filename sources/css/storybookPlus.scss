@@ -187,6 +187,22 @@ p {
         
     }
     
+    #quiz {
+        
+        .answerArea {
+            
+            textarea {
+            	width: 100%;
+        	}
+        	
+        	input[type=text] {
+            	width: 100%;
+        	}
+            
+        }
+        
+    }
+    
     #ap {  
         width: rem( 900px );
     	top: rem( 506px );
@@ -446,9 +462,10 @@ p {
     	
     	.answerArea {
     	
-    	    display: inline-block;
+    	    display: block;
         	padding: 0 rem( $gutter );
         	margin: rem( $gutter ) 0;
+        	@include box-sizing( border-box );
         	
         	label {
             	display: block;
@@ -991,7 +1008,6 @@ p {
 .vjs-default-skin {
 
     .vjs-volume-control {
-        
         margin-left: rem( 10px ) !important;
         margin-right: rem( 20px ) !important;
     }

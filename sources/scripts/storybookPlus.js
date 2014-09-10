@@ -511,8 +511,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     var img;
     var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 ) ;
     
-    var magnified = $( "#storybook_plus_wrapper" ).hasClass( "magnified" );
-    
     if ( slideSource !== "quiz" ) {
     
         slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 );
@@ -552,14 +550,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         } else {
         
             $( "#ap" ).hide();
-            
-            /*
-if ( $( "#note" ).hasClass( "cropped" ) ) {
-            
-                $( "#note" ).removeClass( "cropped" );
-                
-            }
-*/
             
         }
         
@@ -658,18 +648,8 @@ if ( $( "#note" ).hasClass( "cropped" ) ) {
         					}
         					
         					$.fn.bindAudioPlayerFadeInOut();
-        					
-        					/* $( "#note" ).addClass( "cropped" ); */
                             
                         } else {
-                        
-                            /*
-if ( $( "#note" ).hasClass( "cropped" ) ) {
-            
-                                $( "#note" ).removeClass( "cropped" );
-                                
-                            }
-*/
                             
                             $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
                             
@@ -1379,7 +1359,11 @@ $.fn.bindImgMagnify = function() {
             
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"magnifyIcon\"></span>" );
-            $( "#note" ).show(); 
+            
+            if ( $( "#quiz" ).length <= 0 ) {
+                $( "#note" ).show(); 
+            }
+            
             
         } else {
             
