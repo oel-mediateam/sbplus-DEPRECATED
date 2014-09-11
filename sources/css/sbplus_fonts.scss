@@ -57,16 +57,6 @@
     content: "\e3b1";
 }
 
-#fontMinusBtn:before {
-    @extend .defaultFontSettings;
-    content: "\e375";
-}
-
-#fontPlusBtn:before {
-    @extend .defaultFontSettings;
-    content: "\e376";
-}
-
 .icon-notification:before {
     @extend .defaultFontSettings;
 	content: "\e358";

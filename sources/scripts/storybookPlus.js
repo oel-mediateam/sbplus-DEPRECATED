@@ -457,7 +457,8 @@ $.fn.initializePlayer = function() {
 
     });
     
-    // note is enabled
+    /*
+// note is enabled
     if ( enabledNote ) {
 
         // display current font size
@@ -480,6 +481,7 @@ $.fn.initializePlayer = function() {
         });
 
     }
+*/
     
     // add the zoom boutton to the control after the slide status
     $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"magnifyIcon\"></span></span>" );
@@ -1425,10 +1427,10 @@ $.fn.loadProfilePhoto = function() {
  * @return void
  *
  */
+/*
 $.fn.adjustFontSize = function( arg ) {
     
     var size = 2;
-    /* var cropped = false; */
     
     if ( arg === "minus" ) {
     
@@ -1450,14 +1452,6 @@ $.fn.adjustFontSize = function( arg ) {
         
     }
     
-    /*
-if ( $( "#note" ).hasClass( "cropped" ) ) {
-        
-        cropped = true;
-        
-    }
-*/
-    
     $( "#note" ).removeClass();
 
     if ( defaultFontSize === 12 ) {
@@ -1477,17 +1471,11 @@ if ( $( "#note" ).hasClass( "cropped" ) ) {
         $( "#note" ).addClass( "size20" );
         
     }
-    
-    /*
-if ( cropped ) {
-        
-        $( "#note" ).addClass( "cropped" );
-    }
-*/
 
     $( '#fontSizeIndicator' ).html( defaultFontSize );
     
 };
+*/
 
 /**
  * Request downloadable files 
