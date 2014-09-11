@@ -172,7 +172,7 @@ p {
     
     #ap {
     
-        width: rem( 900px );
+        width: 100%;
     	top: rem( 506px );
     	
     	.mejs-container {
@@ -184,7 +184,7 @@ p {
                 	width: rem( 716px ) !important;
                 	
                 	.mejs-time-total {
-                    	width: rem( 705px ) !important;
+                    	width: rem( 706px ) !important;
                 	}
                 	
             	}
@@ -388,6 +388,25 @@ p {
     	height: rem( 30px );
     	top: rem( 360px );
     	background-color: #7e7e7e;
+    	
+    	.mejs-container {
+        	
+        	.mejs-controls {
+            	
+            	.mejs-time-rail {
+            	
+                	width: rem( 456px ) !important;
+                	
+                	.mejs-time-total {
+                    	width: rem( 446px ) !important;
+                	}
+                	
+            	}
+            	
+        	}
+        	
+    	}
+    	
     }
     
     #apm {
