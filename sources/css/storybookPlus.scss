@@ -156,8 +156,6 @@ p {
     
     #control {
         
-        /* width: rem( 900px ); */
-        
         #leftBtn {
             border-left: 1px solid #ccc;
         }
@@ -185,9 +183,29 @@ p {
         
     }
     
-    #ap {  
+    #ap {
+    
         width: rem( 900px );
     	top: rem( 506px );
+    	
+    	.mejs-container {
+        	
+        	.mejs-controls {
+            	
+            	.mejs-time-rail {
+            	
+                	width: rem( 716px ) !important;
+                	
+                	.mejs-time-total {
+                    	width: rem( 705px ) !important;
+                	}
+                	
+            	}
+            	
+        	}
+        	
+    	}
+    	
     }
     
     #vp {
@@ -372,6 +390,7 @@ p {
     #ap {
     	display: none;
     	position: absolute;
+        width: rem( 640px );
     	height: rem( 30px );
     	top: rem( 360px );
     	background-color: #7e7e7e;
@@ -602,7 +621,7 @@ p {
     	border-top: #ccc solid rem( 1px );
     	border-bottom: #ccc solid rem( 1px );
     	background-color: #f7f7f7;
-    	float:left;
+    	float: left;
     	
     	.btn {
         	display: block;

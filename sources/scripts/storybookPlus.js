@@ -1237,7 +1237,7 @@ $.fn.showFeedback = function( index ) {
  */
 $.fn.loadAudioPlayer = function( id, srcName ) {
     
-    var width = 640, height = 30;
+    var width = "100%", height = 30;
     
     if ( id === "#apcm" ) {
     
