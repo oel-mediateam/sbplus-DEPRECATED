@@ -453,7 +453,7 @@ $.fn.initializePlayer = function() {
     });
     
     // add the zoom boutton to the control after the slide status
-    $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"magnifyIcon\"></span></span>" );
+    $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"magnifyIcon\" title=\"Expand\"></span></span>" );
     $.fn.bindImgMagnify();
     
     // call to load the first slide
@@ -514,15 +514,17 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             
         } catch(e) { }
         
-        if ( enabledNote === false && quizDetected === false ) {
+        /*
+if ( enabledNote === false && quizDetected === false ) {
         
             $( "#apm" ).hide();
             
         } else {
+*/
         
             $( "#ap" ).hide();
             
-        }
+        /* } */
         
         audioPlaying = false;
 
@@ -574,58 +576,29 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 $( "#progressing" ).fadeOut();
     
                 if ( !audioPlaying ) {
-    
-                    if ( ( enabledNote === false && quizDetected === false ) ) {
-    					
-    					if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
-                            
-                            $( "#currentStatus" ).removeClass( "noPlayer" );
-                            $( "#apm" ).show();
-                            
-                            if (firstAudioLoad !== true) {
-    					    
-                    		    $.fn.loadAudioPlayer( "#apcm", srcName );
-                                firstAudioLoad = true;
-        						
-        					} else {
-        					    
-        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-        						audioPlayer.setSrc( sources );
-        						
-        					}
-                            
-                        } else {
                         
-                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
-                            
-                        }
-    
+                    if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
+                        
+                        $( "#ap" ).show();
+                        
+                        if (firstAudioLoad !== true) {
+					    
+                		    $.fn.loadAudioPlayer( "#apc", srcName );
+                            firstAudioLoad = true;
+    						
+    					} else {
+    					    
+    						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
+    						audioPlayer.setSrc( sources );
+    						
+    					}
+    					
+    					$.fn.bindAudioPlayerFadeInOut();
+                        
                     } else {
                         
-                        if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
-                            
-                            $( "#ap" ).show();
-                            
-                            if (firstAudioLoad !== true) {
-    					    
-                    		    $.fn.loadAudioPlayer( "#apc", srcName );
-                                firstAudioLoad = true;
-        						
-        					} else {
-        					    
-        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-        						audioPlayer.setSrc( sources );
-        						
-        					}
-        					
-        					$.fn.bindAudioPlayerFadeInOut();
-                            
-                        } else {
-                            
-                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
-                            
-                        }
-    
+                        $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
+                        
                     }
     
                     audioPlaying = true;
@@ -1198,6 +1171,7 @@ $.fn.showFeedback = function( index ) {
 /**
  * Load audio player
  * @since 2.1.0
+ * @updated 2.2.0
  *
  * @author Ethan S. Lin
  * @param strings, id and source name
@@ -1207,13 +1181,6 @@ $.fn.showFeedback = function( index ) {
 $.fn.loadAudioPlayer = function( id, srcName ) {
     
     var width = "100%", height = 30;
-    
-    if ( id === "#apcm" ) {
-    
-        width = 300;
-        height = 0;
-        
-    }
     
     audioPlayer = new MediaElementPlayer( id, {
     
@@ -1338,14 +1305,20 @@ $.fn.bindImgMagnify = function() {
         if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
             
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
-            $( this ).html( "<span class=\"magnifyIcon\"></span>" );
-            $( "#note" ).show();
+            $( this ).html( "<span class=\"magnifyIcon\" title=\"Expand\"></span>" );
+            
+            if ( !$( "#storybook_plus_wrapper" ).hasClass( "noteDisabled" ) ) {
+                $( "#note" ).show();
+            }
             
         } else {
             
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
-            $( this ).html( "<span class=\"magnifyOut\"></span>" );
-            $( "#note" ).hide();
+            $( this ).html( "<span class=\"magnifyOut\" title=\"Contract\"></span>" );
+            
+            if ( !$( "#storybook_plus_wrapper" ).hasClass( "noteDisabled" ) ) {
+                $( "#note" ).hide();
+            }
             
         }
             
