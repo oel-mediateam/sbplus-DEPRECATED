@@ -6,7 +6,7 @@
 		<length>25 Minutes</length>
 		<instructor>Demo</instructor>
 		<slideImgFormat /> <!-- default to png if not specified -->
-		<note></note> <!-- disabled on default -->
+		<note>y</note> <!-- disabled on default -->
 	</setup>
 			
 	<!-- instructor or lesson information -->
@@ -29,8 +29,7 @@
 		</note>
 	</topic>
 	
-	<!--
-<topic src="quiz" title="Fill-in-the-blank">
+	<topic src="quiz" title="Fill-in-the-blank">
 		<quiz type="fib">
 			<question>_____ enables the operating system to automatically detect newly installed hardware.</question>
 			<choice />
@@ -40,7 +39,6 @@
 		</quiz>
 		<note />
 	</topic>
--->
 	
 	<topic src="swf:animations" title="Flash animation">
 		<quiz />
@@ -49,8 +47,7 @@
 		</note>
 	</topic>
 	
-	<!--
-<topic src="quiz" title="Short answer">
+	<topic src="quiz" title="Short answer">
 		<quiz type="sa">
 			<question>Describe Garfield.</question>
 			<choice />
@@ -60,7 +57,6 @@
 		</quiz>
 		<note />
 	</topic>
--->
 	
 	<topic src="image-audio:slide04" title="Image and audio">
 		<quiz />
@@ -69,8 +65,7 @@
 		</note>
 	</topic>
 	
-	<!--
-<topic src="quiz" title="True or False">
+	<topic src="quiz" title="True or False">
 		<quiz type="t/f">
 			<question>It is wise to stay home on snow day.</question>
 			<choice />
@@ -80,7 +75,6 @@
 		</quiz>
 		<note />
 	</topic>
--->
 	
 	<topic src="image-audio:slide21" title="Another image with audio">
 		<quiz />
@@ -89,8 +83,7 @@
 		</note>
 	</topic>
 	
-	<!--
-<topic src="quiz" title="Image Answer Choices">
+	<topic src="quiz" title="Image Answer Choices">
 		<quiz type="mc">
 			<question><![CDATA[Which pokémon are Ethan's favorites?<small>Ethan is a pokémon fan ... sort of.</small>]]></question>
 			<choice useImg="true">pikachu.gif|mewtwo.gif|mew.gif|rattata.gif|krabby.gif|rayquaza.gif</choice>
@@ -100,7 +93,6 @@
 		</quiz>
 		<note />
 	</topic>
--->
 	
 	<topic src="swf:interactive" title="Interactive Flash piece">
 		<quiz />
@@ -109,8 +101,7 @@
 		</note>
 	</topic>
 	
-	<!--
-<topic src="quiz" title="Who's that pokémon!?">
+	<topic src="quiz" title="Who's that pokémon!?">
 		<quiz type="mc">
 			<question img="mrmime.png"><![CDATA[Who's that pokémon?<small>A bipedal, humanoid Pokémon with a round, white body with a red spot in the middle. Its light pink arms and legs are connected to its body by red spheres. Its knees have small, white coverings. There are red pads on the tips of its white fingers, and its black feet curl upward at the tips. Blue growths extend from the sides of its pale pink head, and there are red circles on its cheeks.</small>]]></question>
 			<choice>Slowpoke|Kakuna|Mr. Mime|Arbok|Clefable</choice>
@@ -120,7 +111,6 @@
 		</quiz>
 		<note />
 	</topic>
--->
 
 	<topic src="youtube:UaWN7gObv-c" title="Embedded YouTube Video">
 		<quiz />
@@ -143,8 +133,7 @@
 		</note>
 	</topic>
 	
-	<!--
-<topic src="quiz" title="What sound is that?">
+	<topic src="quiz" title="What sound is that?">
 		<quiz type="mc">
 			<question audio="lugia"><![CDATA[Who's cry does it belong to?]]></question>
 			<choice>Pickachu|Mewtwo|Mr. Mime|Lugia|Jigglypuff</choice>
@@ -154,10 +143,8 @@
 		</quiz>
 		<note />
 	</topic>
--->
 	
-	<!--
-<topic src="quiz" title="Sound and Image">
+	<topic src="quiz" title="Sound and Image">
 		<quiz type="t/f">
 			<question img="mrmime.png" audio="lugia"><![CDATA[Does this pokémon make this cry?]]></question>
 			<choice></choice>
@@ -167,7 +154,6 @@
 		</quiz>
 		<note />
 	</topic>
--->
 	
 	<topic src="image:slide10" title="Another Image Only">
 		<quiz />
@@ -176,8 +162,7 @@
 		</note>
 	</topic>
 	
-	<!--
-<topic src="quiz" title="Multiple choice">
+	<topic src="quiz" title="Multiple choice">
 		<quiz type="mc">
 			<question>What enables the operating system to automatically detect newly installed hardware?</question>
 			<choice>ReadyBoost|PnP|Hyper-V|AutoConnect</choice>
@@ -187,7 +172,6 @@
 		</quiz>
 		<note />
 	</topic>
--->
 	
 	<topic src="image:slide08" title="A really really really long long long title which cannot fit into one line">
 		<quiz />
@@ -196,8 +180,7 @@
 		</note>
 	</topic>
 		
-	<!--
-<topic src="quiz" title="True or False">
+	<topic src="quiz" title="True or False">
 		<quiz type="t/f">
 			<question>Dinosaurs make good pets.</question>
 			<choice />
@@ -207,10 +190,8 @@
 		</quiz>
 		<note />
 	</topic>
--->
 	
-	<!--
-<topic src="quiz" title="Multiple answers">
+	<topic src="quiz" title="Multiple answers">
 		<quiz type="mc">
 			<question>What are the colors of the American flag?</question>
 			<choice>Red|Green|Blue|White|Yellow|Gold</choice>
@@ -220,7 +201,6 @@
 		</quiz>
 		<note />
 	</topic>
--->
 	
 	<!--
 		- use "tf" in the type attribute for true or false question
