@@ -373,12 +373,9 @@ $.fn.initializePlayer = function() {
     
     // setup up player header
     $( "#lessonTitle" ).attr( "title", lessonTitle );
-    if ( lessonTitle.length > 50 ) {
-        lessonTitle = lessonTitle.substr(0, 46) + "...";
-    }
     $( "#lessonTitle" ).html( lessonTitle );
     
-    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#profile\">" + instructor + "</a>" );
+    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"javascript:void(0);\">" + instructor + "</a>" );
     
     // setup profile panel
     $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a id=\"profileClose\" href=\"#\">close</a></div>" );

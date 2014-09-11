@@ -1,6 +1,7 @@
 // variables
 $font-size: 14px;
 $gutter: 15px;
+$border-color: #ccc;
 
 // mixins
 @mixin clear() {
@@ -119,7 +120,6 @@ p {
         	#img {
         	
             	position: absolute;
-            	/* z-index: 10; */
             	
             	img {
                     height: rem( 506px );
@@ -132,8 +132,8 @@ p {
                 width: rem( 900px ) !important;
                 height: rem( 506px ) !important;
             	z-index: 10;
-            	border-left: 1px solid #ccc;
-            	border-right: 1px solid #ccc;
+            	border-left: rem( 1px ) solid $border-color;
+            	border-right: rem( 1px ) solid $border-color;
             	@include box-sizing( border-box );
             }
             
@@ -157,11 +157,11 @@ p {
     #control {
         
         #leftBtn {
-            border-left: 1px solid #ccc;
+            border-left: rem( 1px ) solid $border-color;
         }
         
         #magnifyBtn {
-            border-right: 1px solid #ccc;
+            border-right: rem( 1px ) solid $border-color;
             border-left: none;
         }
         
@@ -291,8 +291,12 @@ p {
     	
     	#lessonTitle {
         	display: inline-block;
-            width: 410px;
+            width: rem( 410px );
+            height: rem( 23px );
+            white-space: nowrap;
             margin-right: rem( $gutter );
+            overflow: hidden;
+            text-overflow: ellipsis;
     	    float: left;
     	    cursor: default;
     	}
@@ -320,7 +324,7 @@ p {
     	
     } // header
     
-    /* SLIDE LOADING SPINNER */
+    // SLIDE LOADING SPINNER
     #progressing {
         position: absolute;
         top: rem( 200px );
@@ -346,8 +350,8 @@ p {
 	// SLIDE NOTE AREA
     #slideNote {
     	width: rem( 640px );
-    	border-right: #ccc solid rem( 1px );
-    	border-left: #ccc solid rem( 1px );
+    	border-right: rem( 1px ) solid $border-color;
+    	border-left: rem( 1px ) solid $border-color;
     	float: left;
     }
     
@@ -562,7 +566,7 @@ p {
         
     	width: 100%;
     	height: rem( 146px );
-    	border-top: #ccc solid rem( 1px );
+    	border-top: rem( 1px ) solid $border-color;
     	padding: 0 rem( 5px );
     	background-color: #fff;
     	overflow: auto;
@@ -618,8 +622,8 @@ p {
     
     	width: 100%;
     	height: rem( 38px );
-    	border-top: #ccc solid rem( 1px );
-    	border-bottom: #ccc solid rem( 1px );
+    	border-top: rem( 1px ) solid $border-color;
+    	border-bottom: rem( 1px ) solid $border-color;
     	background-color: #f7f7f7;
     	float: left;
     	
@@ -633,7 +637,7 @@ p {
             cursor: pointer;
             text-align: center;
             float: left;
-            border-right: #ccc solid rem( 1px );
+            border-right: rem( 1px ) solid $border-color;
             @include box-sizing( "border-box" );
             @include single-transition( color, ease-out, .6s );
     	}
@@ -660,7 +664,7 @@ p {
         	font-weight: bold;
         	text-transform: uppercase;
         	padding: rem( 12px ) rem( 12px ) 0;
-        	border-right: #ccc solid rem( 1px );
+        	border-right: rem( 1px ) solid $border-color;
         	float: left;
         	cursor: default;
         	@include box-sizing( "border-box" );
@@ -684,8 +688,8 @@ p {
 
 	width: rem( 258px );
 	height: rem( 546px );
-	border-bottom: #ccc solid rem( 1px );
-	border-right: #ccc solid rem( 1px );
+	border-bottom: rem( 1px ) solid $border-color;
+	border-right: rem( 1px ) solid $border-color;
 	background-color: #fff;
 	float: left;
 	overflow: auto;
@@ -764,7 +768,7 @@ p {
 	padding: rem( 10px );
 	color: #fff;
 	background-color: #fafafa;
-	border: 1px solid #ccc;
+	border: rem( 1px ) solid $border-color;
 	top: rem( 30px );
 	left: 0;
 	@include clear;
