@@ -87,19 +87,6 @@ p {
         background-color: #ebebeb;
     }
     
-    #control {
-        
-        #currentStatus {
-            width: rem( 461px );
-        }
-        
-        #magnifyBtn {
-            width: rem( 51px );
-            border-right: none;
-        }
-        
-    }
-    
 }
 
 #storybook_plus_wrapper.magnified {
@@ -355,15 +342,18 @@ p {
     	float: left;
     }
     
-    #slideNote.quizSlide {
+    .quizSlide {
         
+        #slide {
+            height: rem( 506px );
+        }
         
-        #slide, #quiz {
+        #quiz {
             height: rem( 506px );
         }
         
         #note {
-            display: none;
+            display: none !important;
         }
         
     }
@@ -419,7 +409,7 @@ p {
     // QUIZ
     #quiz {
     
-    	height: rem( 360px );
+    	height: rem( 560px );
     	background-color: #ebebeb;
     	overflow-y: scroll;
     	

@@ -2,8 +2,6 @@
 /* global MediaElementPlayer */
 
 // global variable declarations
-var defaultFontSize = 14;
-    
 var topicCount = 0,
     counter = 0,
     previousIndex = 0,
@@ -453,32 +451,6 @@ $.fn.initializePlayer = function() {
         return false;
 
     });
-    
-    /*
-// note is enabled
-    if ( enabledNote ) {
-
-        // display current font size
-        $('#fontSizeIndicator').html( defaultFontSize );
-
-        // binding increasing and decreasing font size buttons
-        $('#fontMinusBtn').on('click', function() {
-
-            $.fn.adjustFontSize( "minus" );
-            return false;
-
-        });
-
-        // font plus button
-        $('#fontPlusBtn').on('click', function() {
-
-            $.fn.adjustFontSize( "plus" );
-            return false;
-
-        });
-
-    }
-*/
     
     // add the zoom boutton to the control after the slide status
     $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"magnifyIcon\"></span></span>" );
@@ -1367,11 +1339,7 @@ $.fn.bindImgMagnify = function() {
             
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"magnifyIcon\"></span>" );
-            
-            if ( $( "#quiz" ).length <= 0 ) {
-                $( "#note" ).show(); 
-            }
-            
+            $( "#note" ).show();
             
         } else {
             
@@ -1414,65 +1382,6 @@ $.fn.loadProfilePhoto = function() {
     } );
 
 };
-
-/**
- * Adjusting the notes font size
- * @since 2.1.0
- *
- * @author Ethan S. Lin
- * @param string, minus or plus
- * @return void
- *
- */
-/*
-$.fn.adjustFontSize = function( arg ) {
-    
-    var size = 2;
-    
-    if ( arg === "minus" ) {
-    
-        defaultFontSize -= size;
-        
-    } else if ( arg === "plus" ) {
-        
-        defaultFontSize += size;
-        
-    }
-    
-    if ( defaultFontSize <= 12 ) {
-    
-        defaultFontSize = 12;
-        
-    } else if ( defaultFontSize >= 20) {
-        
-        defaultFontSize = 20;
-        
-    }
-    
-    $( "#note" ).removeClass();
-
-    if ( defaultFontSize === 12 ) {
-        
-        $( "#note" ).addClass( "size12" );
-
-    } else if ( defaultFontSize === 16 ) {
-
-        $( "#note" ).addClass( "size16" );
-
-    } else if ( defaultFontSize === 18 ) {
-    
-        $( "#note" ).addClass( "size18" );
-        
-    } else if ( defaultFontSize === 20 ) {
-        
-        $( "#note" ).addClass( "size20" );
-        
-    }
-
-    $( '#fontSizeIndicator' ).html( defaultFontSize );
-    
-};
-*/
 
 /**
  * Request downloadable files 
