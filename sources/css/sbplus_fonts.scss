@@ -39,12 +39,14 @@
 
 .magnifyIcon:before {
     @extend .defaultFontSettings;
-    content: "\e1bc";
+    //content: "\e1bc";
+    content: "\e600";
 }
 
 .magnifyOut:before {
     @extend .defaultFontSettings;
-    content: "\e600";
+    //content: "\e602";
+    content: "\e601";
 }
 
 #leftBtn:before {
@@ -75,4 +77,10 @@
 .icon-arrow-down:before {
     @extend .defaultFontSettings;
 	content: "\e416";
+}
+.icon-expand:before {
+	content: "\e600";
+}
+.icon-contract:before {
+	content: "\e601";
 }
