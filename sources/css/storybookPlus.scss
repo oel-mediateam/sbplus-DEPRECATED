@@ -865,6 +865,7 @@ p {
 	left: 0;
 	@include clear;
 	@include box-sizing( border-box );
+	z-index: 20;
 	
 	.photo {
 	
