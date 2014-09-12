@@ -93,12 +93,35 @@ p {
     
 }
 
+#storybook_plus_wrapper.withQuiz.magnified {
+    
+    #control {
+        
+        #currentStatus {
+            width: 64% !important;
+        }
+        
+    }
+    
+    #note {
+        display: none;
+    }
+    
+}
+
 #storybook_plus_wrapper.magnified {
+    
+    #content {
+        position: relative;
+        overflow: hidden;
+    }
     
     #slideNote {
         
+        position: relative;
         width: rem( 900px );
         height: rem( 546px );
+        overflow: hidden;
         border: none;
         
         #slide {
@@ -139,6 +162,18 @@ p {
         
     }
     
+    #slideNote.quizSlide {
+        
+        #control {
+            
+            #currentStatus {
+                width: 64%;
+            }
+            
+        }
+        
+    }
+    
     #progressing {
         top: 46%;
         left: 48%;
@@ -146,9 +181,17 @@ p {
     }
     
     #control {
+    
+        position: absolute;
+        bottom: 0;
+        z-index: 12;
         
         #leftBtn {
             border-left: rem( 1px ) solid $border-color;
+        }
+        
+        #currentStatus {
+            width: 56%;
         }
         
         #magnifyBtn {
@@ -177,7 +220,7 @@ p {
     #ap {
     
         width: 100%;
-    	top: rem( 506px );
+    	top: rem( 476px );
     	
     	.mejs-container {
         	
@@ -216,11 +259,25 @@ p {
     }
     
     #toc {
-        display: none;
+        position: absolute;
+        width: rem( 217px );
+        height: rem( 507px );
+        left: rem( 900px );
+        border-left: rem( 3px ) solid $border-color;
+        z-index: 13;
     }
     
     #profile {
         height: rem( 546px );
+    }
+    
+    #note {
+        position: absolute;
+        top: rem( 506px );
+        border-right: rem( 1px ) solid $border-color;
+        border-left: rem( 1px ) solid $border-color;
+        border-top-width: rem( 3px );
+        z-index: 11;
     }
     
 }
@@ -229,7 +286,7 @@ p {
 #splash_screen {
 
 	width: rem( 900px );
-	height: rem( 630px );
+	height: rem( 576px );
 	padding: rem( 180px ) rem( 200px ) rem( 200px );
 	text-align: center;
 	background-color: #fff;
@@ -363,7 +420,7 @@ p {
         #note {
             display: none !important;
         }
-        
+
     }
 	
 	// SLIDE
@@ -650,6 +707,13 @@ p {
             @include single-transition( color, ease-out, .6s );
     	}
     	
+    	.btn.active {
+    	
+    	    color: #59a8dc;
+    	    background-color: $border-color;
+        	
+    	}
+    	
     	.btn:hover {
         	color: #59a8dc;
         	@include single-transition( color, ease-in, .3s );
@@ -685,6 +749,26 @@ p {
             line-height: rem( 16px );
             border-right: none;
             padding: rem( 12px ) 0 0;
+        }
+        
+        #notesBtn {
+            @extend .btn;
+            display: none;
+            width: 8%;
+            font-size: rem( 16px );
+            line-height: rem( 16px );
+            padding: rem( 12px ) 0 0;
+            border-right: rem( 1px ) solid $border-color;
+        }
+        
+        #tocBtn {
+            @extend .btn;
+            display: none;
+            width: 8%;
+            font-size: rem( 16px );
+            line-height: rem( 16px );
+            padding: rem( 12px ) 0 0;
+            border-right: rem( 1px ) solid $border-color;
         }
     	
     } //#control

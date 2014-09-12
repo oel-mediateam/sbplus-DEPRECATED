@@ -6,7 +6,7 @@
 		<length>25 Minutes</length>
 		<instructor>Demo</instructor>
 		<slideImgFormat /> <!-- default to png if not specified -->
-		<note></note> <!-- disabled on default -->
+		<note>y</note> <!-- disabled on default -->
 	</setup>
 			
 	<!-- instructor or lesson information -->

@@ -453,9 +453,24 @@ $.fn.initializePlayer = function() {
     });
     
     // add the zoom boutton to the control after the slide status
-    if ( enabledNote === false && quizDetected ) {
+    if ( enabledNote === true || quizDetected === true ) {
+    
         $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
+        
+        if ( $( "#storybook_plus_wrapper" ).hasClass( "withQuiz" ) ) {
+            
+            $( "#magnifyBtn" ).before( "<span id=\"tocBtn\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+            
+        } else {
+        
+            $( "#magnifyBtn" ).before( "<span id=\"notesBtn\"><span class=\"notes\" title=\"Toggle Notes\"></span></span><span id=\"tocBtn\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+            
+        }
+        
         $.fn.bindImgMagnify();
+        $.fn.bindNoteSlideToggle();
+        $.fn.bindTocSlideToggle();
+        
     }
     
     // call to load the first slide
@@ -689,6 +704,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "quiz":
             
             $( "#slideNote" ).addClass( "quizSlide" );
+            
             $.fn.setupQuiz( sNum );
             $( "#progressing" ).fadeOut();
         
@@ -1238,14 +1254,18 @@ $.fn.loadNote = function( num ) {
 
     var note = noteArray[num];
 	
-	if ( !$( "#slideNote" ).hasClass( "quizSlide" ) && !$( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
+	if ( !$( "#slideNote" ).hasClass( "quizSlide" ) ) {
 
     	$( "#note" ).html( note ).hide().fadeIn( "fast" );
     	
-	} else {
-	
-    	$( "#note" ).hide();
+    	if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
+            
+            $( "#notesBtn" ).show();
+            
+        }
     	
+	} else {
+    	$( "#notesBtn" ).hide();
 	}
 	
 	if ( $( "#note" ).find( "a" ).length ) {
@@ -1298,21 +1318,95 @@ $.fn.bindImgMagnify = function() {
             
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"icon-expand\" title=\"Expand\"></span>" );
-            
-            if ( !$( "#storybook_plus_wrapper" ).hasClass( "noteDisabled" ) ) {
-                $( "#note" ).show();
-            }
-            
+            $( "#notesBtn, #tocBtn" ).hide();
+                        
         } else {
             
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
             $( this ).html( "<span class=\"icon-contract\" title=\"Contract\"></span>" );
+            $( "#tocBtn" ).show();
             
-            if ( !$( "#storybook_plus_wrapper" ).hasClass( "noteDisabled" ) ) {
-                $( "#note" ).hide();
+            if ( !$( "#slideNote" ).hasClass( "quizSlide" ) ) {
+                
+                $( "#notesBtn" ).show();
+                
             }
             
         }
+            
+    } );
+
+};
+
+/**
+ * Slide notes up and down in expanded mode
+ * @since 2.2.0
+ *
+ * @author Ethan S. Lin
+ * @return void
+ *
+ */
+$.fn.bindNoteSlideToggle = function() {
+    
+    var note = $( "#note" );
+    var pos;
+    var up = false;
+    
+    $( "#notesBtn" ).on( "click", function() {
+        
+        if ( up ) {
+        
+            pos = 506;
+            up = false;
+            $(this).removeClass( "active" );
+            
+        } else {
+            
+            pos = 360;
+            up = true;
+            $(this).addClass( "active" );
+        }
+        
+        note.animate({
+            "top": pos
+        });
+            
+    } );
+
+};
+
+/**
+ * Slide table of contents left and right in expanded mode
+ * @since 2.2.0
+ *
+ * @author Ethan S. Lin
+ * @return void
+ *
+ */
+$.fn.bindTocSlideToggle = function() {
+    
+    var toc = $( "#toc" );
+    var pos;
+    var left = false;
+    
+    $( "#tocBtn" ).on( "click", function() {
+        
+        if ( left ) {
+        
+            pos = 900;
+            left = false;
+            $(this).removeClass( "active" );
+            
+        } else {
+            
+            pos = 683;
+            left = true;
+            $(this).addClass( "active" );
+        }
+        
+        toc.animate({
+            "left": pos
+        });
             
     } );
 
