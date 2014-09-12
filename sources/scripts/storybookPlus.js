@@ -454,7 +454,7 @@ $.fn.initializePlayer = function() {
     
     // add the zoom boutton to the control after the slide status
     if ( enabledNote === false && quizDetected ) {
-        $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"magnifyIcon\" title=\"Expand\"></span></span>" );
+        $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
         $.fn.bindImgMagnify();
     }
     
@@ -1297,7 +1297,7 @@ $.fn.bindImgMagnify = function() {
         if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
             
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
-            $( this ).html( "<span class=\"magnifyIcon\" title=\"Expand\"></span>" );
+            $( this ).html( "<span class=\"icon-expand\" title=\"Expand\"></span>" );
             
             if ( !$( "#storybook_plus_wrapper" ).hasClass( "noteDisabled" ) ) {
                 $( "#note" ).show();
@@ -1306,7 +1306,7 @@ $.fn.bindImgMagnify = function() {
         } else {
             
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
-            $( this ).html( "<span class=\"magnifyOut\" title=\"Contract\"></span>" );
+            $( this ).html( "<span class=\"icon-contract\" title=\"Contract\"></span>" );
             
             if ( !$( "#storybook_plus_wrapper" ).hasClass( "noteDisabled" ) ) {
                 $( "#note" ).hide();

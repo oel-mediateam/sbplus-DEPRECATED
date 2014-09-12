@@ -37,18 +37,6 @@
     content: "\e385";
 }
 
-.magnifyIcon:before {
-    @extend .defaultFontSettings;
-    //content: "\e1bc";
-    content: "\e600";
-}
-
-.magnifyOut:before {
-    @extend .defaultFontSettings;
-    //content: "\e602";
-    content: "\e601";
-}
-
 #leftBtn:before {
     @extend .defaultFontSettings;
     content: "\e3b3";
@@ -78,9 +66,23 @@
     @extend .defaultFontSettings;
 	content: "\e416";
 }
+
 .icon-expand:before {
+    @extend .defaultFontSettings;
 	content: "\e600";
 }
+
 .icon-contract:before {
+    @extend .defaultFontSettings;
 	content: "\e601";
+}
+
+.notes:before {
+    @extend .defaultFontSettings;
+    content: "\e602";
+}
+
+.toc:before {
+    @extend .defaultFontSettings;
+    content: "\e603";
 }
