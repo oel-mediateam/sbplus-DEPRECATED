@@ -531,8 +531,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             
         } catch(e) { }
         
-            $( "#ap" ).hide();
-        
+        $( "#ap" ).hide();
+
         audioPlaying = false;
 
     }
@@ -1391,6 +1391,10 @@ $.fn.bindTocSlideToggle = function() {
     
     $( "#tocBtn" ).on( "click", function() {
         
+        //console.log(toc.offset());
+        //console.log(toc.offset().top);
+        //console.log(toc.offset().left);
+        
         if ( left ) {
         
             pos = 900;
@@ -1399,7 +1403,7 @@ $.fn.bindTocSlideToggle = function() {
             
         } else {
             
-            pos = 683;
+            pos = 642;
             left = true;
             $(this).addClass( "active" );
         }

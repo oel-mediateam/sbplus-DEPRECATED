@@ -19,6 +19,7 @@ $border-color: #ccc;
 @import "compass/css3/border-radius";
 @import "compass/css3/opacity";
 @import "compass/css3/transition";
+@import "compass/css3/box-shadow";
 @import "sbplus_fonts";
 
 // GENERAL
@@ -260,7 +261,6 @@ p {
     
     #toc {
         position: absolute;
-        width: rem( 217px );
         height: rem( 507px );
         left: rem( 900px );
         border-left: rem( 3px ) solid $border-color;
@@ -343,7 +343,7 @@ p {
     	
     	#lessonTitle {
         	display: inline-block;
-            width: rem( 410px );
+            width: rem( 505px );
             height: rem( 23px );
             white-space: nowrap;
             margin-right: rem( $gutter );
@@ -355,6 +355,7 @@ p {
     	
     	#instructorName {
         	@extend #lessonTitle;
+        	width: rem( 315px );
         	text-align: right;
         }
         
@@ -857,7 +858,7 @@ p {
 	position: absolute;
 	width: 100%;
 	height: rem( 546px );
-	padding: rem( 10px );
+	padding: rem( 20px );
 	color: #fff;
 	background-color: #fafafa;
 	border: rem( 1px ) solid $border-color;
@@ -907,10 +908,12 @@ p {
         
         a, a:link, a:visited, a:hover {
             display: block;
-            padding: rem( 5px );
+            padding: rem( 4px ) rem( 5px ) rem( 2px );
             text-decoration: none;
             color: #fafafa;
-            background-color: #696969;
+            background-color: #f85757;
+            border: rem( 1px ) solid #fb9696;
+            @include single-box-shadow( #e33838, 0, rem( 3px ), 0 );
             @include border-radius( rem( 5px ) );
         }
         
