@@ -453,8 +453,10 @@ $.fn.initializePlayer = function() {
     });
     
     // add the zoom boutton to the control after the slide status
-    $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"magnifyIcon\" title=\"Expand\"></span></span>" );
-    $.fn.bindImgMagnify();
+    if ( enabledNote === false && quizDetected ) {
+        $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"magnifyIcon\" title=\"Expand\"></span></span>" );
+        $.fn.bindImgMagnify();
+    }
     
     // call to load the first slide
     $.fn.loadSlide( topicSrc[0], counter );
@@ -514,17 +516,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             
         } catch(e) { }
         
-        /*
-if ( enabledNote === false && quizDetected === false ) {
-        
-            $( "#apm" ).hide();
-            
-        } else {
-*/
-        
             $( "#ap" ).hide();
-            
-        /* } */
         
         audioPlaying = false;
 

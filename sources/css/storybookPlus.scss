@@ -74,6 +74,15 @@ p {
         height: rem( 400px );
     }
     
+    #control {
+        
+        #currentStatus {
+            width: 80%;
+            border-right: none;
+        }
+        
+    }
+    
 }
 
 #storybook_plus_wrapper.withQuiz {
