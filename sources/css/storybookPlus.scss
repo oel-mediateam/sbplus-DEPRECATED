@@ -902,19 +902,16 @@ p {
         position: absolute;
         font-size: rem( 12px );
         line-height: rem( 12px );
-        top: rem( 15px );
-        right: rem( 17px );
+        top: rem( 5px );
+        right: rem( 16px );
         @include clear;
         
         a, a:link, a:visited, a:hover {
             display: block;
-            padding: rem( 4px ) rem( 5px ) rem( 2px );
             text-decoration: none;
-            color: #fafafa;
-            background-color: #f85757;
-            border: rem( 1px ) solid #fb9696;
-            @include single-box-shadow( #e33838, 0, rem( 3px ), 0 );
-            @include border-radius( rem( 5px ) );
+            color: #888;
+            font-size: rem( 32px );
+            line-height: rem( 32px );
         }
         
     }

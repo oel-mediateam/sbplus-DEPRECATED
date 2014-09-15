@@ -376,7 +376,7 @@ $.fn.initializePlayer = function() {
     $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"javascript:void(0);\">" + instructor + "</a>" );
     
     // setup profile panel
-    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a id=\"profileClose\" href=\"#\">close</a></div>" );
+    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a id=\"profileClose\" href=\"#\">&times;</a></div>" );
     $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
     
     $( "#player" ).append( "<div id=\"progressing\"></div>" );
