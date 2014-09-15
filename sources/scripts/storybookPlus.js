@@ -1349,27 +1349,42 @@ $.fn.bindImgMagnify = function() {
 $.fn.bindNoteSlideToggle = function() {
     
     var note = $( "#note" );
-    var pos;
-    var up = false;
+    var openPos = 360, closedPos = 536;
     
     $( "#notesBtn" ).on( "click", function() {
+    
+        var currentPos = Math.ceil( note.offset().top );
+        var pos  = 0;
         
-        if ( up ) {
+        if ( currentPos >= closedPos ) {
         
-            pos = 506;
-            up = false;
-            $(this).removeClass( "active" );
+            pos = openPos;
+            $(this).addClass( "active" );
             
         } else {
             
-            pos = 360;
-            up = true;
-            $(this).addClass( "active" );
+            pos = closedPos;
+            $(this).removeClass( "active" );
+            
         }
         
-        note.animate({
+        if ( $( "#toc" ).offset().left <= 642 ) {
+            
+            $( "#toc" ).animate( {
+        
+                "left": 900
+                
+            } );
+            
+            $( "#tocBtn" ).removeClass( "active" );
+            
+        }
+        
+        note.animate( {
+        
             "top": pos
-        });
+            
+        } );
             
     } );
 
@@ -1386,31 +1401,41 @@ $.fn.bindNoteSlideToggle = function() {
 $.fn.bindTocSlideToggle = function() {
     
     var toc = $( "#toc" );
-    var pos;
-    var left = false;
+    var openPos = 642, closedPos = 900;
     
     $( "#tocBtn" ).on( "click", function() {
         
-        //console.log(toc.offset());
-        //console.log(toc.offset().top);
-        //console.log(toc.offset().left);
+        var currentPos = Math.ceil( toc.offset().left );
+        var pos = 0;
         
-        if ( left ) {
-        
-            pos = 900;
-            left = false;
-            $(this).removeClass( "active" );
+        if ( currentPos >= closedPos ) {
+            
+            pos = openPos;
+            $(this).addClass( "active" );
             
         } else {
             
-            pos = 642;
-            left = true;
-            $(this).addClass( "active" );
+            pos = closedPos;
+            $(this).removeClass( "active" );
         }
         
-        toc.animate({
+        if ( $( "#note" ).offset().top >= 360 ) {
+            
+            $( "#note" ).animate( {
+        
+                "top": 536
+                
+            } );
+            
+            $( "#notesBtn" ).removeClass( "active" );
+            
+        }
+        
+        toc.animate( {
+        
             "left": pos
-        });
+            
+        } );
             
     } );
 
