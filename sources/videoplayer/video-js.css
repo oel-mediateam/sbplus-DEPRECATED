@@ -3,6 +3,9 @@ Video.js Default Styles (http://videojs.com)
 Version 4.2.0
 Create your own skin at http://designer.videojs.com
 */
+
+@import "videojs.progressTips.min.css";
+
 /* SKIN
 ================================================================================
 The main class name for all skin-specific styles. To make your own skin,

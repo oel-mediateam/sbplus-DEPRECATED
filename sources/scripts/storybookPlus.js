@@ -373,7 +373,7 @@ $.fn.initializePlayer = function() {
     $( "#lessonTitle" ).attr( "title", lessonTitle );
     $( "#lessonTitle" ).html( lessonTitle );
     
-    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"javascript:void(0);\">" + instructor + "</a>" );
+    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#\">" + instructor + "</a>" );
     
     // setup profile panel
     $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a id=\"profileClose\" href=\"#\">&times;</a></div>" );
@@ -704,7 +704,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "quiz":
             
             $( "#slideNote" ).addClass( "quizSlide" );
-            
             $.fn.setupQuiz( sNum );
             $( "#progressing" ).fadeOut();
         
@@ -901,7 +900,7 @@ $.fn.displayAnswerChoices = function( index ) {
     
     if ( !quizError ) {
         
-        $( "#quiz" ).append( "<div class=\"submitArea\"><a id=\"check\" rel=\"" + index + "\" href=\"javascript:void(0)\">SUBMIT</a></div>" );
+        $( "#quiz" ).append( "<div class=\"submitArea\"><a id=\"check\" rel=\"" + index + "\" href=\"#\">SUBMIT</a></div>" );
         $( "#slide" ).append( "</div>" );
         
         // give the quiz a second to build up
@@ -1072,6 +1071,8 @@ $.fn.displayAnswerChoices = function( index ) {
                 } );
                 
             }
+            
+            return false;
     
         } ); // end click event
         
