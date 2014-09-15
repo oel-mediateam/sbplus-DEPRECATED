@@ -1,6 +1,6 @@
 .mejs-container {
 	position: relative;
-	/* background: #000; */
+	background: #000;
 	font-family: Helvetica, Arial;
 	text-align: left;
 	vertical-align: top;
@@ -9,6 +9,8 @@
 
 .me-plugin {
 	position: absolute;
+	height: auto;
+	width: auto;
 }
 
 .mejs-embed, .mejs-embed body {
@@ -94,10 +96,10 @@
 	width: 100px;
 	height: 100px;
 	margin: -50px 0 0 -50px;
-	background: url(bigplay.png) no-repeat;
+	background: url(bigplay.svg) no-repeat;
 }
 
-.no-svg .mejs-overlay-button { 
+.no-svg .mejs-overlay-button {
 	background-image: url(bigplay.png);
 }
 
@@ -144,12 +146,13 @@
 background: url(background.png);
 	background: rgba(0, 0, 0, 0.7);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50,50,50,0.7)), to(rgba(0,0,0,0.7)));
-	background: -webkit-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7)); 
+	background: -webkit-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
 	background: -moz-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
-	background: -o-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7)); 
-	background: -ms-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7)); 	
+	background: -o-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
+	background: -ms-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
 	background: linear-gradient(rgba(50,50,50,0.7), rgba(0,0,0,0.7));
-*/ 	
+*/
+    background-color: #7e7e7e;
 	height: 30px;
 	width: 100%;
 }
@@ -180,16 +183,16 @@ background: url(background.png);
 	height: 16px;
 	width: 16px;
 	border: 0;
-	background: transparent url(controls.png) no-repeat;
+	background: transparent url(controls.svg) no-repeat;
 }
 
-.no-svg .mejs-controls .mejs-button button { 
+.no-svg .mejs-controls .mejs-button button {
 	background-image: url(controls.png);
 }
 
 /* :focus for accessibility */
 .mejs-controls .mejs-button button:focus {
-	outline: none;
+	outline: dotted 1px #999;
 }
 
 /* End: CONTROL BAR */
@@ -209,7 +212,7 @@ background: url(background.png);
 }
 
 .mejs-container .mejs-controls .mejs-time span {
-	color: #ccc;
+	color: #fff;
 	font-size: 11px;
 	line-height: 12px;
 	display: block;
@@ -253,14 +256,16 @@ background: url(background.png);
 
 .mejs-controls .mejs-time-rail .mejs-time-total {
 	margin: 5px;
-	background: #333;
-	background: rgba(50,50,50,0.8);
+	background-color: #333;
+	/*
+background: rgba(50,50,50,0.8);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(30,30,30,0.8)), to(rgba(60,60,60,0.8)));
-	background: -webkit-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8)); 
+	background: -webkit-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
 	background: -moz-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
 	background: -o-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
 	background: -ms-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
 	background: linear-gradient(rgba(30,30,30,0.8), rgba(60,60,60,0.8));
+*/
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-buffering {
@@ -289,10 +294,10 @@ background: url(background.png);
 @keyframes buffering-stripes { from {background-position: 0 0;} to {background-position: 30px 0;} }
 
 .mejs-controls .mejs-time-rail .mejs-time-loaded {
-	background: rgba(200,200,200,0.8);
+	background: #646464;
 	/*
 background: rgba(60,170,200,0.8);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(44,124,145,0.8)), to(rgba(78,183,212,0.8))); 
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(44,124,145,0.8)), to(rgba(78,183,212,0.8)));
 	background: -webkit-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
 	background: -moz-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
 	background: -o-linear-gradient(top, rgba(44,124,145,0.8), rgba(78,183,212,0.8));
@@ -303,12 +308,12 @@ background: rgba(60,170,200,0.8);
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-current {
-	background: rgba(78,183,212,0.8);
+	background-color: #66a8cc;
 	/*
 background: rgba(255,255,255,0.8);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,0.9)), to(rgba(200,200,200,0.8)));
 	background: -webkit-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
-	background: -moz-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8)); 
+	background: -moz-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
 	background: -o-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
 	background: -ms-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
 	background: linear-gradient(rgba(255,255,255,0.9), rgba(200,200,200,0.8));
@@ -334,18 +339,18 @@ background: rgba(255,255,255,0.8);
 .mejs-controls .mejs-time-rail .mejs-time-float {
 	position: absolute;
 	display: none;
-	background: #000;
+	background: #eee;
 	width: 36px;
 	height: 17px;
-	/* border: solid 1px #333; */
+	border: solid 1px #333;
 	top: -26px;
 	margin-left: -18px;
 	text-align: center;
-	color: #fff;
+	color: #111;
 }
 
 .mejs-controls .mejs-time-rail .mejs-time-float-current {
-	margin: 3px;
+	margin: 2px;
 	width: 30px;
 	display: block;
 	text-align: center;
@@ -359,7 +364,7 @@ background: rgba(255,255,255,0.8);
 	height: 0;
 	line-height: 0;
 	border: solid 5px #eee;
-	border-color: #000 transparent transparent transparent;
+	border-color: #eee transparent transparent transparent;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
@@ -496,12 +501,12 @@ background: rgba(255,255,255,0.8);
 	font-size: 1px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	border-radius: 2px;	
-	background: rgba(30,30,30,0.8);
+	border-radius: 2px;
+	background-color: #333;
 	/*
 background: rgba(50,50,50,0.8);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(30,30,30,0.8)), to(rgba(60,60,60,0.8)));
-	background: -webkit-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8)); 
+	background: -webkit-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
 	background: -moz-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
 	background: -o-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
 	background: -ms-linear-gradient(top, rgba(30,30,30,0.8), rgba(60,60,60,0.8));
@@ -521,12 +526,12 @@ background: rgba(50,50,50,0.8);
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
-	background: rgba(200,200,200,0.8);
+	background-color: #66a8cc;
 	/*
 background: rgba(255,255,255,0.8);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,0.9)), to(rgba(200,200,200,0.8)));
 	background: -webkit-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
-	background: -moz-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8)); 
+	background: -moz-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
 	background: -o-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
 	background: -ms-linear-gradient(top, rgba(255,255,255,0.9), rgba(200,200,200,0.8));
 	background: linear-gradient(rgba(255,255,255,0.9), rgba(200,200,200,0.8));
@@ -551,13 +556,13 @@ background: rgba(255,255,255,0.8);
 	visibility: hidden;
 	position: absolute;
 	bottom: 26px;
-	right: -10px;
-	width: 130px;
+	right: -51px;
+	width: 85px;
 	height: 100px;
 	background: url(background.png);
 	background: rgba(50,50,50,0.7);
 	border: solid 1px transparent;
-	padding: 10px;
+	padding: 10px 10px 0 10px;
 	overflow: hidden;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
@@ -594,7 +599,7 @@ background: rgba(255,255,255,0.8);
 }
 
 .mejs-controls .mejs-captions-button .mejs-captions-selector ul li label {
-	width: 100px;
+	width: 55px;
 	float: left;
 	padding: 4px 0 0 0;
 	line-height: 15px;
@@ -626,8 +631,8 @@ background: rgba(255,255,255,0.8);
 	background: -moz-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
 	background: -o-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
 	background: -ms-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7));
-	background: linear-gradient(rgba(50,50,50,0.7), rgba(0,0,0,0.7)); 
-	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, startColorstr=#323232,endColorstr=#000000);		
+	background: linear-gradient(rgba(50,50,50,0.7), rgba(0,0,0,0.7));
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, startColorstr=#323232,endColorstr=#000000);
 	overflow: hidden;
 	border: 0;
 }
@@ -655,7 +660,7 @@ background: rgba(255,255,255,0.8);
 	background: -o-linear-gradient(top, rgba(102,102,102,0.7), rgba(50,50,50,0.6));
 	background: -ms-linear-gradient(top, rgba(102,102,102,0.7), rgba(50,50,50,0.6));
 	background: linear-gradient(rgba(102,102,102,0.7), rgba(50,50,50,0.6));
-	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, startColorstr=#666666,endColorstr=#323232);		
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, startColorstr=#666666,endColorstr=#323232);
 }
 
 .mejs-chapters .mejs-chapter .mejs-chapter-block .ch-title {
@@ -682,8 +687,8 @@ background: rgba(255,255,255,0.8);
 	bottom: 0;
 	left: 0;
 	text-align:center;
-	line-height: 22px;
-	font-size: 12px;
+	line-height: 20px;
+	font-size: 16px;
 	color: #fff;
 }
 
@@ -705,14 +710,14 @@ background: rgba(255,255,255,0.8);
 }
 
 .mejs-captions-position-hover {
-	bottom: 45px;
+	bottom: 35px;
 }
 
 .mejs-captions-text {
 	padding: 3px 5px;
 	background: url(background.png);
-	background: rgba(20, 20, 20, 0.8);
-
+	background: rgba(20, 20, 20, 0.5);
+	white-space: pre-wrap;
 }
 /* End: Track (Captions and Chapters) */
 
@@ -776,7 +781,7 @@ background: rgba(255,255,255,0.8);
 	height: 1px;
 	font-size: 0;
 	margin: 5px 6px;
-	background: #333;	
+	background: #333;
 }
 
 .mejs-contextmenu .mejs-contextmenu-item {
@@ -784,7 +789,7 @@ background: rgba(255,255,255,0.8);
 	font-size: 12px;
 	padding: 4px 6px;
 	cursor: pointer;
-	color: #333;	
+	color: #333;
 }
 .mejs-contextmenu .mejs-contextmenu-item:hover {
 	background: #2C7C91;
@@ -878,3 +883,85 @@ background: rgba(255,255,255,0.8);
 	cursor: pointer;
 }
 /* End: Postroll */
+
+
+/* Start: Speed */
+div.mejs-speed-button {
+	width: 46px !important;
+	position: relative;
+}
+
+.mejs-controls .mejs-button.mejs-speed-button button {
+	background: transparent;
+	width: 36px;
+	font-size: 11px;
+	line-height: normal;
+	color: #ffffff;
+}
+
+.mejs-controls .mejs-speed-button .mejs-speed-selector {
+	visibility: hidden;
+	position: absolute;
+	top: -100px;
+	left: -10px;
+	width: 60px;
+	height: 100px;
+	background: url(background.png);
+	background: rgba(50, 50, 50, 0.7);
+	border: solid 1px transparent;
+	padding: 0;
+	overflow: hidden;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+
+.mejs-controls .mejs-speed-button:hover > .mejs-speed-selector {
+	visibility: visible;
+}
+
+.mejs-controls .mejs-speed-button .mejs-speed-selector ul li label.mejs-speed-selected {
+	color: rgba(33, 248, 248, 1);
+}
+
+.mejs-controls .mejs-speed-button .mejs-speed-selector ul {
+	margin: 0;
+	padding: 0;
+	display: block;
+	list-style-type: none !important;
+	overflow: hidden;
+}
+
+.mejs-controls .mejs-speed-button .mejs-speed-selector ul li {
+	margin: 0 0 6px 0;
+	padding: 0 10px;
+	list-style-type: none !important;
+	display: block;
+	color: #fff;
+	overflow: hidden;
+}
+
+.mejs-controls .mejs-speed-button .mejs-speed-selector ul li input {
+	clear: both;
+	float: left;
+	margin: 3px 3px 0 5px;
+	display: none;
+}
+
+.mejs-controls .mejs-speed-button .mejs-speed-selector ul li label {
+	width: 60px;
+	float: left;
+	padding: 4px 0 0 0;
+	line-height: 15px;
+	font-family: helvetica, arial;
+	font-size: 11.5px;
+	color: white;
+	margin-left: 5px;
+	cursor: pointer;
+}
+
+.mejs-controls .mejs-speed-button .mejs-speed-selector ul li:hover {
+	background-color: rgb(200, 200, 200) !important;
+	background-color: rgba(255,255,255,.4) !important;
+}
+/* End: Speed */

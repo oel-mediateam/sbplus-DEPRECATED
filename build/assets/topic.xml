@@ -2,7 +2,7 @@
 <course>
 
 	<setup>
-		<lesson>PSAS350 - Chapter Three, part 2</lesson>
+		<lesson>SMGT340 - Understanding the Hierarchy and Interplay of Statutes, Regulations, and Case Law at the Federal and State Levels</lesson>
 		<length>25 Minutes</length>
 		<instructor>Demo</instructor>
 		<slideImgFormat /> <!-- default to png if not specified -->
@@ -11,14 +11,14 @@
 			
 	<!-- instructor or lesson information -->
 	<profile>
-		<![CDATA[<p>Oh, hello! Hey! Hi! This is a demo of the Storyboard Player (SBP). Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut purus augue.</p>]]>
+		<![CDATA[<p>Oh, hello! Hey! Hi! This is a demo of the Storyboard Player (SBP). Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut purus augue. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, praesentium, ipsam, ut, voluptatibus pariatur quasi esse adipisci dolorum laboriosam excepturi possimus minima libero atque consequuntur quidem reiciendis eligendi laborum vero? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat, accusamus, similique qui dicta libero dolorem culpa molestias necessitatibus voluptatibus nostrum rem illo corporis ipsam nulla cumque harum vero nemo voluptate. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, veritatis excepturi fuga quisquam dolorem nesciunt ea necessitatibus accusantium. Voluptatibus minima voluptatum harum laboriosam ex reiciendis praesentium. Quas, quia a quis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, rem, ipsa, reprehenderit quod quo eum sunt a eveniet ex excepturi soluta deleniti dicta est error perferendis tempora tenetur harum neque.</p>]]>
 	</profile>
 	
 	<!-- topic list -->
 	<topic src="image:slide01" title="Image only">
 		<quiz />
 		<note>
-			<![CDATA[<h1>Demoing Storybook Plus. (Headline 1)</h1><p>Lorem <strong>ipsum</strong> dolor sit <em>amet</em>, consectetur <strong><em>adipiscing</em></strong> elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. <a href="https://www.google.com">Vestibulum</a> quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p><h2>Headline 2</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. Vestibulum quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p><h3>Headline 3</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="https://www.yahoo.com">Vestibulum</a> Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. Vestibulum quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p>]]>
+			<![CDATA[<h1>Demoing Storybook Plus. (Headline 1)</h1><p>Lorem <strong>ipsum</strong> dolor sit <em>amet</em>, consectetur <strong><em>adipiscing</em></strong> elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. <a href="https://www.google.com">Vestibulum</a> quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p><h2>Headline 2</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. Vestibulum quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p><h3>Headline 3</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="https://www.yahoo.com">Vestibulum</a> Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. Vestibulum quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis.</p>]]>
 		</note>
 	</topic>
 	
@@ -85,7 +85,7 @@
 	
 	<topic src="quiz" title="Image Answer Choices">
 		<quiz type="mc">
-			<question><![CDATA[Which pokémon is Ethan's favorite?<small>Ethan is a pokémon fan ... sort of.</small>]]></question>
+			<question><![CDATA[Which pokémon are Ethan's favorites?<small>Ethan is a pokémon fan ... sort of.</small>]]></question>
 			<choice useImg="true">pikachu.gif|mewtwo.gif|mew.gif|rattata.gif|krabby.gif|rayquaza.gif</choice>
 			<answer>mewtwo.gif|pikachu.gif</answer>
 			<wrongFeedback><![CDATA[Ethan's is going to blast you and then dance!]]></wrongFeedback>
@@ -125,8 +125,8 @@
 			<![CDATA[<p>This slide contains an embedded Vimeo video. Please excuse this strange video... It was randomly grabbed from Vimeo.</p>]]>
 		</note>
 	</topic>
-	
-	<topic src="kaltura:1_88byq1sd" title="Embedded Kaltura Video">
+		
+	<topic src="kaltura:1_b7q348t6" title="Embedded Kaltura Video">
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contains an embedded Kaltura video.</p>]]>
@@ -146,7 +146,7 @@
 	
 	<topic src="quiz" title="Sound and Image">
 		<quiz type="t/f">
-			<question img="mrmime.png" audio="lugia.mp3"><![CDATA[Does this pokémon make this cry?]]></question>
+			<question img="mrmime.png" audio="lugia"><![CDATA[Does this pokémon make this cry?]]></question>
 			<choice></choice>
 			<answer>false</answer>
 			<wrongFeedback>Play more pokémon games!</wrongFeedback>

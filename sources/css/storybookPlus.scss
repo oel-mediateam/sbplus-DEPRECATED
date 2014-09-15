@@ -1,6 +1,7 @@
 // variables
 $font-size: 14px;
 $gutter: 15px;
+$border-color: #ccc;
 
 // mixins
 @mixin clear() {
@@ -18,6 +19,7 @@ $gutter: 15px;
 @import "compass/css3/border-radius";
 @import "compass/css3/opacity";
 @import "compass/css3/transition";
+@import "compass/css3/box-shadow";
 @import "sbplus_fonts";
 
 // GENERAL
@@ -49,6 +51,7 @@ p {
 
 // PLAYER WRAPPER
 #storybook_plus_wrapper {
+    position: relative;
 	width: rem( 900px );
 	@include clear;
 }
@@ -60,25 +63,25 @@ p {
         padding: rem( 100px ) rem( 200px );
     }
     
+    #profile {
+        height: rem( 400px );
+    }
+    
     #note {
         display: none;
+    }
+    
+    #toc {
+        height: rem( 400px );
     }
     
     #control {
         
         #currentStatus {
-            width: rem( 212px );
+            width: 80%;
             border-right: none;
         }
         
-        #fontMinusBtn, #fontPlusBtn, #fontSizeIndicator {
-            display: none;
-        }
-        
-    }
-    
-    #toc {
-        height: rem( 400px );
     }
     
 }
@@ -89,17 +92,192 @@ p {
         background-color: #ebebeb;
     }
     
+}
+
+#storybook_plus_wrapper.withQuiz.magnified {
+    
     #control {
         
         #currentStatus {
-            width: rem( 212px );
-            border-right: none;
+            width: 64% !important;
         }
         
-        #fontMinusBtn, #fontPlusBtn, #fontSizeIndicator {
-            display: none;
+    }
+    
+    #note {
+        display: none;
+    }
+    
+}
+
+#storybook_plus_wrapper.magnified {
+    
+    #content {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    #slideNote {
+        
+        position: relative;
+        width: rem( 900px );
+        height: rem( 546px );
+        overflow: hidden;
+        border: none;
+        
+        #slide {
+    	    
+    	    position: relative;
+    	    width: rem( 900px );
+    	    height: rem( 506px );
+    	    overflow: hidden;
+    	    
+        	#img {
+        	
+            	position: absolute;
+            	
+            	img {
+                    height: rem( 506px );
+            	}
+            	
+            }
+            
+            object {
+                position: absolute;
+                width: rem( 900px ) !important;
+                height: rem( 506px ) !important;
+            	z-index: 10;
+            	border-left: rem( 1px ) solid $border-color;
+            	border-right: rem( 1px ) solid $border-color;
+            	@include box-sizing( border-box );
+            }
+            
+            iframe {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            	z-index: 10;
+            }
+        	
         }
         
+    }
+    
+    #slideNote.quizSlide {
+        
+        #control {
+            
+            #currentStatus {
+                width: 64%;
+            }
+            
+        }
+        
+    }
+    
+    #progressing {
+        top: 46%;
+        left: 48%;
+        z-index: 20;
+    }
+    
+    #control {
+    
+        position: absolute;
+        bottom: 0;
+        z-index: 12;
+        
+        #leftBtn {
+            border-left: rem( 1px ) solid $border-color;
+        }
+        
+        #currentStatus {
+            width: 56%;
+        }
+        
+        #magnifyBtn {
+            border-right: rem( 1px ) solid $border-color;
+            border-left: none;
+        }
+        
+    }
+    
+    #quiz {
+        
+        .answerArea {
+            
+            textarea {
+            	width: 100%;
+        	}
+        	
+        	input[type=text] {
+            	width: 100%;
+        	}
+            
+        }
+        
+    }
+    
+    #ap {
+    
+        width: 100%;
+    	top: rem( 476px );
+    	
+    	.mejs-container {
+        	
+        	.mejs-controls {
+            	
+            	.mejs-time-rail {
+            	
+                	width: rem( 716px ) !important;
+                	
+                	.mejs-time-total {
+                    	width: rem( 706px ) !important;
+                	}
+                	
+            	}
+            	
+        	}
+        	
+    	}
+    	
+    }
+    
+    #vp {
+    	
+    	position: relative;
+    	width: rem( 900px );
+        height: rem( 506px );
+        margin: 0;
+    
+    	.video-js {
+    	    position: absolute;
+        	width: rem( 900px ) !important;
+            height: rem( 506px ) !important;
+            z-index: 10;
+    	}
+    	
+    }
+    
+    #toc {
+        position: absolute;
+        height: rem( 507px );
+        left: rem( 900px );
+        border-left: rem( 3px ) solid $border-color;
+        z-index: 13;
+    }
+    
+    #profile {
+        height: rem( 546px );
+    }
+    
+    #note {
+        position: absolute;
+        top: rem( 506px );
+        border-right: rem( 1px ) solid $border-color;
+        border-left: rem( 1px ) solid $border-color;
+        border-top-width: rem( 3px );
+        z-index: 11;
     }
     
 }
@@ -108,8 +286,8 @@ p {
 #splash_screen {
 
 	width: rem( 900px );
-	height: rem( 630px );
-	padding: rem( 200px );
+	height: rem( 576px );
+	padding: rem( 180px ) rem( 200px ) rem( 200px );
 	text-align: center;
 	background-color: #fff;
 	background-position: left bottom;
@@ -165,13 +343,19 @@ p {
     	
     	#lessonTitle {
         	display: inline-block;
-            width: 410px;
+            width: rem( 505px );
+            height: rem( 23px );
+            white-space: nowrap;
             margin-right: rem( $gutter );
+            overflow: hidden;
+            text-overflow: ellipsis;
     	    float: left;
+    	    cursor: default;
     	}
     	
     	#instructorName {
         	@extend #lessonTitle;
+        	width: rem( 315px );
         	text-align: right;
         }
         
@@ -193,7 +377,7 @@ p {
     	
     } // header
     
-    /* SLIDE LOADING SPINNER */
+    // SLIDE LOADING SPINNER
     #progressing {
         position: absolute;
         top: rem( 200px );
@@ -219,101 +403,89 @@ p {
 	// SLIDE NOTE AREA
     #slideNote {
     	width: rem( 640px );
-    	border-right: #ccc solid rem( 1px );
-    	border-left: #ccc solid rem( 1px );
+    	border-right: rem( 1px ) solid $border-color;
+    	border-left: rem( 1px ) solid $border-color;
     	float: left;
     }
     
-    #slideNote.quizSlide {
+    .quizSlide {
         
+        #slide {
+            height: rem( 506px );
+        }
         
-        #slide, #quiz {
-            height: rem( 560px );
+        #quiz {
+            height: rem( 506px );
         }
         
         #note {
-            display: none;
+            display: none !important;
         }
-        
+
     }
 	
 	// SLIDE
     #slide {
-    
-    	position: relative;
+
     	width: 100%;
     	height: rem( 360px );
     	background: #fff;
     	overflow: hidden;
     	
     	#img {
-    	
+    	    
     	    display: block;
     	    line-height: 0;
-        	
-        	img {
+    	    
+    	    img {
             	width: 100%;
                 height: rem( 360px );
         	}
         	
-    	} // #img
-    	
-    	.magnifyIcon {
-        	position: absolute;
-        	width: rem( 30px );
-        	height: rem( 30px );
-        	font-size: rem( 20px );
-        	line-height: rem( 20px );
-        	color: #fff;
-        	text-align: center;
-        	padding-top: rem( 7px );
-        	bottom: rem( 6px );
-        	right: rem( 6px );
-        	cursor: pointer;
-        	background-color: #131313;
-        	@include border-radius( rem( 3px ) );
-        	@include box-sizing( "border-box" );
-        	@include opacity( 0 );
-        	@include single-transition( opacity, ease-out, .3s );
-        }
+    	}
     	
     } // #slide
-    
-    #slide:hover {
-        
-        .magnifyIcon {
-            display: block;
-            @include opacity( .75 );
-            @include single-transition( opacity, ease-in, .3s );
-        }
-        
-    }
     
     // AUDIO PLAYER
     #ap {
     	display: none;
-    	background-color: rgba(7,20,30,0.7);
-    }
-    
-    #apm {
-    	display: none;
-    	width: rem( 300px );
-    	height: rem( 34px );
-    	padding-top: rem( 4px );
-    	background-color: rgba(7,20,30,0.7);
-    	float: left;
+    	position: absolute;
+        width: rem( 640px );
+    	height: rem( 30px );
+    	top: rem( 360px );
+    	background-color: #7e7e7e;
+    	
+    	.mejs-container {
+        	
+        	.mejs-controls {
+            	
+            	.mejs-time-rail {
+            	
+                	width: rem( 456px ) !important;
+                	
+                	.mejs-time-total {
+                    	width: rem( 446px ) !important;
+                	}
+                	
+            	}
+            	
+        	}
+        	
+    	}
+    	
     }
     
     // VIDEO PLAYER
     #vp {
     	display: none;
-    	margin-top: rem( -360px );
+    	width: rem( 640px );
+    	height: rem( 360px );
     }
     
     // QUIZ
     #quiz {
     
-    	height: rem( 360px );
+    	height: rem( 560px );
     	background-color: #ebebeb;
     	overflow-y: scroll;
     	
@@ -338,7 +510,7 @@ p {
         	
         	img {
         	    display: block;
-            	max-width: rem( 610px );
+            	max-width: rem( 360px );
             	padding-right: rem( $gutter );
             	height: auto;
             	float: left;
@@ -362,9 +534,10 @@ p {
     	
     	.answerArea {
     	
-    	    display: inline-block;
+    	    display: block;
         	padding: 0 rem( $gutter );
         	margin: rem( $gutter ) 0;
+        	@include box-sizing( border-box );
         	
         	label {
             	display: block;
@@ -384,16 +557,12 @@ p {
             	
             	input[type=radio], input[type=checkbox] {
                 	position: absolute;
-            	}            	
-            	
-            	img {
-                	outline: red;
             	}
             	
         	}
             
             textarea {
-            	width: rem( 600px );
+            	width: rem( 595px );
             	height: rem( 110px );
             	padding: rem( 5px );
             	font-size: rem( $font-size );
@@ -404,10 +573,10 @@ p {
         	}
         	
         	input[type=text] {
-        	    @extend textarea;
-            	width: rem( 600px );
+            	width: rem( 595px );
             	height: rem( 30px );
             	padding: rem( 5px );
+            	@include box-sizing( border-box );
         	}
         	
         }
@@ -462,8 +631,8 @@ p {
     #note {
         
     	width: 100%;
-    	height: rem( 200px );
-    	border-top: #ccc solid rem( 1px );
+    	height: rem( 146px );
+    	border-top: rem( 1px ) solid $border-color;
     	padding: 0 rem( 5px );
     	background-color: #fff;
     	overflow: auto;
@@ -471,11 +640,11 @@ p {
     	@include box-sizing( "border-box" );
     	
     	.noNotes {
-        	font-size: rem( 82px );
-        	line-height: rem( 82px );
+        	font-size: rem( 55px );
+        	line-height: rem( 55px );
         	color: #d4d4d4;
         	text-align: center;
-        	padding: rem( 60px ) 0 0 0;
+        	padding: rem( 50px ) 0 0 0;
         	cursor: default;
     	}
     	
@@ -513,120 +682,16 @@ p {
         }
     	
     } // #note
-    
-    #note.size12 {
-        
-        h1 {
-        	font-size: rem( 18px );
-        	line-height: rem( 24px );
-    	}
-    	
-    	h2 {
-        	font-size: rem( 16px );
-            line-height: rem( 22px );
-    	}
-    	
-    	h3, h4, h5, h6 {
-        	font-size: rem( 14px );
-        	line-height: rem( 20px );
-        }
-    	
-    	p {
-        	font-size: rem( 12px );
-        	line-height: rem( 18px );
-        }
-        
-    }
-    
-    #note.size16 {
-        
-        h1 {
-        	font-size: rem( 22px );
-        	line-height: rem( 28px );
-    	}
-    	
-    	h2 {
-        	font-size: rem( 20px );
-            line-height: rem( 26px );
-    	}
-    	
-    	h3, h4, h5, h6 {
-        	font-size: rem( 18px );
-        	line-height: rem( 24px );
-        }
-    	
-    	p {
-        	font-size: rem( 16px );
-        	line-height: rem( 22px );
-        }
-    }
-        
-    #note.size18 {
-        
-        h1 {
-        	font-size: rem( 24px );
-        	line-height: rem( 30px );
-    	}
-    	
-    	h2 {
-        	font-size: rem( 22px );
-            line-height: rem( 28px );
-    	}
-    	
-    	h3, h4, h5, h6 {
-        	font-size: rem( 20px );
-        	line-height: rem( 26px );
-        }
-    	
-    	p {
-        	font-size: rem( 18px );
-        	line-height: rem( 24px );
-        }
-        
-    }
-    
-    #note.size20 {
-        
-        h1 {
-        	font-size: rem( 26px );
-        	line-height: rem( 32px );
-    	}
-    	
-    	h2 {
-        	font-size: rem( 24px );
-            line-height: rem( 30px );
-    	}
-    	
-    	h3, h4, h5, h6 {
-        	font-size: rem( 22px );
-        	line-height: rem( 28px );
-        }
-    	
-    	p {
-        	font-size: rem( 20px );
-        	line-height: rem( 26px );
-        }
-        
-    }
-    
-    #note.cropped {
-        height: 170px;
-        
-        .noNotes {
-            padding-top: rem( 50px );
-        }
-        
-    }
 	
 	// PLAYER CONTROLS
     #control {
     
     	width: 100%;
     	height: rem( 38px );
-    	border-top: #ccc solid rem( 1px );
-    	border-bottom: #ccc solid rem( 1px );
+    	border-top: rem( 1px ) solid $border-color;
+    	border-bottom: rem( 1px ) solid $border-color;
     	background-color: #f7f7f7;
-    	float:left;
+    	float: left;
     	
     	.btn {
         	display: block;
@@ -634,12 +699,20 @@ p {
             height: rem( 38px );
             font-size: rem( 22px );
     	    line-height: rem( 22px );
-    	    padding: rem( 11px ) 0 0 rem( 18px );
+    	    padding: rem( 11px ) 0 0;
             cursor: pointer;
+            text-align: center;
             float: left;
-            border-right: #ccc solid rem( 1px );
+            border-right: rem( 1px ) solid $border-color;
             @include box-sizing( "border-box" );
             @include single-transition( color, ease-out, .6s );
+    	}
+    	
+    	.btn.active {
+    	
+    	    color: #59a8dc;
+    	    background-color: $border-color;
+        	
     	}
     	
     	.btn:hover {
@@ -653,51 +726,50 @@ p {
     	
     	#rightBtn {
     	    @extend .btn;
-    	    padding: rem( 11px ) 0 0 rem( 20px );
+    	    padding: rem( 11px ) 0 0;
     	}
     	
     	#currentStatus {
         	display: block;
-        	width: 56%;
+        	width: 72%;
         	height: rem( 38px );
         	font-size: rem( 16px );
         	font-weight: bold;
         	text-transform: uppercase;
         	padding: rem( 12px ) rem( 12px ) 0;
-        	border-right: #ccc solid rem( 1px );
+        	border-right: rem( 1px ) solid $border-color;
         	float: left;
         	cursor: default;
         	@include box-sizing( "border-box" );
         }
         
-        #fontMinusBtn {
-            @extend .btn;
-            width: 8%;
-            font-size: rem( 16px );
-            line-height: rem( 16px );
-            padding: rem( 12px ) 0 0 rem( 17px );
-        }
-        
-        #fontSizeIndicator {
-        	display: block;
+        #magnifyBtn {
+        	@extend .btn;
         	width: 8%;
-        	height: rem( 38px );
-        	font-size: rem( 16px );
-        	text-align: center;
-        	padding-top: rem( 13px );
-        	border-right: #ccc solid rem( 1px );
-        	cursor: default;
-        	float: left;
-        	@include box-sizing( "border-box" );
+            font-size: rem( 16px );
+            line-height: rem( 16px );
+            border-right: none;
+            padding: rem( 12px ) 0 0;
         }
         
-        #fontPlusBtn {
+        #notesBtn {
             @extend .btn;
+            display: none;
             width: 8%;
             font-size: rem( 16px );
             line-height: rem( 16px );
-            padding: rem( 11px ) 0 0 rem( 17px );
-            border-right: none;
+            padding: rem( 12px ) 0 0;
+            border-right: rem( 1px ) solid $border-color;
+        }
+        
+        #tocBtn {
+            @extend .btn;
+            display: none;
+            width: 8%;
+            font-size: rem( 16px );
+            line-height: rem( 16px );
+            padding: rem( 12px ) 0 0;
+            border-right: rem( 1px ) solid $border-color;
         }
     	
     } //#control
@@ -708,9 +780,9 @@ p {
 #toc {
 
 	width: rem( 258px );
-	height: rem( 600px );
-	border-bottom: #ccc solid rem( 1px );
-	border-right: #ccc solid rem( 1px );
+	height: rem( 546px );
+	border-bottom: rem( 1px ) solid $border-color;
+	border-right: rem( 1px ) solid $border-color;
 	background-color: #fff;
 	float: left;
 	overflow: auto;
@@ -783,21 +855,27 @@ p {
 #profile {
 
 	display: none;
-	width: rem( 600px );
-	height: rem( 300px );
-	padding: rem( 10px );
+	position: absolute;
+	width: 100%;
+	height: rem( 546px );
+	padding: rem( 20px );
 	color: #fff;
-	background-color: #131313;
+	background-color: #fafafa;
+	border: rem( 1px ) solid $border-color;
+	top: rem( 30px );
+	left: 0;
 	@include clear;
+	@include box-sizing( border-box );
+	z-index: 20;
 	
 	.photo {
 	
     	width: rem( 200px );
     	height: rem( 300px );
-    	float:left;
+    	margin-right: rem( 10px );
+    	float: left;
     	
     	img{
-        	display: block;
         	margin: 0 auto;
         	padding: 0;
         	max-height: rem( 300px );
@@ -808,18 +886,34 @@ p {
 	
 	.bio {
     	
-    	width: rem( 380px );
-    	height: rem( 300px );
-    	margin-left: rem( 10px );
-    	padding-right: rem( 10px );
+    	display: inline;
+    	color: #000;
+    	line-height: rem( 20px );
     	overflow: auto;
-    	float: left;
     	
-    	p:first-child {
-        	font-weight: bold;
-        	font-size: rem( 18px );
+    	h2 {
+        	margin: 0 0 rem( 14px );
     	}
     	
+    }
+    
+    .profileCloseBtn {
+    
+        position: absolute;
+        font-size: rem( 12px );
+        line-height: rem( 12px );
+        top: rem( 5px );
+        right: rem( 16px );
+        @include clear;
+        
+        a, a:link, a:visited, a:hover {
+            display: block;
+            text-decoration: none;
+            color: #888;
+            font-size: rem( 32px );
+            line-height: rem( 32px );
+        }
+        
     }
 	
 } // #profile
@@ -870,6 +964,19 @@ p {
     } // ul
 	
 } // #download_bar
+
+// video js
+.vjs-default-skin {
+    
+    .vjs-fullscreen-control {
+        display: none;
+    }
+    
+    .vjs-volume-control {
+        margin-left: rem( 10px ) !important;
+        margin-right: rem( 20px ) !important;
+    }
+}
 
 // AJAX ERROR
 #errorMsg {

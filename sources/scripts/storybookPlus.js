@@ -2,8 +2,6 @@
 /* global MediaElementPlayer */
 
 // global variable declarations
-var defaultFontSize = 14;
-    
 var topicCount = 0,
     counter = 0,
     previousIndex = 0,
@@ -31,6 +29,7 @@ var audioPlayer,
     videoPlaying = false,
     sources;
 
+// when document finished loading and ready
 $( document ).ready( function() {
 	
     var ua = navigator.userAgent,
@@ -371,25 +370,31 @@ $.fn.initializePlayer = function() {
     $( "#splash_screen" ).hide();
     
     // setup up player header
+    $( "#lessonTitle" ).attr( "title", lessonTitle );
     $( "#lessonTitle" ).html( lessonTitle );
-    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#profile\">" + instructor + "</a>" );
+    
+    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#\">" + instructor + "</a>" );
     
     // setup profile panel
-    $( "#profile .bio" ).html( "<p>" + instructor + "</p>" + PROFILE );
+    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a id=\"profileClose\" href=\"#\">&times;</a></div>" );
+    $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
     
     $( "#player" ).append( "<div id=\"progressing\"></div>" );
 	
-	// enable fancy box for profile panel
-    $( "#info, a.instructorName" ).fancybox( {
-    
-        helpers: {
-            overlay: {
-                css: {
-                    'background': 'rgba(250, 250, 250, 0.85)'
-                }
-            }
-        },
-        padding: 0
+	// bind for profile panel open/close toggle
+    $( "#info, a.instructorName, #profileClose" ).on( "click", function() {
+        
+        if ( $( "#profile" ).is(":visible") ) {
+        
+            $( "#profile" ).fadeOut( 300 );
+            
+        } else {
+        
+            $( "#profile" ).fadeIn( 300 );
+            
+        }
+        
+        return false;
         
     } );
 	
@@ -447,33 +452,29 @@ $.fn.initializePlayer = function() {
 
     });
     
-    // note is enabled
-    if ( enabledNote ) {
-
-        // display current font size
-        $('#fontSizeIndicator').html( defaultFontSize );
-
-        // binding increasing and decreasing font size buttons
-        $('#fontMinusBtn').on('click', function() {
-
-            $.fn.adjustFontSize( "minus" );
-            return false;
-
-        });
-
-        // font plus button
-        $('#fontPlusBtn').on('click', function() {
-
-            $.fn.adjustFontSize( "plus" );
-            return false;
-
-        });
-
+    // add the zoom boutton to the control after the slide status
+    if ( enabledNote === true || quizDetected === true ) {
+    
+        $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
+        
+        if ( $( "#storybook_plus_wrapper" ).hasClass( "withQuiz" ) ) {
+            
+            $( "#magnifyBtn" ).before( "<span id=\"tocBtn\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+            
+        } else {
+        
+            $( "#magnifyBtn" ).before( "<span id=\"notesBtn\"><span class=\"notes\" title=\"Toggle Notes\"></span></span><span id=\"tocBtn\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+            
+        }
+        
+        $.fn.bindImgMagnify();
+        $.fn.bindNoteSlideToggle();
+        $.fn.bindTocSlideToggle();
+        
     }
     
     // call to load the first slide
     $.fn.loadSlide( topicSrc[0], counter );
-    
     
     // load and set the instructor picture
     $.fn.loadProfilePhoto();
@@ -530,25 +531,13 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             
         } catch(e) { }
         
-        if ( enabledNote === false && quizDetected === false ) {
-        
-            $( "#apm" ).hide();
-            
-        } else {
-        
-            $( "#ap" ).hide();
-            
-            if ( $( "#note" ).hasClass( "cropped" ) ) {
-            
-                $( "#note" ).removeClass( "cropped" );
-                
-            }
-            
-        }
-        
+        $( "#ap" ).hide();
+
         audioPlaying = false;
 
     }
+    
+    $( "#slide" ).html( "" ).show();
     
     switch ( slideSource ) {
         
@@ -562,11 +551,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             $( img ).load( function() {
                 
                 $( this ).hide();
-                $( "#slide" ).html( "<a id=\"img\" title=\"" + imgCaption + "\" href=\"" + imgPath + "\">" );
+                $( "#slide" ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
-                $( "#slide" ).append( "</a><div class=\"magnifyIcon\"></div>" );
                 $( this ).fadeIn();
-                $( this ).bindImgMagnify();
                 $( "#progressing" ).fadeOut();
     
             } ).error( function() {
@@ -581,7 +568,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
         
         case "image-audio:":
-        
+            
             img = new Image();
 
             imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
@@ -590,71 +577,35 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             $( img ).load( function() {
     
                 $( this ).hide();
-                $( "#slide" ).html( "<a id=\"img\" title=\"" + imgCaption + "\"href=\"" + imgPath + "\">" );
+                $( "#slide" ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
-                $( "#slide" ).append( "</a><div class=\"magnifyIcon\"></div>" );
                 $( this ).fadeIn();
-                $( this ).bindImgMagnify();
                 $( "#progressing" ).fadeOut();
     
                 if ( !audioPlaying ) {
-    
-                    if ( enabledNote === false && quizDetected === false ) {
-    					
-    					if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
-                            
-                            $( "#apm" ).show();
-                            
-                            if (firstAudioLoad !== true) {
-    					    
-                    		    $.fn.loadAudioPlayer( "#apcm", srcName );
-                                firstAudioLoad = true;
-        						
-        					} else {
-        					    
-        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-        						audioPlayer.setSrc( sources );
-        						
-        					}
-                            
-                        } else {
                         
-                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
-                            
-                        }
-    
+                    if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
+                        
+                        $( "#ap" ).show();
+                        
+                        if (firstAudioLoad !== true) {
+					    
+                		    $.fn.loadAudioPlayer( "#apc", srcName );
+                            firstAudioLoad = true;
+    						
+    					} else {
+    					    
+    						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
+    						audioPlayer.setSrc( sources );
+    						
+    					}
+    					
+    					$.fn.bindAudioPlayerFadeInOut();
+                        
                     } else {
                         
-                        if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
-                            
-                            $( "#ap").show();
-                            
-                            if (firstAudioLoad !== true) {
-    					    
-                    		    $.fn.loadAudioPlayer( "#apc", srcName );
-                                firstAudioLoad = true;
-        						
-        					} else {
-        					    
-        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-        						audioPlayer.setSrc( sources );
-        						
-        					}
-        					
-        					$( "#note" ).addClass( "cropped" );
-                            
-                        } else {
+                        $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
                         
-                            if ( $( "#note" ).hasClass( "cropped" ) ) {
-            
-                                $( "#note" ).removeClass( "cropped" );
-                                
-                            }
-                            
-                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
-                            
-                        }
-    
                     }
     
                     audioPlaying = true;
@@ -684,6 +635,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 $( "#progressing" ).fadeOut();
                 
             } );
+            
+            $( "#slide" ).hide();
     
             if ( !videoPlaying ) {
             
@@ -691,6 +644,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     
                 videojs( playerID, {}, function() {
                 
+                    this.removeChild('FullscreenToggle');
                     this.progressTips();
                     this.src( [
     					{type: "video/mp4", src:"assets/video/" + srcName + ".mp4"},
@@ -709,7 +663,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 
         case "youtube:":
         
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&fs=0&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\"></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 
@@ -719,7 +673,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "vimeo:":
                 
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 
@@ -729,7 +683,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "kaltura:":
                 
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/24641251/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1405368331&entry_id=" + srcName + "&flashvars[akamaiHD.loadingPolicy]=preInitialize&flashvars[akamaiHD.asyncInit]=true&flashvars[streamerType]=hdnetwork&flashvars[autoPlay]=true\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>" ).promise().done( function() {
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/25820941/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1410288619&entry_id=" + srcName + "&flashvars[akamaiHD.loadingPolicy]=preInitialize&flashvars[akamaiHD.asyncInit]=true&flashvars[streamerType]=hdnetwork&flashvars[autoPlay]=true\" frameborder=\"0\"></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 
@@ -946,7 +900,7 @@ $.fn.displayAnswerChoices = function( index ) {
     
     if ( !quizError ) {
         
-        $( "#quiz" ).append( "<div class=\"submitArea\"><a id=\"check\" rel=\"" + index + "\" href=\"javascript:void(0)\">SUBMIT</a></div>" );
+        $( "#quiz" ).append( "<div class=\"submitArea\"><a id=\"check\" rel=\"" + index + "\" href=\"#\">SUBMIT</a></div>" );
         $( "#slide" ).append( "</div>" );
         
         // give the quiz a second to build up
@@ -1117,6 +1071,8 @@ $.fn.displayAnswerChoices = function( index ) {
                 } );
                 
             }
+            
+            return false;
     
         } ); // end click event
         
@@ -1224,6 +1180,7 @@ $.fn.showFeedback = function( index ) {
 /**
  * Load audio player
  * @since 2.1.0
+ * @updated 2.2.0
  *
  * @author Ethan S. Lin
  * @param strings, id and source name
@@ -1232,12 +1189,7 @@ $.fn.showFeedback = function( index ) {
  */
 $.fn.loadAudioPlayer = function( id, srcName ) {
     
-    var width = 640, height = 30;
-    
-    if ( id === "#apcm" ) {
-        width = 300;
-        height = 0;
-    }
+    var width = "100%", height = 30;
     
     audioPlayer = new MediaElementPlayer( id, {
     
@@ -1264,6 +1216,33 @@ $.fn.loadAudioPlayer = function( id, srcName ) {
 };
 
 /**
+ * Fade in and out audio player
+ * @since 2.2.0
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
+$.fn.bindAudioPlayerFadeInOut = function() {
+    
+    $( "#ap" ).delay( 3000 ).fadeOut( "slow" );
+    
+    $( "#img, #ap" ).on( "mouseenter", function() {
+        
+        $( "#ap" ).stop(true,true).fadeIn( "slow" );
+        
+    } );
+    
+    $( "#img, #ap" ).on( "mouseleave", function() {
+        
+        $( "#ap" ).stop(false,true).delay( 1000 ).fadeOut( "slow" );
+        
+    } );
+    
+};
+
+/**
  * Load notes for the current slide
  * @since 2.1.0
  *
@@ -1280,10 +1259,14 @@ $.fn.loadNote = function( num ) {
 
     	$( "#note" ).html( note ).hide().fadeIn( "fast" );
     	
-	} else {
-	
-    	$( "#note" ).hide();
+    	if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
+            
+            $( "#notesBtn" ).show();
+            
+        }
     	
+	} else {
+    	$( "#notesBtn" ).hide();
 	}
 	
 	if ( $( "#note" ).find( "a" ).length ) {
@@ -1321,7 +1304,7 @@ $.fn.updateSlideNum = function( num ) {
 };
 
 /**
- * Open the current slide image in fancybox
+ * Magnify the current slide image and video
  * @since 2.0.0
  *
  * @author Ethan S. Lin
@@ -1330,36 +1313,131 @@ $.fn.updateSlideNum = function( num ) {
  */
 $.fn.bindImgMagnify = function() {
 
-    $( ".magnifyIcon" ).on( "click", function() {
+    $( "#magnifyBtn" ).on( "click", function() {
+ 
+        if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
+            
+            $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
+            $( this ).html( "<span class=\"icon-expand\" title=\"Expand\"></span>" );
+            $( "#notesBtn, #tocBtn" ).hide();
+                        
+        } else {
+            
+            $( "#storybook_plus_wrapper" ).addClass( "magnified" );
+            $( this ).html( "<span class=\"icon-contract\" title=\"Contract\"></span>" );
+            $( "#tocBtn" ).show();
+            
+            if ( !$( "#slideNote" ).hasClass( "quizSlide" ) ) {
+                
+                $( "#notesBtn" ).show();
+                
+            }
+            
+        }
+            
+    } );
+
+};
+
+/**
+ * Slide notes up and down in expanded mode
+ * @since 2.2.0
+ *
+ * @author Ethan S. Lin
+ * @return void
+ *
+ */
+$.fn.bindNoteSlideToggle = function() {
     
-        $.fancybox.open( {
+    var note = $( "#note" );
+    var openPos = 360, closedPos = 536;
+    
+    $( "#notesBtn" ).on( "click", function() {
+    
+        var currentPos = Math.ceil( note.offset().top );
+        var pos  = 0;
         
-            href: imgPath,
-            title: imgCaption,
-            helpers: {
-                overlay: {
-                    css: {
-                        'background': 'rgba(250, 250, 250, 0.85)'
-                    }
-                }
-            },
-            padding: 0
+        if ( currentPos >= closedPos ) {
+        
+            pos = openPos;
+            $(this).addClass( "active" );
+            
+        } else {
+            
+            pos = closedPos;
+            $(this).removeClass( "active" );
+            
+        }
+        
+        if ( $( "#toc" ).offset().left <= 642 ) {
+            
+            $( "#toc" ).animate( {
+        
+                "left": 900
+                
+            } );
+            
+            $( "#tocBtn" ).removeClass( "active" );
+            
+        }
+        
+        note.animate( {
+        
+            "top": pos
             
         } );
-        
+            
     } );
+
+};
+
+/**
+ * Slide table of contents left and right in expanded mode
+ * @since 2.2.0
+ *
+ * @author Ethan S. Lin
+ * @return void
+ *
+ */
+$.fn.bindTocSlideToggle = function() {
     
-    $('a#img').fancybox( {
+    var toc = $( "#toc" );
+    var openPos = 642, closedPos = 900;
     
-        helpers: {
-            overlay: {
-                css: {
-                    'background': 'rgba(250, 250, 250, 0.85)'
-                }
-            }
-        },
-        padding: 0
+    $( "#tocBtn" ).on( "click", function() {
         
+        var currentPos = Math.ceil( toc.offset().left );
+        var pos = 0;
+        
+        if ( currentPos >= closedPos ) {
+            
+            pos = openPos;
+            $(this).addClass( "active" );
+            
+        } else {
+            
+            pos = closedPos;
+            $(this).removeClass( "active" );
+        }
+        
+        if ( $( "#note" ).offset().top >= 360 ) {
+            
+            $( "#note" ).animate( {
+        
+                "top": 536
+                
+            } );
+            
+            $( "#notesBtn" ).removeClass( "active" );
+            
+        }
+        
+        toc.animate( {
+        
+            "left": pos
+            
+        } );
+            
     } );
 
 };
@@ -1392,63 +1470,6 @@ $.fn.loadProfilePhoto = function() {
         
     } );
 
-};
-
-/**
- * Adjusting the notes font size
- * @since 2.1.0
- *
- * @author Ethan S. Lin
- * @param string, minus or plus
- * @return void
- *
- */
-$.fn.adjustFontSize = function( arg ) {
-    
-    var size = 2;
-    
-    if ( arg === "minus" ) {
-    
-        defaultFontSize -= size;
-        
-    } else if ( arg === "plus" ) {
-        
-        defaultFontSize += size;
-        
-    }
-    
-    if ( defaultFontSize <= 12 ) {
-    
-        defaultFontSize = 12;
-        
-    } else if ( defaultFontSize >= 20) {
-        
-        defaultFontSize = 20;
-        
-    }
-    
-    $( "#note" ).removeClass();
-
-    if ( defaultFontSize === 12 ) {
-        
-        $( "#note" ).addClass( "size12" );
-
-    } else if ( defaultFontSize === 16 ) {
-
-        $( "#note" ).addClass( "size16" );
-
-    } else if ( defaultFontSize === 18 ) {
-    
-        $( "#note" ).addClass( "size18" );
-        
-    } else if ( defaultFontSize === 20 ) {
-        
-        $( "#note" ).addClass( "size20" );
-        
-    }
-
-    $( '#fontSizeIndicator' ).html( defaultFontSize );
-    
 };
 
 /**
@@ -1545,8 +1566,6 @@ $.fn.displayGetLessonError = function( status, exception ) {
     $('#errorMsg').html('<p>' + statusMsg + '</p><p>' + exceptionMsg + '</p>');
 
 };
-
-
 
 /* MISC. HELPER FUNCTIONS
 ***************************************************************/
