@@ -967,7 +967,11 @@ p {
 
 // video js
 .vjs-default-skin {
-
+    
+    .vjs-fullscreen-control {
+        display: none;
+    }
+    
     .vjs-volume-control {
         margin-left: rem( 10px ) !important;
         margin-right: rem( 20px ) !important;
