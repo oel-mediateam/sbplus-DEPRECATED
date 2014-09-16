@@ -9,3 +9,6 @@ bower_components/
 # ingore SASS cache hidden directory
 .sass-cache
 **/.sass-cache
+
+# ingore build2
+build2/

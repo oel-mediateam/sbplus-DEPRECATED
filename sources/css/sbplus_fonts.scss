@@ -37,11 +37,6 @@
     content: "\e385";
 }
 
-.magnifyIcon:before {
-    @extend .defaultFontSettings;
-    content: "\e1bc";
-}
-
 #leftBtn:before {
     @extend .defaultFontSettings;
     content: "\e3b3";
@@ -50,16 +45,6 @@
 #rightBtn:before {
     @extend .defaultFontSettings;
     content: "\e3b1";
-}
-
-#fontMinusBtn:before {
-    @extend .defaultFontSettings;
-    content: "\e375";
-}
-
-#fontPlusBtn:before {
-    @extend .defaultFontSettings;
-    content: "\e376";
 }
 
 .icon-notification:before {
@@ -80,4 +65,24 @@
 .icon-arrow-down:before {
     @extend .defaultFontSettings;
 	content: "\e416";
+}
+
+.icon-expand:before {
+    @extend .defaultFontSettings;
+	content: "\e600";
+}
+
+.icon-contract:before {
+    @extend .defaultFontSettings;
+	content: "\e601";
+}
+
+.notes:before {
+    @extend .defaultFontSettings;
+    content: "\e602";
+}
+
+.toc:before {
+    @extend .defaultFontSettings;
+    content: "\e603";
 }
