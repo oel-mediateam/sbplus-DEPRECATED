@@ -673,6 +673,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "vimeo:":
                 
+                
+                
             $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
@@ -683,7 +685,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "kaltura:":
                 
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/25820941/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1410288619&entry_id=" + srcName + "&flashvars[akamaiHD.loadingPolicy]=preInitialize&flashvars[akamaiHD.asyncInit]=true&flashvars[streamerType]=hdnetwork&flashvars[autoPlay]=true\" frameborder=\"0\"></iframe>" ).promise().done( function() {
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/26115501/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1410895526&entry_id=" + srcName + "&flashvars[streamerType]=auto\" frameborder=\"0\"></iframe>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 
