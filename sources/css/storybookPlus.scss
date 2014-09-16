@@ -1008,3 +1008,8 @@ noscript {
     }
 	
 }
+
+// legacy elements
+#apm, #fontMinusBtn, #fontPlusBtn, #fontSizeIndicator {
+    display: none;
+}
