@@ -403,12 +403,8 @@ $.fn.initializePlayer = function() {
     $( "#selectable" ).selectable( {
     
         stop: function() {
-
-            $( ".ui-selected", this ).each( function() {
-                
-                tocIndex = $( "#selectable li" ).index( this );
-                
-            } );
+            
+            tocIndex = Number( $( ".ui-selected .slideNum" ).html().replace(".","") ) - 1;
             
             if ( tocIndex !== previousIndex ) {
             
@@ -672,8 +668,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
         
         case "vimeo:":
-                
-                
                 
             $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done( function() {
                 
