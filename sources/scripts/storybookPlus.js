@@ -13,6 +13,7 @@ var topicCount = 0,
     slideImgFormat = "png",
     media = "Slide",
     enabledNote = false,
+    version,
     imgCaption;
     
 var questions,
@@ -276,6 +277,7 @@ $.fn.parseContent = function( xml ) {
 /**
  * Set up the player
  * @since 2.0.0
+ * @updated 2.3.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -285,6 +287,8 @@ $.fn.setupPlayer = function() {
     
     var directory = $.fn.getDirectory();
     var selfAssessmentIcon;
+    
+    version = ( $( "#storybook_plus_wrapper" ).attr( "data-version" ) === undefined ) ? "" : $( "#storybook_plus_wrapper" ).attr( "data-version" ).replace(/\./g, "");
     
     $( document ).attr( "title", lessonTitle );
     
@@ -309,12 +313,11 @@ $.fn.setupPlayer = function() {
 		
 	} );
 	
-    if ( enabledNote === false && quizDetected === false ) {
-    
+    if ( enabledNote === false && quizDetected === false && version < 230 ) {
+        
         $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
         
-        
-    } else if ( enabledNote === false && quizDetected === true ) {
+    } else if ( ( enabledNote === false && quizDetected === true ) || version >= 230 ) {
     
         $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
         $( "#note" ).html( "<div class=\"noNotes\">&bull;&bull;&bull;</div>" );
@@ -449,7 +452,7 @@ $.fn.initializePlayer = function() {
     });
     
     // add the zoom boutton to the control after the slide status
-    if ( enabledNote === true || quizDetected === true ) {
+    if ( enabledNote === true || quizDetected === true || version >= 230 ) {
     
         $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
         
