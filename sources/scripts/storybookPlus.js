@@ -795,6 +795,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         }, function() {
         
         videoPlayer = this;
+        this.progressTips();
         this.removeChild('FullscreenToggle');
 		
     } );
