@@ -24,8 +24,7 @@ var PROFILE,
     instructor,
     duration;
         
-var 
-    videoPlayer,
+var videoPlayer,
     audioPlayer,
     firstAudioLoad = false,
     audioPlaying = false,
@@ -243,7 +242,6 @@ $.fn.parseContent = function( xml ) {
                 
             }
             
-
             if ( choiceNode ) {
             
                 quiz.choice = $.fn.splitSelections( choiceNode );
@@ -659,8 +657,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             } else {
             
                 if ( videoPlayer ) {
-                    videoPlayer.dispose();
-                    videoPlayer = null;
+                    videoPlayer.pause();
                     $( "#vp" ).hide();
                 }
                 
@@ -712,7 +709,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
 /**
  * Setup videojs player
- * @since 2.2.0
+ * @since 2.3.0
  *
  * @author Ethan S. Lin
  *
@@ -768,12 +765,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     }
     
     $( "#slide" ).hide();
-    
-    if ( videoPlayer ) {
-        videoPlayer.dispose();
-        videoPlayer = null;
-    }
-    
     $( "#vp" ).show();
 
     videojs( playerID, {
