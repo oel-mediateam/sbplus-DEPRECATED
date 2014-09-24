@@ -24,7 +24,9 @@ var PROFILE,
     instructor,
     duration;
         
-var audioPlayer,
+var 
+    videoPlayer,
+    audioPlayer,
     firstAudioLoad = false,
     audioPlaying = false,
     videoPlaying = false,
@@ -515,8 +517,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     // if video is playing
     if ( videoPlaying ) {
     
-        $( "#vp" ).html( "" );
-        $( "#vp" ).hide();
+        videoPlayer.dispose();
         videoPlaying = false;
         
     }
@@ -629,7 +630,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             var time = $.now(),
                 playerID = "vpc" + time;
     
-            $( "#vp" ).append( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" controls autoplay width=\"640\" height=\"360\">" + ( ( $.fn.fileExists( "assets/video/" + srcName, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + srcName + ".vtt\" srclang=\"en\" label=\"English\" default>" : "" ) + "</video>" ).promise().done( function() {
+            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + srcName, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + srcName + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + "<source src=\"assets/video/" + srcName + ".mp4\" type=\"video/mp4\" data-res=\"480\" />"  + "</video>" ).promise().done( function() {
                 
                 $( "#progressing" ).fadeOut();
                 
@@ -641,19 +642,28 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             
                 $( "#vp" ).show();
     
-                videojs( playerID, {}, function() {
-                
+                videojs( playerID, {
+                        
+                        "width": 640,
+                        "height": 360,
+                        "controls": true,
+                        "autoplay": true,
+                        "preload": "auto",
+                        
+                        plugins : {
+                        
+                            resolutionSelector : {}
+                        
+                        }
+                    
+                    }, function() {
+                    
+                    videoPlayer = this;
                     this.removeChild('FullscreenToggle');
-                    this.progressTips();
-                    this.src( [
-    					{type: "video/mp4", src:"assets/video/" + srcName + ".mp4"},
-    					{type: "video/webm", src:"assets/video/" + srcName + ".webm"}
-    				] );
     				
                 } );
                 
                 videojs.options.flash.swf = "sources/videoplayer/video-js.swf";
-    
                 videoPlaying = true;
             
             }
