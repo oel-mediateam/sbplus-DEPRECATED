@@ -29,7 +29,6 @@ var
     audioPlayer,
     firstAudioLoad = false,
     audioPlaying = false,
-    videoPlaying = false,
     sources;
 
 // when document finished loading and ready
@@ -498,11 +497,19 @@ $.fn.initializePlayer = function() {
 $.fn.loadSlide = function( slideSource, sNum ) {
 
     var img;
-    var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 ) ;
+    var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 );
     
     if ( slideSource !== "quiz" ) {
     
         slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 );
+    
+        if ( slideSource === "kaltura:" ) {
+        
+            if ( srcName.split( ":" ).length !== 1 ) {
+                srcName = srcName.split( ":" );
+            }
+            
+        }
         
     }
     
@@ -511,14 +518,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     if ( $( "#slideNote" ).hasClass( "quizSlide" ) ) {
         
         $( "#slideNote" ).removeClass( "quizSlide" );
-        
-    }
-    
-    // if video is playing
-    if ( videoPlaying ) {
-    
-        videoPlayer.dispose();
-        videoPlaying = false;
         
     }
     
@@ -627,46 +626,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "video:":
         
-            var time = $.now(),
-                playerID = "vpc" + time;
-    
-            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + srcName, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + srcName + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + "<source src=\"assets/video/" + srcName + ".mp4\" type=\"video/mp4\" data-res=\"480\" />"  + "</video>" ).promise().done( function() {
-                
-                $( "#progressing" ).fadeOut();
-                
-            } );
-            
-            $( "#slide" ).hide();
-    
-            if ( !videoPlaying ) {
-            
-                $( "#vp" ).show();
-    
-                videojs( playerID, {
-                        
-                        "width": 640,
-                        "height": 360,
-                        "controls": true,
-                        "autoplay": true,
-                        "preload": "auto",
-                        
-                        plugins : {
-                        
-                            resolutionSelector : {}
-                        
-                        }
-                    
-                    }, function() {
-                    
-                    videoPlayer = this;
-                    this.removeChild('FullscreenToggle');
-    				
-                } );
-                
-                videojs.options.flash.swf = "sources/videoplayer/video-js.swf";
-                videoPlaying = true;
-            
-            }
+            $.fn.setupVideoPlayer( 'video', srcName );
         
         break;
                 
@@ -691,12 +651,26 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
         
         case "kaltura:":
+            
+            if ( $.isArray( srcName ) ) {
+            
+                $.fn.setupVideoPlayer( 'kaltura', srcName );
                 
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/26115501/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1410895526&entry_id=" + srcName + "&flashvars[streamerType]=auto\" frameborder=\"0\"></iframe>" ).promise().done( function() {
+            } else {
+            
+                if ( videoPlayer ) {
+                    videoPlayer.dispose();
+                    videoPlayer = null;
+                    $( "#vp" ).hide();
+                }
                 
-                $( "#progressing" ).fadeOut();
+                $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/26115501/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1411594495&entry_id="+ srcName +"&flashvars[akamaiHD.loadingPolicy]=preInitialize&flashvars[akamaiHD.asyncInit]=true&flashvars[streamerType]=hdnetwork\" frameborder=\"0\"></iframe>" ).promise().done( function() {
                 
-            } );
+                    $( "#progressing" ).fadeOut();
+                
+                } );
+                
+            }
         
         break;
         
@@ -735,6 +709,99 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     $( this ).updateSlideNum( sNum );
 
 };
+
+/**
+ * Setup videojs player
+ * @since 2.2.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param int, topic slide index
+ * @return void
+ *
+ */
+ $.fn.setupVideoPlayer = function ( type, src ) {
+     
+     var time = $.now(),
+        playerID = "vpc" + time;
+    
+    switch( type ) {
+        
+        case "video":
+        
+            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />"  + "</video>" ).promise().done( function() {
+        
+                $( "#progressing" ).fadeOut();
+        
+            } );
+        
+        break;
+        
+        case "kaltura":
+            
+            var video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
+            
+            if ( src[1] !== undefined || src[1] !== "" ) {
+                video += "<source src=\"http://cdnbakmi.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + src[0] + "/v/1/flavorId/" + src[1] + "/name/a.mp4\" type=\"video/mp4\" data-res=\"low\" />";
+            }
+            
+            video += "<source src=\"http://cdnbakmi.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + src[0] + "/v/1/flavorId/" + src[2] + "/name/a.mp4\" type=\"video/mp4\" data-res=\"normal\" />";
+            
+            if ( src[3] !== undefined || src[3] !== "" ) {
+                video += "<source src=\"http://cdnbakmi.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + src[0] + "/v/1/flavorId/" + src[3] + "/name/a.mp4\" type=\"video/mp4\" data-res=\"high\" />";
+            }
+            
+            if ( src[4] !== undefined ) {
+                video += "<track kind=\"subtitles\" src=\"http://cdnbakmi.kaltura.com/api_v3/index.php/service/caption_captionAsset/action/serve/captionAssetId/" + src[4] + "\" srclang=\"en\" label=\"English\">";
+            }
+            
+            video += "</video>";
+            
+            $( "#vp" ).html( video ).promise().done( function() {
+        
+                $( "#progressing" ).fadeOut();
+        
+            } );
+        
+        break;
+        
+    }
+    
+    $( "#slide" ).hide();
+    
+    if ( videoPlayer ) {
+        videoPlayer.dispose();
+        videoPlayer = null;
+    }
+    
+    $( "#vp" ).show();
+
+    videojs( playerID, {
+            
+            "width": 640,
+            "height": 360,
+            "controls": true,
+            "autoplay": true,
+            "preload": "auto",
+            
+            plugins : {
+            
+                resolutionSelector : { 
+                    default_res : "normal"
+                }
+            
+            }
+        
+        }, function() {
+        
+        videoPlayer = this;
+        this.removeChild('FullscreenToggle');
+		
+    } );
+    
+    videojs.options.flash.swf = "sources/videoplayer/video-js.swf";
+     
+ };
 
 /**
  * Setup self-assessment question

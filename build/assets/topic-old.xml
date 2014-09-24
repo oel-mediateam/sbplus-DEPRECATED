@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<course>
+
+	<setup>
+		<lesson>SMGT340 - Understanding the Hierarchy and Interplay of Statutes, Regulations, and Case Law at the Federal and State Levels</lesson>
+		<length>25 Minutes</length>
+		<instructor>Demo</instructor>
+		<slideImgFormat /> <!-- default to png if not specified -->
+		<note>y</note> <!-- disabled on default -->
+	</setup>
+			
+	<!-- instructor or lesson information -->
+	<profile>
+		<![CDATA[<p>Oh, hello! Hey! Hi! This is a demo of the Storyboard Player (SBP). Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut purus augue. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, praesentium, ipsam, ut, voluptatibus pariatur quasi esse adipisci dolorum laboriosam excepturi possimus minima libero atque consequuntur quidem reiciendis eligendi laborum vero? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat, accusamus, similique qui dicta libero dolorem culpa molestias necessitatibus voluptatibus nostrum rem illo corporis ipsam nulla cumque harum vero nemo voluptate. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, veritatis excepturi fuga quisquam dolorem nesciunt ea necessitatibus accusantium. Voluptatibus minima voluptatum harum laboriosam ex reiciendis praesentium. Quas, quia a quis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, rem, ipsa, reprehenderit quod quo eum sunt a eveniet ex excepturi soluta deleniti dicta est error perferendis tempora tenetur harum neque.</p>]]>
+	</profile>
+	
+	<!-- topic list -->
+	<topic src="image:slide01" title="Image only">
+		<quiz />
+		<note>
+			<![CDATA[<h1>Demoing Storybook Plus. (Headline 1)</h1><p>Lorem <strong>ipsum</strong> dolor sit <em>amet</em>, consectetur <strong><em>adipiscing</em></strong> elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. <a href="https://www.google.com">Vestibulum</a> quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p><h2>Headline 2</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. Vestibulum quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis a.</p><h3>Headline 3</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="https://www.yahoo.com">Vestibulum</a> Etiam nisi felis, gravida imperdiet eleifend nec, hendrerit non sapien. Vestibulum quis tortor purus. Morbi sagittis placerat enim adipiscing tempor. Aenean vestibulum ornare elit, sed ultrices urna iaculis.</p>]]>
+		</note>
+	</topic>
+	
+	<topic src="video:smgt370_course_intro" title="Video (from webstreamer)">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contain a video.</p>]]>
+		</note>
+	</topic>
+	
+	<topic src="quiz" title="Fill-in-the-blank">
+		<quiz type="fib">
+			<question>_____ enables the operating system to automatically detect newly installed hardware.</question>
+			<choice />
+			<answer>PnP|Plug and Play</answer>
+			<wrongFeedback>What? Wrong! Please go over the presentation again.</wrongFeedback>
+			<correctFeedback>Ding! Ding! Ding! You're correct! Good job!</correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="swf:animations" title="Flash animation">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains a Flash animation. <a href="https://www.adobe.com">Adobe.</a></p>]]>
+		</note>
+	</topic>
+	
+	<topic src="quiz" title="Short answer">
+		<quiz type="sa">
+			<question>Describe Garfield.</question>
+			<choice />
+			<answer>You are on the right path if you mention the words "cat" and "cute" in your answer.</answer>
+			<wrongFeedback />
+			<correctFeedback />
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="image-audio:slide04" title="Image and audio">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains an image and a audio.</p>]]>
+		</note>
+	</topic>
+	
+	<topic src="quiz" title="True or False">
+		<quiz type="t/f">
+			<question>It is wise to stay home on snow day.</question>
+			<choice />
+			<answer>true</answer>
+			<wrongFeedback></wrongFeedback>
+			<correctFeedback></correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="image-audio:slide21" title="Another image with audio">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains another image with an audio.</p>]]>
+		</note>
+	</topic>
+	
+	<topic src="quiz" title="Image Answer Choices">
+		<quiz type="mc">
+			<question><![CDATA[Which pokémon are Ethan's favorites?<small>Ethan is a pokémon fan ... sort of.</small>]]></question>
+			<choice useImg="true">pikachu.gif|mewtwo.gif|mew.gif|rattata.gif|krabby.gif|rayquaza.gif</choice>
+			<answer>mewtwo.gif|pikachu.gif</answer>
+			<wrongFeedback><![CDATA[Ethan's is going to blast you and then dance!]]></wrongFeedback>
+			<correctFeedback><![CDATA[Ethan thinks you are stalking him...]]></correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="swf:interactive" title="Interactive Flash piece">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains a Flash interactive object.</p>]]>
+		</note>
+	</topic>
+	
+	<topic src="quiz" title="Who's that pokémon!?">
+		<quiz type="mc">
+			<question img="mrmime.png"><![CDATA[Who's that pokémon?<small>A bipedal, humanoid Pokémon with a round, white body with a red spot in the middle. Its light pink arms and legs are connected to its body by red spheres. Its knees have small, white coverings. There are red pads on the tips of its white fingers, and its black feet curl upward at the tips. Blue growths extend from the sides of its pale pink head, and there are red circles on its cheeks.</small>]]></question>
+			<choice>Slowpoke|Kakuna|Mr. Mime|Arbok|Clefable</choice>
+			<answer>Mr. Mime</answer>
+			<wrongFeedback>How can you not know!? It is the only clown in pokémon.</wrongFeedback>
+			<correctFeedback>Gotta catch 'em all!</correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+
+	<topic src="youtube:UaWN7gObv-c" title="Embedded YouTube Video">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains an embedded YouTube video. <a href="https://www.youtube.com/embed/UaWN7gObv-c?autoplay=1&rel=0" target="_blank">YouTube video</a></p>]]>
+		</note>
+	</topic>
+	
+	<topic src="vimeo:90640415" title="Embedded Vimeo Video">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains an embedded Vimeo video. Please excuse this strange video... It was randomly grabbed from Vimeo.</p>]]>
+		</note>
+	</topic>
+		
+	<topic src="kaltura:1_b7q348t6" title="Embedded Kaltura Video">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains an embedded Kaltura video.</p>]]>
+		</note>
+	</topic>
+	
+	<topic src="quiz" title="What sound is that?">
+		<quiz type="mc">
+			<question audio="lugia"><![CDATA[Who's cry does it belong to?]]></question>
+			<choice>Pickachu|Mewtwo|Mr. Mime|Lugia|Jigglypuff</choice>
+			<answer>Lugia</answer>
+			<wrongFeedback>Oooo... tricky, tricky!</wrongFeedback>
+			<correctFeedback><![CDATA[<img src="assets/img/lugia.png" alt="lugia" border="0" />]]></correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="quiz" title="Sound and Image">
+		<quiz type="t/f">
+			<question img="mrmime.png" audio="lugia"><![CDATA[Does this pokémon make this cry?]]></question>
+			<choice></choice>
+			<answer>false</answer>
+			<wrongFeedback>Play more pokémon games!</wrongFeedback>
+			<correctFeedback>You must be a pokémon fan!</correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="image:slide10" title="Another Image Only">
+		<quiz />
+		<note>
+			<![CDATA[<script type="text/javascript">alert( "hack hack script injection!" );</script>]]>
+		</note>
+	</topic>
+	
+	<topic src="quiz" title="Multiple choice">
+		<quiz type="mc">
+			<question>What enables the operating system to automatically detect newly installed hardware?</question>
+			<choice>ReadyBoost|PnP|Hyper-V|AutoConnect</choice>
+			<answer>PnP</answer>
+			<wrongFeedback>ReadyBoost is technology that instantly add RAM to your PC.|PnP stands for plug-and-play.|Hyper-V is a server technology for virtualization.|AutoConnect is made up.</wrongFeedback>
+			<correctFeedback>Right on! PnP or plug-and-play is awesome.</correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="image:slide08" title="A really really really long long long title which cannot fit into one line">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide have a very long title.</p>]]>
+		</note>
+	</topic>
+		
+	<topic src="quiz" title="True or False">
+		<quiz type="t/f">
+			<question>Dinosaurs make good pets.</question>
+			<choice />
+			<answer>false</answer>
+			<wrongFeedback>Dinosaurs are gigantic. They no longer exist, but if you like bones...</wrongFeedback>
+			<correctFeedback>Yep. You do not want them as pets. Imagine what you need to do to clean up after them. Yuck!</correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<topic src="quiz" title="Multiple answers">
+		<quiz type="mc">
+			<question>What are the colors of the American flag?</question>
+			<choice>Red|Green|Blue|White|Yellow|Gold</choice>
+			<answer>Red|Blue|White</answer>
+			<wrongFeedback>Uh-oh!</wrongFeedback>
+			<correctFeedback><![CDATA["The colors,” Thomson said at the time, “are those used in the flag of the United States of America. White signifies purity and innocence. Red, hardiness & valour, and Blue… signifies vigilance, perseverance & justice.”]]></correctFeedback>
+		</quiz>
+		<note />
+	</topic>
+	
+	<!--
+		- use "tf" in the type attribute for true or false question
+		- use "mc" for multiple choice question
+		- use "sa" for fill in the blank or short answer question
+	-->
+				
+</course>
