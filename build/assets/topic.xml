@@ -16,14 +16,14 @@
 	
 	<!-- topic list -->
 	
-	<topic src="kaltura:1_szxsff50:1_am17jyet:1_1de4h8mg:1_f5unu3g0:1_6gvi6qah" title="HWM 340">
+	<topic src="kaltura:1_szxsff50" title="HWM 340">
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contain a kaltura video.</p>]]>
 		</note>
 	</topic>
 	
-	<topic src="kaltura:1_79l7x706:1_h6yxzne9:1_5ts1ysiv:1_8hw8qtou" title="BPS PSB 350">
+	<topic src="kaltura:1_79l7x706" title="BPS PSB 350">
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contain a kaltura video.</p>]]>
@@ -37,7 +37,7 @@
 		</note>
 	</topic>
 	
-	<topic src="kaltura:1_tjp8id2t:1_p68lik3s:1_ajolfoyv:1_er6d2acc" title="SMGT 340">
+	<topic src="kaltura:1_tjp8id2t" title="SMGT 340">
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contain a kaltura video.</p>]]>

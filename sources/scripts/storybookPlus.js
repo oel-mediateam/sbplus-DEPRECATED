@@ -1,5 +1,6 @@
 /* global videojs */
 /* global MediaElementPlayer */
+/* global kWidget */
 
 // global variable declarations
 var topicCount = 0,
@@ -651,25 +652,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "kaltura:":
             
-            if ( $.isArray( srcName ) ) {
-            
-                $.fn.setupVideoPlayer( 'kaltura', srcName );
-                
-            } else {
-            
-                if ( videoPlayer !== false ) {
-                    videoPlayer.pause();
-                    $( "#vp" ).hide();
-                    videoPlayer = false;
-                }
-                
-                $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/embedIframeJs/uiconf_id/26115501/partner_id/1660872?iframeembed=true&playerId=kaltura_player_1411594495&entry_id="+ srcName +"&flashvars[akamaiHD.loadingPolicy]=preInitialize&flashvars[akamaiHD.asyncInit]=true&flashvars[streamerType]=hdnetwork\" frameborder=\"0\"></iframe>" ).promise().done( function() {
-                
-                    $( "#progressing" ).fadeOut();
-                
-                } );
-                
-            }
+            $( "#slide" ).hide();
+            $.fn.setupVideoPlayer( 'kaltura', srcName );
         
         break;
         
@@ -733,41 +717,85 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 $( "#progressing" ).fadeOut();
         
             } );
+            
+            $.fn.loadVideoJsPlayer(playerID);
         
         break;
         
         case "kaltura":
             
-            // video element opening tag
-            var video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
+            var entryId, captionId, captionExt, captionLang, flavors = {}, video;
             
-            // set low res vid if available
-            if ( src[1] !== undefined || src[1] !== "" ) {
-                video += "<source src=\"http://cdnbakmi.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + src[0] + "/v/1/flavorId/" + src[1] + "/name/a.mp4\" type=\"video/mp4\" data-res=\"low\" />";
-            }
+            kWidget.getSources( {
+                'partnerId': 1660872,
+                'entryId': src,
+                'callback': function( data ) {
+                    
+                    entryId = data.entryId;
+                    captionId = data.captionId;
+                    captionExt = data.captionExt;
+                    captionLang = data.captionLang;
+                    
+                    for( var i in data.sources ) {
+                    
+                        var source = data.sources[i];
+                        
+                        if ( source.flavorParamsId === 487061 ) {
+                        
+                            flavors.low = source.flavorId;
+                        
+                        }
+                        
+                        if ( source.flavorParamsId === 487071 ) {
+                        
+                            flavors.normal = source.flavorId;
+                        
+                        }
+                        
+                        if ( source.flavorParamsId === 487081 ) {
+                        
+                            flavors.high = source.flavorId;
+                        
+                        }
+                        
+                    } // end for loop
+                    
+                    // video element opening tag
+                    video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
+
+                    // set low res vid if available
+                    if ( flavors.low !== undefined ) {
+                        video += "<source src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + entryId + "/v/1/flavorId/" + flavors.low + "/name/a.mp4\" type=\"video/mp4\" data-res=\"low\" />";
+                    }
+
+                    // set normal res vid
+                    video += "<source src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + entryId + "/v/1/flavorId/" + flavors.normal + "/name/a.mp4\" type=\"video/mp4\" data-res=\"normal\" />";
+
+                    // set high res vid if available
+                    if ( flavors.low !== undefined ) {
+                        video += "<source src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + entryId + "/v/1/flavorId/" + flavors.high + "/name/a.mp4\" type=\"video/mp4\" data-res=\"high\" />";
+                    }
+
+                    // set caption track if available
+                    if ( captionId !== null ) {
+                        video += "<track kind=\"subtitles\" src=\"https://cdnapisec.kaltura.com/api_v3/index.php/service/caption_captionAsset/action/serve/captionAssetId/" + captionId + "\" srclang=\"en\" label=\"English\">";
+                    }
+
+                    // closing video tag
+                    video += "</video>";
+
+                    // insert video tag to #vp element
+                    $( "#vp" ).html( video ).promise().done( function() {
+
+                        $( "#progressing" ).fadeOut();
+
+                    } );
+                    
+                    $.fn.loadVideoJsPlayer(playerID);
+                
+                } // end callback
             
-            // set normal res vid
-            video += "<source src=\"http://cdnbakmi.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + src[0] + "/v/1/flavorId/" + src[2] + "/name/a.mp4\" type=\"video/mp4\" data-res=\"normal\" />";
-            
-            // set high res vid if available
-            if ( src[3] !== undefined || src[3] !== "" ) {
-                video += "<source src=\"http://cdnbakmi.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + src[0] + "/v/1/flavorId/" + src[3] + "/name/a.mp4\" type=\"video/mp4\" data-res=\"high\" />";
-            }
-            
-            // set caption track if available
-            if ( src[4] !== undefined ) {
-                video += "<track kind=\"subtitles\" src=\"http://cdnbakmi.kaltura.com/api_v3/index.php/service/caption_captionAsset/action/serve/captionAssetId/" + src[4] + "\" srclang=\"en\" label=\"English\">";
-            }
-            
-            // closing video tag
-            video += "</video>";
-            
-            // insert video tag to #vp element
-            $( "#vp" ).html( video ).promise().done( function() {
-        
-                $( "#progressing" ).fadeOut();
-        
-            } );
+            } ); // end kWidget
         
         break;
         
@@ -776,9 +804,22 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
         
     }
+     
+ };
+
+/**
+ * load videojs player
+ * @since 2.4.1
+ *
+ * @author Ethan S. Lin
+ *
+ * @param strings, video element id
+ * @return void
+ *
+ */
+$.fn.loadVideoJsPlayer = function( playerID) {
     
-    $( "#slide" ).hide();
-    $( "#vp" ).show();
+    $( "#vp" ).fadeIn('slow');
 
     videojs( playerID, {
             
@@ -805,8 +846,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     } );
     
     videojs.options.flash.swf = "sources/videoplayer/video-js.swf";
-     
- };
+    
+};
 
 /**
  * Setup self-assessment question
