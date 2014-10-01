@@ -245,16 +245,16 @@ p {
     
     #vp {
     	
-    	position: relative;
+    	position: absolute;
     	width: rem( 900px );
         height: rem( 506px );
         margin: 0;
+        top: 0;
+        left: 0;
     
     	.video-js {
-    	    position: absolute;
         	width: rem( 900px ) !important;
             height: rem( 506px ) !important;
-            z-index: 10;
     	}
     	
     }
@@ -478,6 +478,9 @@ p {
     // VIDEO PLAYER
     #vp {
     	display: none;
+        position: absolute;
+        top: rem( 30px );
+        left: 0;
     	width: rem( 640px );
     	height: rem( 360px );
     }

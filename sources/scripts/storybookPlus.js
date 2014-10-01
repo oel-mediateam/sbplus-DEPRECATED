@@ -25,7 +25,7 @@ var PROFILE,
     instructor,
     duration;
         
-var videoPlayer,
+var videoPlayer = null,
     audioPlayer,
     firstAudioLoad = false,
     audioPlaying = false,
@@ -521,6 +521,12 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
     }
     
+    if ( videoPlayer !== null ) {
+        videoPlayer.dispose();
+        videoPlayer = null;
+        $( '#vp' ).empty().hide();
+    }
+    
     // if audio is playing
     if ( audioPlaying ) {
         
@@ -536,7 +542,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
     
-    $( "#slide" ).html( "" ).show();
+    //$( "#slide" ).html( "" ).show();
+    $( "#slide" ).html( "" );
     
     switch ( slideSource ) {
         
@@ -625,7 +632,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
         
         case "video:":
-        
+            
             $.fn.setupVideoPlayer( 'video', srcName );
         
         break;
@@ -652,7 +659,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "kaltura:":
             
-            $( "#slide" ).hide();
             $.fn.setupVideoPlayer( 'kaltura', srcName );
         
         break;
@@ -705,8 +711,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  */
  $.fn.setupVideoPlayer = function ( type, src ) {
      
-     var time = $.now(),
-        playerID = "vpc" + time;
+     var playerID = "vpc";
     
     switch( type ) {
         
@@ -819,7 +824,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  */
 $.fn.loadVideoJsPlayer = function( playerID) {
     
-    $( "#vp" ).fadeIn('slow');
+    $( "#vp" ).fadeIn();
 
     videojs( playerID, {
             
