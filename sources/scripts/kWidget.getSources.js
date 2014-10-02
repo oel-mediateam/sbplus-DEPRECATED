@@ -8,7 +8,7 @@ if( ! window.kWidget ){
 ( function( kWidget ) {
 	// Add master exported function:
 	kWidget.getSources = function( settings ){
-		var sourceApi = new kWidget.api( { 'wid' : '_' + settings.partnerId } );
+		var sourceApi = new kWidget.api( { 'wid' : '_' + settings.partnerId , 'serviceUrl': 'https://cdnapisec.kaltura.com' } );
 		sourceApi.doRequest([
 		{
 			'contextDataParams' : {
@@ -41,9 +41,9 @@ if( ! window.kWidget ){
 			var serviceUrl;
 			
 			if( protocol == 'https' ){
-				serviceUrl = 'https://www.kaltura.com';
-			} else {
 				serviceUrl = 'https://cdnapisec.kaltura.com';
+			} else {
+				serviceUrl = 'http://cdnapi.kaltura.com';
 			}
 	
 			var baseUrl = serviceUrl + '/p/' + settings.partnerId +

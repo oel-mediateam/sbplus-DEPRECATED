@@ -513,7 +513,11 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
     }
     
-    $( "#progressing" ).fadeIn();
+    if ( slideSource !== 'video:' && slideSource !== 'kaltura:' && slideSource !== 'youtube:' && slideSource !== 'vimeo:' ) {
+        
+        $( "#progressing" ).fadeIn();
+        
+    }
     
     if ( $( "#slideNote" ).hasClass( "quizSlide" ) ) {
         
@@ -639,21 +643,13 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 
         case "youtube:":
         
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&fs=0&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\"></iframe>" ).promise().done( function() {
-                
-                $( "#progressing" ).fadeOut();
-                
-            } );
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&fs=0&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\"></iframe>" ).promise().done();
         
         break;
         
         case "vimeo:":
                 
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done( function() {
-                
-                $( "#progressing" ).fadeOut();
-                
-            } );
+            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done();
         
         break;
         
@@ -717,11 +713,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "video":
         
-            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />"  + "</video>" ).promise().done( function() {
-        
-                $( "#progressing" ).fadeOut();
-        
-            } );
+            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />"  + "</video>" ).promise().done();
             
             $.fn.loadVideoJsPlayer(playerID);
         
@@ -747,39 +739,51 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                         
                         if ( source.flavorParamsId === 487061 ) {
                         
-                            flavors.low = source.flavorId;
+                            flavors.low = source.src;
                         
                         }
                         
                         if ( source.flavorParamsId === 487071 ) {
                         
-                            flavors.normal = source.flavorId;
+                            flavors.normal = source.src;
                         
                         }
                         
                         if ( source.flavorParamsId === 487081 ) {
                         
-                            flavors.high = source.flavorId;
+                            flavors.high = source.src;
                         
                         }
                         
+//                        if ( source.flavorParamsId === 487111 ) {
+//                        
+//                            flavors.webm = source.src;
+//                        
+//                        }
+                        
                     } // end for loop
+                    
+//                    console.log(flavors.low + "\n" + flavors.normal + "\n" + flavors.high + "\n" + flavors.webm);
                     
                     // video element opening tag
                     video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
 
                     // set low res vid if available
                     if ( flavors.low !== undefined ) {
-                        video += "<source src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + entryId + "/v/1/flavorId/" + flavors.low + "/name/a.mp4\" type=\"video/mp4\" data-res=\"low\" />";
+                        video += "<source src=\"" + flavors.low + "\" type=\"video/mp4\" data-res=\"low\" />";
                     }
 
                     // set normal res vid
-                    video += "<source src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + entryId + "/v/1/flavorId/" + flavors.normal + "/name/a.mp4\" type=\"video/mp4\" data-res=\"normal\" />";
+                    video += "<source src=\"" + flavors.normal + "\" type=\"video/mp4\" data-res=\"normal\" />";
 
                     // set high res vid if available
                     if ( flavors.low !== undefined ) {
-                        video += "<source src=\"https://cdnapisec.kaltura.com/p/1660872/sp/166087200/serveFlavor/entryId/" + entryId + "/v/1/flavorId/" + flavors.high + "/name/a.mp4\" type=\"video/mp4\" data-res=\"high\" />";
+                        video += "<source src=\"" + flavors.high + "\" type=\"video/mp4\" data-res=\"high\" />";
                     }
+                    
+//                    if ( flavors.webm !== undefined ) {
+//                        video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" data-res=\"webm\" />";
+//                    }
 
                     // set caption track if available
                     if ( captionId !== null ) {
@@ -836,7 +840,7 @@ $.fn.loadVideoJsPlayer = function( playerID) {
             
             plugins : {
             
-                resolutionSelector : { 
+                resolutionSelector : {
                     default_res : "normal"
                 }
             
@@ -850,7 +854,7 @@ $.fn.loadVideoJsPlayer = function( playerID) {
 		
     } );
     
-    videojs.options.flash.swf = "sources/videoplayer/video-js.swf";
+    videojs.options.flash.swf = "https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/videoplayer/video-js.swf";
     
 };
 
