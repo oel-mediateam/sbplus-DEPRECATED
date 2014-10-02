@@ -514,7 +514,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     }
     
     if ( slideSource !== 'video:' && slideSource !== 'kaltura:' && slideSource !== 'youtube:' && slideSource !== 'vimeo:' ) {
-        
         $( "#progressing" ).fadeIn();
         
     }
@@ -713,7 +712,11 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         
         case "video":
         
-            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />"  + "</video>" ).promise().done();
+            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />"  + "</video>" ).promise().done( function() {
+
+                $( "#progressing" ).fadeOut();
+
+            } );
             
             $.fn.loadVideoJsPlayer(playerID);
         
@@ -842,7 +845,9 @@ $.fn.loadVideoJsPlayer = function( playerID) {
             
                 resolutionSelector : {
                     default_res : "normal"
-                }
+                },
+                
+                loopbutton: true
             
             }
         
