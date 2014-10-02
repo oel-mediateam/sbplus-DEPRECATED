@@ -12,11 +12,15 @@ are just basic styles to make it look ok with plain text.
 	line-height: 3em;
 }
 
+.vjs-res-button:before {
+    content: "\e600";
+}
+
 /* Don't show hover effects on title */
 ul li.vjs-menu-title.vjs-res-menu-title:hover {
 	cursor: default;
-	background-color: transparent;
-	color: #CCC;
+	background-color: #333;
+	color: #fafafa;
 	
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;

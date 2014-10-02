@@ -838,7 +838,7 @@ $.fn.loadVideoJsPlayer = function( playerID) {
             "autoplay": true,
             "preload": "auto",
             
-            plugins : {
+            plugins: {
             
                 resolutionSelector : {
                     default_res : "normal"

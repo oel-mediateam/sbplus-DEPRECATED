@@ -333,17 +333,17 @@
 				button_nodes = player.controlBar.resolutionSelector.el().firstChild.children;
 				button_node_count = button_nodes.length;
 				
-				// Update the button text
-				while ( button_node_count > 0 ) {
-					
-					button_node_count--;
-					
-					if ( 'vjs-current-res' == button_nodes[button_node_count].className ) {
-						
-						button_nodes[button_node_count].innerHTML = methods.res_label( target_resolution );
-						break;
-					}
-				}
+				//Update the button text
+//				while ( button_node_count > 0 ) {
+//					
+//					button_node_count--;
+//					
+//					if ( 'vjs-current-res' == button_nodes[button_node_count].className ) {
+//						
+//						button_nodes[button_node_count].innerHTML = methods.res_label( target_resolution );
+//						break;
+//					}
+//				}
 			}
 			
 			// Update the classes to reflect the currently selected resolution
@@ -365,13 +365,14 @@
 			el : _V_.Component.prototype.createEl( null, {
 				
 				className	: 'vjs-res-button vjs-menu-button vjs-control',
-				innerHTML	: '<div class="vjs-control-content"><span class="vjs-current-res">' + ( current_res || 'Quality' ) + '</span></div>',
+				innerHTML	: '<div class="vjs-control-content"><div class="vjs-control-text">' + ( current_res || 'Quality' ) + '</div></div>',
 				role		: 'button',
 				'aria-live'	: 'polite', // let the screen reader user know that the text of the button may change
 				tabIndex	: 0
-				
 			}),
-			available_res	: available_res
+            
+            available_res	: available_res
+			
 		});
 		
 		// Add the button to the control bar object and the DOM

@@ -679,9 +679,8 @@ easily in the skin designer. http://designer.videojs.com/
   left: -5em;
   /* Width of menu - width of button / 2 */
 
-  /* background-color-with-alpha */
-  background-color: #006dcc;
-  background-color: rgba(0, 109, 204, 0.7);
+  background-color: #333;
+    
   /* box-shadow */
   -webkit-box-shadow: -0.2em -0.2em 0.3em rgba(255, 255, 255, 0.2);
   -moz-box-shadow: -0.2em -0.2em 0.3em rgba(255, 255, 255, 0.2);
@@ -700,7 +699,15 @@ easily in the skin designer. http://designer.videojs.com/
   text-transform: lowercase;
 }
 .vjs-default-skin .vjs-menu-button ul li.vjs-selected {
-  background-color: #000;
+  position: relative;
+  background-color: rgba(0, 109, 204, 0.7);
+}
+.vjs-default-skin .vjs-menu-button ul li.vjs-selected:before {
+  position: absolute;
+  font-family: VideoJS;
+  content: "\e001";
+  top: 20%;
+  left: 0.3em;
 }
 .vjs-default-skin .vjs-menu-button ul li:focus,
 .vjs-default-skin .vjs-menu-button ul li:hover,
@@ -711,10 +718,6 @@ easily in the skin designer. http://designer.videojs.com/
   /* background-color-with-alpha */
   background-color: #ffffff;
   background-color: rgba(255, 255, 255, 0.75);
-  /* box-shadow */
-  -webkit-box-shadow: 0 0 1em #ffffff;
-  -moz-box-shadow: 0 0 1em #ffffff;
-  box-shadow: 0 0 1em #ffffff;
 }
 .vjs-default-skin .vjs-menu-button ul li.vjs-menu-title {
   text-align: center;
@@ -725,6 +728,10 @@ easily in the skin designer. http://designer.videojs.com/
   margin: 0 0 0.3em 0;
   font-weight: bold;
   cursor: default;
+}
+.vjs-default-skin .vjs-menu-button ul li.vjs-menu-title:hover {
+  color: #fff;
+  background-color: #333;
 }
 /* Subtitles Button */
 .vjs-default-skin .vjs-subtitles-button:before {
