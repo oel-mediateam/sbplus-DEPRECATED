@@ -647,13 +647,13 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
         
         case "vimeo:":
-                
+        
             $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done();
         
         break;
         
         case "kaltura:":
-            
+        
             $.fn.setupVideoPlayer( 'kaltura', srcName );
         
         break;
@@ -715,10 +715,10 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />"  + "</video>" ).promise().done( function() {
 
                 $( "#progressing" ).fadeOut();
+                $.fn.loadVideoJsPlayer(playerID);
 
             } );
-            
-            $.fn.loadVideoJsPlayer(playerID);
+
         
         break;
         
@@ -758,11 +758,11 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                         
                         }
                         
-//                        if ( source.flavorParamsId === 487111 ) {
-//                        
-//                            flavors.webm = source.src;
-//                        
-//                        }
+                        if ( source.flavorParamsId === 487111 ) {
+                        
+                            flavors.webm = source.src;
+                        
+                        }
                         
                     } // end for loop
                     
@@ -784,9 +784,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                         video += "<source src=\"" + flavors.high + "\" type=\"video/mp4\" data-res=\"high\" />";
                     }
                     
-//                    if ( flavors.webm !== undefined ) {
-//                        video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" data-res=\"webm\" />";
-//                    }
+                    if ( flavors.webm !== undefined && $.fn.supportWebm() ) {
+                        video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" data-res=\"webm\" />";
+                    }
 
                     // set caption track if available
                     if ( captionId !== null ) {
@@ -808,7 +808,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 } // end callback
             
             } ); // end kWidget
-        
+            
         break;
         
         default:
@@ -1944,5 +1944,21 @@ $.fn.parseArrayImg = function( arr ) {
    }
    
    return str;
+   
+ };
+
+/**
+ * Check for WebM support
+ * @since 2.4.2
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return bool
+ *
+ */
+ $.fn.supportWebm = function () {
+    
+     return !!document.createElement( 'video' )
+                    .canPlayType( 'video/webm; codecs="vp8.0, vorbis"' );
    
  };
