@@ -319,7 +319,7 @@ $.fn.setupPlayer = function() {
         
     } else if ( ( enabledNote === false && quizDetected === true ) || version >= 230 ) {
         
-        var dir = $.fn.getDirectory();
+        var dir = $.fn.getProgramDirectory();
         var logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_ex_ceoel_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
         
         $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
@@ -518,7 +518,7 @@ $.fn.initializePlayer = function() {
 /**
  * Load current slide
  * @since 2.0.0
- * @updated 2.4.0
+ * @updated 2.5.1
  *
  * @author Ethan S. Lin
  *
@@ -640,8 +640,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     						audioPlayer.setSrc( sources );
     						
     					}
-    					
-    					$.fn.bindAudioPlayerFadeInOut();
                         
                     } else {
                         
@@ -1346,7 +1344,7 @@ $.fn.showFeedback = function( index ) {
 /**
  * Load audio player
  * @since 2.1.0
- * @updated 2.2.0
+ * @updated 2.5.1
  *
  * @author Ethan S. Lin
  * @param strings, id and source name
@@ -1374,6 +1372,18 @@ $.fn.loadAudioPlayer = function( id, srcName ) {
 			sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
 			me.setSrc( sources );
 			me.load();
+            
+            me.addEventListener( "play", function() {
+                
+                $.fn.bindAudioPlayerFadeInOut();
+                
+            } );
+            
+            me.addEventListener( "ended", function() {
+                
+                $.fn.unbindAudioPlayerFadeInOut();
+                
+            } );
 			
 		}
 		
@@ -1405,6 +1415,23 @@ $.fn.bindAudioPlayerFadeInOut = function() {
         $( "#ap" ).stop(false,true).delay( 1000 ).fadeOut( "slow" );
         
     } );
+    
+};
+
+/**
+ * Unbind audio player fade in and out
+ * @since 2.5.1
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
+$.fn.unbindAudioPlayerFadeInOut = function() {
+    
+    $( "#ap" ).fadeIn( "fast" );
+    $( "#img, #ap" ).unbind( "mouseenter" );
+    $( "#img, #ap" ).unbind( "mouseleave" );
     
 };
 
@@ -2003,7 +2030,7 @@ $.fn.parseArrayImg = function( arr ) {
  *
  */
  
-$.fn.getDirectory = function() {
+$.fn.getProgramDirectory = function() {
     
     var url = window.location.href.split( "/" );
     
