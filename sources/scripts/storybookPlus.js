@@ -318,9 +318,41 @@ $.fn.setupPlayer = function() {
         $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
         
     } else if ( ( enabledNote === false && quizDetected === true ) || version >= 230 ) {
-    
+        
+        var dir = $.fn.getDirectory();
+        var logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_ex_ceoel_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
+        
         $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
-        $( "#note" ).html( "<div class=\"noNotes\">&bull;&bull;&bull;</div>" );
+        
+        switch( dir ) {
+                
+                case "smgt":
+                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_smgt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
+                break;
+                
+                case "hwm":
+                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_hwm_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
+                break;
+                
+                case "himt":
+                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_himt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
+                break;
+                
+                case "il":
+                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_il_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
+                break;
+                
+                case "flx":
+                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_flx_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
+                break;
+                
+                case "bps":
+                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
+                break;
+                
+        }
+        
+        $( "#note" ).html( "<div class=\"noNotes\">" + logo + "</div>" );
         
     }
 	
@@ -765,8 +797,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                         }
                         
                     } // end for loop
-                    
-//                    console.log(flavors.low + "\n" + flavors.normal + "\n" + flavors.high + "\n" + flavors.webm);
                     
                     // video element opening tag
                     video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
@@ -1962,3 +1992,23 @@ $.fn.parseArrayImg = function( arr ) {
                     .canPlayType( 'video/webm; codecs="vp8.0, vorbis"' );
    
  };
+
+/**
+ * Get for parent directory
+ * @since 2.4.2
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return string
+ *
+ */
+ 
+$.fn.getDirectory = function() {
+    
+    var url = window.location.href.split( "/" );
+    
+    if ( url[4] === undefined ) { return ""; }
+    
+    return url[4];
+    
+};
