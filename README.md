@@ -46,10 +46,10 @@ Replaced the three dots with the program logo in notes area for SB+ lesson that 
 * Removed fancybox scripts
 
 **Version 2.2.0**  
-* Improve the quiz engine to handle multiple answer choices, images, and over all look and feel.
+Improved the quiz engine to handle multiple answer choices, images, and over all look and feel.
 
 **Version 2.1.0**  
-Don't remember...
+Can't remember... took an arrow to the brain!
 
-**Version 2.0.0** 
-Releasing SB+ version 2 to the world!
+**Version 2.0.0**  
+Released SB+ version 2 to the world! Forgot all of the technical details because of the excitments.
