@@ -170,7 +170,7 @@
 	_V_.plugin( 'resolutionSelector', function( options ) {
 		
 		// Only enable the plugin on HTML5 videos
-		if ( ! this.el().firstChild.canPlayType  ) { return; }	
+		//if ( ! this.el().firstChild.canPlayType  ) { return; }	
 		
 		/*******************************************************************
 		 * Setup variables, parse settings

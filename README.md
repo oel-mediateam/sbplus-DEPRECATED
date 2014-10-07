@@ -1,5 +1,5 @@
 # Storybook Plus
-**_version 2.5.1_**
+**_version 2.5.2_**
 
 Author: Ethan S. Lin  
 Organization: University of Wisconsin-Extension division of Continuing Education, Outreach & E-Learning
@@ -19,3 +19,10 @@ For documentation, please visit: https://mediastreamer.doit.wisc.edu/uwli-ltc/me
 If any bugs/glitches are found in this Storybook Plus application, please report them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub. When reporting a bug, please write the report as detailed and specifically as possible. Note the steps to reproduce the bug and include screen captures if possible.
 
 For questions, please also post them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub.
+
+####Version Log
+**Version 2.5.2**
+VideoJS uses Flash playback for users who view SB+ on Windows version of Google Chrome. Google Chrome on Windows has an issue with [aliasing](https://code.google.com/p/chromium/issues/detail?id=351458) on HTML5 video play back. This is an temporary fix, and will revert back to HTML5 once Google resolved this issue.
+
+**Version 2.5.1**
+Resolved a duplicate function name that cause an error for the downloadable file function.

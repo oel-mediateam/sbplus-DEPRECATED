@@ -850,7 +850,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * load videojs player
  * @since 2.4.1
- *
+ * @updated 2.5.2
  * @author Ethan S. Lin
  *
  * @param strings, video element id
@@ -859,10 +859,18 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  */
 $.fn.loadVideoJsPlayer = function( playerID) {
     
+    var tOrder = ["html5", "flash"];
+    var tech = window.navigator.appVersion.toLowerCase();
+    
+    if ( tech.indexOf("windows") >= 0 && tech.indexOf("chrome") >= 0 ) {
+        tOrder = ["flash", "html5"];
+    }
+    
     $( "#vp" ).fadeIn();
 
     videojs( playerID, {
             
+            techOrder: tOrder,
             "width": 640,
             "height": 360,
             "controls": true,
@@ -2023,6 +2031,7 @@ $.fn.parseArrayImg = function( arr ) {
 /**
  * Get for parent directory
  * @since 2.4.2
+ * @updated 2.5.1
  *
  * @author Ethan S. Lin
  * @param none
