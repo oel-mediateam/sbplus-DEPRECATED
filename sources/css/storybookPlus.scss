@@ -448,13 +448,14 @@ p {
     
     // AUDIO PLAYER
     #ap {
+        
     	display: none;
     	position: absolute;
         width: rem( 640px );
     	height: rem( 30px );
     	top: rem( 360px );
     	background-color: #7e7e7e;
-    	
+        
     	.mejs-container {
         	
         	.mejs-controls {

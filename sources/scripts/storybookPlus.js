@@ -857,7 +857,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  * @return void
  *
  */
-$.fn.loadVideoJsPlayer = function( playerID) {
+$.fn.loadVideoJsPlayer = function( playerID ) {
     
     var tOrder = ["html5", "flash"];
     var tech = window.navigator.appVersion.toLowerCase();
