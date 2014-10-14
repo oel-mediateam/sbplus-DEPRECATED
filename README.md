@@ -1,5 +1,5 @@
 # Storybook Plus
-**_version 2.5.2_**
+**_version 2.5.3_**
 
 ### Minimum Supported Web Browsers
 * Internet Explorer 9+
@@ -19,7 +19,7 @@ If any bugs/glitches are found in this Storybook Plus application, please report
 For questions, please also post them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub.
 
 ---
-####Version Log
+####Version Change Log
 **2.5.3** (10-14-2014)  
 * Kaltura kWidget updated to version 2.19.2.
 
