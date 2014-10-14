@@ -20,6 +20,9 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 
 ---
 ####Version Log
+**2.5.3** (10-14-2014)  
+* Kaltura kWidget updated to version 2.19.2.
+
 **2.5.2** (10-07-2014)  
 * VideoJS uses Flash technoloy for users who view SB+ on Windows version of Google Chrome. Google Chrome on Windows has an [issue with aliasing](https://code.google.com/p/chromium/issues/detail?id=351458) on HTML5 video. This is a temporary fix and will revert back to HTML5 once Google resolved this issue.
 
