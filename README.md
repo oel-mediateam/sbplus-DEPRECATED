@@ -1,5 +1,5 @@
-# Storybook Plus
-**_version 2.5.3_**
+#Storybook Plus
+**_version 2.5.4_**
 
 ### Minimum Supported Web Browsers
 * Internet Explorer 9+
@@ -13,18 +13,21 @@
 For documentation, please visit: https://mediastreamer.doit.wisc.edu/uwli-ltc/media/documentation/sbplus/v2/
 
 ---
-### Bug Reporting and Questions
+###Bug Reporting and Questions
 If any bugs/glitches are found in this Storybook Plus application, please report them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub. When reporting a bug, please write the report as detailed and specifically as possible. Note the steps to reproduce the bug and include screen captures if possible.
 
 For questions, please also post them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub.
 
 ---
 ####Version Change Log
+**2.5.4** (10-31-2014)  
+* Updated [video.js](https://github.com/videojs/video.js) to version 4.10.2
+
 **2.5.3** (10-14-2014)  
-* Kaltura kWidget updated to version 2.19.2.
+* Kaltura kWidget updated to version 2.19.2
 
 **2.5.2** (10-07-2014)  
-* VideoJS uses Flash technoloy for users who view SB+ on Windows version of Google Chrome. Google Chrome on Windows has an [issue with aliasing](https://code.google.com/p/chromium/issues/detail?id=351458) on HTML5 video. This is a temporary fix and will revert back to HTML5 once Google resolved this issue.
+* VideoJS uses Flash technology for users who view SB+ on Windows version of Google Chrome. Google Chrome on Windows has an [issue with aliasing](https://code.google.com/p/chromium/issues/detail?id=351458) on HTML5 video. This is a temporary fix and will revert back to HTML5 once Google resolved this issue.
 
 **2.5.1** (10-06-2014)  
 * Resolved a duplicate function name that cause an error for the downloadable file function.
