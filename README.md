@@ -1,5 +1,5 @@
 #Storybook Plus
-**_version 2.5.4_**
+**_version 2.5.5_**
 
 ### Minimum Supported Web Browsers
 * Internet Explorer 9+
@@ -20,6 +20,10 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 
 ---
 ####Version Change Log
+**2.5.5** (11-03-2014)  
+* Updated [video.js](https://github.com/videojs/video.js) CSS to version 4.10.0
+* Replaced resolution switch plugin with a better resolution switching plugin
+
 **2.5.4** (10-31-2014)  
 * Updated [video.js](https://github.com/videojs/video.js) to version 4.10.2
 
@@ -34,10 +38,10 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 * Improved how the audio player should fade in and out. Also, display the player after playback ended.
 
 **2.5.0** (10-06-2014)  
-* Replaced the three dots with the program logo in notes area for SB+ lesson that contains quiz but no notes. Program logo to display is based on where the SB+ lesson is stored in the directroy. Defaults to UW-EX CEOEL logo if not in any program.
+* Replaced the three dots with the program logo in notes area for SB+ lesson that contains quiz but no notes. Program logo to display is based on where the SB+ lesson is stored in the directory. Defaults to UW-EX CEOEL logo if not in any program.
 
 **2.4.0**  
-* Kaltura videos are no longer embeded via iFrame. VideoJS will now play video sources from Kaltura with the use of kWidget javascript.
+* Kaltura videos are no longer embedded via iFrame. VideoJS will now play video sources from Kaltura with the use of kWidget javascript.
 * Added feature to switch resolutions for video from Kaltura on VideoJS Player.
 * Restyled VideoJS Control bar for more intuitive user experiences.
 
@@ -55,7 +59,7 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 * Can't remember... took an arrow to the brain!
 
 **2.0.0**  
-* Released SB+ version 2 to the world! Forgot all of the technical details because of the excitments.
+* Released SB+ version 2 to the world! Forgot all of the technical details because of the excitements.
 
 ---
 Ethan S. Lin  
