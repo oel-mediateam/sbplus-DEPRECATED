@@ -805,7 +805,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                     }
 
                     // set normal res vid
-                    video += "<source src=\"" + flavors.normal + "\" type=\"video/mp4\" data-res=\"normal\" />";
+                    video += "<source src=\"" + flavors.normal + "\" type=\"video/mp4\" data-res=\"normal\" data-default=\"true\" />";
 
                     // set high res vid if available
                     if ( flavors.low !== undefined ) {
@@ -813,7 +813,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                     }
 
                     if ( flavors.webm !== undefined && $.fn.supportWebm() ) {
-                        video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" data-res=\"webm\" />";
+                        video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" />";
                     }
 
                     // set caption track if available
@@ -850,7 +850,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * load videojs player
  * @since 2.4.1
- * @updated 2.5.2
+ * @updated 2.5.5
  * @author Ethan S. Lin
  *
  * @param strings, video element id
@@ -879,9 +879,7 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
 
             plugins: {
 
-                resolutionSelector : {
-                    default_res : "normal"
-                }
+                resolutions: true
 
             }
 

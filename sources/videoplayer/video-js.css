@@ -1,6 +1,6 @@
 /*!
 Video.js Default Styles (http://videojs.com)
-Version 4.8.1
+Version 4.10.0
 Create your own skin at http://designer.videojs.com
 */
 /* SKIN
@@ -57,6 +57,7 @@ The control icons are from a custom font. Each icon corresponds to a character
   font-size: 1em;
   line-height: 1;
   text-align: center;
+  text-shadow: 0em 0em 1em #fff;
   position: absolute;
   top: 0;
   left: 0;
@@ -122,6 +123,11 @@ The default control bar that is a container for most of the controls.
 .vjs-default-skin.vjs-error .vjs-control-bar {
   display: none;
 }
+/* Don't hide the control bar if it's audio */
+.vjs-audio.vjs-default-skin.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
+  opacity: 1;
+  visibility: visible;
+}
 /* IE8 is flakey with fonts, and you have to change the actual content to force
 fonts to show/hide properly.
   - "\9" IE8 hack didn't work for this
@@ -143,7 +149,7 @@ fonts to show/hide properly.
   height: 3.0em;
   width: 4em;
 }
-/* FontAwsome button icons */
+/* Font button icons */
 .vjs-default-skin .vjs-control:before {
   font-family: VideoJS;
   font-size: 1.5em;
@@ -158,7 +164,7 @@ fonts to show/hide properly.
 /* Replacement for focus outline */
 .vjs-default-skin .vjs-control:focus:before,
 .vjs-default-skin .vjs-control:hover:before {
-  text-shadow: 0em 0em 0.8em #ffffff;
+  text-shadow: 0em 0em 1em #ffffff;
 }
 .vjs-default-skin .vjs-control:focus {
   /*  outline: 0; */
@@ -203,6 +209,7 @@ fonts to show/hide properly.
   width: 100%;
   height: 100%;
   text-align: center;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 .vjs-default-skin .vjs-playback-rate.vjs-menu-button .vjs-menu .vjs-menu-content {
   width: 4em;
@@ -241,9 +248,6 @@ fonts to show/hide properly.
   height: 0.6em;
   margin: 1.1em auto 0;
 }
-.vjs-default-skin .vjs-volume-menu-button .vjs-menu-content {
-  height: 2.9em;
-}
 .vjs-default-skin .vjs-volume-level {
   position: absolute;
   top: 0;
@@ -270,9 +274,31 @@ fonts to show/hide properly.
   width: 1em;
   height: 1em;
 }
+/* The volume menu button is like menu buttons (captions/subtitles) but works
+    a little differently. It needs to be possible to tab to the volume slider
+    without hitting space bar on the menu button. To do this we're not using
+    display:none to hide the slider menu by default, and instead setting the
+    width and height to zero. */
+.vjs-default-skin .vjs-volume-menu-button .vjs-menu {
+  display: block;
+  width: 0;
+  height: 0;
+  border-top-color: transparent;
+}
 .vjs-default-skin .vjs-volume-menu-button .vjs-menu .vjs-menu-content {
-  width: 6em;
-  left: -4em;
+  height: 0;
+  width: 0;
+}
+.vjs-default-skin .vjs-volume-menu-button:hover .vjs-menu,
+.vjs-default-skin .vjs-volume-menu-button .vjs-menu.vjs-lock-showing {
+  border-top-color: rgba(7, 40, 50, 0.5);
+  /* Same as ul background */
+
+}
+.vjs-default-skin .vjs-volume-menu-button:hover .vjs-menu .vjs-menu-content,
+.vjs-default-skin .vjs-volume-menu-button .vjs-menu.vjs-lock-showing .vjs-menu-content {
+  height: 2.9em;
+  width: 10em;
 }
 /* Progress
 --------------------------------------------------------------------------------
@@ -421,15 +447,15 @@ easily in the skin designer. http://designer.videojs.com/
 .vjs-default-skin .vjs-big-play-button {
   /* Center it horizontally */
   left: 50%;
-  margin-left: -2em;
+  margin-left: -1.75em;
   /* Center it vertically */
   top: 50%;
   margin-top: -1em;
-  font-size: 1.8em;
+  font-size: 2em;
   display: block;
   z-index: 2;
   position: absolute;
-  width: 4em;
+  width: 3.5em;
   height: 2em;
   text-align: center;
   vertical-align: middle;
@@ -441,9 +467,9 @@ easily in the skin designer. http://designer.videojs.com/
   background-color: rgba(0, 109, 204, 0.7);
   border: 0 solid #3b4249;
   /* border-radius */
-  -webkit-border-radius: 0.3em;
-  -moz-border-radius: 0.3em;
-  border-radius: 0.3em;
+  -webkit-border-radius: 0.4em;
+  -moz-border-radius: 0.4em;
+  border-radius: 0.4em;
   /* box-shadow */
   -webkit-box-shadow: 0px 0px 1em rgba(255, 255, 255, 0.25);
   -moz-box-shadow: 0px 0px 1em rgba(255, 255, 255, 0.25);
@@ -458,7 +484,7 @@ easily in the skin designer. http://designer.videojs.com/
 .vjs-default-skin.vjs-big-play-centered .vjs-big-play-button {
   /* Center it horizontally */
   left: 50%;
-  margin-left: -2em;
+  margin-left: -1.75em;
   /* Center it vertically */
   top: 50%;
   margin-top: -1em;
@@ -479,7 +505,7 @@ easily in the skin designer. http://designer.videojs.com/
 .vjs-default-skin:hover .vjs-big-play-button,
 .vjs-default-skin .vjs-big-play-button:focus {
   outline: 0;
-  border-color: #006dcc;
+  border-color: #fff;
   /* IE8 needs a non-glow hover state */
   background-color: #505050;
   background-color: rgba(50, 50, 50, 0.75);
@@ -679,14 +705,13 @@ easily in the skin designer. http://designer.videojs.com/
   left: -5em;
   /* Width of menu - width of button / 2 */
 
-  background-color: #333;
-    
   /* box-shadow */
-  -webkit-box-shadow: -0.2em -0.2em 0.3em rgba(255, 255, 255, 0.2);
-  -moz-box-shadow: -0.2em -0.2em 0.3em rgba(255, 255, 255, 0.2);
-  box-shadow: -0.2em -0.2em 0.3em rgba(255, 255, 255, 0.2);
+  -webkit-box-shadow: 0 0 0.2em rgba(255, 255, 255, 0.2);
+  -moz-box-shadow: 0 0 0.2em rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0.2em rgba(255, 255, 255, 0.2);
 }
-.vjs-default-skin .vjs-menu-button:hover .vjs-menu {
+.vjs-default-skin .vjs-menu-button:hover .vjs-control-content .vjs-menu,
+.vjs-default-skin .vjs-control-content .vjs-menu.vjs-lock-showing {
   display: block;
 }
 .vjs-default-skin .vjs-menu-button ul li {
@@ -697,17 +722,22 @@ easily in the skin designer. http://designer.videojs.com/
   font-size: 1.2em;
   text-align: center;
   text-transform: lowercase;
+  background-color: #333;
 }
 .vjs-default-skin .vjs-menu-button ul li.vjs-selected {
   position: relative;
-  background-color: rgba(0, 109, 204, 0.7);
+  background-color: #006dcc;
 }
 .vjs-default-skin .vjs-menu-button ul li.vjs-selected:before {
   position: absolute;
   font-family: VideoJS;
   content: "\e001";
-  top: 20%;
-  left: 0.3em;
+  color: inherit;
+  top: 18%;
+  left: .3em;
+}
+.vjs-default-skin .vjs-menu-button ul li.vjs-selected:before:hover {
+  color: #fff;
 }
 .vjs-default-skin .vjs-menu-button ul li:focus,
 .vjs-default-skin .vjs-menu-button ul li:hover,
@@ -729,17 +759,13 @@ easily in the skin designer. http://designer.videojs.com/
   font-weight: bold;
   cursor: default;
 }
-.vjs-default-skin .vjs-menu-button ul li.vjs-menu-title:hover {
-  color: #fff;
-  background-color: #333;
-}
 /* Subtitles Button */
 .vjs-default-skin .vjs-subtitles-button:before {
   content: "\e00c";
 }
 /* Captions Button */
 .vjs-default-skin .vjs-captions-button:before {
-  content: "\e00c";
+  content: "\e008";
 }
 /* Chapters Button */
 .vjs-default-skin .vjs-chapters-button:before {
@@ -863,6 +889,19 @@ body.vjs-full-window {
   padding: 0;
   width: 100%;
 }
+/* Hide the poster after the video has started playing */
+.video-js.vjs-has-started .vjs-poster {
+  display: none;
+}
+/* Don't hide the poster if we're playing audio */
+.video-js.vjs-audio.vjs-has-started .vjs-poster {
+  display: block;
+}
+/* Hide the poster when controls are disabled because it's clickable
+    and the native poster can take over */
+.video-js.vjs-controls-disabled .vjs-poster {
+  display: none;
+}
 /* Hide the poster when native controls are used otherwise it covers them */
 .video-js.vjs-using-native-controls .vjs-poster {
   display: none;
@@ -900,6 +939,10 @@ body.vjs-full-window {
 }
 .vjs-tt-cue {
   display: block;
+}
+/* Increase font-size when fullscreen */
+.video-js.vjs-fullscreen .vjs-text-track {
+  font-size: 3em;
 }
 /* Hide disabled or unsupported controls */
 .vjs-default-skin .vjs-hidden {
