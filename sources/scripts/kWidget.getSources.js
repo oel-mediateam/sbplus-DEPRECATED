@@ -31,33 +31,33 @@ if( ! window.kWidget ){
 			'action' : 'list',
 			'filter:entryIdEqual' : settings.entryId
 		}], function( result ){ // API result
-            
-			var ks = sourceApi.ks; 
+
+			var ks = sourceApi.ks;
 			var ipadAdaptiveFlavors = [];
 			var iphoneAdaptiveFlavors = [];
 			var deviceSources = [];
 			var protocol = location.protocol.substr(0, location.protocol.length-1);
 			// Set the service url based on protocol type
 			var serviceUrl;
-			
+
 			if( protocol == 'https' ){
 				serviceUrl = 'https://cdnapisec.kaltura.com';
 			} else {
-				serviceUrl = 'http://cdnapi.kaltura.com';
+				serviceUrl = 'http://cdnbakmi.kaltura.com';
 			}
-	
+
 			var baseUrl = serviceUrl + '/p/' + settings.partnerId +
-					'/sp/' + settings.partnerId + '00/serveFlavor';
-					
+					'/sp/' + settings.partnerId + '00/playManifest';
+
 			for( var i in result[1]['flavorAssets'] ){
-			
+
 				var asset = result[1]['flavorAssets'][i];
-				
+
 				// Continue if clip is not ready (2)
 				if( asset.status != 2  ) {
 					continue;
 				}
-				
+
 				// Setup a source object:
 				var source = {
 					/* 'data-bitrate' : asset.bitrate * 8, */
@@ -66,50 +66,50 @@ if( ! window.kWidget ){
 					'flavorParamsId': asset.flavorParamsId,
 					'flavorId': asset.id
 				};
-	
-	
+
+
 				var src  = baseUrl + '/entryId/' + asset.entryId;
-				
+
 				// Check if Apple http streaming is enabled and the tags include applembr ( single stream HLS )
 				if( asset.tags.indexOf('applembr') != -1 ) {
 					src += '/format/applehttp/protocol/'+ protocol + '/a.m3u8';
-	
+
 					deviceSources.push({
 						/* 'data-flavorid' : 'AppleMBR', */
 						'type' : 'application/vnd.apple.mpegurl',
 						'src' : src
 					});
-	
+
 					continue;
-					
+
 				} else {
-					src += '/v/1/flavorId/' + asset.id + '/name';
+					src += '/flavorId/' + asset.id + '/format/url/protocol/http';
 				}
-	
+
 				// add the file extension:
 				if( asset.tags.toLowerCase().indexOf('ipad') != -1 ){
 					source['src'] = src + '/a.mp4';
 					/* source['data-flavorid'] = 'iPad'; */
 					source['type'] = 'video/mp4';
 				}
-	
+
 				// Check for iPhone src
 				if( asset.tags.toLowerCase().indexOf('iphone') != -1 ){
 					source['src'] = src + '/a.mp4';
 					/* source['data-flavorid'] = 'iPhone'; */
 					source['type'] = 'video/mp4';
 				}
-				
+
 				// Check for iPhone src with flavor params id
 				if( asset.flavorParamsId === 487081) {
 					source['src'] = src + '/a.mp4';
 					/* source['data-flavorid'] = 'HD/720'; */
 					source['type'] = 'video/mp4';
 				}
-				
+
 				// Check for ogg source
 				if( asset.fileExt &&
-					( 
+					(
 						asset.fileExt.toLowerCase() == 'ogg'
 						||
 						asset.fileExt.toLowerCase() == 'ogv'
@@ -121,7 +121,7 @@ if( ! window.kWidget ){
 					/* source['data-flavorid'] = 'ogg'; */
 					source['type'] = 'video/ogg';
 				}
-	
+
 				// Check for webm source
 				if( asset.fileExt == 'webm'
 					||
@@ -135,30 +135,30 @@ if( ! window.kWidget ){
 					/* source['data-flavorid'] = 'webm'; */
 					source['type'] = 'video/webm';
 				}
-	
+
 				// Check for 3gp source
 				if( asset.fileExt == '3gp' ){
 					source['src'] = src + '/a.3gp';
 					/* source['data-flavorid'] = '3gp'; */
 					source['type'] = 'video/3gp';
 				}
-	
+
 				// Add the device sources
 				if( source['src'] ){
 					deviceSources.push( source );
 				}
-	
+
 				// Check for adaptive compatible flavor:
 				if( asset.tags.toLowerCase().indexOf('ipadnew') != -1 ){
 					ipadAdaptiveFlavors.push( asset.id );
 				}
-				
+
 				if( asset.tags.toLowerCase().indexOf('iphonenew') != -1 ){
 					iphoneAdaptiveFlavors.push( asset.id );
 				}
-	
+
 			};
-			
+
 			// Add the flavor list adaptive style urls ( multiple flavor HLS ):
 			// Create iPad flavor for Akamai HTTP
 			if( ipadAdaptiveFlavors.length != 0 ) {
@@ -168,7 +168,7 @@ if( ! window.kWidget ){
 					'src' : baseUrl + '/entryId/' + asset.entryId + '/flavorIds/' + ipadAdaptiveFlavors.join(',')  + '/format/applehttp/protocol/' + protocol + '/a.m3u8'
 				});
 			}
-			
+
 			// Create iPhone flavor for Akamai HTTP
 			if(iphoneAdaptiveFlavors.length != 0 ) {
 				deviceSources.push({
@@ -177,7 +177,7 @@ if( ! window.kWidget ){
 					'src' : baseUrl + '/entryId/' + asset.entryId + '/flavorIds/' + iphoneAdaptiveFlavors.join(',')  + '/format/applehttp/protocol/' + protocol + '/a.m3u8'
 				});
 			}
-	
+
 			// callback with device sources, poster
 			if( settings.callback ){
 				settings.callback({
@@ -190,7 +190,7 @@ if( ! window.kWidget ){
 					'sources': deviceSources
 				});
 			}
-			
+
 		});
 	};
 } )( window.kWidget );

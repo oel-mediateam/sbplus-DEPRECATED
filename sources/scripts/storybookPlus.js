@@ -742,7 +742,14 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "video":
 
-            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />"  + "</video>" ).promise().done( function() {
+            var webmSrc = "";
+            var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />";
+
+            if ( $.fn.fileExists( "assets/video/" + src, "webm", "video/webm" ) ) {
+                 webmSrc = "<source src=\"assets/video/" + src + ".webm\" type=\"video/webm\" />";
+             }
+
+            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + webmSrc + mp4Src + "</video>" ).promise().done( function() {
 
                 $( "#progressing" ).fadeOut();
                 $.fn.loadVideoJsPlayer(playerID);
@@ -850,7 +857,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * load videojs player
  * @since 2.4.1
- * @updated 2.5.5
+ * @updated 2.5.6
  * @author Ethan S. Lin
  *
  * @param strings, video element id
@@ -861,35 +868,62 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
 
     var tOrder = ["html5", "flash"];
     var tech = window.navigator.appVersion.toLowerCase();
+    var onFlash = false;
 
     if ( tech.indexOf("windows") >= 0 && tech.indexOf("chrome") >= 0 ) {
         tOrder = ["flash", "html5"];
+        onFlash = true;
+
     }
 
     $( "#vp" ).fadeIn();
 
-    videojs( playerID, {
+    if ( onFlash ) {
 
-            techOrder: tOrder,
-            "width": 640,
-            "height": 360,
-            "controls": true,
-            "autoplay": true,
-            "preload": "auto",
+        videojs( playerID, {
 
-            plugins: {
+                techOrder: tOrder,
+                "width": 640,
+                "height": 360,
+                "controls": true,
+                "autoplay": true,
+                "preload": "auto"
 
-                resolutions: true
+            }, function() {
 
-            }
+            videoPlayer = this;
+            this.progressTips();
+            this.removeChild('FullscreenToggle');
 
-        }, function() {
+        } );
 
-        videoPlayer = this;
-        this.progressTips();
-        this.removeChild('FullscreenToggle');
+    } else {
 
-    } );
+        videojs( playerID, {
+
+                techOrder: tOrder,
+                "width": 640,
+                "height": 360,
+                "controls": true,
+                "autoplay": true,
+                "preload": "auto",
+
+                plugins: {
+
+                    resolutions: true
+
+                }
+
+            }, function() {
+
+            videoPlayer = this;
+            this.progressTips();
+            this.removeChild('FullscreenToggle');
+
+        } );
+
+
+    }
 
     videojs.options.flash.swf = "https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/videoplayer/video-js.swf";
 
