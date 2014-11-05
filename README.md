@@ -1,5 +1,5 @@
 #Storybook Plus
-**_version 2.5.6_**
+**_version 2.5.7_**
 
 ### Minimum Supported Web Browsers
 * Internet Explorer 9+
@@ -20,6 +20,10 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 
 ---
 ####Version Change Log
+**2.5.7** (11-05-2014)  
+* Fixed an issue where Flash player is conflicting with resolution switcher
+* Improved Flash player fallback for MP4 in Firefox
+
 **2.5.6** (11-04-2014)  
 * Updated Kaltura kWidget to version 2.20
 * Fixed an issue where videos are not playing properly on Firefox
