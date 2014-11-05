@@ -1,3 +1,16 @@
+/*
+ * Storybook Plus
+ *
+ * @author: Ethan Lin
+ * @url: https://github.com/oel-mediateam/sbplus
+ * @version: 2.5.7
+ * Released Wednesday, November 5, 2014
+ *
+ * @license: The MIT License (MIT)
+ * Copyright (c) 2014 UW-EX CEOEL
+ *
+ */
+
 /* global videojs */
 /* global MediaElementPlayer */
 /* global kWidget */
@@ -30,6 +43,12 @@ var videoPlayer = null,
     firstAudioLoad = false,
     audioPlaying = false,
     sources;
+
+var tech = navigator.userAgent;
+var IS_FIREFOX = (/Firefox/i).test( tech );
+var IS_CHROME = (/Chrome/i).test( tech );
+var IS_WINDOWS = (/Windows/i).test( tech );
+var IS_MAC = (/Macintosh/i).test( tech );
 
 // when document finished loading and ready
 $( document ).ready( function() {
@@ -191,7 +210,6 @@ $.fn.parseContent = function( xml ) {
             noteArray[topicCount] = $.fn.stripScript( $( this ).find( "note" ).text() );
 
         }
-
 
         if ( topicSrc[topicCount] === "quiz" ) {
 
@@ -727,6 +745,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * Setup videojs player
  * @since 2.4.0
+ * @updated 2.5.7
  *
  * @author Ethan S. Lin
  *
@@ -742,14 +761,10 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "video":
 
-            var webmSrc = "";
+            var subtitle = ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" );
             var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />";
 
-            if ( $.fn.fileExists( "assets/video/" + src, "webm", "video/webm" ) ) {
-                 webmSrc = "<source src=\"assets/video/" + src + ".webm\" type=\"video/webm\" />";
-             }
-
-            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" ) + webmSrc + mp4Src + "</video>" ).promise().done( function() {
+            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
 
                 $( "#progressing" ).fadeOut();
                 $.fn.loadVideoJsPlayer(playerID);
@@ -857,7 +872,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * load videojs player
  * @since 2.4.1
- * @updated 2.5.6
+ * @updated 2.5.7
  * @author Ethan S. Lin
  *
  * @param strings, video element id
@@ -866,64 +881,34 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  */
 $.fn.loadVideoJsPlayer = function( playerID ) {
 
-    var tOrder = ["html5", "flash"];
-    var tech = window.navigator.appVersion.toLowerCase();
-    var onFlash = false;
+    var options = {
 
-    if ( tech.indexOf("windows") >= 0 && tech.indexOf("chrome") >= 0 ) {
-        tOrder = ["flash", "html5"];
-        onFlash = true;
+        techOrder: ["html5", "flash"],
+        "width": 640,
+        "height": 360,
+        "controls": true,
+        "autoplay": true,
+        "preload": "auto",
+        plugins: { resolutions: true }
+
+    };
+
+    if ( ( IS_FIREFOX && IS_MAC ) || ( IS_WINDOWS && IS_CHROME ) ) {
+
+        options.techOrder = ["flash", "html5"];
+        options.plugins = null;
 
     }
 
     $( "#vp" ).fadeIn();
 
-    if ( onFlash ) {
+    videojs( playerID, options, function() {
 
-        videojs( playerID, {
+        videoPlayer = this;
+        this.progressTips();
+        this.removeChild('FullscreenToggle');
 
-                techOrder: tOrder,
-                "width": 640,
-                "height": 360,
-                "controls": true,
-                "autoplay": true,
-                "preload": "auto"
-
-            }, function() {
-
-            videoPlayer = this;
-            this.progressTips();
-            this.removeChild('FullscreenToggle');
-
-        } );
-
-    } else {
-
-        videojs( playerID, {
-
-                techOrder: tOrder,
-                "width": 640,
-                "height": 360,
-                "controls": true,
-                "autoplay": true,
-                "preload": "auto",
-
-                plugins: {
-
-                    resolutions: true
-
-                }
-
-            }, function() {
-
-            videoPlayer = this;
-            this.progressTips();
-            this.removeChild('FullscreenToggle');
-
-        } );
-
-
-    }
+    } );
 
     videojs.options.flash.swf = "https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/videoplayer/video-js.swf";
 
@@ -1078,8 +1063,6 @@ $.fn.displayAnswerChoices = function( index ) {
                 }
 
             }
-
-
 
             $( "#quiz" ).append( "</div>" );
 
