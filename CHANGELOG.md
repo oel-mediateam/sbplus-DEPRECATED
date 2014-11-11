@@ -1,7 +1,8 @@
 #SB+ Version Change Log
 
 ##Unreleased/pending:
-**None at the moment...**
+* None at the moment...
+
 ---
 ##2.5.7 (11-05-2014)
 * Fixed an issue where Flash player is conflicting with resolution switcher
