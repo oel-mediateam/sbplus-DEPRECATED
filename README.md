@@ -1,16 +1,27 @@
-#Storybook Plus
+#Storybook Plus (SB+)
 **_version 2.5.7_**
 
-### Minimum Supported Web Browsers
+###Web Browser Requirements
+
+####Minimum
 * Internet Explorer 9+
 * Mozilla Firefox 30+
 * Google Chrome 33+
 * Apple Safari 5+
 * Opera 20+
 
-*Latest stable version is always recommended.*
+####Recommended
+* Internet Explorer 11
+* Mozilla Firefox - latest version
+* Google Chrome - latest version
+* Apple Safari 8
+* Opera - latest version
 
-For documentation, please visit: https://mediastreamer.doit.wisc.edu/uwli-ltc/media/documentation/sbplus/v2/
+SB+ may not work properly with beta or pre-release versions of these browsers. Please use the latest stable version above for the best experience.
+
+---
+###Documentation
+For more details and how to setup a SB+ presentation, please visit the [Storybook Plus Documentation](https://mediastreamer.doit.wisc.edu/uwli-ltc/media/documentation/sbplus/v2/).
 
 ---
 ###Bug Reporting and Questions
