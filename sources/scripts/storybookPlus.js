@@ -3,7 +3,7 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.5.7
+ * @version: 2.5.8
  * Released Wednesday, November 5, 2014
  *
  * @license: The MIT License (MIT)
@@ -44,16 +44,20 @@ var videoPlayer = null,
     audioPlaying = false,
     sources;
 
+var ROOT_PATH = "https://media.uwex.edu/media/storybook_plus_v2/";
+
 var tech = navigator.userAgent;
 var IS_FIREFOX = (/Firefox/i).test( tech );
 var IS_CHROME = (/Chrome/i).test( tech );
 var IS_WINDOWS = (/Windows/i).test( tech );
 var IS_MAC = (/Macintosh/i).test( tech );
+// var IS_CHROME_39 = (/chrome\/[3][9]/i).test( tech );
 
 // when document finished loading and ready
 $( document ).ready( function() {
 
-    var ua = navigator.userAgent,
+    /*
+var ua = navigator.userAgent,
         checker = {
 
             ios: ua.match( /(iPhone|iPod|iPad)/i ),
@@ -77,6 +81,7 @@ $( document ).ready( function() {
         return false;
 
     }
+*/
 
     $.fn.getLessonContent( "assets/topic.xml" );
 
@@ -157,7 +162,6 @@ $.fn.parseContent = function( xml ) {
     lessonTitle = "Lesson name is not specified.";
     instructor = "Instructor name is not specified.";
     duration = '';
-
 
     // lesson title
     if ( LESSON.length ) {
@@ -295,7 +299,7 @@ $.fn.parseContent = function( xml ) {
 /**
  * Set up the player
  * @since 2.0.0
- * @updated 2.3.0
+ * @updated 2.5.8
  *
  * @author Ethan S. Lin
  * @return void
@@ -338,34 +342,35 @@ $.fn.setupPlayer = function() {
     } else if ( ( enabledNote === false && quizDetected === true ) || version >= 230 ) {
 
         var dir = $.fn.getProgramDirectory();
-        var logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_ex_ceoel_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
+
+        var logo = "<img src=\"" + ROOT_PATH +"sources/img/uw_ex_ceoel_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
 
         $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
 
         switch( dir ) {
 
                 case "smgt":
-                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_smgt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_smgt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
                 break;
 
                 case "hwm":
-                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_hwm_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_hwm_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
                 break;
 
                 case "himt":
-                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_himt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "/sources/img/uw_himt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
                 break;
 
                 case "il":
-                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_il_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_il_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
                 break;
 
                 case "flx":
-                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_flx_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_flx_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
                 break;
 
                 case "bps":
-                    logo = "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
                 break;
 
         }
@@ -910,7 +915,7 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
 
     } );
 
-    videojs.options.flash.swf = "https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus_v2/sources/videoplayer/video-js.swf";
+    videojs.options.flash.swf = ROOT_PATH + "sources/videoplayer/video-js.swf";
 
 };
 
@@ -1659,6 +1664,7 @@ $.fn.bindTocSlideToggle = function() {
 /**
  * Loading the instructor profile image
  * @since 2.0.0
+ * @update 2.5.8
  *
  * @author Ethan S. Lin
  * @return void
@@ -1675,7 +1681,7 @@ $.fn.loadProfilePhoto = function() {
 
     } ).error( function() {
 
-        $( "#profile .photo" ).html( "<img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus/img/profile.png\" width=\"200\" height=\"300\" alt=\"No Profile Photo\" border=\"0\" />" );
+        $( "#profile .photo" ).html( "<img src=\"" + ROOT_PATH + "sources/img/profile.png\" width=\"200\" height=\"300\" alt=\"No Profile Photo\" border=\"0\" />" );
 
     } ).attr( {
 

@@ -1,7 +1,9 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
-* None at the moment...
+* Updated to work with new media server
+* Added a global variable to hold the server root directory
+* Removed "open in a new tab" on mobile device
 
 ---
 ###2.5.7 (11-05-2014)
