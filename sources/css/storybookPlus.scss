@@ -62,86 +62,86 @@ p {
         height: rem( 430px );
         padding: rem( 100px ) rem( 200px );
     }
-    
+
     #profile {
         height: rem( 400px );
     }
-    
+
     #note {
         display: none;
     }
-    
+
     #toc {
         height: rem( 400px );
     }
-    
+
     #control {
-        
+
         #currentStatus {
             width: 80%;
             border-right: none;
         }
-        
+
     }
-    
+
 }
 
 #storybook_plus_wrapper.withQuiz {
-    
+
     #note {
-        background-color: #ebebeb;
+        background-color: #fff;
     }
-    
+
 }
 
 #storybook_plus_wrapper.withQuiz.magnified {
-    
+
     #control {
-        
+
         #currentStatus {
             width: 64% !important;
         }
-        
+
     }
-    
+
     #note {
         display: none;
     }
-    
+
 }
 
 #storybook_plus_wrapper.magnified {
-    
+
     #content {
         position: relative;
         overflow: hidden;
     }
-    
+
     #slideNote {
-        
+
         position: relative;
         width: rem( 900px );
         height: rem( 546px );
         overflow: hidden;
         border: none;
-        
+
         #slide {
-    	    
+
     	    position: relative;
     	    width: rem( 900px );
     	    height: rem( 506px );
     	    overflow: hidden;
-    	    
+
         	#img {
-        	
+
             	position: absolute;
-            	
+
             	img {
                     height: rem( 506px );
             	}
-            	
+
             }
-            
+
             object {
                 position: absolute;
                 width: rem( 900px ) !important;
@@ -151,114 +151,114 @@ p {
             	border-right: rem( 1px ) solid $border-color;
             	@include box-sizing( border-box );
             }
-            
+
             iframe {
                 position: absolute;
                 width: 100%;
                 height: 100%;
             	z-index: 10;
             }
-        	
+
         }
-        
+
     }
-    
+
     #slideNote.quizSlide {
-        
+
         #control {
-            
+
             #currentStatus {
                 width: 64%;
             }
-            
+
         }
-        
+
     }
-    
+
     #progressing {
         top: 46%;
         left: 48%;
         z-index: 20;
     }
-    
+
     #control {
-    
+
         position: absolute;
         bottom: 0;
         z-index: 12;
-        
+
         #leftBtn {
             border-left: rem( 1px ) solid $border-color;
         }
-        
+
         #currentStatus {
             width: 56%;
         }
-        
+
         #magnifyBtn {
             border-right: rem( 1px ) solid $border-color;
             border-left: none;
         }
-        
+
     }
-    
+
     #quiz {
-        
+
         .answerArea {
-            
+
             textarea {
             	width: 100%;
         	}
-        	
+
         	input[type=text] {
             	width: 100%;
         	}
-            
+
         }
-        
+
     }
-    
+
     #ap {
-    
+
         width: 100%;
     	top: rem( 476px );
-    	
+
     	.mejs-container {
-        	
+
         	.mejs-controls {
-            	
+
             	.mejs-time-rail {
-            	
+
                 	width: rem( 716px ) !important;
-                	
+
                 	.mejs-time-total {
                     	width: rem( 706px ) !important;
                 	}
-                	
+
             	}
-            	
+
         	}
-        	
+
     	}
-    	
+
     }
-    
+
     #vp {
-    	
+
     	position: absolute;
     	width: rem( 900px );
         height: rem( 506px );
         margin: 0;
         top: 0;
         left: 0;
-    
+
     	.video-js {
         	width: rem( 900px ) !important;
             height: rem( 506px ) !important;
     	}
-    	
+
     }
-    
+
     #toc {
         position: absolute;
         height: rem( 507px );
@@ -266,11 +266,11 @@ p {
         border-left: rem( 3px ) solid $border-color;
         z-index: 13;
     }
-    
+
     #profile {
         height: rem( 546px );
     }
-    
+
     #note {
         position: absolute;
         top: rem( 506px );
@@ -279,7 +279,7 @@ p {
         border-top-width: rem( 3px );
         z-index: 11;
     }
-    
+
 }
 
 // SPLASH SCREEN
@@ -294,22 +294,22 @@ p {
 	background-repeat: no-repeat;
 	cursor: pointer;
 	@include box-sizing( "border-box" );
-	
+
 	p {
-	
+
     	font-size: rem( 24px );
         line-height: rem( 28px );
         font-weight: bold;
-        
+
         small {
             font-size: rem( 18px );
             line-height: rem( 22px );
             font-weight: normal;
         }
-        
+
 	}
-	
-	a.playBtn, a.playBtn:visited, a.playBtn:hover {	
+
+	a.playBtn, a.playBtn:visited, a.playBtn:hover {
     	display: inline-block;
     	font-size: rem( 26px );
     	line-height: rem( 26px );
@@ -321,7 +321,7 @@ p {
     	background-color: #006DCC;
     	@include border-radius( rem( 3px ) );
     }
-	
+
 } // #splase_screen
 
 // PLAYER
@@ -329,10 +329,10 @@ p {
 
 	display: none;
 	@include clear;
-	
+
 	// HEADER (TOP BLACK) BAR
     header {
-    
+
     	width: rem( 870px );
     	height: rem( 23px );
     	color: #fff;
@@ -340,7 +340,7 @@ p {
     	font-weight: bold;
     	padding: rem( 7px ) rem( $gutter ) 0;
     	background-color: #131313;
-    	
+
     	#lessonTitle {
         	display: inline-block;
             width: rem( 505px );
@@ -352,31 +352,31 @@ p {
     	    float: left;
     	    cursor: default;
     	}
-    	
+
     	#instructorName {
         	@extend #lessonTitle;
         	width: rem( 315px );
         	text-align: right;
         }
-        
+
         .infoIcn {
         	display: inline-block;
         	@include opacity( .75 );
         	@include single-transition( opacity, ease-out, .3s );
         }
-        
+
         .infoIcn:hover {
             @include opacity( 1 );
         	@include single-transition( opacity, ease-in, .3s );
         }
-        
+
         a, a:visited, a:hover {
             color: #fff;
             text-decoration: none;
         }
-    	
+
     } // header
-    
+
     // SLIDE LOADING SPINNER
     #progressing {
         position: absolute;
@@ -390,7 +390,7 @@ p {
         background-color: rgba( 255, 255, 255, .75);
         @include border-radius( 50% );
     }
-	
+
 } // #player
 
 
@@ -399,7 +399,7 @@ p {
 
     width: 100%;
 	@include clear;
-	
+
 	// SLIDE NOTE AREA
     #slideNote {
     	width: rem( 640px );
@@ -407,23 +407,23 @@ p {
     	border-left: rem( 1px ) solid $border-color;
     	float: left;
     }
-    
+
     .quizSlide {
-        
+
         #slide {
             height: rem( 506px );
         }
-        
+
         #quiz {
             height: rem( 506px );
         }
-        
+
         #note {
             display: none !important;
         }
 
     }
-	
+
 	// SLIDE
     #slide {
 
@@ -431,51 +431,51 @@ p {
     	height: rem( 360px );
     	background: #fff;
     	overflow: hidden;
-    	
+
     	#img {
-    	    
+
     	    display: block;
     	    line-height: 0;
-    	    
+
     	    img {
             	width: 100%;
                 height: rem( 360px );
         	}
-        	
+
     	}
-    	
+
     } // #slide
-    
+
     // AUDIO PLAYER
     #ap {
-        
+
     	display: none;
     	position: absolute;
         width: rem( 640px );
     	height: rem( 30px );
     	top: rem( 360px );
     	background-color: #7e7e7e;
-        
+
     	.mejs-container {
-        	
+
         	.mejs-controls {
-            	
+
             	.mejs-time-rail {
-            	
+
                 	width: rem( 456px ) !important;
-                	
+
                 	.mejs-time-total {
                     	width: rem( 446px ) !important;
                 	}
-                	
+
             	}
-            	
+
         	}
-        	
+
     	}
-    	
+
     }
-    
+
     // VIDEO PLAYER
     #vp {
     	display: none;
@@ -485,14 +485,14 @@ p {
     	width: rem( 640px );
     	height: rem( 360px );
     }
-    
+
     // QUIZ
     #quiz {
-    
+
     	height: rem( 560px );
     	background-color: #ebebeb;
     	overflow-y: scroll;
-    	
+
     	.header {
         	height: rem( 15px );
         	color: #000;
@@ -503,15 +503,15 @@ p {
         	background-image: url( "../img/quiz_bg.png" );
         	background-color: #e8e8e8;
     	}
-    	
+
     	.question {
-    	
+
         	padding: 0 rem( $gutter );
         	font-size: rem( 18px );
         	line-height: rem( 24px );
         	font-weight: bold;
         	margin: rem( $gutter ) 0;
-        	
+
         	img {
         	    display: block;
             	max-width: rem( 360px );
@@ -519,7 +519,7 @@ p {
             	height: auto;
             	float: left;
         	}
-        	
+
         	small {
         	    display: block;
             	font-size: rem( 14px );
@@ -527,22 +527,22 @@ p {
                 font-weight: normal;
                 margin: rem( 5px ) 0;
         	}
-        	
+
         	audio {
             	display: block;
             	margin: rem( $gutter ) 0;
             	outline: none;
         	}
-        	
+
     	}
-    	
+
     	.answerArea {
-    	
+
     	    display: block;
         	padding: 0 rem( $gutter );
         	margin: rem( $gutter ) 0;
         	@include box-sizing( border-box );
-        	
+
         	label {
             	display: block;
             	position: relative;
@@ -553,18 +553,18 @@ p {
             	color: #000;
             	cursor: pointer;
             }
-            
+
             .img_choice {
-                	
+
             	display: inline-block;
             	margin: 0 rem( 10px ) rem( 10px ) 0;
-            	
+
             	input[type=radio], input[type=checkbox] {
                 	position: absolute;
             	}
-            	
+
         	}
-            
+
             textarea {
             	width: rem( 595px );
             	height: rem( 110px );
@@ -575,22 +575,22 @@ p {
             	outline: none;
             	@include box-sizing( border-box );
         	}
-        	
+
         	input[type=text] {
             	width: rem( 595px );
             	height: rem( 30px );
             	padding: rem( 5px );
             	@include box-sizing( border-box );
         	}
-        	
+
         }
-        
+
     	.submitArea {
-    	
+
         	text-align: left;
             padding: 0 rem( $gutter );
             margin: rem( $gutter ) 0;
-            
+
             a, a:visited, a:hover {
                 display: inline-block;
             	color: #fff;
@@ -603,13 +603,13 @@ p {
             	background-color: #5bb75b;
             	@include border-radius( rem( 3px ) );
             }
-            
+
             a:hover {
             	background-color: #4ba14b;
             }
-    
+
     	} // .submitArea
-    	
+
     	.quizCorrect {
             font-size: rem( 14px );
             text-align: center;
@@ -619,21 +619,21 @@ p {
             background-color: #08b108;
             margin: 0;
     	}
-    	
+
     	.quizIncorrect {
         	@extend .quizCorrect;
         	background-color: #b0092d;
     	}
-    	
+
     	.result {
         	padding: 0 rem( 20px );
         }
-    	
+
     } // #quiz
-    
+
     // NOTE STYLES
     #note {
-        
+
     	width: 100%;
     	height: rem( 146px );
     	border-top: rem( 1px ) solid $border-color;
@@ -642,8 +642,8 @@ p {
     	overflow: auto;
     	float: left;
     	@include box-sizing( "border-box" );
-    	
-    	.noNotes {
+
+    	.logo {
         	font-size: rem( 55px );
         	line-height: rem( 55px );
         	color: #d4d4d4;
@@ -651,52 +651,56 @@ p {
         	padding: rem( 20px ) 0 0 0;
         	cursor: default;
     	}
-    	
+
     	a, a:visited {
         	color: #00f;
             text-decoration: underline;
     	}
-    	
+
     	a:hover {
         	text-decoration: none;
     	}
-    	
+
     	h1, h2, h3, h4, h5, h6, p {
             margin: rem( 6px ) 0;
     	}
-    	
+
     	h1 {
         	font-size: rem( 20px );
         	line-height: rem( 26px );
     	}
-    	
+
     	h2 {
         	font-size: rem( 18px );
             line-height: rem( 24px );
     	}
-    	
+
     	h3, h4, h5, h6 {
         	font-size: rem( 16px );
         	line-height: rem( 22px );
         }
-    	
+
     	p {
         	font-size: rem( $font-size );
         	line-height: rem( 20px );
         }
-    	
+
     } // #note
-	
+
+    #note.noNotes {
+        background-color: #ebebeb;
+    }
+
 	// PLAYER CONTROLS
     #control {
-    
+
     	width: 100%;
     	height: rem( 38px );
     	border-top: rem( 1px ) solid $border-color;
     	border-bottom: rem( 1px ) solid $border-color;
     	background-color: #f7f7f7;
     	float: left;
-    	
+
     	.btn {
         	display: block;
             width: 10%;
@@ -711,28 +715,28 @@ p {
             @include box-sizing( "border-box" );
             @include single-transition( color, ease-out, .6s );
     	}
-    	
+
     	.btn.active {
-    	
+
     	    color: #59a8dc;
     	    background-color: $border-color;
-        	
+
     	}
-    	
+
     	.btn:hover {
         	color: #59a8dc;
         	@include single-transition( color, ease-in, .3s );
         }
-    	
+
     	#leftBtn {
     	    @extend .btn;
     	}
-    	
+
     	#rightBtn {
     	    @extend .btn;
     	    padding: rem( 11px ) 0 0;
     	}
-    	
+
     	#currentStatus {
         	display: block;
         	width: 72%;
@@ -746,7 +750,7 @@ p {
         	cursor: default;
         	@include box-sizing( "border-box" );
         }
-        
+
         #magnifyBtn {
         	@extend .btn;
         	width: 8%;
@@ -755,7 +759,7 @@ p {
             border-right: none;
             padding: rem( 12px ) 0 0;
         }
-        
+
         #notesBtn {
             @extend .btn;
             display: none;
@@ -765,7 +769,7 @@ p {
             padding: rem( 12px ) 0 0;
             border-right: rem( 1px ) solid $border-color;
         }
-        
+
         #tocBtn {
             @extend .btn;
             display: none;
@@ -775,9 +779,9 @@ p {
             padding: rem( 12px ) 0 0;
             border-right: rem( 1px ) solid $border-color;
         }
-    	
+
     } //#control
-	
+
 } // #content
 
 // TABLE OF CONTENT
@@ -791,68 +795,68 @@ p {
 	float: left;
 	overflow: auto;
 	@include box-sizing( "border-box" );
-	
+
 	#selectable {
-	    
+
 	    width: 100%;
 	    list-style: none;
     	margin: 0;
     	padding: 0;
     	overflow-x: hidden;
     	@include clear;
-    	
+
     	li {
         	width: 100%;
         	margin: 0;
         	padding: rem( 8px ) 0;
         	cursor: pointer;
         	@include clear;
-        	
+
         	.slideNum {
             	width: 10%;
             	padding: 0 1%;
             	text-align: right;
             	float: left;
         	}
-        	
+
         	.title {
             	width: 86%;
             	padding: 0 1%;
             	float: left;
         	}
-        	
+
     	}
-    	
+
     	li:hover {
-    	
+
         	background-color: #59a8dc;
         	color: #fff;
-        	
+
         	.light {
             	@include opacity( 1 );
         	}
-        	
+
         }
-    	
+
     	.ui-selecting {
-    	
+
         	background-color: #0099ff;
-        	
+
         }
-        
+
         .ui-selected {
-        
+
         	background-color: #0099ff;
         	color: #fff;
-        	
+
         	.light {
             	@include opacity( 1 );
         	}
-        	
+
         }
-    	
+
     } // #selectable
-	
+
 } // #toc
 
 // PROFILE PANEL
@@ -871,45 +875,45 @@ p {
 	@include clear;
 	@include box-sizing( border-box );
 	z-index: 20;
-	
+
 	.photo {
-	
+
     	width: rem( 200px );
     	height: rem( 300px );
     	margin-right: rem( 10px );
     	float: left;
-    	
+
     	img{
         	margin: 0 auto;
         	padding: 0;
         	max-height: rem( 300px );
         	max-width: rem( 200px );
         }
-        
+
     }
-	
+
 	.bio {
-    	
+
     	display: inline;
     	color: #000;
     	line-height: rem( 20px );
     	overflow: auto;
-    	
+
     	h2 {
         	margin: 0 0 rem( 14px );
     	}
-    	
+
     }
-    
+
     .profileCloseBtn {
-    
+
         position: absolute;
         font-size: rem( 12px );
         line-height: rem( 12px );
         top: rem( 5px );
         right: rem( 16px );
         @include clear;
-        
+
         a, a:link, a:visited, a:hover {
             display: block;
             text-decoration: none;
@@ -917,9 +921,9 @@ p {
             font-size: rem( 32px );
             line-height: rem( 32px );
         }
-        
+
     }
-	
+
 } // #profile
 
 // DOWNLOAD BAR
@@ -929,19 +933,19 @@ p {
 	margin: rem( 10px ) 0;
 	text-align: right;
 	@include clear;
-	
+
 	ul {
-	
+
 	    display: inline-block;
     	margin: 0 0 0 rem( 30px );
     	padding: 0;
     	list-style: none;
-    	
+
     	li {
-    	
+
         	display: inline-block;
         	margin-left: rem( 10px );
-        	
+
         	a, a:visited {
             	display: block;
             	color: #818181;
@@ -953,7 +957,7 @@ p {
             	@include transition-duration( .3s );
             	@include transition-timing-function( ease-out );
         	}
-        	
+
         	a:hover {
         	    color: #333;
             	border-color: #333;
@@ -962,20 +966,20 @@ p {
             	@include transition-duration( .3s );
             	@include transition-timing-function( ease-in );
             }
-        	
+
         }
-    	
+
     } // ul
-	
+
 } // #download_bar
 
 // video js
 .vjs-default-skin {
-    
+
     .vjs-fullscreen-control {
         display: none;
     }
-    
+
     .vjs-volume-control {
         margin-left: rem( 10px ) !important;
         margin-right: rem( 20px ) !important;
@@ -984,15 +988,15 @@ p {
 
 // AJAX ERROR
 #errorMsg {
-    
+
     color: #000;
 	padding: 0 rem( 10px );
-	
+
 	p:first-child {
     	font-size: rem( 18px );
     	color: #f00;
 	}
-	
+
 }
 
 // NO JAVASCRIPT ERROR
@@ -1000,17 +1004,17 @@ noscript {
 
 	display: block;
 	margin: rem( 15px );
-	
+
 	h1 {
     	font-size: rem( 24px );
     	color: #900;
     }
-    
+
     p {
     	font-size: rem( 16px );
     	line-height: rem( 20px );
     }
-	
+
 }
 
 // legacy elements

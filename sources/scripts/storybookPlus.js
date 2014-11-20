@@ -375,7 +375,9 @@ $.fn.setupPlayer = function() {
 
         }
 
-        $( "#note" ).html( "<div class=\"noNotes\">" + logo + "</div>" );
+        if ( enabledNote === false ) {
+            $( "#note" ).addClass( "noNotes" ).html( "<div class=\"logo\">" + logo + "</div>" );
+        }
 
     }
 
