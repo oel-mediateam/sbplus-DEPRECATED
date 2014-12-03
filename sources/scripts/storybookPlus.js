@@ -44,13 +44,11 @@ var videoPlayer = null,
     audioPlaying = false,
     sources;
 
-var ROOT_PATH = "https://media.uwex.edu/media/storybook_plus_v2/";
+var ROOT_PATH = "https://media.uwex.edu/content/media/storybook_plus_v2/";
 
 var tech = navigator.userAgent;
-var IS_FIREFOX = (/Firefox/i).test( tech );
 var IS_CHROME = (/Chrome/i).test( tech );
 var IS_WINDOWS = (/Windows/i).test( tech );
-var IS_MAC = (/Macintosh/i).test( tech );
 // var IS_CHROME_39 = (/chrome\/[3][9]/i).test( tech );
 
 // when document finished loading and ready
@@ -900,7 +898,9 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
 
     };
 
-    if ( ( IS_FIREFOX && IS_MAC ) || ( IS_WINDOWS && IS_CHROME ) ) {
+    // console.log($.fn.supportMp4());
+
+    if ( $.fn.supportMp4() === false || ( IS_WINDOWS && IS_CHROME ) ) {
 
         options.techOrder = ["flash", "html5"];
         options.plugins = null;
@@ -2046,6 +2046,22 @@ $.fn.parseArrayImg = function( arr ) {
 
      return !!document.createElement( 'video' )
                     .canPlayType( 'video/webm; codecs="vp8.0, vorbis"' );
+
+ };
+
+ /**
+ * Check for MP4 support
+ * @since 2.5.8
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return bool
+ *
+ */
+ $.fn.supportMp4 = function () {
+
+     return !!document.createElement( 'video' )
+                    .canPlayType( 'video/mp4; codecs="avc1.4D401E, mp4a.40.2"' );
 
  };
 
