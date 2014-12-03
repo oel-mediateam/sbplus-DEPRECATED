@@ -4,6 +4,8 @@
 * Updated to work with new media server
 * Added a global variable to hold the server root directory
 * Removed "open in a new tab" on mobile device
+* Fixed the notes background color, so it is not gray when there are notes
+* Improved MP4 support detection rather than browser sniffing
 
 ---
 ###2.5.7 (11-05-2014)
