@@ -15,3 +15,6 @@ build/demo
 
 # ingore build2
 build2/
+
+#ingore test file
+build/test.html
