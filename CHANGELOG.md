@@ -1,6 +1,8 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
+* Updated VideoJS to version 4.11.1
+* Replace VideoJS Resolution switcher to (videojs-resolution-selector)[https://github.com/dominic-p/videojs-resolution-selector]
 * Updated to work with new media server
 * Added a global variable to hold the server root directory
 * Removed "open in a new tab" on mobile device

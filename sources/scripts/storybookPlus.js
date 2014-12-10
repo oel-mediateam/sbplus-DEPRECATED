@@ -44,7 +44,7 @@ var videoPlayer = null,
     audioPlaying = false,
     sources;
 
-var ROOT_PATH = "https://media.uwex.edu/content/media/storybook_plus_v2/";
+var ROOT_PATH = "https://media.uwex.edu/sandbox/ethan/content/media/storybook_plus_v2/";
 
 var tech = navigator.userAgent;
 var IS_CHROME = (/Chrome/i).test( tech );
@@ -190,7 +190,7 @@ $.fn.parseContent = function( xml ) {
     // check image file format
     if ( SLIDEFORMAT.length ) {
 
-        slideImgFormat = SLIDEFORMAT;
+        slideImgFormat = SLIDEFORMAT.toLowerCase();
 
     }
 
@@ -205,7 +205,7 @@ $.fn.parseContent = function( xml ) {
     TOPIC.each( function() {
 
         topicTitle[topicCount] = $.trim( $( this ).attr( 'title' ) );
-        topicSrc[topicCount] = $.trim( $( this ).attr( 'src' ) );
+        topicSrc[topicCount] = $.trim( $( this ).attr( 'src' ).toLowerCase() );
 
         if ( enabledNote ) {
 
@@ -552,11 +552,11 @@ $.fn.initializePlayer = function() {
 $.fn.loadSlide = function( slideSource, sNum ) {
 
     var img;
-    var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 );
+    var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 ).toLowerCase();
 
     if ( slideSource !== "quiz" ) {
 
-        slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 );
+        slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 ).toLowerCase();
 
         if ( slideSource === "kaltura:" ) {
 
@@ -767,12 +767,14 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "video":
 
             var subtitle = ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" );
+
             var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />";
 
             $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
 
                 $( "#progressing" ).fadeOut();
-                $.fn.loadVideoJsPlayer(playerID);
+
+                $.fn.loadVideoJsPlayer(playerID, src);
 
             } );
 
@@ -877,7 +879,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * load videojs player
  * @since 2.4.1
- * @updated 2.5.7
+ * @updated 2.5.8
  * @author Ethan S. Lin
  *
  * @param strings, video element id
@@ -894,7 +896,9 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
         "controls": true,
         "autoplay": true,
         "preload": "auto",
-        plugins: { resolutions: true }
+        plugins: {
+            resolutionSelector: { default_res: 'normal' }
+        }
 
     };
 
