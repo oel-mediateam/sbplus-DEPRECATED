@@ -205,7 +205,7 @@ $.fn.parseContent = function( xml ) {
     TOPIC.each( function() {
 
         topicTitle[topicCount] = $.trim( $( this ).attr( 'title' ) );
-        topicSrc[topicCount] = $.trim( $( this ).attr( 'src' ).toLowerCase() );
+        topicSrc[topicCount] = $.trim( $( this ).attr( 'src' ) );
 
         if ( enabledNote ) {
 
@@ -541,7 +541,7 @@ $.fn.initializePlayer = function() {
 /**
  * Load current slide
  * @since 2.0.0
- * @updated 2.5.1
+ * @updated 2.5.8
  *
  * @author Ethan S. Lin
  *
@@ -552,19 +552,21 @@ $.fn.initializePlayer = function() {
 $.fn.loadSlide = function( slideSource, sNum ) {
 
     var img;
-    var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 ).toLowerCase();
+    var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 );
 
     if ( slideSource !== "quiz" ) {
 
-        slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 ).toLowerCase();
+        slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 );
 
-        if ( slideSource === "kaltura:" ) {
+        /*
+if ( slideSource === "kaltura:" ) {
 
             if ( srcName.split( ":" ).length !== 1 ) {
                 srcName = srcName.split( ":" );
             }
 
         }
+*/
 
     }
 
@@ -608,6 +610,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "image:":
 
             img = new Image();
+            srcName = srcName.toLowerCase();
 
             imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
             imgCaption = $( "#selectable li .title" ).get( sNum ).innerHTML;
@@ -634,6 +637,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "image-audio:":
 
             img = new Image();
+            srcName = srcName.toLowerCase();
 
             imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
             imgCaption = $( "#selectable li .title" ).get( sNum ).innerHTML;
@@ -689,6 +693,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "video:":
 
+            srcName = srcName.toLowerCase();
             $.fn.setupVideoPlayer( 'video', srcName );
 
         break;
@@ -713,6 +718,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "swf:":
 
+            srcName = srcName.toLowerCase();
             $( "#slide" ).html( "<object width=\"640\" height=\"360\" type=\"application/x-shockwave-flash\" data=\"assets/swf/" + srcName + ".swf\"><param name=\"movie\" value=\"assets/swf/" + srcName + ".swf\" /><div id=\"errorMsg\"><p>Error: Adobe Flash Player is not enabled or installed!</p><p>Adobe Flash Player is required to view this slide. Please enable or <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">install Adobe Flash Player</a>.</p></div></object>" ).promise().done( function() {
 
                 $( "#progressing" ).fadeOut();
