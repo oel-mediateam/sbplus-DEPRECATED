@@ -585,6 +585,7 @@ if ( slideSource === "kaltura:" ) {
         videoPlayer.dispose();
         videoPlayer = null;
         $( '#vp' ).empty().hide();
+        $( '#slideNote' ).focus();
     }
 
     // if audio is playing
