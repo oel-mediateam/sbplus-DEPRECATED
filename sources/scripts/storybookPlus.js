@@ -582,10 +582,14 @@ if ( slideSource === "kaltura:" ) {
     }
 
     if ( videoPlayer !== null ) {
+
+        $( '.vjs-control' ).blur();
+        $( '.vjs-menu-item' ).blur();
+
         videoPlayer.dispose();
         videoPlayer = null;
         $( '#vp' ).empty().hide();
-        $( '#slideNote' ).focus();
+
     }
 
     // if audio is playing
