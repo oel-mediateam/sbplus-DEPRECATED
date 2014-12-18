@@ -44,7 +44,7 @@ var videoPlayer = null,
     audioPlaying = false,
     sources;
 
-var ROOT_PATH = "https://media.uwex.edu/sandbox/ethan/content/media/storybook_plus_v2/";
+var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
 
 var tech = navigator.userAgent;
 var IS_CHROME = (/Chrome/i).test( tech );
@@ -341,34 +341,34 @@ $.fn.setupPlayer = function() {
 
         var dir = $.fn.getProgramDirectory();
 
-        var logo = "<img src=\"" + ROOT_PATH +"sources/img/uw_ex_ceoel_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
+        var logo = "<img src=\"" + ROOT_PATH +"img/uw_ex_ceoel_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
 
         $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
 
         switch( dir ) {
 
                 case "smgt":
-                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_smgt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_smgt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
                 break;
 
                 case "hwm":
-                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_hwm_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_hwm_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
                 break;
 
                 case "himt":
-                    logo = "<img src=\"" + ROOT_PATH + "/sources/img/uw_himt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_himt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
                 break;
 
                 case "il":
-                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_il_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_il_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
                 break;
 
                 case "flx":
-                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_flx_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_flx_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
                 break;
 
                 case "bps":
-                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
                 break;
 
         }
@@ -932,7 +932,7 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
 
     } );
 
-    videojs.options.flash.swf = ROOT_PATH + "sources/videoplayer/video-js.swf";
+    videojs.options.flash.swf = ROOT_PATH + "videoplayer/video-js.swf";
 
 };
 
@@ -1698,7 +1698,7 @@ $.fn.loadProfilePhoto = function() {
 
     } ).error( function() {
 
-        $( "#profile .photo" ).html( "<img src=\"" + ROOT_PATH + "sources/img/profile.png\" width=\"200\" height=\"300\" alt=\"No Profile Photo\" border=\"0\" />" );
+        $( "#profile .photo" ).html( "<img src=\"" + ROOT_PATH + "img/profile.png\" width=\"200\" height=\"300\" alt=\"No Profile Photo\" border=\"0\" />" );
 
     } ).attr( {
 
