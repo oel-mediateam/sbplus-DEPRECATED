@@ -1,6 +1,9 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
+
+---
+###2.5.8 (12-23-2014)
 * Updated VideoJS to version 4.11.1
 * Replace VideoJS Resolution switcher to (videojs-resolution-selector)[https://github.com/dominic-p/videojs-resolution-selector]
 * Updated to work with new media server
@@ -9,7 +12,6 @@
 * Fixed the notes background color, so it is not gray when there are notes
 * Improved MP4 support detection rather than browser sniffing
 
----
 ###2.5.7 (11-05-2014)
 * Fixed an issue where Flash player is conflicting with resolution switcher
 * Improved Flash player fallback for MP4 in Firefox
