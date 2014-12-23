@@ -44,7 +44,7 @@ var videoPlayer = null,
     audioPlaying = false,
     sources;
 
-var ROOT_PATH = "https://media.uwex.edu/content/media/storybook_plus_v2/";
+var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
 
 var tech = navigator.userAgent;
 var IS_CHROME = (/Chrome/i).test( tech );
@@ -190,7 +190,7 @@ $.fn.parseContent = function( xml ) {
     // check image file format
     if ( SLIDEFORMAT.length ) {
 
-        slideImgFormat = SLIDEFORMAT;
+        slideImgFormat = SLIDEFORMAT.toLowerCase();
 
     }
 
@@ -341,34 +341,34 @@ $.fn.setupPlayer = function() {
 
         var dir = $.fn.getProgramDirectory();
 
-        var logo = "<img src=\"" + ROOT_PATH +"sources/img/uw_ex_ceoel_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
+        var logo = "<img src=\"" + ROOT_PATH +"img/uw_ex_ceoel_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
 
         $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
 
         switch( dir ) {
 
                 case "smgt":
-                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_smgt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_smgt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
                 break;
 
                 case "hwm":
-                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_hwm_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_hwm_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
                 break;
 
                 case "himt":
-                    logo = "<img src=\"" + ROOT_PATH + "/sources/img/uw_himt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_himt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
                 break;
 
                 case "il":
-                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_il_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_il_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
                 break;
 
                 case "flx":
-                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_flx_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_flx_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
                 break;
 
                 case "bps":
-                    logo = "<img src=\"" + ROOT_PATH + "sources/img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
+                    logo = "<img src=\"" + ROOT_PATH + "img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
                 break;
 
         }
@@ -541,7 +541,7 @@ $.fn.initializePlayer = function() {
 /**
  * Load current slide
  * @since 2.0.0
- * @updated 2.5.1
+ * @updated 2.5.8
  *
  * @author Ethan S. Lin
  *
@@ -558,13 +558,15 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 );
 
-        if ( slideSource === "kaltura:" ) {
+        /*
+if ( slideSource === "kaltura:" ) {
 
             if ( srcName.split( ":" ).length !== 1 ) {
                 srcName = srcName.split( ":" );
             }
 
         }
+*/
 
     }
 
@@ -580,9 +582,14 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     }
 
     if ( videoPlayer !== null ) {
+
+        $( '.vjs-control' ).blur();
+        $( '.vjs-menu-item' ).blur();
+
         videoPlayer.dispose();
         videoPlayer = null;
         $( '#vp' ).empty().hide();
+
     }
 
     // if audio is playing
@@ -608,6 +615,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "image:":
 
             img = new Image();
+            srcName = srcName.toLowerCase();
 
             imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
             imgCaption = $( "#selectable li .title" ).get( sNum ).innerHTML;
@@ -634,6 +642,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "image-audio:":
 
             img = new Image();
+            srcName = srcName.toLowerCase();
 
             imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
             imgCaption = $( "#selectable li .title" ).get( sNum ).innerHTML;
@@ -689,6 +698,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "video:":
 
+            srcName = srcName.toLowerCase();
             $.fn.setupVideoPlayer( 'video', srcName );
 
         break;
@@ -713,6 +723,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "swf:":
 
+            srcName = srcName.toLowerCase();
             $( "#slide" ).html( "<object width=\"640\" height=\"360\" type=\"application/x-shockwave-flash\" data=\"assets/swf/" + srcName + ".swf\"><param name=\"movie\" value=\"assets/swf/" + srcName + ".swf\" /><div id=\"errorMsg\"><p>Error: Adobe Flash Player is not enabled or installed!</p><p>Adobe Flash Player is required to view this slide. Please enable or <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">install Adobe Flash Player</a>.</p></div></object>" ).promise().done( function() {
 
                 $( "#progressing" ).fadeOut();
@@ -767,12 +778,14 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "video":
 
             var subtitle = ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" );
+
             var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />";
 
             $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
 
                 $( "#progressing" ).fadeOut();
-                $.fn.loadVideoJsPlayer(playerID);
+
+                $.fn.loadVideoJsPlayer(playerID, src);
 
             } );
 
@@ -877,7 +890,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * load videojs player
  * @since 2.4.1
- * @updated 2.5.7
+ * @updated 2.5.8
  * @author Ethan S. Lin
  *
  * @param strings, video element id
@@ -894,7 +907,9 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
         "controls": true,
         "autoplay": true,
         "preload": "auto",
-        plugins: { resolutions: true }
+        plugins: {
+            resolutionSelector: { default_res: 'normal' }
+        }
 
     };
 
@@ -917,7 +932,7 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
 
     } );
 
-    videojs.options.flash.swf = ROOT_PATH + "sources/videoplayer/video-js.swf";
+    videojs.options.flash.swf = ROOT_PATH + "videoplayer/video-js.swf";
 
 };
 
@@ -1683,7 +1698,7 @@ $.fn.loadProfilePhoto = function() {
 
     } ).error( function() {
 
-        $( "#profile .photo" ).html( "<img src=\"" + ROOT_PATH + "sources/img/profile.png\" width=\"200\" height=\"300\" alt=\"No Profile Photo\" border=\"0\" />" );
+        $( "#profile .photo" ).html( "<img src=\"" + ROOT_PATH + "img/profile.png\" width=\"200\" height=\"300\" alt=\"No Profile Photo\" border=\"0\" />" );
 
     } ).attr( {
 
