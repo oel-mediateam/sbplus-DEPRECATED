@@ -1,5 +1,5 @@
 #Storybook Plus (SB+)
-**_version 2.5.8_**
+**_version 2.5.9_**
 
 ---
 ###Web Browser Requirements

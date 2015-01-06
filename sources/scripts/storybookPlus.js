@@ -3,11 +3,11 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.5.8
- * Released Wednesday, November 5, 2014
+ * @version: 2.5.9
+ * Released Tuesday, January 6, 2015
  *
  * @license: The MIT License (MIT)
- * Copyright (c) 2014 UW-EX CEOEL
+ * Copyright (c) 2015 UW-EX CEOEL
  *
  */
 
@@ -417,6 +417,7 @@ $.fn.setupPlayer = function() {
 /**
  * Initialize the player
  * @since 2.0.0
+ * @updated 2.5.9
  *
  * @author Ethan S. Lin
  * @return void
@@ -437,7 +438,12 @@ $.fn.initializePlayer = function() {
     $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a id=\"profileClose\" href=\"#\">&times;</a></div>" );
     $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
 
-    $( "#player" ).append( "<div id=\"progressing\"></div>" );
+
+    if ( media !== 'Video' ) {
+
+        $( "#player" ).append( "<div id=\"progressing\"></div>" );
+
+    }
 
 	// bind for profile panel open/close toggle
     $( "#info, a.instructorName, #profileClose" ).on( "click", function() {

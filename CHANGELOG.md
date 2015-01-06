@@ -1,7 +1,7 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
-*none at the moment*
+* Removed progressing loader when all slides are video
 
 ---
 ###2.5.8 (12-23-2014)
