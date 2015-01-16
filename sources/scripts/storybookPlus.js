@@ -4,10 +4,10 @@
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
  * @version: 2.5.9
- * Released Tuesday, January 6, 2015
+ * Released Friday, January 16, 2015
  *
  * @license: The MIT License (MIT)
- * Copyright (c) 2015 UW-EX CEOEL
+ * Copyright (c) 2013-2015 UWEX CEOEL Media Services
  *
  */
 
@@ -46,40 +46,13 @@ var videoPlayer = null,
 
 var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
 
-var tech = navigator.userAgent;
-var IS_CHROME = (/Chrome/i).test( tech );
-var IS_WINDOWS = (/Windows/i).test( tech );
+// var tech = navigator.userAgent;
+// var IS_CHROME = (/Chrome/i).test( tech );
+// var IS_WINDOWS = (/Windows/i).test( tech );
 // var IS_CHROME_39 = (/chrome\/[3][9]/i).test( tech );
 
 // when document finished loading and ready
 $( document ).ready( function() {
-
-    /*
-var ua = navigator.userAgent,
-        checker = {
-
-            ios: ua.match( /(iPhone|iPod|iPad)/i ),
-            android: ua.match( /Android/i ),
-            blackberry: ua.match( /BlackBerry/i )
-
-        };
-
-    var mobile = ( $.fn.getParameterByName( "m" ) === "0" ) ? false : true;
-
-    if ( ( checker.ios || checker.blackberry || checker.android ) && mobile ) {
-
-        var location = window.location.href,
-            locTemp;
-
-        locTemp = location.substr( location.indexOf( "." ) );
-        location = "http://mediastreamer" + locTemp + "?m=0";
-
-        $( "body" ).html( "<div class=\"mobile\"><a href=\"" + location + "\" target=\"_blank\"><img src=\"https://mediastreamer.doit.wisc.edu/uwli-ltc/media/storybook_plus/img/view_on_full_site.png\" width=\"450px\" height=\"315px\" alt=\"Launch Presentation in New Window\" border=\"0\" /></a></div>" );
-
-        return false;
-
-    }
-*/
 
     $.fn.getLessonContent( "assets/topic.xml" );
 
@@ -547,7 +520,7 @@ $.fn.initializePlayer = function() {
 /**
  * Load current slide
  * @since 2.0.0
- * @updated 2.5.8
+ * @updated 2.5.9
  *
  * @author Ethan S. Lin
  *
@@ -563,16 +536,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     if ( slideSource !== "quiz" ) {
 
         slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 );
-
-        /*
-if ( slideSource === "kaltura:" ) {
-
-            if ( srcName.split( ":" ).length !== 1 ) {
-                srcName = srcName.split( ":" );
-            }
-
-        }
-*/
 
     }
 
@@ -613,7 +576,6 @@ if ( slideSource === "kaltura:" ) {
 
     }
 
-    //$( "#slide" ).html( "" ).show();
     $( "#slide" ).html( "" );
 
     switch ( slideSource ) {
@@ -632,7 +594,6 @@ if ( slideSource === "kaltura:" ) {
                 $( "#slide" ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
                 $( this ).fadeIn();
-                $( "#progressing" ).fadeOut();
 
             } ).error( function() {
 
@@ -659,7 +620,6 @@ if ( slideSource === "kaltura:" ) {
                 $( "#slide" ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
                 $( this ).fadeIn();
-                $( "#progressing" ).fadeOut();
 
                 if ( !audioPlaying ) {
 
@@ -732,8 +692,6 @@ if ( slideSource === "kaltura:" ) {
             srcName = srcName.toLowerCase();
             $( "#slide" ).html( "<object width=\"640\" height=\"360\" type=\"application/x-shockwave-flash\" data=\"assets/swf/" + srcName + ".swf\"><param name=\"movie\" value=\"assets/swf/" + srcName + ".swf\" /><div id=\"errorMsg\"><p>Error: Adobe Flash Player is not enabled or installed!</p><p>Adobe Flash Player is required to view this slide. Please enable or <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">install Adobe Flash Player</a>.</p></div></object>" ).promise().done( function() {
 
-                $( "#progressing" ).fadeOut();
-
             } );
 
         break;
@@ -742,7 +700,6 @@ if ( slideSource === "kaltura:" ) {
 
             $( "#slideNote" ).addClass( "quizSlide" );
             $.fn.setupQuiz( sNum );
-            $( "#progressing" ).fadeOut();
 
         break;
 
@@ -761,6 +718,16 @@ if ( slideSource === "kaltura:" ) {
     }
 
     $( this ).updateSlideNum( sNum );
+
+    if ( $( "#progressing" ).length ) {
+
+        $( "#progressing" ).promise().done( function() {
+
+            $(this).fadeOut();
+
+        } );
+
+    }
 
 };
 
@@ -789,12 +756,9 @@ if ( slideSource === "kaltura:" ) {
 
             $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
 
-                $( "#progressing" ).fadeOut();
-
                 $.fn.loadVideoJsPlayer(playerID, src);
 
             } );
-
 
         break;
 
@@ -871,11 +835,7 @@ if ( slideSource === "kaltura:" ) {
                     video += "</video>";
 
                     // insert video tag to #vp element
-                    $( "#vp" ).html( video ).promise().done( function() {
-
-                        $( "#progressing" ).fadeOut();
-
-                    } );
+                    $( "#vp" ).html( video );
 
                     $.fn.loadVideoJsPlayer(playerID);
 
@@ -919,9 +879,7 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
 
     };
 
-    // console.log($.fn.supportMp4());
-
-    if ( $.fn.supportMp4() === false || ( IS_WINDOWS && IS_CHROME ) ) {
+    if ( $.fn.supportMp4() === false && $.fn.supportWebm() === false ) {
 
         options.techOrder = ["flash", "html5"];
         options.plugins = null;

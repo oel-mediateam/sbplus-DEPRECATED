@@ -380,6 +380,7 @@ p {
     // SLIDE LOADING SPINNER
     #progressing {
         position: absolute;
+        display: none;
         top: rem( 200px );
         left: rem( 315px );
         width: rem( 30px );

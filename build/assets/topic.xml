@@ -147,6 +147,13 @@
 		</note>
 	</topic>
 
+	<topic src="kaltura:1_vh2nyd0m" title="Embedded Kaltura Video 2">
+		<quiz />
+		<note>
+			<![CDATA[<p>This slide contains an embedded Kaltura video.</p>]]>
+		</note>
+	</topic>
+
 	<topic src="quiz" title="What sound is that?">
 		<quiz type="mc">
 			<question audio="lugia"><![CDATA[Who's cry does it belong to?]]></question>

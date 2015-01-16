@@ -1,9 +1,15 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
-* Removed progressing loader when all slides are video
+_none at the moment_
 
 ---
+###2.5.9 (01-16-2015)
+* Removed progressing loader when all slides are video
+* Improved fading out progressing loader
+* Updated kWidget to version 2.25
+* Google Chrome resolved the HTML5 video text aliasing issue on Windows, so HTML5 video player is back.
+
 ###2.5.8 (12-23-2014)
 * Updated VideoJS to version 4.11.1
 * Replace VideoJS Resolution switcher to [videojs-resolution-selector](https://github.com/dominic-p/videojs-resolution-selector)

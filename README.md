@@ -18,11 +18,11 @@
 * Apple Safari 8
 * Opera - latest version
 
-SB+ may not work properly with beta or pre-release versions of these browsers. Please use the latest stable version above for the best experience.
+SB+ may not work properly with beta or pre-release versions of web browsers. Please use the latest stable version for the best viewing experience.
 
 ---
 ###Documentation
-For more details and how to setup a SB+ presentation, please visit the [Storybook Plus Documentation](https://mediastreamer.doit.wisc.edu/uwli-ltc/media/documentation/sbplus/v2/).
+For more details and how to setup a SB+ presentation, please visit the [Storybook Plus Documentation](https://media.uwex.edu/resources/documentation/storybook-plus-v2/).
 
 ---
 ###Bug Reporting and Questions

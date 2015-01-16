@@ -271,6 +271,7 @@ p {
       text-decoration: none; }
   #player #progressing {
     position: absolute;
+    display: none;
     top: 14.28571rem;
     left: 22.5rem;
     width: 2.14286rem;
