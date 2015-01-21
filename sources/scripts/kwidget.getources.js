@@ -49,6 +49,7 @@ if( ! window.kWidget ){
 			var baseUrl = serviceUrl + '/p/' + settings.partnerId +
 					'/sp/' + settings.partnerId + '00/playManifest';
 
+
 			for( var i in result[0]['flavorAssets'] ){
 
 				var asset = result[0]['flavorAssets'][i];
@@ -83,7 +84,7 @@ if( ! window.kWidget ){
 					continue;
 
 				} else {
-					src += '/flavorId/' + asset.id + '/format/url/protocol/http';
+					src += '/flavorId/' + asset.id + '/format/url/protocol/https';
 				}
 
 				// add the file extension:

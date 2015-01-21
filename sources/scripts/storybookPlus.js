@@ -270,7 +270,7 @@ $.fn.parseContent = function( xml ) {
 /**
  * Set up the player
  * @since 2.0.0
- * @updated 2.5.8
+ * @updated 2.5.9
  *
  * @author Ethan S. Lin
  * @return void
@@ -321,6 +321,7 @@ $.fn.setupPlayer = function() {
         switch( dir ) {
 
                 case "smgt":
+                case "msmgt":
                     logo = "<img src=\"" + ROOT_PATH + "img/uw_smgt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
                 break;
 

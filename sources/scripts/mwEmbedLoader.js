@@ -83,8 +83,8 @@ subParamKey]);}}else{param[requestInx+':'+paramKey]=this.parseParam(requestObjec
 ;}}})(window.kWidget);mw.setConfig('debug', false );
 mw.setConfig('Mw.XmlProxyUrl', 'http://cdnapi.kaltura.com/html5/html5lib/v2.25/simplePhpXMLProxy.php' );
 mw.setConfig('Kaltura.UseManifestUrls', true );
-mw.setConfig('Kaltura.Protocol', 'http' );
-mw.setConfig('Kaltura.ServiceUrl', 'http://cdnapi.kaltura.com' );
+mw.setConfig('Kaltura.Protocol', 'https' );
+mw.setConfig('Kaltura.ServiceUrl', 'https://www.kaltura.com' );
 mw.setConfig('Kaltura.ServiceBase', '/api_v3/index.php?service=' );
 mw.setConfig('Kaltura.CdnUrl', 'http://cdnbakmi.kaltura.com' );
 mw.setConfig('Kaltura.StatsServiceUrl', 'http://stats.kaltura.com' );
