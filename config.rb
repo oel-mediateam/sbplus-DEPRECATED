@@ -9,7 +9,7 @@ images_dir = "build/sources/img/"
 javascripts_dir = "sources/scripts/"
 fonts_dir = "sources/fonts/"
 
-output_style = :compressed
+output_style = :nested
 environment = :production
 
 relative_assets = true
