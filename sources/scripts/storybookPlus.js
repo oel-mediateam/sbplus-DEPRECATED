@@ -73,20 +73,14 @@ $( document ).ready( function() {
  */
 $.fn.getLessonContent = function( file ) {
 
-    $.ajaxSetup( {
-
+    $.ajax( {
         url: file,
         type: 'GET',
         dataType: 'xml',
         accepts: 'xml',
         content: 'xml',
         contentType: 'xml; charset="utf-8"',
-        cache: false
-
-    } );
-
-    $.ajax( {
-
+        cache: false,
         encoding: 'UTF-8',
         beforeSend: function ( xhr ) {
 
@@ -279,7 +273,6 @@ $.fn.parseContent = function( xml ) {
  */
 $.fn.setupPlayer = function() {
 
-    var directory = $.fn.getDirectory();
     var selfAssessmentIcon;
 
     version = ( $( "#storybook_plus_wrapper" ).attr( "data-version" ) === undefined ) ? "" : $( "#storybook_plus_wrapper" ).attr( "data-version" ).replace(/\./g, "");
@@ -386,8 +379,7 @@ $.fn.setupPlayer = function() {
     } );
 
     // download files
-    $.fn.getDownloadableFile( directory, "mp3", "audio/mpeg" );
-    $.fn.getDownloadableFile( directory, "pdf", "application/pdf" );
+    $.fn.getDownloadableFiles();
 
 };
 
@@ -627,29 +619,36 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
                 if ( !audioPlaying ) {
 
-                    if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
+                    $.ajax( {
 
-                        $( "#ap" ).show();
+                        url: 'assets/audio/' + srcName + '.mp3',
+                        type:'HEAD',
+                        error: function() {
 
-                        if (firstAudioLoad !== true) {
+                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
 
-                		    $.fn.loadAudioPlayer( "#apc", srcName );
-                            firstAudioLoad = true;
+                        },
+                        success: function() {
 
-    					} else {
+                            $( "#ap" ).show();
 
-    						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-    						audioPlayer.setSrc( sources );
+                            if (firstAudioLoad !== true) {
 
-    					}
+                    		    $.fn.loadAudioPlayer( "#apc", srcName );
+                                firstAudioLoad = true;
 
-                    } else {
+        					} else {
 
-                        $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
+        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
+        						audioPlayer.setSrc( sources );
 
-                    }
+        					}
 
-                    audioPlaying = true;
+        					audioPlaying = true;
+
+                        }
+
+                    } );
 
                 }
 
@@ -754,13 +753,21 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "video":
 
-            var subtitle = ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" );
+            var subtitle = "";
 
-            var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />";
+            $.get( 'assets/video/' + src + '.vtt', function() {
 
-            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
+                subtitle = "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">";
 
-                $.fn.loadVideoJsPlayer(playerID, src);
+            } ).always( function() {
+
+                var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />";
+
+                $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
+
+                    $.fn.loadVideoJsPlayer(playerID, src);
+
+                } );
 
             } );
 
@@ -771,9 +778,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
             if ( kalturaLoaded === 0 ) {
 
-                $.getScript( '../sources/scripts/mwembedloader.js' ).done( function() {
+                $.getScript( '../sources/scripts/mwembedloader.js', function() {
 
-                    $.getScript( '../sources/scripts/kwidgetgetsources.js' ).done( function() {
+                    $.getScript( '../sources/scripts/kwidgetgetsources.js', function() {
 
                         $.fn.requestKalturaAPI( playerID, src );
                         kalturaLoaded = 1;
@@ -1724,34 +1731,45 @@ $.fn.loadProfilePhoto = function() {
 /**
  * Request downloadable files
  * @since 2.1.0
+ * @updated 2.6.0
  *
  * @author Ethan S. Lin
  * @param strings, file name and extension
  * @return void
  *
  */
-$.fn.getDownloadableFile = function( file, ext, contentType ) {
+$.fn.getDownloadableFiles = function() {
 
-    var newURL = file,
-        fileType = "Audio",
-        downloadBar = $( "#download_bar ul" ),
-        protocol = window.location.protocol;
+    var directory = $.fn.getDirectory();
+    var downloadBar = $( "#download_bar ul" );
+    var url = window.location.href;
 
-	if ( protocol !== "http:" ) {
-		var url = window.location.href;
-		url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ).replace( "https", "http" );
-		newURL = url + file;
-	}
+	url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ) + directory;
 
-	if ( ext === "pdf" ) {
-		fileType = "Transcript";
-	}
+	// get transcript first
+	$.get( url + '.pdf', function() {
 
-    if ( $.fn.fileExists( file, ext, contentType ) ) {
+    	downloadBar.append("<li><a href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Transcript</a></li>");
 
-        downloadBar.append("<li><a href=\"" + newURL + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> " + fileType + "</a></li>");
+	} ).always( function() {
 
-    }
+    	// get audio file
+    	$.get( url + '.mp3', function() {
+
+        	downloadBar.append("<li><a href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Audio</a></li>");
+
+    	} ).always( function() {
+
+        	// get package/zip file
+        	$.get( url + '.zip', function() {
+
+            	downloadBar.append("<li><a href=\"" + url + ".zip\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Supplement</a></li>");
+
+        	} );
+
+    	} );
+
+	} );
 
 };
 
@@ -1867,53 +1885,6 @@ $.fn.getDirectory = function() {
 	src = src[src.length - 2];
 
 	return src;
-
-};
-
-/**
- * Check for file exisitance
- * @since 2.1.0
- *
- * @author Ethan S. Lin
- *
- * @param strings, file path, extension, and content type
- * @return bool
- *
- */
-$.fn.fileExists = function( file, ext, content_type ) {
-
-    var exists,
-        cType = content_type;
-
-    switch ( ext ) {
-
-        case "pdf":
-            cType = "application/pdf";
-        break;
-
-    }
-
-    $.ajax( {
-
-        url: file + "." + ext,
-        type: "HEAD",
-        dataType: "text",
-        contentType: cType,
-        async: false,
-        beforeSend: function( xhr ) {
-            xhr.overrideMimeType( cType );
-            xhr.setRequestHeader( "Accept", cType );
-        },
-        success: function() {
-            exists = true;
-        },
-        error: function() {
-            exists = false;
-        }
-
-    } );
-
-    return exists;
 
 };
 
