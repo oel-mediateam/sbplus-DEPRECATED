@@ -1,7 +1,17 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
-_none at the moment_
+* Added supplement/zip package file to the download bar
+* Refactored the code on getting downloadable files
+* Updated the screen space for lesson title and instructor name on the header bar
+* Fixed an issue where the table of contents disappeared after exiting expanded mode
+* Added table of contents label to the top of table of contents list
+* Table of contents control and button controls are not longer selectable/highlightable
+* Removed the duplicate "source" folder inside the "build" folder
+* Updated jQuery UI to version 1.11.2
+* Updated jQuery to version 2.1.3
+* Updated VideoJS to version 4.12.1
+* Updated code to load Kaltura API once and only when it is need
 
 ---
 ###2.5.9 (01-16-2015)
