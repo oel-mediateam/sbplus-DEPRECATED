@@ -19,6 +19,7 @@ $border-color: #ccc;
 @import "compass/css3/border-radius";
 @import "compass/css3/opacity";
 @import "compass/css3/transition";
+@import "compass/css3/user-interface";
 @import "compass/css3/box-shadow";
 @import "sbplus_fonts";
 
@@ -260,11 +261,19 @@ p {
     }
 
     #toc {
+
         position: absolute;
         height: rem( 507px );
         left: rem( 900px );
         border-left: rem( 3px ) solid $border-color;
         z-index: 13;
+
+        .toc_heading {
+
+            width: rem( 254px );
+
+        }
+
     }
 
     #profile {
@@ -343,7 +352,7 @@ p {
 
     	#lessonTitle {
         	display: inline-block;
-            width: rem( 505px );
+            width: rem( 610px );
             height: rem( 23px );
             white-space: nowrap;
             margin-right: rem( $gutter );
@@ -355,7 +364,7 @@ p {
 
     	#instructorName {
         	@extend #lessonTitle;
-        	width: rem( 315px );
+        	width: rem( 210px );
         	text-align: right;
         }
 
@@ -702,6 +711,10 @@ p {
     	background-color: #f7f7f7;
     	float: left;
 
+    	* {
+        	@include user-select(none);
+    	}
+
     	.btn {
         	display: block;
             width: 10%;
@@ -788,14 +801,39 @@ p {
 // TABLE OF CONTENT
 #toc {
 
+    position: relative;
 	width: rem( 258px );
 	height: rem( 546px );
 	border-bottom: rem( 1px ) solid $border-color;
 	border-right: rem( 1px ) solid $border-color;
 	background-color: #fff;
 	float: left;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: auto;
 	@include box-sizing( "border-box" );
+
+	* {
+    	@include user-select(none);
+	}
+
+    .toc_heading {
+
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: -ms-sticky;
+        position: -o-sticky;
+        position: sticky;
+        width: rem( 257px );
+        background-color: #636363;
+        color: #e8e8e8;
+        font-size: 12px;
+        text-align: center;
+        padding: rem( 4px ) 0;
+        border-bottom: rem( 1px ) #59a8dc solid;
+        top: 0px;
+        z-index: 10;
+
+    }
 
 	#selectable {
 
