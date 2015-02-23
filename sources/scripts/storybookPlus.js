@@ -773,7 +773,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
                 $.getScript( '../sources/scripts/mwembedloader.js' ).done( function() {
 
-                    $.getScript( '../sources/scripts/kwidget.getsources.js' ).done( function() {
+                    $.getScript( '../sources/scripts/kwidgetgetsources.js' ).done( function() {
 
                         $.fn.requestKalturaAPI( playerID, src );
                         kalturaLoaded = 1;
