@@ -3,8 +3,8 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.5.9
- * Released Friday, January 16, 2015
+ * @version: 2.6.0
+ * Released
  *
  * @license: The MIT License (MIT)
  * Copyright (c) 2013-2015 UWEX CEOEL Media Services
@@ -42,7 +42,8 @@ var videoPlayer = null,
     audioPlayer,
     firstAudioLoad = false,
     audioPlaying = false,
-    sources;
+    sources,
+    kalturaLoaded = 0;
 
 var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
 
@@ -354,6 +355,8 @@ $.fn.setupPlayer = function() {
     }
 
 	// loop to populate the table of contents
+	$( "#selectable" ).before( '<div class="toc_heading">Table of Contents</div>' );
+
     $.each( topicTitle, function( i ) {
 
 		if ( topicSrc[i] === "quiz" ) {
@@ -735,7 +738,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * Setup videojs player
  * @since 2.4.0
- * @updated 2.5.7
+ * @updated 2.6.0
  *
  * @author Ethan S. Lin
  *
@@ -765,92 +768,128 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "kaltura":
 
-            var entryId, captionId, captionExt, captionLang, flavors = {}, video;
 
-            kWidget.getSources( {
-                'partnerId': 1660872,
-                'entryId': src,
-                'callback': function( data ) {
+            if ( kalturaLoaded === 0 ) {
 
-                    entryId = data.entryId;
-                    captionId = data.captionId;
-                    captionExt = data.captionExt;
-                    captionLang = data.captionLang;
+                $.getScript( '../sources/scripts/mwembedloader.js' ).done( function() {
 
-                    for( var i in data.sources ) {
+                    $.getScript( '../sources/scripts/kwidget.getsources.js' ).done( function() {
 
-                        var source = data.sources[i];
+                        $.fn.requestKalturaAPI( playerID, src );
+                        kalturaLoaded = 1;
 
-                        if ( source.flavorParamsId === 487061 ) {
+                    } ); // end kwidget.getsources.js
 
-                            flavors.low = source.src;
+                } ); // end mwembedloader.js
 
-                        }
+            } else {
 
-                        if ( source.flavorParamsId === 487071 ) {
+                $.fn.requestKalturaAPI( playerID, src );
 
-                            flavors.normal = source.src;
-
-                        }
-
-                        if ( source.flavorParamsId === 487081 ) {
-
-                            flavors.high = source.src;
-
-                        }
-
-                        if ( source.flavorParamsId === 487111 ) {
-
-                            flavors.webm = source.src;
-
-                        }
-
-                    } // end for loop
-
-                    // video element opening tag
-                    video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
-
-                    // set low res vid if available
-                    if ( flavors.low !== undefined ) {
-                        video += "<source src=\"" + flavors.low + "\" type=\"video/mp4\" data-res=\"low\" />";
-                    }
-
-                    // set normal res vid
-                    video += "<source src=\"" + flavors.normal + "\" type=\"video/mp4\" data-res=\"normal\" data-default=\"true\" />";
-
-                    // set high res vid if available
-                    if ( flavors.low !== undefined ) {
-                        video += "<source src=\"" + flavors.high + "\" type=\"video/mp4\" data-res=\"high\" />";
-                    }
-
-                    if ( flavors.webm !== undefined && $.fn.supportWebm() ) {
-                        video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" />";
-                    }
-
-                    // set caption track if available
-                    if ( captionId !== null ) {
-                        video += "<track kind=\"subtitles\" src=\"https://cdnapisec.kaltura.com/api_v3/index.php/service/caption_captionAsset/action/serve/captionAssetId/" + captionId + "\" srclang=\"en\" label=\"English\">";
-                    }
-
-                    // closing video tag
-                    video += "</video>";
-
-                    // insert video tag to #vp element
-                    $( "#vp" ).html( video );
-
-                    $.fn.loadVideoJsPlayer(playerID);
-
-                } // end callback
-
-            } ); // end kWidget
+            }
 
         break;
 
         default:
-            $.fn.displayErrorMsg( "Kaltura video error!", "Please double check your XML file." );
+            $.fn.displayErrorMsg( "Video error!", "Please double check your XML file." );
         break;
 
     }
+
+ };
+
+/**
+ * Requesting data from Kaltura API, construct src,
+ * and call loadVideoJSPlayer
+ * @since 2.6.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param strings, playerID and source
+ * @return void
+ *
+ */
+ $.fn.requestKalturaAPI = function( playerID, src ) {
+
+    var entryId, captionId, captionExt, captionLang, flavors = {}, video;
+
+    kWidget.getSources( {
+
+        'partnerId': 1660872,
+        'entryId': src,
+        'callback': function( data ) {
+
+            entryId = data.entryId;
+            captionId = data.captionId;
+            captionExt = data.captionExt;
+            captionLang = data.captionLang;
+
+            for( var i in data.sources ) {
+
+                var source = data.sources[i];
+
+                if ( source.flavorParamsId === 487061 ) {
+
+                    flavors.low = source.src;
+
+                }
+
+                if ( source.flavorParamsId === 487071 ) {
+
+                    flavors.normal = source.src;
+
+                }
+
+                if ( source.flavorParamsId === 487081 ) {
+
+                    flavors.high = source.src;
+
+                }
+
+                if ( source.flavorParamsId === 487111 ) {
+
+                    flavors.webm = source.src;
+
+                }
+
+            } // end for loop
+
+            // video element opening tag
+            video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
+
+            // set low res vid if available
+            if ( flavors.low !== undefined ) {
+                video += "<source src=\"" + flavors.low + "\" type=\"video/mp4\" data-res=\"low\" />";
+            }
+
+            // set normal res vid
+            video += "<source src=\"" + flavors.normal + "\" type=\"video/mp4\" data-res=\"normal\" data-default=\"true\" />";
+
+            // set high res vid if available
+            if ( flavors.low !== undefined ) {
+                video += "<source src=\"" + flavors.high + "\" type=\"video/mp4\" data-res=\"high\" />";
+            }
+
+            if ( flavors.webm !== undefined && $.fn.supportWebm() ) {
+                video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" />";
+            }
+
+            // set caption track if available
+            if ( captionId !== null ) {
+                video += "<track kind=\"subtitles\" src=\"https://cdnapisec.kaltura.com/api_v3/index.php/service/caption_captionAsset/action/serve/captionAssetId/" + captionId + "\" srclang=\"en\" label=\"English\">";
+            }
+
+            // closing video tag
+            video += "</video>";
+
+            // insert video tag to #vp element
+            $( "#vp" ).html( video );
+
+            $.fn.loadVideoJsPlayer(playerID);
+
+        } // end callback
+
+    } ); // end kWidget
 
  };
 
@@ -1507,6 +1546,7 @@ $.fn.updateSlideNum = function( num ) {
 /**
  * Magnify the current slide image and video
  * @since 2.0.0
+ * @updated 2.6.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -1521,6 +1561,13 @@ $.fn.bindImgMagnify = function() {
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"icon-expand\" title=\"Expand\"></span>" );
             $( "#notesBtn, #tocBtn" ).hide();
+            $( "#toc" ).css( 'left', '' );
+
+            if ( $( "#tocBtn" ).hasClass( 'active' ) ) {
+
+                $( "#tocBtn" ).removeClass( 'active' );
+
+            }
 
         } else {
 
