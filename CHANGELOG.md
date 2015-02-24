@@ -10,7 +10,6 @@
 * Removed the duplicate "source" folder inside the "build" folder
 * Updated jQuery UI to version 1.11.2
 * Updated jQuery to version 2.1.3
-* Updated VideoJS to version 4.12.1
 * Updated code to load Kaltura API once and only when it is need
 
 ---

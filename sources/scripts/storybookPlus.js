@@ -862,7 +862,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             } // end for loop
 
             // video element opening tag
-            video = "<video crossorigin=\"anonymous\" id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
+            video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
 
             // set low res vid if available
             if ( flavors.low !== undefined ) {
