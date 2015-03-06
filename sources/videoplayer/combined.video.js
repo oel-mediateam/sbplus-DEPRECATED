@@ -1,7 +1,7 @@
 /*
  * Video.js
  * @author: Brightcove, Inc.
- * @version: 4.11.1
+ * @version: 4.11.4
  * @license: https://github.com/videojs/video.js/blob/master/LICENSE
  *
  * Copyright 2014 Brightcove, Inc.
@@ -2132,8 +2132,8 @@ vjs.Component.prototype.removeChild = function(component){
 
   if (!childFound) return;
 
-  this.childIndex_[component.id] = null;
-  this.childNameIndex_[component.name] = null;
+  this.childIndex_[component.id()] = null;
+  this.childNameIndex_[component.name()] = null;
 
   var compEl = component.el();
   if (compEl && compEl.parentNode === this.contentEl()) {
@@ -3419,7 +3419,6 @@ vjs.MenuButton.prototype.onClick = function(){
 };
 
 vjs.MenuButton.prototype.onKeyPress = function(event){
-  event.preventDefault();
 
   // Check for space bar (32) or enter (13) keys
   if (event.which == 32 || event.which == 13) {
@@ -3428,11 +3427,13 @@ vjs.MenuButton.prototype.onKeyPress = function(event){
     } else {
       this.pressButton();
     }
+    event.preventDefault();
   // Check for escape (27) key
   } else if (event.which == 27){
     if (this.buttonPressed_){
       this.unpressButton();
     }
+    event.preventDefault();
   }
 };
 
@@ -4778,7 +4779,9 @@ vjs.Player.prototype.src = function(source){
 
         // The setSource tech method was added with source handlers
         // so older techs won't support it
-        if (this.tech['setSource']) {
+        // We need to check the direct prototype for the case where subclasses
+        // of the tech do not support source handlers
+        if (window['videojs'][this.techName].prototype.hasOwnProperty('setSource')) {
           this.techCall('setSource', source);
         } else {
           this.techCall('src', source.src);
@@ -6060,11 +6063,11 @@ vjs.PlaybackRateMenuButton = vjs.MenuButton.extend({
   }
 });
 
+vjs.PlaybackRateMenuButton.prototype.buttonText = 'Playback Rate';
+vjs.PlaybackRateMenuButton.prototype.className = 'vjs-playback-rate';
+
 vjs.PlaybackRateMenuButton.prototype.createEl = function(){
-  var el = vjs.Component.prototype.createEl.call(this, 'div', {
-    className: 'vjs-playback-rate vjs-menu-button vjs-control',
-    innerHTML: '<div class="vjs-control-content"><span class="vjs-control-text">' + this.localize('Playback Rate') + '</span></div>'
-  });
+  var el = vjs.MenuButton.prototype.createEl.call(this);
 
   this.labelEl_ = vjs.createEl('div', {
     className: 'vjs-playback-rate-value',
@@ -6795,6 +6798,7 @@ vjs.Html5.prototype.createEl = function(){
   var player = this.player_,
       // If possible, reuse original tag for HTML5 playback technology element
       el = player.tag,
+      attributes,
       newEl,
       clone;
 
@@ -6811,8 +6815,15 @@ vjs.Html5.prototype.createEl = function(){
       player.tag = null;
     } else {
       el = vjs.createEl('video');
+
+      // determine if native controls should be used
+      attributes = videojs.util.mergeOptions({}, player.tagAttributes);
+      if (!vjs.TOUCH_ENABLED || player.options()['nativeControlsForTouch'] !== true) {
+        delete attributes.controls;
+      }
+
       vjs.setElementAttributes(el,
-        vjs.obj.merge(player.tagAttributes || {}, {
+        vjs.obj.merge(attributes, {
           id:player.id() + '_html5_api',
           'class':'vjs-tech'
         })
@@ -7044,13 +7055,13 @@ vjs.Html5.nativeSourceHandler = {};
  * @return {String}         'probably', 'maybe', or '' (empty string)
  */
 vjs.Html5.nativeSourceHandler.canHandleSource = function(source){
-  var ext;
+  var match, ext;
 
   function canPlayType(type){
     // IE9 on Windows 7 without MediaPlayer throws an error here
     // https://github.com/videojs/video.js/issues/519
     try {
-      return !!vjs.TEST_VID.canPlayType(type);
+      return vjs.TEST_VID.canPlayType(type);
     } catch(e) {
       return '';
     }
@@ -7059,11 +7070,15 @@ vjs.Html5.nativeSourceHandler.canHandleSource = function(source){
   // If a type was provided we should rely on that
   if (source.type) {
     return canPlayType(source.type);
-  } else {
+  } else if (source.src) {
     // If no type, fall back to checking 'video/[EXTENSION]'
-    ext = source.src.match(/\.([^\/\?]+)(\?[^\/]+)?$/i)[1];
+    match = source.src.match(/\.([^.\/\?]+)(\?[^\/]+)?$/i);
+    ext = match && match[1];
+
     return canPlayType('video/'+ext);
   }
+
+  return '';
 };
 
 /**
@@ -7726,8 +7741,8 @@ vjs.Flash.rtmpSourceHandler.canHandleSource = function(source){
 vjs.Flash.rtmpSourceHandler.handleSource = function(source, tech){
   var srcParts = vjs.Flash.streamToParts(source.src);
 
-  tech.setRtmpConnection(srcParts.connection);
-  tech.setRtmpStream(srcParts.stream);
+  tech['setRtmpConnection'](srcParts.connection);
+  tech['setRtmpStream'](srcParts.stream);
 };
 
 // Register the native source handler
