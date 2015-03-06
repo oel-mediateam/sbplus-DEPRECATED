@@ -433,19 +433,25 @@ $.fn.initializePlayer = function() {
 
 	// setup toc selectable items
 	$( "#selectable li:first" ).addClass( "ui-selected" );
-    $( "#selectable" ).selectable( {
 
-        stop: function() {
+    $( "#selectable" ).selectable();
+    $( "#selectable" ).selectable( "option", "appendTo", "#toc" );
+    $( "#selectable" ).on( "selectablestop", function() {
 
-            tocIndex = Number( $( ".ui-selected .slideNum" ).html().replace(".","") ) - 1;
+        tocIndex = Number( $( ".ui-selected .slideNum" ).html().replace(".","") ) - 1;
 
-            if ( tocIndex !== previousIndex ) {
+        if ( tocIndex !== previousIndex ) {
 
-                $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
-                previousIndex = tocIndex;
+            $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
+            previousIndex = tocIndex;
 
-            }
         }
+
+    } );
+
+    $( "#selectable" ).on( "selectableselected", function() {
+
+        $.fn.autoscroll();
 
     } );
 
@@ -460,6 +466,8 @@ $.fn.initializePlayer = function() {
 
         $.fn.loadSlide( topicSrc[counter], counter );
         previousIndex = counter;
+
+        $.fn.autoscroll();
 
         return false;
 
@@ -476,6 +484,8 @@ $.fn.initializePlayer = function() {
 
         $.fn.loadSlide( topicSrc[counter], counter );
         previousIndex = counter;
+
+        $.fn.autoscroll();
 
         return false;
 
@@ -512,6 +522,33 @@ $.fn.initializePlayer = function() {
     $( "#player" ).show();
 
 };
+
+/**
+ * Check table of content position and scroll is out of view
+ * @since 2.6.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param none
+ * @return void
+ *
+ */
+ $.fn.autoscroll = function() {
+
+    var itemPos = $( '.ui-selected' ).position().top;
+    var conBtm = $( "#selectable" ).height();
+
+    if ( itemPos >= conBtm ) {
+
+        $( "#selectable" ).animate( { scrollTop: ( conBtm / 2 ) }, 1000 );
+
+    } else if ( itemPos < $( "#selectable" ).scrollTop() / 6 ) {
+
+        $( "#selectable" ).animate( { scrollTop: 0 }, 1000 );
+
+    }
+
+ };
 
 /**
  * Load current slide
