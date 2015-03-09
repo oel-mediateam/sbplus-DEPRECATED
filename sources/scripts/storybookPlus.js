@@ -1786,14 +1786,14 @@ $.fn.getDownloadableFiles = function() {
 	// get transcript first
 	$.get( url + '.pdf', function() {
 
-    	downloadBar.append("<li><a href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Transcript</a></li>");
+    	downloadBar.append("<li><a download href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Transcript</a></li>");
 
 	} ).always( function() {
 
     	// get audio file
     	$.get( url + '.mp3', function() {
 
-        	downloadBar.append("<li><a href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Audio</a></li>");
+        	downloadBar.append("<li><a download href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Audio</a></li>");
 
     	} ).always( function() {
 

@@ -1,6 +1,7 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
+* Added HTML5 download attribute to download links
 * Table of content now auto scroll when item is out of view
 * Added supplement/zip package file to the download bar
 * Refactored the code on getting downloadable files
