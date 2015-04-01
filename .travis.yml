@@ -6,3 +6,8 @@ branches:
     - master
 env:
   - PACKAGE_VERSION="2.6.0"
+
+before_script:
+  - sudo npm install -g grunt
+
+script: grunt test --verbose --force
