@@ -15,7 +15,7 @@ environment = :production
 relative_assets = true
 
 # To disable debugging comments that display the original location of your selectors. Uncomment:
-# line_comments = false
+#line_comments = false
 color_output = false
 
 preferred_syntax = :scss
