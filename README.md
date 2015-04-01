@@ -11,9 +11,8 @@
 * Apple Safari 5+
 * Opera 20+
 
-*Latest stable version of the web browser is highly recommended.*
-
-SB+ may not function properly with beta or pre-released version of web browsers. Please use the latest stable version for the best experience.
+*Latest stable version of the web browser is highly recommended.  
+SB+ may not function properly with beta or pre-released version of web browsers. Please use the latest stable version for the best experience.*
 
 ---
 ###Documentation
