@@ -826,14 +826,16 @@ p {
 
         position: absolute;
         width: rem( 257px );
-        background-color: #636363;
-        color: #e8e8e8;
+        background-color: #ebebeb;
+        color: #000;
         font-size: 12px;
         text-align: center;
+        font-weight: bold;
         padding: rem( 4px ) 0;
-        border-bottom: rem( 1px ) #59a8dc solid;
+        border-bottom: rem( 1px ) #ccc solid;
         top: 0px;
         z-index: 10;
+        cursor: default;
 
     }
 
