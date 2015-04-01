@@ -10,4 +10,4 @@ env:
 before_script:
   - npm install -g grunt
 
-script: grunt test --verbose --force
+script: grunt build --verbose --force
