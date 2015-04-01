@@ -1,5 +1,5 @@
 #Storybook Plus (SB+)
-**_version 2.5.9_**
+**_version 2.6.0_**
 
 ---
 ###Web Browser Requirements
@@ -11,14 +11,9 @@
 * Apple Safari 5+
 * Opera 20+
 
-####Recommended
-* Internet Explorer 11
-* Mozilla Firefox - latest version
-* Google Chrome - latest version
-* Apple Safari 8
-* Opera - latest version
+*Latest stable version of the web browser is highly recommended.*
 
-SB+ may not work properly with beta or pre-release versions of web browsers. Please use the latest stable version for the best viewing experience.
+SB+ may not function properly with beta or pre-released version of web browsers. Please use the latest stable version for the best experience.
 
 ---
 ###Documentation
@@ -32,7 +27,7 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 
 ---
 ###Version Change Log
-All updates, fixes, changes, improvements, new features, and upcoming updates are listed on the [change log](https://github.com/oel-mediateam/sbplus/blob/master/CHANGELOG.md) page.
+All updates, fixes, changes, improvements, and new features are listed on the [change log](https://github.com/oel-mediateam/sbplus/blob/master/CHANGELOG.md) page.
 
 ---
 Ethan S. Lin  

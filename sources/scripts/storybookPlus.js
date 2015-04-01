@@ -3,8 +3,8 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.5.9
- * Released Friday, January 16, 2015
+ * @version: 2.6.0
+ * Released 4/1/2015
  *
  * @license: The MIT License (MIT)
  * Copyright (c) 2013-2015 UWEX CEOEL Media Services
@@ -42,7 +42,8 @@ var videoPlayer = null,
     audioPlayer,
     firstAudioLoad = false,
     audioPlaying = false,
-    sources;
+    sources,
+    kalturaLoaded = 0;
 
 var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
 
@@ -72,20 +73,14 @@ $( document ).ready( function() {
  */
 $.fn.getLessonContent = function( file ) {
 
-    $.ajaxSetup( {
-
+    $.ajax( {
         url: file,
         type: 'GET',
         dataType: 'xml',
         accepts: 'xml',
         content: 'xml',
         contentType: 'xml; charset="utf-8"',
-        cache: false
-
-    } );
-
-    $.ajax( {
-
+        cache: false,
         encoding: 'UTF-8',
         beforeSend: function ( xhr ) {
 
@@ -278,7 +273,6 @@ $.fn.parseContent = function( xml ) {
  */
 $.fn.setupPlayer = function() {
 
-    var directory = $.fn.getDirectory();
     var selfAssessmentIcon;
 
     version = ( $( "#storybook_plus_wrapper" ).attr( "data-version" ) === undefined ) ? "" : $( "#storybook_plus_wrapper" ).attr( "data-version" ).replace(/\./g, "");
@@ -354,6 +348,8 @@ $.fn.setupPlayer = function() {
     }
 
 	// loop to populate the table of contents
+	$( "#selectable" ).before( '<div class="toc_heading">Table of Contents</div>' );
+
     $.each( topicTitle, function( i ) {
 
 		if ( topicSrc[i] === "quiz" ) {
@@ -383,8 +379,7 @@ $.fn.setupPlayer = function() {
     } );
 
     // download files
-    $.fn.getDownloadableFile( directory, "mp3", "audio/mpeg" );
-    $.fn.getDownloadableFile( directory, "pdf", "application/pdf" );
+    $.fn.getDownloadableFiles();
 
 };
 
@@ -438,19 +433,25 @@ $.fn.initializePlayer = function() {
 
 	// setup toc selectable items
 	$( "#selectable li:first" ).addClass( "ui-selected" );
-    $( "#selectable" ).selectable( {
 
-        stop: function() {
+    $( "#selectable" ).selectable();
+    $( "#selectable" ).selectable( "option", "appendTo", "#toc" );
+    $( "#selectable" ).on( "selectablestop", function() {
 
-            tocIndex = Number( $( ".ui-selected .slideNum" ).html().replace(".","") ) - 1;
+        tocIndex = Number( $( ".ui-selected .slideNum" ).html().replace(".","") ) - 1;
 
-            if ( tocIndex !== previousIndex ) {
+        if ( tocIndex !== previousIndex ) {
 
-                $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
-                previousIndex = tocIndex;
+            $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
+            previousIndex = tocIndex;
 
-            }
         }
+
+    } );
+
+    $( "#selectable" ).on( "selectableselected", function() {
+
+        $.fn.autoscroll();
 
     } );
 
@@ -465,6 +466,8 @@ $.fn.initializePlayer = function() {
 
         $.fn.loadSlide( topicSrc[counter], counter );
         previousIndex = counter;
+
+        $.fn.autoscroll();
 
         return false;
 
@@ -481,6 +484,8 @@ $.fn.initializePlayer = function() {
 
         $.fn.loadSlide( topicSrc[counter], counter );
         previousIndex = counter;
+
+        $.fn.autoscroll();
 
         return false;
 
@@ -517,6 +522,33 @@ $.fn.initializePlayer = function() {
     $( "#player" ).show();
 
 };
+
+/**
+ * Check table of content position and scroll is out of view
+ * @since 2.6.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param none
+ * @return void
+ *
+ */
+ $.fn.autoscroll = function() {
+
+    var itemPos = $( '.ui-selected' ).position().top;
+    var conBtm = $( "#selectable" ).height();
+
+    if ( itemPos >= conBtm ) {
+
+        $( "#selectable" ).animate( { scrollTop: ( conBtm / 2 ) }, 1000 );
+
+    } else if ( itemPos < $( "#selectable" ).scrollTop() / 6 ) {
+
+        $( "#selectable" ).animate( { scrollTop: 0 }, 1000 );
+
+    }
+
+ };
 
 /**
  * Load current slide
@@ -624,29 +656,36 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
                 if ( !audioPlaying ) {
 
-                    if ( $.fn.fileExists( "assets/audio/" + srcName, "mp3", "audio/mpeg" ) ) {
+                    $.ajax( {
 
-                        $( "#ap" ).show();
+                        url: 'assets/audio/' + srcName + '.mp3',
+                        type:'HEAD',
+                        error: function() {
 
-                        if (firstAudioLoad !== true) {
+                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
 
-                		    $.fn.loadAudioPlayer( "#apc", srcName );
-                            firstAudioLoad = true;
+                        },
+                        success: function() {
 
-    					} else {
+                            $( "#ap" ).show();
 
-    						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-    						audioPlayer.setSrc( sources );
+                            if (firstAudioLoad !== true) {
 
-    					}
+                    		    $.fn.loadAudioPlayer( "#apc", srcName );
+                                firstAudioLoad = true;
 
-                    } else {
+        					} else {
 
-                        $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
+        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
+        						audioPlayer.setSrc( sources );
 
-                    }
+        					}
 
-                    audioPlaying = true;
+        					audioPlaying = true;
+
+                        }
+
+                    } );
 
                 }
 
@@ -735,7 +774,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * Setup videojs player
  * @since 2.4.0
- * @updated 2.5.7
+ * @updated 2.6.0
  *
  * @author Ethan S. Lin
  *
@@ -751,13 +790,21 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "video":
 
-            var subtitle = ( ( $.fn.fileExists( "assets/video/" + src, "vtt", "text/vtt" ) ) ? "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">" : "" );
+            var subtitle = "";
 
-            var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />";
+            $.get( 'assets/video/' + src + '.vtt', function() {
 
-            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
+                subtitle = "<track kind=\"subtitles\" src=\"assets/video/" + src + ".vtt\" srclang=\"en\" label=\"English\">";
 
-                $.fn.loadVideoJsPlayer(playerID, src);
+            } ).always( function() {
+
+                var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />";
+
+                $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
+
+                    $.fn.loadVideoJsPlayer(playerID, src);
+
+                } );
 
             } );
 
@@ -765,92 +812,128 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "kaltura":
 
-            var entryId, captionId, captionExt, captionLang, flavors = {}, video;
 
-            kWidget.getSources( {
-                'partnerId': 1660872,
-                'entryId': src,
-                'callback': function( data ) {
+            if ( kalturaLoaded === 0 ) {
 
-                    entryId = data.entryId;
-                    captionId = data.captionId;
-                    captionExt = data.captionExt;
-                    captionLang = data.captionLang;
+                $.getScript( '../sources/scripts/mwembedloader.js', function() {
 
-                    for( var i in data.sources ) {
+                    $.getScript( '../sources/scripts/kwidgetgetsources.js', function() {
 
-                        var source = data.sources[i];
+                        $.fn.requestKalturaAPI( playerID, src );
+                        kalturaLoaded = 1;
 
-                        if ( source.flavorParamsId === 487061 ) {
+                    } ); // end kwidget.getsources.js
 
-                            flavors.low = source.src;
+                } ); // end mwembedloader.js
 
-                        }
+            } else {
 
-                        if ( source.flavorParamsId === 487071 ) {
+                $.fn.requestKalturaAPI( playerID, src );
 
-                            flavors.normal = source.src;
-
-                        }
-
-                        if ( source.flavorParamsId === 487081 ) {
-
-                            flavors.high = source.src;
-
-                        }
-
-                        if ( source.flavorParamsId === 487111 ) {
-
-                            flavors.webm = source.src;
-
-                        }
-
-                    } // end for loop
-
-                    // video element opening tag
-                    video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
-
-                    // set low res vid if available
-                    if ( flavors.low !== undefined ) {
-                        video += "<source src=\"" + flavors.low + "\" type=\"video/mp4\" data-res=\"low\" />";
-                    }
-
-                    // set normal res vid
-                    video += "<source src=\"" + flavors.normal + "\" type=\"video/mp4\" data-res=\"normal\" data-default=\"true\" />";
-
-                    // set high res vid if available
-                    if ( flavors.low !== undefined ) {
-                        video += "<source src=\"" + flavors.high + "\" type=\"video/mp4\" data-res=\"high\" />";
-                    }
-
-                    if ( flavors.webm !== undefined && $.fn.supportWebm() ) {
-                        video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" />";
-                    }
-
-                    // set caption track if available
-                    if ( captionId !== null ) {
-                        video += "<track kind=\"subtitles\" src=\"https://cdnapisec.kaltura.com/api_v3/index.php/service/caption_captionAsset/action/serve/captionAssetId/" + captionId + "\" srclang=\"en\" label=\"English\">";
-                    }
-
-                    // closing video tag
-                    video += "</video>";
-
-                    // insert video tag to #vp element
-                    $( "#vp" ).html( video );
-
-                    $.fn.loadVideoJsPlayer(playerID);
-
-                } // end callback
-
-            } ); // end kWidget
+            }
 
         break;
 
         default:
-            $.fn.displayErrorMsg( "Kaltura video error!", "Please double check your XML file." );
+            $.fn.displayErrorMsg( "Video error!", "Please double check your XML file." );
         break;
 
     }
+
+ };
+
+/**
+ * Requesting data from Kaltura API, construct src,
+ * and call loadVideoJSPlayer
+ * @since 2.6.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param strings, playerID and source
+ * @return void
+ *
+ */
+ $.fn.requestKalturaAPI = function( playerID, src ) {
+
+    var entryId, captionId, captionExt, captionLang, flavors = {}, video;
+
+    kWidget.getSources( {
+
+        'partnerId': 1660872,
+        'entryId': src,
+        'callback': function( data ) {
+
+            entryId = data.entryId;
+            captionId = data.captionId;
+            captionExt = data.captionExt;
+            captionLang = data.captionLang;
+
+            for( var i in data.sources ) {
+
+                var source = data.sources[i];
+
+                if ( source.flavorParamsId === 487061 ) {
+
+                    flavors.low = source.src;
+
+                }
+
+                if ( source.flavorParamsId === 487071 ) {
+
+                    flavors.normal = source.src;
+
+                }
+
+                if ( source.flavorParamsId === 487081 ) {
+
+                    flavors.high = source.src;
+
+                }
+
+                if ( source.flavorParamsId === 487111 ) {
+
+                    flavors.webm = source.src;
+
+                }
+
+            } // end for loop
+
+            // video element opening tag
+            video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
+
+            // set low res vid if available
+            if ( flavors.low !== undefined ) {
+                video += "<source src=\"" + flavors.low + "\" type=\"video/mp4\" data-res=\"low\" />";
+            }
+
+            // set normal res vid
+            video += "<source src=\"" + flavors.normal + "\" type=\"video/mp4\" data-res=\"normal\" data-default=\"true\" />";
+
+            // set high res vid if available
+            if ( flavors.low !== undefined ) {
+                video += "<source src=\"" + flavors.high + "\" type=\"video/mp4\" data-res=\"high\" />";
+            }
+
+            if ( flavors.webm !== undefined && $.fn.supportWebm() ) {
+                video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" />";
+            }
+
+            // set caption track if available
+            if ( captionId !== null ) {
+                video += "<track kind=\"subtitles\" src=\"https://cdnapisec.kaltura.com/api_v3/index.php/service/caption_captionAsset/action/serve/captionAssetId/" + captionId + "\" srclang=\"en\" label=\"English\">";
+            }
+
+            // closing video tag
+            video += "</video>";
+
+            // insert video tag to #vp element
+            $( "#vp" ).html( video );
+
+            $.fn.loadVideoJsPlayer(playerID);
+
+        } // end callback
+
+    } ); // end kWidget
 
  };
 
@@ -1507,6 +1590,7 @@ $.fn.updateSlideNum = function( num ) {
 /**
  * Magnify the current slide image and video
  * @since 2.0.0
+ * @updated 2.6.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -1521,6 +1605,13 @@ $.fn.bindImgMagnify = function() {
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"icon-expand\" title=\"Expand\"></span>" );
             $( "#notesBtn, #tocBtn" ).hide();
+            $( "#toc" ).css( 'left', '' );
+
+            if ( $( "#tocBtn" ).hasClass( 'active' ) ) {
+
+                $( "#tocBtn" ).removeClass( 'active' );
+
+            }
 
         } else {
 
@@ -1677,34 +1768,45 @@ $.fn.loadProfilePhoto = function() {
 /**
  * Request downloadable files
  * @since 2.1.0
+ * @updated 2.6.0
  *
  * @author Ethan S. Lin
  * @param strings, file name and extension
  * @return void
  *
  */
-$.fn.getDownloadableFile = function( file, ext, contentType ) {
+$.fn.getDownloadableFiles = function() {
 
-    var newURL = file,
-        fileType = "Audio",
-        downloadBar = $( "#download_bar ul" ),
-        protocol = window.location.protocol;
+    var directory = $.fn.getDirectory();
+    var downloadBar = $( "#download_bar ul" );
+    var url = window.location.href;
 
-	if ( protocol !== "http:" ) {
-		var url = window.location.href;
-		url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ).replace( "https", "http" );
-		newURL = url + file;
-	}
+	url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ) + directory;
 
-	if ( ext === "pdf" ) {
-		fileType = "Transcript";
-	}
+	// get transcript first
+	$.get( url + '.pdf', function() {
 
-    if ( $.fn.fileExists( file, ext, contentType ) ) {
+    	downloadBar.append("<li><a download href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Transcript</a></li>");
 
-        downloadBar.append("<li><a href=\"" + newURL + "." + ext + "\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> " + fileType + "</a></li>");
+	} ).always( function() {
 
-    }
+    	// get audio file
+    	$.get( url + '.mp3', function() {
+
+        	downloadBar.append("<li><a download href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Audio</a></li>");
+
+    	} ).always( function() {
+
+        	// get package/zip file
+        	$.get( url + '.zip', function() {
+
+            	downloadBar.append("<li><a href=\"" + url + ".zip\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Supplement</a></li>");
+
+        	} );
+
+    	} );
+
+	} );
 
 };
 
@@ -1820,53 +1922,6 @@ $.fn.getDirectory = function() {
 	src = src[src.length - 2];
 
 	return src;
-
-};
-
-/**
- * Check for file exisitance
- * @since 2.1.0
- *
- * @author Ethan S. Lin
- *
- * @param strings, file path, extension, and content type
- * @return bool
- *
- */
-$.fn.fileExists = function( file, ext, content_type ) {
-
-    var exists,
-        cType = content_type;
-
-    switch ( ext ) {
-
-        case "pdf":
-            cType = "application/pdf";
-        break;
-
-    }
-
-    $.ajax( {
-
-        url: file + "." + ext,
-        type: "HEAD",
-        dataType: "text",
-        contentType: cType,
-        async: false,
-        beforeSend: function( xhr ) {
-            xhr.overrideMimeType( cType );
-            xhr.setRequestHeader( "Accept", cType );
-        },
-        success: function() {
-            exists = true;
-        },
-        error: function() {
-            exists = false;
-        }
-
-    } );
-
-    return exists;
 
 };
 
