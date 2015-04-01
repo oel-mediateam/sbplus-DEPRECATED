@@ -29,5 +29,5 @@ For questions, please also post them under the "**[Issues](https://github.com/oe
 All updates, fixes, changes, improvements, and new features are listed on the [change log](https://github.com/oel-mediateam/sbplus/blob/master/CHANGELOG.md) page.
 
 ---
-Ethan S. Lin  
-[University of Wisconsin-Extension Division of Continuing Education, Outreach & E-Learning](http://ce.uwex.edu/)
+###License
+Storybook Plus (SB+) is licensed under [GNU v3](https://github.com/oel-mediateam/sbplus/blob/master/LICENSE) license. Copyright (c) 2013-2015 Ethan S. Lin, [University of Wisconsin-Extension, Division of Continuing Education, Outreach & E-Learning](http://ce.uwex.edu/)
