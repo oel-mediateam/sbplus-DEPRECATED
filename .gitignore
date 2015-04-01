@@ -10,11 +10,5 @@ bower_components/
 .sass-cache
 **/.sass-cache
 
-#ignore demo folder in build directory
-build/demo
-
-# ingore build2
-build2/
-
-#ingore test file
-build/test.html
+#ignore build directory
+build/
