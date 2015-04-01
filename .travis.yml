@@ -8,6 +8,6 @@ env:
   - PACKAGE_VERSION="2.6.0"
 
 before_script:
-  - npm install -g grunt
+  - npm install -g grunt-cli
 
 script: grunt test --verbose --force
