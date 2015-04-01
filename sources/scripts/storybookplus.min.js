@@ -4,7 +4,7 @@
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
  * @version: 2.6.0
- * Released
+ * Released 4/1/2015
  *
  * @license: The MIT License (MIT)
  * Copyright (c) 2013-2015 UWEX CEOEL Media Services

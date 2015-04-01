@@ -1,6 +1,10 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
+_none_
+
+---
+###2.6.0 (04-01-2015)
 * Added HTML5 download attribute to download links
 * Table of content now auto scroll when item is out of view
 * Added supplement/zip package file to the download bar
@@ -15,7 +19,6 @@
 * Updated code to load Kaltura API once and only when it is need
 * Updated VideoJs to version 4.11.4
 
----
 ###2.5.9 (01-16-2015)
 * Removed progressing loader when all slides are video
 * Improved fading out progressing loader
