@@ -5,14 +5,14 @@ _none_
 
 ---
 ###2.6.0 (04-01-2015)
-* Added HTML5 download attribute to download links
+* Added HTML5 download attribute to downloadable files
 * Table of content now auto scroll when item is out of view
 * Added supplement/zip package file to the download bar
 * Refactored the code on getting downloadable files
 * Updated the screen space for lesson title and instructor name on the header bar
 * Fixed an issue where the table of contents disappeared after exiting expanded mode
 * Added table of contents label to the top of table of contents list
-* Table of contents control and button controls are not longer selectable/highlightable
+* Table of contents control and button controls are no longer selectable/highlightable
 * Removed the duplicate "source" folder inside the "build" folder
 * Updated jQuery UI to version 1.11.3
 * Updated jQuery to version 2.1.3
