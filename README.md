@@ -1,5 +1,6 @@
 #Storybook Plus (SB+)
 **_version 2.6.0_**
+[![Build Status](https://travis-ci.org/oel-mediateam/sbplus.svg?branch=master)](https://travis-ci.org/oel-mediateam/sbplus)
 
 ---
 ###Web Browser Requirements
