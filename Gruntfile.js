@@ -19,6 +19,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks( 'grunt-contrib-watch' );
 
     // Task to run tests
-    grunt.registerTask( 'default', 'watch' );
+    grunt.registerTask( 'default', 'qunit' );
 
 };
