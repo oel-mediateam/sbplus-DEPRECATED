@@ -830,9 +830,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
             if ( kalturaLoaded === 0 ) {
 
-                $.getScript( '../sources/scripts/mwembedloader.js', function() {
+                $.getScript( ROOT_PATH + '/scripts/mwembedloader.js', function() {
 
-                    $.getScript( '../sources/scripts/kwidgetgetsources.js', function() {
+                    $.getScript( ROOT_PATH +  '/scripts/kwidgetgetsources.js', function() {
 
                         $.fn.requestKalturaAPI( playerID, src );
                         kalturaLoaded = 1;
