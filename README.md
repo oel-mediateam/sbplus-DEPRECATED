@@ -17,7 +17,7 @@ SB+ may not function properly with beta or pre-released version of web browsers.
 
 ---
 ###Documentation
-For more details and how to setup a SB+ presentation, please visit the [Storybook Plus Documentation](https://media.uwex.edu/content/media/documentation/sbplus/v2/index.html).
+For more details and how to setup a SB+ presentation, please visit the [Storybook Plus Documentation](https://media.uwex.edu/resources/documentation/media/storybook-plus-v2/).
 
 ---
 ###Bug Reporting and Questions
