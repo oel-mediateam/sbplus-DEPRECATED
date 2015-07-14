@@ -61,6 +61,17 @@ p {
     margin: rem( $font-size ) 0;
 }
 
+.sr-only {
+    
+    position:absolute;
+    left:-10000px;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    
+}
+
 // MOBILE DEVICE VIEW ON FULL SITE
 .mobile {
     width: rem( 450px );
@@ -73,6 +84,7 @@ p {
     position: relative;
 	width: rem( 900px );
 	@include clear;
+	
 }
 
 #storybook_plus_wrapper.noteDisabled {
@@ -341,16 +353,50 @@ p {
 	}
 
 	a.playBtn, a.playBtn:visited, a.playBtn:hover {
-    	display: inline-block;
+    	
+    	position: relative;
+    	display: block;
+    	width: rem( 25px );
     	font-size: rem( 26px );
     	line-height: rem( 26px );
     	color: #fff;
     	text-align: center;
     	text-decoration: none;
-    	margin-bottom: 0;
+    	margin: 0 auto;
     	padding: rem( 10px ) rem( 40px ) rem( 5px );
     	background-color: #006DCC;
     	@include border-radius( rem( 3px ) );
+    	
+    	.sr-only:focus {
+        	
+        	top: 0;
+        	left: 0;
+        	width: 100%;
+        	height: 100%;
+        	padding: rem( 6px ) rem( 10px ) 0;
+        	background-color: #006DCC;
+        	@include border-radius( rem( 3px ) );
+        	@include box-sizing( border-box ); 
+        	
+    	}
+    	
+    }
+    
+    .playBtn:focus {
+        
+        .sr-only {
+        	
+        	top: 0;
+        	left: 0;
+        	width: 100%;
+        	height: 100%;
+        	padding: rem( 6px ) rem( 10px ) 0;
+        	background-color: #006DCC;
+        	@include border-radius( rem( 3px ) );
+        	@include box-sizing( border-box ); 
+        	
+    	}
+        
     }
 
 } // #splase_screen
@@ -377,7 +423,9 @@ p {
             width: rem( 610px );
             height: rem( 23px );
             white-space: nowrap;
-            margin-right: rem( $gutter );
+            margin: 0 rem( $gutter ) 0 0 ;
+            font-size: rem( 16px );
+            line-height: normal;
             overflow: hidden;
             text-overflow: ellipsis;
     	    float: left;
@@ -391,15 +439,38 @@ p {
         }
 
         .infoIcn {
+            position: relative;
         	display: inline-block;
+/*
         	@include opacity( .75 );
         	@include single-transition( opacity, ease-out, .3s );
+*/
+        	
+        }
+        
+        .infoIcn:focus {
+            
+            .sr-only {
+    
+                font-size: rem( 10px );
+                top: rem( -3px );
+                left: 0;
+                width: 30px;
+                height: auto;
+                line-height: normal;
+                z-index: 10;
+                background-color: black;
+                
+            }
+            
         }
 
+/*
         .infoIcn:hover {
             @include opacity( 1 );
         	@include single-transition( opacity, ease-in, .3s );
         }
+*/
 
         a, a:visited, a:hover {
             color: #fff;
@@ -563,7 +634,7 @@ p {
         	audio {
             	display: block;
             	margin: rem( $gutter ) 0;
-            	outline: none;
+//             	outline: none;
         	}
 
     	}
@@ -604,7 +675,7 @@ p {
             	font-size: rem( $font-size );
             	color: #000;
             	resize: none;
-            	outline: none;
+//             	outline: none;
             	@include box-sizing( border-box );
         	}
 
@@ -734,7 +805,7 @@ p {
     	float: left;
 
     	* {
-        	@include user-select(none);
+//         	@include user-select(none);
     	}
 
     	.btn {
@@ -837,7 +908,7 @@ p {
 	@include box-sizing( "border-box" );
 
 	* {
-    	@include user-select(none);
+//     	@include user-select(none);
 	}
 
     .toc_heading {
@@ -926,18 +997,18 @@ p {
 #profile {
 
 	display: none;
-	position: absolute;
+// 	position: absolute;
 	width: 100%;
 	height: rem( 546px );
 	padding: rem( 20px );
 	color: #fff;
 	background-color: #fafafa;
 	border: rem( 1px ) solid $border-color;
-	top: rem( 30px );
-	left: 0;
+	padding-top: rem( 30px );
+// 	left: 0;
 	@include clear;
 	@include box-sizing( border-box );
-	z-index: 20;
+// 	z-index: 20;
 
 	.photo {
 
@@ -956,14 +1027,16 @@ p {
     }
 
 	.bio {
-
-    	display: inline;
+    
+        width: rem( 648px );
     	color: #000;
     	line-height: rem( 20px );
-    	overflow: auto;
+    	float: left;
 
     	h2 {
+        	
         	margin: 0 0 rem( 14px );
+        	
     	}
 
     }
@@ -973,16 +1046,33 @@ p {
         position: absolute;
         font-size: rem( 12px );
         line-height: rem( 12px );
-        top: rem( 5px );
+        top: rem( 35px );
         right: rem( 16px );
         @include clear;
 
         a, a:link, a:visited, a:hover {
+            
+            position: relative;
             display: block;
             text-decoration: none;
             color: #888;
             font-size: rem( 32px );
             line-height: rem( 32px );
+            
+        }
+        
+        a:focus {
+            
+            .sr-only {
+                
+                width: rem( 32px );
+                height: auto;
+                font-size: rem( 12px );
+                top: rem( 15px );
+                left: rem( -6px );
+                
+            }
+            
         }
 
     }
@@ -1010,6 +1100,7 @@ p {
         	margin-left: rem( 10px );
 
         	a, a:visited {
+            	position: relative;
             	display: block;
             	color: #818181;
             	text-decoration: none;
@@ -1019,6 +1110,22 @@ p {
             	@include transition-property( color, border, border-color, background-color );
             	@include transition-duration( .3s );
             	@include transition-timing-function( ease-out );
+            	
+        	}
+        	
+        	a:focus {
+            	
+            	.sr-only {
+                	
+                	width: rem( 50px );
+                	height: auto;
+                	font-size: rem( 10px );
+                	text-align: left;
+                	left: 0;
+                	top: rem( -14px );
+                	
+            	}
+            	
         	}
 
         	a:hover {

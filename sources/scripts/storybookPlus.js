@@ -3,8 +3,8 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.6.0
- * Released 4/1/2015
+ * @version: 2.7.0
+ * Released 7/--/2015
  *
  * @license: GNU GENERAL PUBLIC LICENSE v3
  *
@@ -280,7 +280,7 @@ $.fn.parseContent = function( xml ) {
 /**
  * Set up the player
  * @since 2.0.0
- * @updated 2.5.9
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -290,11 +290,11 @@ $.fn.setupPlayer = function() {
 
     var selfAssessmentIcon;
 
-    version = ( $( "#storybook_plus_wrapper" ).attr( "data-version" ) === undefined ) ? "" : $( "#storybook_plus_wrapper" ).attr( "data-version" ).replace(/\./g, "");
+    version = ( $( "#storybook_plus_wrapper" ).attr( "data-version" ) === undefined ) ? "" : $ ( "#storybook_plus_wrapper" ).attr( "data-version" ).replace(/\./g, "");
 
     $( document ).attr( "title", lessonTitle );
 
-    // initialy hide error message container
+    // hide error message container
     $( "#errorMsg" ).hide();
 
     // loop to check whether all topics are video or mixed
@@ -357,13 +357,15 @@ $.fn.setupPlayer = function() {
         }
 
         if ( enabledNote === false ) {
-            $( "#note" ).addClass( "noNotes" ).html( "<div class=\"logo\">" + logo + "</div>" );
+            
+            $( "#note" ).addClass( "noNotes" ).attr("aria-label", "Notes area. No notes available.").html( "<div class=\"logo\" aria-hidden=\"true\">" + logo + "</div>" );
+            
         }
 
     }
 
 	// loop to populate the table of contents
-	$( "#selectable" ).before( '<div class="toc_heading">Table of Contents</div>' );
+	$( "#selectable" ).before( '<div class="toc_heading" tabindex="13">Table of Contents</div>' );
 
     $.each( topicTitle, function( i ) {
 
@@ -377,13 +379,16 @@ $.fn.setupPlayer = function() {
 
 		}
 
-		$( "#selectable" ).append( "<li class=\"ui-widget-content\" title=\"" + topicTitle[i] + "\">" + "<div class=\"slideNum\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\">" + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
+		$( "#selectable" ).append( "<li class=\"ui-widget-content\" role=\"menuitem\" title=\"" + topicTitle[i] + "\">" + "<div class=\"slideNum\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\">" + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
 
 	} );
 
 	// set up the splash screen
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
-    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a class=\"playBtn\" href=\"#\"></a>" );
+    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" href=\"#\"><span tabindex=\"0\" class=\"sr-only\">Play</span></a>" );
+    
+    // focus on the play button
+    $( ".playBtn" ).focus();
 
     // bind click event to splash screen
     $( "#splash_screen, #playBtn" ).on( "click", function() {
@@ -401,7 +406,7 @@ $.fn.setupPlayer = function() {
 /**
  * Initialize the player
  * @since 2.0.0
- * @updated 2.5.9
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -416,10 +421,10 @@ $.fn.initializePlayer = function() {
     $( "#lessonTitle" ).attr( "title", lessonTitle );
     $( "#lessonTitle" ).html( lessonTitle );
 
-    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#\">" + instructor + "</a>" );
+    $( "#instructorName" ).html( "<a tabindex=\"2\" role=\"button\" class=\"instructorName\" href=\"#\">" + instructor + "</a>" );
 
     // setup profile panel
-    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a id=\"profileClose\" href=\"#\">&times;</a></div>" );
+    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a tabindex=\"6\" role=\"button\" id=\"profileClose\" href=\"#\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">close</span></a></div>" );
     $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
 
 
@@ -433,12 +438,27 @@ $.fn.initializePlayer = function() {
     $( "#info, a.instructorName, #profileClose" ).on( "click", function() {
 
         if ( $( "#profile" ).is(":visible") ) {
-
-            $( "#profile" ).fadeOut( 300 );
+        
+            $( "#profile" ).fadeOut( 300, function(){
+                
+                $( "#content" ).fadeIn( "fast", function() {
+                    
+                    // focus on the lesson header
+                    $( "#lessonTitle" ).focus();
+                    
+                } );
+                
+            } );
+            
 
         } else {
 
-            $( "#profile" ).fadeIn( 300 );
+            $( "#profile" ).fadeIn( 300, function() {
+                
+                $( ".bio" ).focus();
+                
+            } );
+            $( "#content" ).hide();
 
         }
 
@@ -509,15 +529,15 @@ $.fn.initializePlayer = function() {
     // add the zoom boutton to the control after the slide status
     if ( enabledNote === true || quizDetected === true || version >= 230 ) {
 
-        $( "#control" ).append( "<span id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
+        $( "#control" ).append( "<span role=\"button\" aria-label=\"expand or contract slide image\" tabindex=\"12\" id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
 
         if ( $( "#storybook_plus_wrapper" ).hasClass( "withQuiz" ) ) {
 
-            $( "#magnifyBtn" ).before( "<span id=\"tocBtn\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+            $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-label=\"Toggle table of content\" tabindex=\"10\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
 
         } else {
 
-            $( "#magnifyBtn" ).before( "<span id=\"notesBtn\"><span class=\"notes\" title=\"Toggle Notes\"></span></span><span id=\"tocBtn\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+            $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-label=\"toggle notes\" tabindex=\"11\"><span class=\"notes\" title=\"Toggle Notes\"></span></span><span id=\"tocBtn\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
 
         }
 
@@ -568,7 +588,7 @@ $.fn.initializePlayer = function() {
 /**
  * Load current slide
  * @since 2.0.0
- * @updated 2.5.9
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  *
@@ -642,6 +662,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 $( "#slide" ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
                 $( this ).fadeIn();
+                $( this ).focus();
 
             } ).error( function() {
 
@@ -649,7 +670,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
             } ).attr( {
                 'src': imgPath,
-                'border': 0
+                'alt': "Slide " + ( sNum + 1 ) + " " + imgCaption,
+                'border': 0,
+                'tabindex': 4
             } );
 
         break;
@@ -668,6 +691,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 $( "#slide" ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
                 $( this ).fadeIn();
+                $( this ).focus();
 
                 if ( !audioPlaying ) {
 
@@ -711,7 +735,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             } ).attr( {
 
                 'src': imgPath,
-                'border': 0
+                'alt': imgCaption,
+                'border': 0,
+                'tabindex': 4
 
             } );
 
@@ -726,13 +752,13 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "youtube:":
 
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&fs=0&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\"></iframe>" ).promise().done();
+            $( "#slide" ).html( "<iframe id=\"youtube\" width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&fs=0&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\"></iframe>" ).promise().done(function() { $(this).find("#youtube").focus(); });
 
         break;
 
         case "vimeo:":
 
-            $( "#slide" ).html( "<iframe width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done();
+            $( "#slide" ).html( "<iframe id=\"vimeo\" width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done( function() { $(this).find("#vimeo").focus(); } );
 
         break;
 
@@ -955,7 +981,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * load videojs player
  * @since 2.4.1
- * @updated 2.5.8
+ * @updated 2.7.0
  * @author Ethan S. Lin
  *
  * @param strings, video element id
@@ -996,6 +1022,8 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
     } );
 
     videojs.options.flash.swf = ROOT_PATH + "videoplayer/video-js.swf";
+    
+    $( "#vp" ).focus();
 
 };
 
@@ -1565,7 +1593,9 @@ $.fn.loadNote = function( num ) {
         }
 
 	} else {
+    	
     	$( "#notesBtn" ).hide();
+    	
 	}
 
 	if ( $( "#note" ).find( "a" ).length ) {
@@ -1591,6 +1621,8 @@ $.fn.loadNote = function( num ) {
 $.fn.updateSlideNum = function( num ) {
 
     var currentNum = num + 1;
+    var status = media + " " + currentNum + " of " + topicCount;
+    
     counter = num;
 
     $( "#selectable li" ).each( function() {
@@ -1598,7 +1630,7 @@ $.fn.updateSlideNum = function( num ) {
     } );
 
     $( "#selectable li:nth-child(" + currentNum + ")" ).addClass( "ui-selected" );
-    $( "#currentStatus" ).html( media + " " + currentNum + " of " + topicCount );
+    $( "#currentStatus" ).html( "<span aria-label=\"" + status + "\" tabindex=\"9\" >" + status + "</span>" );
 
 };
 
@@ -1620,11 +1652,13 @@ $.fn.bindImgMagnify = function() {
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"icon-expand\" title=\"Expand\"></span>" );
             $( "#notesBtn, #tocBtn" ).hide();
-            $( "#toc" ).css( 'left', '' );
+            $( "#toc" ).css( 'left', '' ).show();
 
             if ( $( "#tocBtn" ).hasClass( 'active' ) ) {
 
                 $( "#tocBtn" ).removeClass( 'active' );
+                
+                $( "#slideNote img" ).focus();
 
             }
 
@@ -1633,12 +1667,15 @@ $.fn.bindImgMagnify = function() {
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
             $( this ).html( "<span class=\"icon-contract\" title=\"Contract\"></span>" );
             $( "#tocBtn" ).show();
+            $( "#toc" ).hide();
 
             if ( !$( "#slideNote" ).hasClass( "quizSlide" ) ) {
 
                 $( "#notesBtn" ).show();
 
             }
+            
+            $( "#slideNote img" ).focus();
 
         }
 
@@ -1662,7 +1699,7 @@ $.fn.bindNoteSlideToggle = function() {
     $( "#notesBtn" ).on( "click", function() {
 
         var currentPos = Math.ceil( note.offset().top );
-        var pos  = 0;
+        var pos = 0;
 
         if ( currentPos >= closedPos ) {
 
@@ -1712,10 +1749,12 @@ $.fn.bindTocSlideToggle = function() {
     var openPos = 642, closedPos = 900;
 
     $( "#tocBtn" ).on( "click", function() {
-
+        
+        $( "#toc" ).show();
+        
         var currentPos = Math.ceil( toc.offset().left );
         var pos = 0;
-
+        
         if ( currentPos >= closedPos ) {
 
             pos = openPos;
@@ -1725,6 +1764,7 @@ $.fn.bindTocSlideToggle = function() {
 
             pos = closedPos;
             $(this).removeClass( "active" );
+        
         }
 
         if ( $( "#note" ).offset().top >= 360 ) {
@@ -1743,6 +1783,14 @@ $.fn.bindTocSlideToggle = function() {
 
             "left": pos
 
+        }, function() {
+            
+            if ( pos >= closedPos ) {
+                
+                $( "#toc" ).hide();
+                
+            }
+            
         } );
 
     } );
@@ -1765,11 +1813,11 @@ $.fn.loadProfilePhoto = function() {
 
     $( img ).load( function() {
 
-        $( "#profile .photo" ).html( "<img src=\"" + imgPath + "\" alt=\"Instructor Photo\" border=\"0\" />" );
+        $( "#profile .photo" ).html( "<img tabindex=\"4\" src=\"" + imgPath + "\" border=\"0\" alt=\"An photo of the instructor\" />" );
 
     } ).error( function() {
 
-        $( "#profile .photo" ).html( "<img src=\"" + ROOT_PATH + "img/profile.png\" width=\"200\" height=\"300\" alt=\"No Profile Photo\" border=\"0\" />" );
+        $( "#profile .photo" ).html( "<img tabindex=\"4\" src=\"" + ROOT_PATH + "img/profile.png\" width=\"200\" height=\"300\" alt=\"No instructor photo\" border=\"0\" />" );
 
     } ).attr( {
 
@@ -1801,21 +1849,21 @@ $.fn.getDownloadableFiles = function() {
 	// get transcript first
 	$.get( url + '.pdf', function() {
 
-    	downloadBar.append("<li><a download href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Transcript</a></li>");
+    	downloadBar.append("<li><a tabindex=\"0\" role=\"button\" download href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Transcript</a></li>");
 
 	} ).always( function() {
 
     	// get audio file
     	$.get( url + '.mp3', function() {
 
-        	downloadBar.append("<li><a download href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Audio</a></li>");
+        	downloadBar.append("<li><a tabindex=\"0\" role=\"button\" download href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Audio</a></li>");
 
     	} ).always( function() {
 
         	// get package/zip file
         	$.get( url + '.zip', function() {
 
-            	downloadBar.append("<li><a href=\"" + url + ".zip\" target=\"_blank\"><span class=\"icon-arrow-down\"><span> Supplement</a></li>");
+            	downloadBar.append("<li><a tabindex=\"0\" role=\"button\" href=\"" + url + ".zip\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Supplement</a></li>");
 
         	} );
 

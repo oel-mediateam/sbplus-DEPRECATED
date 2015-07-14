@@ -30,9 +30,9 @@
 
 	    <!-- black header bar -->
         <header>
-            <span id="lessonTitle"></span>
+            <h1 tabindex="1" id="lessonTitle"></h1>
             <span id="instructorName"></span>
-            <a id="info" class="infoIcn" href="#"></a>
+            <a tabindex="3" role="button" aria-controltext="" id="info" class="infoIcn" href="#"><span class="sr-only">See Profile </span></a>
         </header>
 
 		<!-- content -->
@@ -41,19 +41,19 @@
 		    <!-- slide and note container -->
 			<div id="slideNote">
 
-				<div id="slide"></div>
+				<div id="slide" tabindex="5"></div>
 
 				<div id="ap">
-					<audio id="apc" autoplay="autoplay" preload="metadata" controls="controls"></audio>
+					<audio tabindex="5" id="apc" autoplay="autoplay" preload="metadata" controls="controls"></audio>
 				</div>
 
-				<div id="vp"></div>
+				<div id="vp" tabindex="5"></div>
 
-				<div id="note"></div>
+				<div id="note" tabindex="6"></div>
 
-				<div id="control">
-					<span id="leftBtn"></span>
-					<span id="rightBtn"></span>
+				<div id="control" role="navigation">
+					<span id="leftBtn" tabindex="7" role="button" aria-label="Previous"></span>
+					<span id="rightBtn" tabindex="8" role="button" aria-label="Next"></span>
 					<span id="currentStatus"></span>
 				</div>
 
@@ -61,7 +61,7 @@
 
 			<!-- table of content -->
 			<div id="toc">
-				<ol id="selectable"></ol>
+				<ol id="selectable" role="menu" tabindex="14"></ol>
 			</div>
 
 		</div>
@@ -70,33 +70,32 @@
 
 
 	<!-- profile panel -->
-	<div id="profile">
+	<div id="profile" role="complementary">
 		<div class="photo"></div>
-		<div class="bio"></div>
+		<div class="bio" tabindex="5"></div>
 	</div>
 
     <!-- download bar -->
 	<div id="download_bar">
-		<ul></ul>
+		<ul role="navigation"></ul>
 	</div>
 
 </div>
 <!-- end #storybook_plus_wrapper div -->
 
-<div id="qunit"></div> <!-- QUnit fills this with results, etc -->
-<div id='qunit-fixture'>
-
-  <!-- any HTML you want to be present in each test (will be reset for each test) -->
-
-</div>
+<!--
+<div id="qunit"></div>
+<div id='qunit-fixture'></div> -->
 
 <script src="../sources/scripts/jquery.min.js" type="text/javascript"></script>
 <script src="../sources/browserdetection/browser-detection.min.js" type="text/javascript"></script>
 <script src="../sources/audioplayer/mediaelement-and-player.min.js" type="text/javascript"></script>
 <script src="../sources/videoplayer/combined.video.min.js" type="text/javascript"></script>
-<script src="../sources/scripts/storybookplus.js" type="text/javascript"></script>
+<script src="../sources/scripts/storybookplus.min.js" type="text/javascript"></script>
 <!-- qunit test; remove on production -->
+<!--
 <script src="tests/qunit.js" type="text/javascript"></script>
 <script src="tests/tests.js" type="text/javascript"></script>
+-->
 </body>
 </html>
