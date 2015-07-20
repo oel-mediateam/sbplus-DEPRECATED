@@ -1,7 +1,7 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
-_none_
+* Added tab indexes/focus to HTML elements
 
 ---
 ###2.6.0 (04-01-2015)

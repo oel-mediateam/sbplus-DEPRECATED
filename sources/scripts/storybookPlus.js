@@ -4,7 +4,7 @@
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
  * @version: 2.7.0
- * Released 7/--/2015
+ * Released 8/--/2015
  *
  * @license: GNU GENERAL PUBLIC LICENSE v3
  *
@@ -385,7 +385,7 @@ $.fn.setupPlayer = function() {
 
 	// set up the splash screen
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
-    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" href=\"#\"><span tabindex=\"0\" class=\"sr-only\">Play</span></a>" );
+    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" href=\"#\"><span class=\"sr-only\">Play</span></a>" );
     
     // focus on the play button
     $( ".playBtn" ).focus();
@@ -493,17 +493,7 @@ $.fn.initializePlayer = function() {
     // bind left click event
     $( "#leftBtn" ).on( "click", function() {
 
-        counter--;
-
-        if ( counter < 0 ) {
-            counter = topicCount - 1;
-        }
-
-        $.fn.loadSlide( topicSrc[counter], counter );
-        previousIndex = counter;
-
-        $.fn.autoscroll();
-
+        $.fn.previousSlide();
         return false;
 
     } );
@@ -511,17 +501,7 @@ $.fn.initializePlayer = function() {
     // bind right click event
     $( "#rightBtn" ).on( "click", function() {
 
-        counter++;
-
-        if ( counter > topicCount - 1 ) {
-            counter = 0;
-        }
-
-        $.fn.loadSlide( topicSrc[counter], counter );
-        previousIndex = counter;
-
-        $.fn.autoscroll();
-
+        $.fn.nextSlide();
         return false;
 
     });
@@ -555,8 +535,59 @@ $.fn.initializePlayer = function() {
 
     // display the player
     $( "#player" ).show();
+    
+    // listent to keyboard events
+    $.fn.listenToKeyboard();
 
 };
+
+/**
+ * back to previous slide
+ * @since 2.7.0
+ * @author Ethan S. Lin
+ *
+ * @param none
+ * @return void
+ *
+ */
+$.fn.previousSlide = function() {
+    
+    counter--;
+
+    if ( counter < 0 ) {
+        counter = topicCount - 1;
+    }
+
+    $.fn.loadSlide( topicSrc[counter], counter );
+    previousIndex = counter;
+
+    $.fn.autoscroll();
+    
+}
+
+/**
+ * advance to next slide
+ * @since 2.7.0
+ * @author Ethan S. Lin
+ *
+ * @param none
+ * @return void
+ *
+ */
+$.fn.nextSlide = function() {
+    
+    counter++;
+
+    if ( counter > topicCount - 1 ) {
+        counter = 0;
+    }
+
+    $.fn.loadSlide( topicSrc[counter], counter );
+    previousIndex = counter;
+
+    $.fn.autoscroll();
+    
+}
 
 /**
  * Check table of content position and scroll is out of view
@@ -1933,6 +1964,58 @@ $.fn.displayGetLessonError = function( status, exception ) {
     $('#errorMsg').html('<p>' + statusMsg + '</p><p>' + exceptionMsg + '</p>');
 
 };
+
+/**
+ * Handling Keyboard events
+ * @since 2.7.0
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
+ 
+ $.fn.listenToKeyboard = function() {
+     
+     //console.log( 'listening to keyboard' );
+     
+     $( document ).on( 'keypress', function( e ) {
+         
+         var code = e.which;
+         var key = '';
+         
+         switch ( code ) {
+             
+             case 97:
+                key = 'a'; // left
+                $.fn.previousSlide();
+             break;
+             case 119:
+                key = 'w'; // up
+                $.fn.previousSlide();
+             break;
+             case 100:
+                key = 'd'; // right
+                $.fn.nextSlide();
+             break;
+             case 115:
+                key = 's'; // down
+                $.fn.nextSlide();
+             break;
+             case 99:
+                key = 'c'; // caption toggle
+            break;
+            case 122:
+                key = 'z'; // magnify toggle
+            break;    
+             
+         }
+         
+         //console.log( "key pressed: " + key );
+         
+     } );
+     
+ };
 
 /* MISC. HELPER FUNCTIONS
 ***************************************************************/
