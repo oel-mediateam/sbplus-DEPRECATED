@@ -563,7 +563,7 @@ $.fn.previousSlide = function() {
 
     $.fn.autoscroll();
     
-}
+};
 
 /**
  * advance to next slide
@@ -587,7 +587,7 @@ $.fn.nextSlide = function() {
 
     $.fn.autoscroll();
     
-}
+};
 
 /**
  * Check table of content position and scroll is out of view
