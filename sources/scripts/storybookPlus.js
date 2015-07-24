@@ -1164,13 +1164,15 @@ $.fn.displayAnswerChoices = function( index ) {
 
         case "t/f":
 
-            $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
+            $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input tabindex=\"0\" id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input tabindex=\"0\" type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
+            $( "label:first-child" ).focus();
 
         break;
 
         case "fib":
 
             $( "#quiz" ).append( "<div class=\"answerArea\"><input type=\"text\" id=\"saAns\" /></div>" );
+            $( "#saAns" ).focus();
 
         break;
 
@@ -1209,12 +1211,14 @@ $.fn.displayAnswerChoices = function( index ) {
             }
 
             $( "#quiz" ).append( "</div>" );
+            $( "label:first-child" ).focus();
 
         break;
 
         case "sa":
 
             $( "#quiz" ).append( "<div class=\"answerArea\"><textarea id=\"saAns\"></textArea></div>" );
+            $( "#saAns" ).focus();
 
         break;
 
@@ -1984,30 +1988,34 @@ $.fn.displayGetLessonError = function( status, exception ) {
          var code = e.which;
          var key = '';
          
-         switch ( code ) {
+         if ( !$( 'input[type=text], textarea' ).is( ':focus' ) ) {
              
-             case 97:
-                key = 'a'; // left
-                $.fn.previousSlide();
-             break;
-             case 119:
-                key = 'w'; // up
-                $.fn.previousSlide();
-             break;
-             case 100:
-                key = 'd'; // right
-                $.fn.nextSlide();
-             break;
-             case 115:
-                key = 's'; // down
-                $.fn.nextSlide();
-             break;
-             case 99:
-                key = 'c'; // caption toggle
-            break;
-            case 122:
-                key = 'z'; // magnify toggle
-            break;    
+             switch ( code ) {
+             
+                 case 97:
+                    key = 'a'; // left
+                    $.fn.previousSlide();
+                 break;
+                 case 119:
+                    key = 'w'; // up
+                    $.fn.previousSlide();
+                 break;
+                 case 100:
+                    key = 'd'; // right
+                    $.fn.nextSlide();
+                 break;
+                 case 115:
+                    key = 's'; // down
+                    $.fn.nextSlide();
+                 break;
+                 case 99:
+                    key = 'c'; // caption toggle
+                break;
+                case 122:
+                    key = 'z'; // magnify toggle
+                break;    
+                 
+             }
              
          }
          
