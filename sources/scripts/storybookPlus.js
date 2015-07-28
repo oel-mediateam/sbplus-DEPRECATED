@@ -710,7 +710,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "vimeo:":
 
-            $( "#slide" ).html( "<iframe id=\"vimeo\" width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done( function() { $(this).find("#vimeo").focus(); } );
+            $.fn.setupMediaPlayer( 'vimeo', srcName );
 
         break;
 
@@ -870,6 +870,17 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             } );
         
         break;
+        
+        case "vimeo":
+        
+            playerID = "vm";
+            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\"></video>" ).promise().done( function() {
+
+                    $.fn.loadVideoJsPlayer(playerID, src);
+
+            } );
+        
+        break;
 
         default:
             $.fn.displayErrorMsg( "Video error!", "Please double check your XML file." );
@@ -1019,6 +1030,7 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
         case 'apc':
             
             options.poster = 'assets/slides/' + src + "." + slideImgFormat;
+            options.plugins = null;
             $( "#ap" ).fadeIn();
             $( "#ap" ).focus();
             
@@ -1027,7 +1039,18 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
         case 'ytb':
         
             options.techOrder = ["youtube"];
-            options.src = "http://www.youtube.com/watch?v=" + src;
+            options.src = "https://www.youtube.com/watch?v=" + src;
+            options.plugins = null;
+            $( "#vp" ).fadeIn();
+            $( "#vp" ).focus();
+            
+        break;
+        
+        case 'vm':
+            
+            options.techOrder = ["vimeo"];
+            options.src = "https://vimeo.com/" + src;
+            options.plugins = null;
             $( "#vp" ).fadeIn();
             $( "#vp" ).focus();
             

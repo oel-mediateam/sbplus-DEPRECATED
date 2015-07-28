@@ -126,28 +126,28 @@
 		<note />
 	</topic>
 
-	<topic src="youtube:UaWN7gObv-c" title="Embedded YouTube Video">
+	<topic src="youtube:EGgL8iGveXs" title="YouTube Video">
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contains an embedded YouTube video. <a href="https://www.youtube.com/embed/UaWN7gObv-c?autoplay=1&rel=0" target="_blank">YouTube video</a></p>]]>
 		</note>
 	</topic>
 
-	<topic src="vimeo:90640415" title="Embedded Vimeo Video">
+	<topic src="vimeo:63186969" title="Vimeo Video">
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contains an embedded Vimeo video. Please excuse this strange video... It was randomly grabbed from Vimeo.</p>]]>
 		</note>
 	</topic>
 
-	<topic src="kaltura:1_b7q348t6" title="Embedded Kaltura Video">
+	<topic src="kaltura:1_b7q348t6" title="Kaltura Video">
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contains an embedded Kaltura video.</p>]]>
 		</note>
 	</topic>
 
-	<topic src="kaltura:1_vh2nyd0m" title="Embedded Kaltura Video 2">
+	<topic src="kaltura:1_vh2nyd0m" title="Kaltura Video 2">
 		<quiz />
 		<note>
 			<![CDATA[<p>This slide contains an embedded Kaltura video.</p>]]>
