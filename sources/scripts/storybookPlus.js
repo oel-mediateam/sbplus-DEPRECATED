@@ -1416,6 +1416,7 @@ $.fn.displayAnswerChoices = function( index ) {
 /**
  * Display current self-assessment feedback
  * @since 2.0.0
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  *
@@ -1428,7 +1429,7 @@ $.fn.showFeedback = function( index ) {
     var questionImg = "";
     var audio = "";
 
-    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
+    $( "#slide" ).html( "<div tabindex=\"5\" id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
 
     if ( questions[index].type !== "sa" ) {
 
@@ -1507,6 +1508,8 @@ $.fn.showFeedback = function( index ) {
         }
 
     }
+    
+    $( "#quiz" ).focus();
 
 };
 
