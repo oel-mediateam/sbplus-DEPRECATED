@@ -27,7 +27,6 @@
  */
 
 /* global videojs */
-/* global MediaElementPlayer */
 /* global kWidget */
 
 // global variable declarations
@@ -54,10 +53,6 @@ var PROFILE,
     duration;
 
 var videoPlayer = null,
-    audioPlayer,
-    firstAudioLoad = false,
-    audioPlaying = false,
-    sources,
     kalturaLoaded = 0;
 
 var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
@@ -660,21 +655,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
 
-    // if audio is playing
-    if ( audioPlaying ) {
-
-        try {
-
-            audioPlayer.pause();
-
-        } catch(e) { }
-
-        $( "#ap" ).hide();
-
-        audioPlaying = false;
-
-    }
-
     $( "#slide" ).html( "" );
 
     switch ( slideSource ) {
@@ -724,40 +704,23 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 $( this ).fadeIn();
                 $( this ).focus();
 
-                if ( !audioPlaying ) {
 
-                    $.ajax( {
+                $.ajax( {
 
-                        url: 'assets/audio/' + srcName + '.mp3',
-                        type:'HEAD',
-                        error: function() {
+                    url: 'assets/audio/' + srcName + '.mp3',
+                    type:'HEAD',
+                    error: function() {
 
-                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
+                        $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
 
-                        },
-                        success: function() {
+                    },
+                    success: function() {
 
-                            $( "#ap" ).show();
+                        // load videojs for audio
 
-                            if (firstAudioLoad !== true) {
+                    }
 
-                    		    $.fn.loadAudioPlayer( "#apc", srcName );
-                                firstAudioLoad = true;
-
-        					} else {
-
-        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-        						audioPlayer.setSrc( sources );
-
-        					}
-
-        					audioPlaying = true;
-
-                        }
-
-                    } );
-
-                }
+                } );
 
             } ).error( function() {
 
@@ -1508,100 +1471,6 @@ $.fn.showFeedback = function( index ) {
     }
     
     $( "#quiz" ).focus();
-
-};
-
-/**
- * Load audio player
- * @since 2.1.0
- * @updated 2.5.1
- *
- * @author Ethan S. Lin
- * @param strings, id and source name
- * @return void
- *
- */
-$.fn.loadAudioPlayer = function( id, srcName ) {
-
-    var width = "100%", height = 30;
-
-    audioPlayer = new MediaElementPlayer( id, {
-
-		audioWidth: width,
-		audioHeight: height,
-		startVolume: 0.8,
-		loop: false,
-		enableAutosize: true,
-		iPadUseNativeControls: false,
-		iPhoneUseNativeControls: false,
-		AndroidUseNativeControls: false,
-		pauseOtherPlayers: true,
-		type: "audio/mpeg",
-		success: function( me ) {
-
-			sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-			me.setSrc( sources );
-			me.load();
-
-            me.addEventListener( "play", function() {
-
-                $.fn.bindAudioPlayerFadeInOut();
-
-            } );
-
-            me.addEventListener( "ended", function() {
-
-                $.fn.unbindAudioPlayerFadeInOut();
-
-            } );
-
-		}
-
-	} );
-
-};
-
-/**
- * Fade in and out audio player
- * @since 2.2.0
- *
- * @author Ethan S. Lin
- * @param none
- * @return void
- *
- */
-$.fn.bindAudioPlayerFadeInOut = function() {
-
-    $( "#ap" ).delay( 3000 ).fadeOut( "slow" );
-
-    $( "#img, #ap" ).on( "mouseenter", function() {
-
-        $( "#ap" ).stop(true,true).fadeIn( "slow" );
-
-    } );
-
-    $( "#img, #ap" ).on( "mouseleave", function() {
-
-        $( "#ap" ).stop(false,true).delay( 1000 ).fadeOut( "slow" );
-
-    } );
-
-};
-
-/**
- * Unbind audio player fade in and out
- * @since 2.5.1
- *
- * @author Ethan S. Lin
- * @param none
- * @return void
- *
- */
-$.fn.unbindAudioPlayerFadeInOut = function() {
-
-    $( "#ap" ).fadeIn( "fast" );
-    $( "#img, #ap" ).unbind( "mouseenter" );
-    $( "#img, #ap" ).unbind( "mouseleave" );
 
 };
 
