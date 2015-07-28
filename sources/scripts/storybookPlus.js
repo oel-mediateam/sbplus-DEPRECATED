@@ -625,7 +625,7 @@ $.fn.nextSlide = function() {
 $.fn.loadSlide = function( slideSource, sNum ) {
 
     var img;
-    var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 ).toLowerCase();
+    var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 );
 
     if ( slideSource !== "quiz" ) {
 
@@ -635,8 +635,10 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     if ( slideSource !== 'video:' && slideSource !== 'kaltura:' && slideSource !== 'youtube:' && slideSource !== 'vimeo:' ) {
         $( "#progressing" ).fadeIn();
+        srcName = srcName.toLowerCase();
 
     }
+    
 
     if ( $( "#slideNote" ).hasClass( "quizSlide" ) ) {
 
@@ -652,7 +654,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         mediaPlayer.dispose();
         mediaPlayer = null;
         $( '#vp' ).empty().hide();
-        $( '#apc' ).empty().hide();
+        $( '#ap' ).empty().hide();
 
     }
 
@@ -701,8 +703,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
 
         case "youtube:":
-
-            $( "#slide" ).html( "<iframe id=\"youtube\" width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&fs=0&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\"></iframe>" ).promise().done(function() { $(this).find("#youtube").focus(); });
+            
+            $.fn.setupMediaPlayer( 'youtube', srcName );
 
         break;
 
@@ -794,11 +796,11 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 } ).always( function() {
     
                     var audioSrc = "<source src=\"assets/audio/" + src + ".mp3\" type=\"audio/mp3\">";
-    
-                    $( "#apc" ).html( audioSrc + subtitle ).promise().done( function() {
-    
+                    
+                    $( "#ap" ).html( "<audio id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + audioSrc + subtitle + "</audio>" ).promise().done( function() {
+
                         $.fn.loadVideoJsPlayer( playerID, src );
-    
+
                     } );
     
                 } );
@@ -856,6 +858,17 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
             }
 
+        break;
+        
+        case "youtube":
+        
+            playerID = "ytb";
+            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\"></video>" ).promise().done( function() {
+
+                    $.fn.loadVideoJsPlayer(playerID, src);
+
+            } );
+        
         break;
 
         default:
@@ -971,7 +984,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  * @return void
  *
  */
-$.fn.loadVideoJsPlayer = function( playerID ) {
+$.fn.loadVideoJsPlayer = function( playerID, src ) {
 
     var options = {
 
@@ -986,23 +999,40 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
         }
 
     };
-
-    if ( playerID === "vpc" ) {
-        
-        if ( $.fn.supportMp4() === false && $.fn.supportWebm() === false ) {
-
-            options.techOrder = ["flash", "html5"];
-            options.plugins = null;
     
-        }
+    switch ( playerID ) {
         
-        $( "#vp" ).fadeIn();
-        $( "#vp" ).focus();
+        case 'vpc':
+            
+            if ( $.fn.supportMp4() === false && $.fn.supportWebm() === false ) {
+
+                options.techOrder = ["flash", "html5"];
+                options.plugins = null;
         
-    } else {
+            }
+            
+            $( "#vp" ).fadeIn();
+            $( "#vp" ).focus();
+            
+        break;
         
-        $( "#ap" ).fadeIn();
-        $( "#ap" ).focus();
+        case 'apc':
+            
+            options.poster = 'assets/slides/' + src + "." + slideImgFormat;
+            $( "#ap" ).fadeIn();
+            $( "#ap" ).focus();
+            
+        break;
+        
+        case 'ytb':
+        
+            options.techOrder = ["youtube"];
+            options.src = "http://www.youtube.com/watch?v=" + src;
+            $( "#vp" ).fadeIn();
+            $( "#vp" ).focus();
+            
+        break;
+        
         
     }
     
