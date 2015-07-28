@@ -52,7 +52,7 @@ var PROFILE,
     instructor,
     duration;
 
-var videoPlayer = null,
+var mediaPlayer = null,
     kalturaLoaded = 0;
 
 var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
@@ -625,7 +625,7 @@ $.fn.nextSlide = function() {
 $.fn.loadSlide = function( slideSource, sNum ) {
 
     var img;
-    var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 );
+    var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 ).toLowerCase();
 
     if ( slideSource !== "quiz" ) {
 
@@ -644,14 +644,15 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
 
-    if ( videoPlayer !== null ) {
+    if ( mediaPlayer !== null ) {
 
         $( '.vjs-control' ).blur();
         $( '.vjs-menu-item' ).blur();
 
-        videoPlayer.dispose();
-        videoPlayer = null;
+        mediaPlayer.dispose();
+        mediaPlayer = null;
         $( '#vp' ).empty().hide();
+        $( '#apc' ).empty().hide();
 
     }
 
@@ -662,7 +663,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "image:":
 
             img = new Image();
-            srcName = srcName.toLowerCase();
 
             imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
             imgCaption = $( "#selectable li .title" ).get( sNum ).innerHTML;
@@ -690,57 +690,13 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "image-audio:":
 
-            img = new Image();
-            srcName = srcName.toLowerCase();
-
-            imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
-            imgCaption = $( "#selectable li .title" ).get( sNum ).innerHTML;
-
-            $( img ).load( function() {
-
-                $( this ).hide();
-                $( "#slide" ).html( "<div id=\"img\"></div>" );
-                $( "#slide #img" ).html( img );
-                $( this ).fadeIn();
-                $( this ).focus();
-
-
-                $.ajax( {
-
-                    url: 'assets/audio/' + srcName + '.mp3',
-                    type:'HEAD',
-                    error: function() {
-
-                        $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
-
-                    },
-                    success: function() {
-
-                        // load videojs for audio
-
-                    }
-
-                } );
-
-            } ).error( function() {
-
-                $.fn.displayErrorMsg( "image not found!", "Expected image: " + imgPath );
-
-            } ).attr( {
-
-                'src': imgPath,
-                'alt': imgCaption,
-                'border': 0,
-                'tabindex': 4
-
-            } );
+            $.fn.setupMediaPlayer( "audio", srcName );
 
         break;
 
         case "video:":
 
-            srcName = srcName.toLowerCase();
-            $.fn.setupVideoPlayer( 'video', srcName );
+            $.fn.setupMediaPlayer( 'video', srcName );
 
         break;
 
@@ -758,13 +714,12 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "kaltura:":
 
-            $.fn.setupVideoPlayer( 'kaltura', srcName );
+            $.fn.setupMediaPlayer( 'kaltura', srcName );
 
         break;
 
         case "swf:":
 
-            srcName = srcName.toLowerCase();
             $( "#slide" ).html( "<object width=\"640\" height=\"360\" type=\"application/x-shockwave-flash\" data=\"assets/swf/" + srcName + ".swf\"><param name=\"movie\" value=\"assets/swf/" + srcName + ".swf\" /><div id=\"errorMsg\"><p>Error: Adobe Flash Player is not enabled or installed!</p><p>Adobe Flash Player is required to view this slide. Please enable or <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">install Adobe Flash Player</a>.</p></div></object>" ).promise().done( function() {
 
             } );
@@ -809,7 +764,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * Setup videojs player
  * @since 2.4.0
- * @updated 2.6.0
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  *
@@ -817,15 +772,48 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  * @return void
  *
  */
- $.fn.setupVideoPlayer = function ( type, src ) {
+ $.fn.setupMediaPlayer = function ( type, src ) {
 
-     var playerID = "vpc";
+    var playerID = "";
+    var subtitle = "";
 
     switch( type ) {
+        
+        case "audio":
+        
+            playerID = "apc";
+            
+            $.get( 'assets/slides/' + src + '.' + slideImgFormat, function() {
+                
+                $( "#apc" ).attr( 'poster', 'assets/slides/' + src + '.' + slideImgFormat );
+                
+                $.get( 'assets/audio/' + src + '.vtt', function() {
+
+                    subtitle = "<track kind=\"subtitles\" src=\"assets/audio/" + src + ".vtt\" srclang=\"en\" label=\"English\">";
+    
+                } ).always( function() {
+    
+                    var audioSrc = "<source src=\"assets/audio/" + src + ".mp3\" type=\"audio/mp3\">";
+    
+                    $( "#apc" ).html( audioSrc + subtitle ).promise().done( function() {
+    
+                        $.fn.loadVideoJsPlayer( playerID, src );
+    
+                    } );
+    
+                } );
+                
+            } ).fail( function() {
+                
+                $.fn.displayErrorMsg( "image not found!", "Expected image: assets/slides/" + src + "." + slideImgFormat );
+                
+            } );
+            
+        break;
 
         case "video":
-
-            var subtitle = "";
+            
+            playerID = "vpc";
 
             $.get( 'assets/video/' + src + '.vtt', function() {
 
@@ -833,7 +821,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
             } ).always( function() {
 
-                var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />";
+                var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\">";
 
                 $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
 
@@ -846,8 +834,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
 
         case "kaltura":
-
-
+            
+            playerID = "vpc";
+            
             if ( kalturaLoaded === 0 ) {
 
                 $.getScript( ROOT_PATH + '/scripts/mwembedloader.js', function() {
@@ -998,24 +987,32 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
 
     };
 
-    if ( $.fn.supportMp4() === false && $.fn.supportWebm() === false ) {
+    if ( playerID === "vpc" ) {
+        
+        if ( $.fn.supportMp4() === false && $.fn.supportWebm() === false ) {
 
-        options.techOrder = ["flash", "html5"];
-        options.plugins = null;
-
+            options.techOrder = ["flash", "html5"];
+            options.plugins = null;
+    
+        }
+        
+        $( "#vp" ).fadeIn();
+        $( "#vp" ).focus();
+        
+    } else {
+        
+        $( "#ap" ).fadeIn();
+        $( "#ap" ).focus();
+        
     }
-
-    $( "#vp" ).fadeIn();
-
-    videoPlayer = videojs( playerID, options, function() {
+    
+    mediaPlayer = videojs( playerID, options, function() {
 
         this.progressTips();
 
     } );
 
     videojs.options.flash.swf = ROOT_PATH + "videoplayer/video-js.swf";
-    
-    $( "#vp" ).focus();
 
 };
 

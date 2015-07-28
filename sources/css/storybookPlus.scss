@@ -264,6 +264,12 @@ p {
     	}
 
     }
+    
+    #ap {
+        
+        @extend #vp;
+        
+    }
 
     #toc {
 
@@ -524,6 +530,12 @@ p {
         left: rem( 1px );
     	width: rem( 640px );
     	height: rem( 360px );
+    }
+    
+    #ap {
+        
+        @extend #vp;
+        
     }
 
     // QUIZ
