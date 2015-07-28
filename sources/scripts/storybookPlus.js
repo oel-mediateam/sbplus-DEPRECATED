@@ -1029,7 +1029,7 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
         "controls": true,
         "autoplay": true,
         "preload": "auto",
-        plugins: {
+        "plugins": {
             resolutionSelector: { default_res: 'normal' }
         }
 
@@ -1044,11 +1044,9 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
 
     $( "#vp" ).fadeIn();
 
-    videojs( playerID, options, function() {
+    videoPlayer = videojs( playerID, options, function() {
 
-        videoPlayer = this;
         this.progressTips();
-        this.removeChild('FullscreenToggle');
 
     } );
 
