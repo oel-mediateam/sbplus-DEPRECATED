@@ -1023,7 +1023,7 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
             }
             
             $( "#vp" ).fadeIn();
-            $( "#vp" ).focus();
+            $( "#vpc" ).focus();
             
         break;
         
@@ -1032,7 +1032,29 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
             options.poster = 'assets/slides/' + src + "." + slideImgFormat;
             options.plugins = null;
             $( "#ap" ).fadeIn();
-            $( "#ap" ).focus();
+            $( "#apc" ).focus();
+            
+            $( "#apc" ).on('mouseenter', function() {
+                    
+                if ( $( this ).hasClass( 'vjs-user-inactive' ) ) {
+                    
+                    $( this ).removeClass( 'vjs-user-inactive' );
+                    $( this ).addClass( 'vjs-user-active' );
+                    
+                }
+                
+            } );
+            
+            $( "#apc" ).on('mouseleave', function() {
+                
+                if ( $( this ).hasClass( 'vjs-user-active' ) ) {
+                    
+                    $( this ).removeClass( 'vjs-user-active' );
+                    $( this ).addClass( 'vjs-user-inactive' );
+                    
+                }
+                
+            } );
             
         break;
         
