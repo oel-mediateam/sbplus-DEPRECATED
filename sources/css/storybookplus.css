@@ -327,15 +327,30 @@ p {
     display: none;
     top: 14.28571rem;
     left: 22.5rem;
-    width: 2.14286rem;
-    height: 2.14286rem;
-    background-image: url("../img/spinner.gif");
+    width: 2.28571rem;
+    height: 2.28571rem;
+    background-image: url("../img/spinner.png");
     background-position: center center;
     background-repeat: no-repeat;
-    background-color: rgba(255, 255, 255, 0.75);
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
-    border-radius: 50%; }
+    border-radius: 50%;
+    -moz-animation-name: spin;
+    -webkit-animation-name: spin;
+    animation-name: spin;
+    -moz-animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -moz-animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -webkit-transform-origin: center center;
+    transform-origin: center center; }
 
 #content {
   width: 100%;

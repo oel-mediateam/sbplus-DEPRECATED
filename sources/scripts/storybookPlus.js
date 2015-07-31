@@ -348,6 +348,10 @@ $.fn.setupPlayer = function() {
                 case "bps":
                     logo = "<img src=\"" + ROOT_PATH + "img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
                 break;
+                
+                case "ds":
+                    logo = "<img src=\"" + ROOT_PATH + "img/ds_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Data Science\" border=\"0\" />";
+                break;
 
         }
 
@@ -479,12 +483,6 @@ $.fn.initializePlayer = function() {
 
     } );
 
-    $( "#selectable" ).on( "selectableselected", function() {
-
-        $.fn.autoscroll();
-
-    } );
-
     // bind left click event
     $( "#leftBtn" ).on( "click", function() {
 
@@ -555,8 +553,6 @@ $.fn.previousSlide = function() {
 
     $.fn.loadSlide( topicSrc[counter], counter );
     previousIndex = counter;
-
-    $.fn.autoscroll();
     
 };
 
@@ -579,8 +575,6 @@ $.fn.nextSlide = function() {
 
     $.fn.loadSlide( topicSrc[counter], counter );
     previousIndex = counter;
-
-    $.fn.autoscroll();
     
 };
 
@@ -596,17 +590,21 @@ $.fn.nextSlide = function() {
  */
  $.fn.autoscroll = function() {
 
-    var itemPos = $( '.ui-selected' ).position().top;
-    var conBtm = $( "#selectable" ).height();
-
-    if ( itemPos >= conBtm ) {
-
-        $( "#selectable" ).animate( { scrollTop: ( conBtm / 2 ) }, 1000 );
-
-    } else if ( itemPos < $( "#selectable" ).scrollTop() / 6 ) {
-
-        $( "#selectable" ).animate( { scrollTop: 0 }, 1000 );
-
+    var visibleHeight = Math.floor( $("#selectable").height() );
+    var currentItemPos = Math.floor(  $( this ).position().top );
+    
+    if ( currentItemPos >= 488 ) {
+        
+        var scrolledHeight = ( visibleHeight / 2 ) + $("#selectable")[0].scrollTop;
+        $( "#selectable" ).animate( { scrollTop: scrolledHeight }, 500 );
+           
+    }
+    
+    if ( currentItemPos < 32 ) {
+        
+        var scrolledUp = $("#selectable")[0].scrollTop - ( visibleHeight / 2 );
+        $( "#selectable" ).animate( { scrollTop: scrolledUp }, 500 );
+           
     }
 
  };
@@ -760,6 +758,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         } );
 
     }
+    
+    $( ".ui-selected" ).autoscroll();
 
 };
 

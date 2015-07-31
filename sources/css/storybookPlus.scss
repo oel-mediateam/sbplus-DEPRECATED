@@ -33,12 +33,14 @@ $border-color: #ccc;
 }
 
 // imports
+@import "compass/css3/animation";
 @import "compass/css3/box-sizing";
 @import "compass/css3/border-radius";
 @import "compass/css3/opacity";
 @import "compass/css3/transition";
 @import "compass/css3/user-interface";
 @import "compass/css3/box-shadow";
+@import "compass/css3/transform";
 @import "sbplus_fonts";
 
 // GENERAL
@@ -458,13 +460,17 @@ p {
         display: none;
         top: rem( 200px );
         left: rem( 315px );
-        width: rem( 30px );
-        height: rem( 30px );
-        background-image: url( "../img/spinner.gif" );
+        width: rem( 32px );
+        height: rem( 32px );
+        background-image: url( "../img/spinner.png" );
         background-position: center center;
         background-repeat: no-repeat;
-        background-color: rgba( 255, 255, 255, .75);
         @include border-radius( 50% );
+        @include animation-properties( (animation-name: spin) );
+        @include animation-properties( (animation-duration: 1s) );
+        @include animation-properties( (animation-timing-function: linear) );
+        @include animation-properties( (animation-iteration-count: infinite) );
+        @include transform-origin(center, center);
     }
 
 } // #player
