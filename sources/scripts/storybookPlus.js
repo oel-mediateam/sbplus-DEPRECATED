@@ -484,12 +484,6 @@ $.fn.initializePlayer = function() {
 
     } );
 
-    $( "#selectable" ).on( "selectableselected", function() {
-
-        $.fn.autoscroll();
-
-    } );
-
     // bind left click event
     $( "#leftBtn" ).on( "click", function() {
 
@@ -501,8 +495,6 @@ $.fn.initializePlayer = function() {
 
         $.fn.loadSlide( topicSrc[counter], counter );
         previousIndex = counter;
-
-        $.fn.autoscroll();
 
         return false;
 
@@ -519,8 +511,6 @@ $.fn.initializePlayer = function() {
 
         $.fn.loadSlide( topicSrc[counter], counter );
         previousIndex = counter;
-
-        $.fn.autoscroll();
 
         return false;
 
@@ -569,18 +559,22 @@ $.fn.initializePlayer = function() {
  *
  */
  $.fn.autoscroll = function() {
-
-    var itemPos = $( '.ui-selected' ).position().top;
-    var conBtm = $( "#selectable" ).height();
-
-    if ( itemPos >= conBtm ) {
-
-        $( "#selectable" ).animate( { scrollTop: ( conBtm / 2 ) }, 1000 );
-
-    } else if ( itemPos < $( "#selectable" ).scrollTop() / 6 ) {
-
-        $( "#selectable" ).animate( { scrollTop: 0 }, 1000 );
-
+    
+    var visibleHeight = Math.floor( $("#selectable").height() );
+    var currentItemPos = Math.floor(  $( this ).position().top );
+    
+    if ( currentItemPos >= 488 ) {
+        
+        var scrolledHeight = ( visibleHeight / 2 ) + $("#selectable")[0].scrollTop;
+        $( "#selectable" ).animate( { scrollTop: scrolledHeight }, 500 );
+           
+    }
+    
+    if ( currentItemPos < 32 ) {
+        
+        var scrolledUp = $("#selectable")[0].scrollTop - ( visibleHeight / 2 );
+        $( "#selectable" ).animate( { scrollTop: scrolledUp }, 500 );
+           
     }
 
  };
@@ -791,7 +785,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
 
     }
-
+    
     if ( enabledNote ) {
 
         $( this ).loadNote( sNum );
@@ -809,6 +803,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         } );
 
     }
+    
+    $( ".ui-selected" ).autoscroll();
 
 };
 
