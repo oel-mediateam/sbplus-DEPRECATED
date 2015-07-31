@@ -491,6 +491,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/sources\/img\/spinner.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 808,
+		"inputAbbreviatedPath": "\/sources\/img\/spinner.png",
+		"outputAbbreviatedPath": "\/sources\/img\/spinner.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/sources\/img\/view_on_full_site.png": {
 		"fileType": 32768,
 		"ignore": 0,
