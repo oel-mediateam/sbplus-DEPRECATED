@@ -353,6 +353,10 @@ $.fn.setupPlayer = function() {
                 case "bps":
                     logo = "<img src=\"" + ROOT_PATH + "img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
                 break;
+                
+                case "ds":
+                    logo = "<img src=\"" + ROOT_PATH + "img/ds_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Data Science\" border=\"0\" />";
+                break;
 
         }
 
