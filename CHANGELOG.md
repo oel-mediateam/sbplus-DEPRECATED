@@ -4,6 +4,11 @@
 _none_
 
 ---
+###2.6.1 (08-04-2015)
+* Uniform loading spinner
+* Fixed an issue with table of content scrolling all the way to the top
+* Added Data Science
+
 ###2.6.0 (04-01-2015)
 * Added HTML5 download attribute to downloadable files
 * Table of content now auto scroll when item is out of view

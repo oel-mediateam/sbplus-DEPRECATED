@@ -3,8 +3,8 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.7.0
- * Released 7/--/2015
+ * @version: 2.6.1
+ * Released 8/4/2015
  *
  * @license: GNU GENERAL PUBLIC LICENSE v3
  *
@@ -280,7 +280,7 @@ $.fn.parseContent = function( xml ) {
 /**
  * Set up the player
  * @since 2.0.0
- * @updated 2.7.0
+ * @updated 2.6.1
  *
  * @author Ethan S. Lin
  * @return void
@@ -410,7 +410,7 @@ $.fn.setupPlayer = function() {
 /**
  * Initialize the player
  * @since 2.0.0
- * @updated 2.7.0
+ * @updated 2.6.1
  *
  * @author Ethan S. Lin
  * @return void
@@ -586,7 +586,7 @@ $.fn.initializePlayer = function() {
 /**
  * Load current slide
  * @since 2.0.0
- * @updated 2.7.0
+ * @updated 2.6.1
  *
  * @author Ethan S. Lin
  *
@@ -981,7 +981,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * load videojs player
  * @since 2.4.1
- * @updated 2.7.0
+ * @updated 2.6.1
  * @author Ethan S. Lin
  *
  * @param strings, video element id
