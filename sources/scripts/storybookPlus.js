@@ -1544,43 +1544,53 @@ $.fn.loadNote = function( num ) {
  $.fn.getProgramLogo = function() {
      
      var dir = $.fn.getProgramDirectory();
+     var logo = "uw_ex_ceoel_logo";
+     var alt = "University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning";
+     var img = "";
 
-        var logo = "<img src=\"" + ROOT_PATH +"img/uw_ex_ceoel_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
+    switch( dir ) {
 
-        switch( dir ) {
+        case "smgt":
+        case "msmgt":
+            logo = "uw_smgt_logo";
+            alt = "University of Wisconsin Sustainable Management";
+        break;
 
-            case "smgt":
-            case "msmgt":
-                logo = "<img src=\"" + ROOT_PATH + "img/uw_smgt_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
-            break;
+        case "hwm":
+            logo = "uw_hwm_logo";
+            alt = "University of Wisconsin Health &amp; Wellness Management";
+        break;
 
-            case "hwm":
-                logo = "<img src=\"" + ROOT_PATH + "img/uw_hwm_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
-            break;
+        case "himt":
+            logo = "uw_himt_logo";
+            alt = "University of Wisconsin Health Information Management &amp; Technology";
+        break;
 
-            case "himt":
-                logo = "<img src=\"" + ROOT_PATH + "img/uw_himt_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
-            break;
+        case "il":
+            logo = "uw_il_logo";
+            alt = "University of Wisconsin Independent Learning";
+        break;
 
-            case "il":
-                logo = "<img src=\"" + ROOT_PATH + "img/uw_il_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
-            break;
+        case "flx":
+            logo = "uw_flx_logo";
+            alt = "University of Wisconsin Flexible Option";
+        break;
 
-            case "flx":
-                logo = "<img src=\"" + ROOT_PATH + "img/uw_flx_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
-            break;
+        case "bps":
+            logo = "uw_bps_logo";
+            alt = "University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication";
+        break;
+        
+        case "ds":
+            logo = "ds_logo";
+            alt = "University of Wisconsin Data Science";
+        break;
 
-            case "bps":
-                logo = "<img src=\"" + ROOT_PATH + "img/uw_bps_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
-            break;
-            
-            case "ds":
-                logo = "<img src=\"" + ROOT_PATH + "img/ds_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Data Science\" border=\"0\" />";
-            break;
-
-        }
-
-        $( "#note" ).attr("aria-label", "Notes area. No notes available.").html( "<div class=\"logo\" aria-hidden=\"true\">" + logo + "</div>" );
+    }
+    
+    img = "<img src=\"" + ROOT_PATH + "img/" + logo + ".svg\" width=\"150\" height=\"65\" alt=\"" + alt + "\" border=\"0\" />";
+    
+    $( "#note" ).attr("aria-label", "Notes area. No notes available.").html( "<div class=\"logo\" aria-hidden=\"true\">" + img + "</div>" );
      
  };
 
@@ -1612,7 +1622,7 @@ $.fn.updateSlideNum = function( num ) {
 /**
  * Magnify the current slide image and video
  * @since 2.0.0
- * @updated 2.6.0
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -1653,7 +1663,7 @@ $.fn.bindImgMagnify = function() {
 };
 
 /**
- * Slide notes up and down in expanded mode
+ * Animate notes area up and down in expanded mode
  * @since 2.2.0
  *
  * @author Ethan S. Lin
@@ -1769,7 +1779,7 @@ $.fn.bindTocSlideToggle = function() {
 /**
  * Loading the instructor profile image
  * @since 2.0.0
- * @update 2.5.8
+ * @update 2.7.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -2014,31 +2024,6 @@ $.fn.getDirectory = function() {
 };
 
 /**
- * Parse the URL query parameter from the current page location
- * @since 2.0.0
- *
- * @author Ethan S. Lin
- * @param string, the parameter to parse
- * @return string, the value of the parameter
- *
- */
-$.fn.getParameterByName = function( param ) {
-
-    var regexS = "[\\?&]" + param + "=([^&#]*)",
-        regex = new RegExp( regexS ),
-        results = regex.exec( window.location.href );
-
-    param = param.replace( /[\[]/, "\\[" ).replace( /[\]]/, "\\]" );
-
-    if ( results === null ) {
-        return "";
-    } else {
-        return decodeURIComponent( results[1].replace( /\+/g, " " ) );
-    }
-
-};
-
-/**
  * Add leading zero to single digit
  * @since 2.1.0
  *
@@ -2189,7 +2174,7 @@ $.fn.parseArrayImg = function( arr ) {
  };
 
 /**
- * Get for parent directory
+ * Get program directory name
  * @since 2.4.2
  * @updated 2.5.1
  *
