@@ -6,7 +6,6 @@
 		<length>25 Minutes</length>
 		<instructor>Demo</instructor>
 		<slideImgFormat /> <!-- default to png if not specified -->
-		<note></note> <!-- disabled on default -->
 	</setup>
 
 	<!-- instructor or lesson information -->
@@ -56,9 +55,7 @@
 
 	<topic src="kaltura:1_79l7x706" title="BPS PSB 350">
 		<quiz />
-		<note>
-			<![CDATA[<p>This slide contain a kaltura video.</p>]]>
-		</note>
+		<note />
 	</topic>
 
 	<topic src="quiz" title="Short answer">

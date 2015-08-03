@@ -40,7 +40,6 @@ var topicCount = 0,
     imgPath,
     slideImgFormat = "png",
     media = "Slide",
-    enabledNote = false,
     version,
     imgCaption;
 
@@ -116,6 +115,7 @@ $.fn.getLessonContent = function( file ) {
 /**
  * Parse the topic XML file for contents
  * @since 2.0.0
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  * @param string, the XML file
@@ -130,7 +130,6 @@ $.fn.parseContent = function( xml ) {
         LESSON = $.fn.stripScript( SETUP.find( "lesson" ).text() ),
         INSTRUCTOR = $.trim( SETUP.find( "instructor" ).text() ),
         LENGTH = $.fn.stripScript( SETUP.find( "length" ).text() ),
-        NOTE = $.fn.stripScript( SETUP.find( "note" ).text() ),
         SLIDEFORMAT = $.fn.stripScript( SETUP.find('slideImgFormat').text() );
 
     PROFILE = $.fn.stripScript( XMLData.find( "profile" ).text() );
@@ -154,17 +153,6 @@ $.fn.parseContent = function( xml ) {
         duration = LENGTH;
     }
 
-    // check note presence
-    if ( NOTE.length ) {
-
-        if ( NOTE === "yes" || NOTE === "y" ) {
-
-            enabledNote = true;
-
-        }
-
-    }
-
     // check image file format
     if ( SLIDEFORMAT.length ) {
 
@@ -184,12 +172,7 @@ $.fn.parseContent = function( xml ) {
 
         topicTitle[topicCount] = $.trim( $( this ).attr( 'title' ) );
         topicSrc[topicCount] = $.trim( $( this ).attr( 'src' ) );
-
-        if ( enabledNote ) {
-
-            noteArray[topicCount] = $.fn.stripScript( $( this ).find( "note" ).text() );
-
-        }
+        noteArray[topicCount] = $.fn.stripScript( $( this ).find( "note" ).text() );
 
         if ( topicSrc[topicCount] === "quiz" ) {
 
@@ -204,8 +187,6 @@ $.fn.parseContent = function( xml ) {
                 answerNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "answer" ).text() );
 
             var quiz = {};
-
-            quizDetected = true;
 
             quiz.id = topicCount;
             quiz.type = quizTypeAttr;
@@ -266,6 +247,12 @@ $.fn.parseContent = function( xml ) {
         ++topicCount;
 
     });
+    
+    if ( questions.length ) {
+        
+        quizDetected = true;
+        
+    }
 
     // call to setup the player
     $.fn.setupPlayer();
@@ -310,56 +297,9 @@ $.fn.setupPlayer = function() {
 
 	} );
 
-    if ( enabledNote === false && quizDetected === false && version < 230 ) {
-
-        $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
-
-    } else if ( ( enabledNote === false && quizDetected === true ) || version >= 230 ) {
-
-        var dir = $.fn.getProgramDirectory();
-
-        var logo = "<img src=\"" + ROOT_PATH +"img/uw_ex_ceoel_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
+    if ( quizDetected === true || version >= 230 ) {
 
         $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
-
-        switch( dir ) {
-
-                case "smgt":
-                case "msmgt":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_smgt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
-                break;
-
-                case "hwm":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_hwm_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
-                break;
-
-                case "himt":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_himt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
-                break;
-
-                case "il":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_il_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
-                break;
-
-                case "flx":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_flx_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
-                break;
-
-                case "bps":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
-                break;
-                
-                case "ds":
-                    logo = "<img src=\"" + ROOT_PATH + "img/ds_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Data Science\" border=\"0\" />";
-                break;
-
-        }
-
-        if ( enabledNote === false ) {
-            
-            $( "#note" ).addClass( "noNotes" ).attr("aria-label", "Notes area. No notes available.").html( "<div class=\"logo\" aria-hidden=\"true\">" + logo + "</div>" );
-            
-        }
 
     }
 
@@ -500,19 +440,11 @@ $.fn.initializePlayer = function() {
     });
 
     // add the zoom boutton to the control after the slide status
-    if ( enabledNote === true || quizDetected === true || version >= 230 ) {
+    if ( quizDetected === true || version >= 230 ) {
 
         $( "#control" ).append( "<span role=\"button\" aria-label=\"expand or contract slide image\" tabindex=\"12\" id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
-
-        if ( $( "#storybook_plus_wrapper" ).hasClass( "withQuiz" ) ) {
-
-            $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-label=\"Toggle table of content\" tabindex=\"10\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
-
-        } else {
-
-            $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-label=\"toggle notes\" tabindex=\"11\"><span class=\"notes\" title=\"Toggle Notes\"></span></span><span id=\"tocBtn\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
-
-        }
+        $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-label=\"Toggle table of content\" tabindex=\"10\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+        $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-label=\"toggle notes\" tabindex=\"11\"><span class=\"notes\" title=\"Toggle Notes\"></span></span>" );
 
         $.fn.bindImgMagnify();
         $.fn.bindNoteSlideToggle();
@@ -636,7 +568,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         srcName = srcName.toLowerCase();
 
     }
-    
 
     if ( $( "#slideNote" ).hasClass( "quizSlide" ) ) {
 
@@ -740,13 +671,11 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
 
     }
+    
+    // load notes
+    $( this ).loadNote( sNum );
 
-    if ( enabledNote ) {
-
-        $( this ).loadNote( sNum );
-
-    }
-
+    // update slide number status
     $( this ).updateSlideNum( sNum );
 
     if ( $( "#progressing" ).length ) {
@@ -759,7 +688,26 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
     
+    // listen to auto scroll
     $( ".ui-selected" ).autoscroll();
+    
+    // display or hide the note button in magnified view
+    
+    if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
+        
+        if ( $( "#note").hasClass( "noNotes" ) ) {
+                
+            $( "#currentStatus" ).addClass( "extendStatusWidth" );
+            $( "#notesBtn" ).hide();
+            
+        } else {
+            
+            $( "#currentStatus" ).removeClass( "extendStatusWidth" );
+            $( "#notesBtn" ).show();
+            
+        }
+        
+    }
 
 };
 
@@ -1549,6 +1497,7 @@ $.fn.showFeedback = function( index ) {
 /**
  * Load notes for the current slide
  * @since 2.1.0
+ * @update 2.7.0
  *
  * @author Ethan S. Lin
  * @param int, current topic number
@@ -1558,33 +1507,82 @@ $.fn.showFeedback = function( index ) {
 $.fn.loadNote = function( num ) {
 
     var note = noteArray[num];
+    
+    if ( note.length ) {
+        
+        $( "#note" ).removeClass( "noNotes" );
+        
+        $( "#note" ).html( note ).hide().fadeIn( "fast" );
+        
+        if ( $( "#note" ).find( "a" ).length ) {
 
-	if ( !$( "#slideNote" ).hasClass( "quizSlide" ) ) {
-
-    	$( "#note" ).html( note ).hide().fadeIn( "fast" );
-
-    	if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
-
-            $( "#notesBtn" ).show();
-
+    		$( "#note a" ).each( function() {
+    			$( this ).attr( "target", "_blank" );
+    
+            });
+    
         }
-
-	} else {
-    	
-    	$( "#notesBtn" ).hide();
-    	
-	}
-
-	if ( $( "#note" ).find( "a" ).length ) {
-
-		$( "#note a" ).each( function() {
-			$( this ).attr( "target", "_blank" );
-
-        });
-
+        
+    } else {
+        
+        $( "#note" ).addClass( "noNotes" );
+        $.fn.getProgramLogo();
+        
     }
 
 };
+
+/**
+ * Get the current program logo if no notes
+ * @since 2.7.0
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
+ $.fn.getProgramLogo = function() {
+     
+     var dir = $.fn.getProgramDirectory();
+
+        var logo = "<img src=\"" + ROOT_PATH +"img/uw_ex_ceoel_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
+
+        switch( dir ) {
+
+            case "smgt":
+            case "msmgt":
+                logo = "<img src=\"" + ROOT_PATH + "img/uw_smgt_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
+            break;
+
+            case "hwm":
+                logo = "<img src=\"" + ROOT_PATH + "img/uw_hwm_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
+            break;
+
+            case "himt":
+                logo = "<img src=\"" + ROOT_PATH + "img/uw_himt_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
+            break;
+
+            case "il":
+                logo = "<img src=\"" + ROOT_PATH + "img/uw_il_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
+            break;
+
+            case "flx":
+                logo = "<img src=\"" + ROOT_PATH + "img/uw_flx_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
+            break;
+
+            case "bps":
+                logo = "<img src=\"" + ROOT_PATH + "img/uw_bps_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
+            break;
+            
+            case "ds":
+                logo = "<img src=\"" + ROOT_PATH + "img/ds_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Data Science\" border=\"0\" />";
+            break;
+
+        }
+
+        $( "#note" ).attr("aria-label", "Notes area. No notes available.").html( "<div class=\"logo\" aria-hidden=\"true\">" + logo + "</div>" );
+     
+ };
 
 /**
  * Update the current slide number indicator
@@ -1644,14 +1642,8 @@ $.fn.bindImgMagnify = function() {
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
             $( this ).html( "<span class=\"icon-contract\" title=\"Contract\"></span>" );
             $( "#tocBtn" ).show();
+            $( "#currentStatus" ).addClass( "extendStatusWidth" );
             $( "#toc" ).hide();
-
-            if ( !$( "#slideNote" ).hasClass( "quizSlide" ) ) {
-
-                $( "#notesBtn" ).show();
-
-            }
-            
             $( "#slideNote img" ).focus();
 
         }

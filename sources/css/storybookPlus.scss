@@ -131,7 +131,7 @@ p {
 
     #control {
 
-        #currentStatus {
+        .extendStatusWidth {
             width: 64% !important;
         }
 
@@ -265,12 +265,6 @@ p {
             height: rem( 506px ) !important;
     	}
 
-    }
-    
-    #ap {
-        
-        @extend #vp;
-        
     }
 
     #toc {
