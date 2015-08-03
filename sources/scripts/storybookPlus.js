@@ -39,6 +39,7 @@ var topicCount = 0,
     topicTitle,
     imgPath,
     slideImgFormat = "png",
+    accent = "",
     media = "Slide",
     version,
     imgCaption;
@@ -130,8 +131,9 @@ $.fn.parseContent = function( xml ) {
         LESSON = $.fn.stripScript( SETUP.find( "lesson" ).text() ),
         INSTRUCTOR = $.trim( SETUP.find( "instructor" ).text() ),
         LENGTH = $.fn.stripScript( SETUP.find( "length" ).text() ),
-        SLIDEFORMAT = $.fn.stripScript( SETUP.find('slideImgFormat').text() );
-
+        SLIDEFORMAT = $.fn.stripScript( SETUP.find('slideImgFormat').text() ),
+        ACCENT = $.fn.stripScript( SETUP.find('accent').text() );
+    
     PROFILE = $.fn.stripScript( XMLData.find( "profile" ).text() );
 
     lessonTitle = "Lesson name is not specified.";
@@ -158,6 +160,12 @@ $.fn.parseContent = function( xml ) {
 
         slideImgFormat = SLIDEFORMAT.toLowerCase();
 
+    }
+    
+    if ( ACCENT.length ) {
+        
+        accent = ACCENT;
+        
     }
 
     // assign values to variables
@@ -325,6 +333,12 @@ $.fn.setupPlayer = function() {
 	// set up the splash screen
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
     $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" href=\"#\"><span class=\"sr-only\">Play</span></a>" );
+    
+    if ( accent.length ) {
+        
+        $( ".playBtn" ).css( "background-color", accent );
+        
+    }
     
     // focus on the play button
     $( ".playBtn" ).focus();

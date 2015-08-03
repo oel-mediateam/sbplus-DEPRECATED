@@ -343,19 +343,6 @@ p {
     	background-color: #006DCC;
     	@include border-radius( rem( 3px ) );
     	
-    	.sr-only:focus {
-        	
-        	top: 0;
-        	left: 0;
-        	width: 100%;
-        	height: 100%;
-        	padding: rem( 6px ) rem( 10px ) 0;
-        	background-color: #006DCC;
-        	@include border-radius( rem( 3px ) );
-        	@include box-sizing( border-box ); 
-        	
-    	}
-    	
     }
     
     .playBtn:focus {
@@ -367,7 +354,7 @@ p {
         	width: 100%;
         	height: 100%;
         	padding: rem( 6px ) rem( 10px ) 0;
-        	background-color: #006DCC;
+        	background-color: inherit;
         	@include border-radius( rem( 3px ) );
         	@include box-sizing( border-box ); 
         	

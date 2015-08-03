@@ -249,26 +249,13 @@ p {
     -moz-border-radius: 0.21429rem;
     -webkit-border-radius: 0.21429rem;
     border-radius: 0.21429rem; }
-    #splash_screen a.playBtn .sr-only:focus, #splash_screen a.playBtn:visited .sr-only:focus, #splash_screen a.playBtn:hover .sr-only:focus {
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 0.42857rem 0.71429rem 0;
-      background-color: #006DCC;
-      -moz-border-radius: 0.21429rem;
-      -webkit-border-radius: 0.21429rem;
-      border-radius: 0.21429rem;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box; }
   #splash_screen .playBtn:focus .sr-only {
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     padding: 0.42857rem 0.71429rem 0;
-    background-color: #006DCC;
+    background-color: inherit;
     -moz-border-radius: 0.21429rem;
     -webkit-border-radius: 0.21429rem;
     border-radius: 0.21429rem;
