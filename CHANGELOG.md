@@ -12,6 +12,7 @@
 * Modified VideoJS audio playback controls to mimic video playback control.
 * Improved notes area. Notes tag in XML is no longer needed and ignored. Program logo will now load when there is no note for a particular slide. Program logos are now displayed smaller.
 * Minor fixes and improvements
+* Added "accent" tag in XML to change the color some elements in SB+
 
 ---
 ###2.6.1 (07-31-2015)

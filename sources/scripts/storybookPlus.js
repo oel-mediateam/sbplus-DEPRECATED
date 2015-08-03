@@ -334,6 +334,7 @@ $.fn.setupPlayer = function() {
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
     $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" href=\"#\"><span class=\"sr-only\">Play</span></a>" );
     
+    // if accent tag from XML has value
     if ( accent.length ) {
         
         $( ".playBtn" ).css( "background-color", accent );
