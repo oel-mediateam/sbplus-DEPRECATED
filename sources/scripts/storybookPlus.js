@@ -564,7 +564,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     }
 
     if ( slideSource !== 'video:' && slideSource !== 'kaltura:' && slideSource !== 'youtube:' && slideSource !== 'vimeo:' ) {
-        $( "#progressing" ).fadeIn();
+        $( "#progressing" ).fadeIn("fast");
         srcName = srcName.toLowerCase();
 
     }
@@ -682,7 +682,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         $( "#progressing" ).promise().done( function() {
 
-            $(this).fadeOut();
+            $(this).fadeOut("fast");
 
         } );
 
