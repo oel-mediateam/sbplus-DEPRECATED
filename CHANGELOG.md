@@ -2,8 +2,23 @@
 
 ###Unreleased/pending:
 * Added tab indexes/focus to HTML elements
+* Added WAI-ARIA markups for accessibility
+* Added WASD keyboard press events to traversing the slides
+* Updated the index file
+* Updated VideoJS to version 4.12.12
+* Removed MediaElementJS library; VideoJS will now serve audio as well.
+* Removed YouTube embed; VideoJS will now serve videos from YouTube.
+* Removed Vimeo embed; VideoJS will now serve videos from Vimeo.
+* Modified VideoJS audio playback controls to mimic video playback control.
+* Improved notes area. Notes tag in XML is no longer needed and ignored. Program logo will now load when there is no note for a particular slide. Program logos are now displayed smaller.
+* Minor fixes and improvements
 
 ---
+###2.6.1 (07-31-2015)
+* Uniform loading spinner
+* Fixed an issue with table of content scrolling all the way to the top
+* Added Data Science
+
 ###2.6.0 (04-01-2015)
 * Added HTML5 download attribute to downloadable files
 * Table of content now auto scroll when item is out of view
