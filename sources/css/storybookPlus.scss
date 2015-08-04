@@ -89,36 +89,6 @@ p {
 	
 }
 
-#storybook_plus_wrapper.noteDisabled {
-
-	#splash_screen {
-        height: rem( 430px );
-        padding: rem( 100px ) rem( 200px );
-    }
-
-    #profile {
-        height: rem( 400px );
-    }
-
-    #note {
-        display: none;
-    }
-
-    #selectable {
-        height: rem( 374px );
-    }
-
-    #control {
-
-        #currentStatus {
-            width: 80%;
-            border-right: none;
-        }
-
-    }
-
-}
-
 #storybook_plus_wrapper.withQuiz {
 
     #note {
@@ -136,7 +106,7 @@ p {
         }
 
     }
-
+    
     #note {
         display: none;
     }

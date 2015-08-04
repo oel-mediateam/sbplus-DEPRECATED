@@ -705,24 +705,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     
     // listen to auto scroll
     $( ".ui-selected" ).autoscroll();
-    
-    // display or hide the note button in magnified view
-    
-    if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
-        
-        if ( $( "#note").hasClass( "noNotes" ) ) {
-                
-            $( "#currentStatus" ).addClass( "extendStatusWidth" );
-            $( "#notesBtn" ).hide();
-            
-        } else {
-            
-            $( "#currentStatus" ).removeClass( "extendStatusWidth" );
-            $( "#notesBtn" ).show();
-            
-        }
-        
-    }
 
 };
 
@@ -1544,8 +1526,40 @@ $.fn.loadNote = function( num ) {
         $.fn.getProgramLogo();
         
     }
+    
+    $.fn.displayNotesBtn();
 
 };
+
+/**
+ * Get the current program logo if no notes
+ * @since 2.7.0
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
+ $.fn.displayNotesBtn = function() {
+     
+     // display or hide the note button in magnified view
+    if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
+        
+        if ( $( "#note").hasClass( "noNotes" ) ) {
+                
+            $( "#currentStatus" ).addClass( "extendStatusWidth" );
+            $( "#notesBtn" ).hide();
+            
+        } else {
+            
+            $( "#currentStatus" ).removeClass( "extendStatusWidth" );
+            $( "#notesBtn" ).show();
+            
+        }
+        
+    }
+     
+ };
 
 /**
  * Get the current program logo if no notes
@@ -1672,6 +1686,8 @@ $.fn.bindImgMagnify = function() {
             $( "#slideNote img" ).focus();
 
         }
+        
+        $.fn.displayNotesBtn();
 
     } );
 

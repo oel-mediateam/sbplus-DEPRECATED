@@ -110,19 +110,6 @@ p {
   float: left;
   clear: both; }
 
-#storybook_plus_wrapper.noteDisabled #splash_screen {
-  height: 30.71429rem;
-  padding: 7.14286rem 14.28571rem; }
-#storybook_plus_wrapper.noteDisabled #profile {
-  height: 28.57143rem; }
-#storybook_plus_wrapper.noteDisabled #note {
-  display: none; }
-#storybook_plus_wrapper.noteDisabled #selectable {
-  height: 26.71429rem; }
-#storybook_plus_wrapper.noteDisabled #control #currentStatus {
-  width: 80%;
-  border-right: none; }
-
 #storybook_plus_wrapper.withQuiz #note {
   background-color: #fff; }
 
