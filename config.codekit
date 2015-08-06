@@ -462,12 +462,12 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 0
 		},
-	"\/sources\/scripts\/mwembedloader.js": {
+	"\/sources\/scripts\/mwEmbedLoader.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/sources\/scripts\/mwembedloader.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/mwembedloader-min.js",
+		"inputAbbreviatedPath": "\/sources\/scripts\/mwEmbedLoader.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/min\/mwEmbedLoader-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,

@@ -894,6 +894,27 @@ p {
         	}
 
         }
+        
+        .sectionBreak {
+            
+            position: relative;
+            border-top: rem( 2px ) solid $border-color;
+            
+        }
+        
+        .sectionBreak:before {
+            
+            position: absolute;
+            font-size: rem( 10px );
+            line-height: normal;
+            color: #888;
+            padding: 0 rem( 3px ) rem( 1px );
+            background-color: $border-color;
+            content: "section break";
+            top: rem( -7px );
+            left: rem( 92px );
+            
+        }
 
     } // #selectable
 

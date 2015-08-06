@@ -177,8 +177,21 @@ $.fn.parseContent = function( xml ) {
     // loop through each topic node to get lesson topics
     // display each topic to web page as well
     TOPIC.each( function() {
-
-        topicTitle[topicCount] = $.trim( $( this ).attr( 'title' ) );
+        
+        // look for section break point
+        var sectionBreak = $.trim( $( this ).attr( 'break' ) );
+        var breakPoint = "";
+        
+        // if found
+        if ( sectionBreak && 
+            ( sectionBreak === "1" || sectionBreak === "y" || sectionBreak === "yes" ) ) {
+            
+            // set break point indicator
+            breakPoint = "|";
+            
+        }
+        
+        topicTitle[topicCount] = $.trim( $( this ).attr( 'title' ) + breakPoint );
         topicSrc[topicCount] = $.trim( $( this ).attr( 'src' ) );
         noteArray[topicCount] = $.fn.stripScript( $( this ).find( "note" ).text() );
 
@@ -315,7 +328,9 @@ $.fn.setupPlayer = function() {
 	$( "#selectable" ).before( '<div class="toc_heading" tabindex="13">Table of Contents</div>' );
 
     $.each( topicTitle, function( i ) {
-
+        
+        var breakClass = "";
+        
 		if ( topicSrc[i] === "quiz" ) {
 
 		    selfAssessmentIcon = " <span class=\"icon-assessement light\"></span>";
@@ -325,8 +340,15 @@ $.fn.setupPlayer = function() {
     		selfAssessmentIcon = "";
 
 		}
-
-		$( "#selectable" ).append( "<li class=\"ui-widget-content\" role=\"menuitem\" title=\"" + topicTitle[i] + "\">" + "<div class=\"slideNum\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\">" + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
+        
+        if ( topicTitle[i].indexOf( "|" ) !== -1 ) {
+            
+            topicTitle[i] = topicTitle[i].replace( "|", "" );
+            breakClass = " sectionBreak";
+            
+        }
+        
+		$( "#selectable" ).append( "<li class=\"ui-widget-content" + breakClass + "\" role=\"menuitem\" title=\"" + topicTitle[i] + "\">" + "<div class=\"slideNum\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\">" + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
 
 	} );
 

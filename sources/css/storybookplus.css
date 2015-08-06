@@ -639,6 +639,19 @@ p {
       #toc #selectable .ui-selected .light {
         filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
         opacity: 1; }
+    #toc #selectable .sectionBreak {
+      position: relative;
+      border-top: 0.14286rem solid #ccc; }
+    #toc #selectable .sectionBreak:before {
+      position: absolute;
+      font-size: 0.71429rem;
+      line-height: normal;
+      color: #888;
+      padding: 0 0.21429rem 0.07143rem;
+      background-color: #ccc;
+      content: "section break";
+      top: -0.5rem;
+      left: 6.57143rem; }
 
 #profile {
   display: none;
