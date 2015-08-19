@@ -898,21 +898,25 @@ p {
         .sectionBreak {
             
             position: relative;
-            border-top: rem( 2px ) solid $border-color;
+            padding-top: 0;
+            border-top: rem( 1px ) solid #e8e8e8;
             
         }
         
         .sectionBreak:before {
             
-            position: absolute;
+            display: block;
+            width: 100%;
+            margin-bottom: 8px;
+            height: rem( 24px );
             font-size: rem( 10px );
             line-height: normal;
-            color: #888;
+            color: #f7f7f7;
             padding: 0 rem( 3px ) rem( 1px );
-            background-color: $border-color;
-            content: "section break";
-            top: rem( -7px );
-            left: rem( 92px );
+            background-color: #f0f0f0;
+            border-bottom: rem( 1px ) solid #e8e8e8;
+            content: '';
+            cursor: default;
             
         }
 

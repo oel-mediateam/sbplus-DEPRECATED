@@ -641,17 +641,21 @@ p {
         opacity: 1; }
     #toc #selectable .sectionBreak {
       position: relative;
-      border-top: 0.14286rem solid #ccc; }
+      padding-top: 0;
+      border-top: 0.07143rem solid #e8e8e8; }
     #toc #selectable .sectionBreak:before {
-      position: absolute;
+      display: block;
+      width: 100%;
+      margin-bottom: 8px;
+      height: 1.71429rem;
       font-size: 0.71429rem;
       line-height: normal;
-      color: #888;
+      color: #f7f7f7;
       padding: 0 0.21429rem 0.07143rem;
-      background-color: #ccc;
-      content: "section break";
-      top: -0.5rem;
-      left: 6.57143rem; }
+      background-color: #f0f0f0;
+      border-bottom: 0.07143rem solid #e8e8e8;
+      content: '';
+      cursor: default; }
 
 #profile {
   display: none;
