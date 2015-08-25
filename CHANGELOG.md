@@ -13,6 +13,7 @@
 * Improved notes area. Notes tag in XML is no longer needed and ignored. Program logo will now display when there is no note for a particular slide. Program logos are now displayed smaller.
 * Added "accent" tag in the setup of XML to change the color some elements in SB+
 * Added "break" attribute to the topic tag in XML to specify a section break. Section break will be visually displayed if specified.
+* Improved autoscrolling in table of contents
 * Minor fixes and improvements
 
 ---
