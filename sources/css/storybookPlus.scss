@@ -751,6 +751,7 @@ p {
     	}
 
     	#currentStatus {
+        	 
         	display: block;
         	width: 72%;
         	height: rem( 38px );
@@ -762,6 +763,7 @@ p {
         	float: left;
         	cursor: default;
         	@include box-sizing( "border-box" );
+        	@include user-select( none );
         }
 
         #magnifyBtn {
@@ -799,7 +801,7 @@ p {
 
 // TABLE OF CONTENT
 #toc {
-
+    
     position: relative;
 	width: rem( 258px );
 // 	height: rem( 546px );
@@ -814,7 +816,7 @@ p {
 	@include box-sizing( "border-box" );
 
 	* {
-//     	@include user-select(none);
+    	@include user-select(none);
 	}
 
     .toc_heading {
@@ -1041,7 +1043,7 @@ p {
             	@include transition-property( color, border, border-color, background-color );
             	@include transition-duration( .3s );
             	@include transition-timing-function( ease-out );
-            	
+            	@include user-select( none );
         	}
         	
         	a:focus {

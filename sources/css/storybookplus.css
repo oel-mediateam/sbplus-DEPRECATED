@@ -550,7 +550,11 @@ p {
       cursor: default;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
-      box-sizing: border-box; }
+      box-sizing: border-box;
+      -moz-user-select: -moz-none;
+      -ms-user-select: none;
+      -webkit-user-select: none;
+      user-select: none; }
     #content #control #magnifyBtn {
       width: 8%;
       font-size: 1.14286rem;
@@ -586,6 +590,11 @@ p {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box; }
+  #toc * {
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none; }
   #toc .toc_heading {
     position: absolute;
     width: 18.35714rem;
@@ -743,7 +752,11 @@ p {
         -moz-transition-timing-function: ease-out;
         -o-transition-timing-function: ease-out;
         -webkit-transition-timing-function: ease-out;
-        transition-timing-function: ease-out; }
+        transition-timing-function: ease-out;
+        -moz-user-select: -moz-none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none; }
       #download_bar ul li a:focus .sr-only {
         width: 3.57143rem;
         height: auto;

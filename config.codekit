@@ -349,11 +349,11 @@
 		"shouldRunBless": 0,
 		"useLibsass": 0
 		},
-	"\/sources\/css\/storybookplus.css": {
+	"\/sources\/css\/storybookPlus.css": {
 		"fileType": 16,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/sources\/css\/storybookplus.css",
+		"inputAbbreviatedPath": "\/sources\/css\/storybookPlus.css",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -462,22 +462,22 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 0
 		},
-	"\/sources\/scripts\/mwEmbedLoader.js": {
+	"\/sources\/scripts\/mwembedloader.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/sources\/scripts\/mwEmbedLoader.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/mwEmbedLoader-min.js",
+		"inputAbbreviatedPath": "\/sources\/scripts\/mwembedloader.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/min\/mwembedloader-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 0
 		},
-	"\/sources\/scripts\/storybookPlus.js": {
+	"\/sources\/scripts\/storybookplus.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/sources\/scripts\/storybookPlus.js",
+		"inputAbbreviatedPath": "\/sources\/scripts\/storybookplus.js",
 		"outputAbbreviatedPath": "\/sources\/scripts\/storybookplus.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1,
