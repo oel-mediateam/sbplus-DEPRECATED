@@ -1,6 +1,6 @@
 {
 "CodeKitInfo": "This is a CodeKit 2.x project configuration file. It is designed to sync project settings across multiple machines. MODIFYING THE CONTENTS OF THIS FILE IS A POOR LIFE DECISION. If you do so, you will likely cause CodeKit to crash. This file is not useful unless accompanied by the project that created it in CodeKit 2. This file is not backwards-compatible with CodeKit 1.x. For more information, see: http:\/\/incident57.com\/codekit",
-"creatorBuild": "19033",
+"creatorBuild": "19051",
 "files": {
 	"\/build\/assets\/img\/lugia.png": {
 		"fileType": 32768,
@@ -72,7 +72,7 @@
 		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 108833,
+		"initialSize": 660511,
 		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide04.png",
 		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide04.png",
 		"outputPathIsOutsideProject": 0,
@@ -271,101 +271,6 @@
 		"randomFootnoteNumbers": 0,
 		"useCompatibilityMode": 0
 		},
-	"\/sources\/audioplayer\/background.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 166,
-		"inputAbbreviatedPath": "\/sources\/audioplayer\/background.png",
-		"outputAbbreviatedPath": "\/sources\/audioplayer\/background.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/sources\/audioplayer\/bigplay.fw.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 79426,
-		"inputAbbreviatedPath": "\/sources\/audioplayer\/bigplay.fw.png",
-		"outputAbbreviatedPath": "\/sources\/audioplayer\/bigplay.fw.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/sources\/audioplayer\/bigplay.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 3001,
-		"inputAbbreviatedPath": "\/sources\/audioplayer\/bigplay.png",
-		"outputAbbreviatedPath": "\/sources\/audioplayer\/bigplay.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/sources\/audioplayer\/controls.fw.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 80753,
-		"inputAbbreviatedPath": "\/sources\/audioplayer\/controls.fw.png",
-		"outputAbbreviatedPath": "\/sources\/audioplayer\/controls.fw.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/sources\/audioplayer\/controls.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 1892,
-		"inputAbbreviatedPath": "\/sources\/audioplayer\/controls.png",
-		"outputAbbreviatedPath": "\/sources\/audioplayer\/controls.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/sources\/audioplayer\/mediaelement-and-player.js": {
-		"fileType": 64,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/sources\/audioplayer\/mediaelement-and-player.js",
-		"outputAbbreviatedPath": "\/sources\/audioplayer\/min\/mediaelement-and-player-min.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
-		},
-	"\/sources\/audioplayer\/mediaelement-and-player.min.js": {
-		"fileType": 64,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/sources\/audioplayer\/mediaelement-and-player.min.js",
-		"outputAbbreviatedPath": "\/sources\/audioplayer\/min\/mediaelement-and-player.min-min.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
-		},
-	"\/sources\/audioplayer\/mediaelementplayer.css": {
-		"fileType": 16,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/sources\/audioplayer\/mediaelementplayer.css",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/sources\/audioplayer\/mediaelementplayer.min.css": {
-		"fileType": 16,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/sources\/audioplayer\/mediaelementplayer.min.css",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
 	"\/sources\/browserdetection\/browser-detection.css": {
 		"fileType": 16,
 		"ignore": 0,
@@ -557,22 +462,22 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 0
 		},
-	"\/sources\/scripts\/mwEmbedLoader.js": {
+	"\/sources\/scripts\/mwembedloader.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/sources\/scripts\/mwEmbedLoader.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/mwEmbedLoader-min.js",
+		"inputAbbreviatedPath": "\/sources\/scripts\/mwembedloader.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/min\/mwembedloader-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 0
 		},
-	"\/sources\/scripts\/storybookPlus.js": {
+	"\/sources\/scripts\/storybookplus.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/sources\/scripts\/storybookPlus.js",
+		"inputAbbreviatedPath": "\/sources\/scripts\/storybookplus.js",
 		"outputAbbreviatedPath": "\/sources\/scripts\/storybookplus.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1,
@@ -652,14 +557,27 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 0
 		},
-	"\/sources\/videoplayer\/video-js.css": {
-		"fileType": 16,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/sources\/videoplayer\/video-js.css",
-		"outputAbbreviatedPath": "No Output Path",
+	"\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/min\/media.vimeo-min.js",
 		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/sources\/videoplayer\/plugins\/youtube\/youtube.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/min\/youtube-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
 		},
 	"\/sources\/videoplayer\/video-js.min.css": {
 		"fileType": 16,
@@ -669,6 +587,17 @@
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
+		},
+	"\/sources\/videoplayer\/video.novtt.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/sources\/videoplayer\/video.novtt.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/min\/video.novtt-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
 		}
 	},
 "hooks": [
@@ -694,6 +623,18 @@
 			"followForSyntaxChecking": 1,
 			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/video-quality-selector.js",
 			"position": 1,
+			"type": 1
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.js",
+			"position": 2,
+			"type": 1
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.js",
+			"position": 3,
 			"type": 1
 			}
 		]
@@ -1184,10 +1125,6 @@
 			}
 		},
 	"jsLintFlags2": {
-		"ass": {
-			"active": 0,
-			"flagValue": -1
-			},
 		"bitwise": {
 			"active": 0,
 			"flagValue": -1
@@ -1196,15 +1133,7 @@
 			"active": 1,
 			"flagValue": -1
 			},
-		"closure": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"continue": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"debug": {
+		"couch": {
 			"active": 0,
 			"flagValue": -1
 			},
@@ -1212,75 +1141,27 @@
 			"active": 0,
 			"flagValue": -1
 			},
-		"eqeq": {
+		"es6": {
 			"active": 0,
 			"flagValue": -1
 			},
-		"evil": {
+		"eval": {
 			"active": 0,
 			"flagValue": -1
 			},
-		"forin": {
+		"for": {
 			"active": 0,
 			"flagValue": -1
-			},
-		"indent": {
-			"active": 0,
-			"flagValue": 4
 			},
 		"maxlen": {
 			"active": 0,
 			"flagValue": 150
 			},
-		"newcap": {
-			"active": 0,
-			"flagValue": -1
-			},
 		"node": {
 			"active": 0,
 			"flagValue": -1
 			},
-		"nomen": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"plusplus": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"properties": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"regexp": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"rhino": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"sloppy": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"stupid": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"sub": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"todo": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"unparam": {
-			"active": 0,
-			"flagValue": -1
-			},
-		"vars": {
+		"this": {
 			"active": 0,
 			"flagValue": -1
 			},

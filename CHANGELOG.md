@@ -4,7 +4,27 @@
 _none_
 
 ---
+<<<<<<< HEAD
+###2.7.0 (08-25-2015)
+* Added tab indexes/focus to HTML elements
+* Added WAI-ARIA markups for accessibility
+* Added WASD keyboard press events to traversing the slides
+* Updated the index file
+* Updated VideoJS to version 4.12.12
+* Removed MediaElementJS library; VideoJS will now serve audio as well.
+* Removed YouTube embed; VideoJS will now serve videos from YouTube.
+* Removed Vimeo embed; VideoJS will now serve videos from Vimeo.
+* Modified VideoJS audio playback controls to mimic video playback control.
+* Improved notes area. Notes tag in XML is no longer needed and ignored. Program logo will now display when there is no note for a particular slide. Program logos are now displayed smaller.
+* Added "accent" tag in the setup of XML to change the color some elements in SB+
+* Added "break" attribute to the topic tag in XML to specify a section break. Section break will be visually displayed if specified.
+* Improved autoscrolling in table of contents
+* Minor fixes and improvements
+
+###2.6.1 (07-31-2015)
+=======
 ###2.6.1 (08-04-2015)
+>>>>>>> master
 * Uniform loading spinner
 * Fixed an issue with table of content scrolling all the way to the top
 * Added Data Science

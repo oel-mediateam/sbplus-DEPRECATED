@@ -89,36 +89,6 @@ p {
 	
 }
 
-#storybook_plus_wrapper.noteDisabled {
-
-	#splash_screen {
-        height: rem( 430px );
-        padding: rem( 100px ) rem( 200px );
-    }
-
-    #profile {
-        height: rem( 400px );
-    }
-
-    #note {
-        display: none;
-    }
-
-    #selectable {
-        height: rem( 374px );
-    }
-
-    #control {
-
-        #currentStatus {
-            width: 80%;
-            border-right: none;
-        }
-
-    }
-
-}
-
 #storybook_plus_wrapper.withQuiz {
 
     #note {
@@ -131,12 +101,12 @@ p {
 
     #control {
 
-        #currentStatus {
+        .extendStatusWidth {
             width: 64% !important;
         }
 
     }
-
+    
     #note {
         display: none;
     }
@@ -251,31 +221,6 @@ p {
 
     }
 
-    #ap {
-
-        width: 100%;
-    	top: rem( 476px );
-
-    	.mejs-container {
-
-        	.mejs-controls {
-
-            	.mejs-time-rail {
-
-                	width: rem( 716px ) !important;
-
-                	.mejs-time-total {
-                    	width: rem( 706px ) !important;
-                	}
-
-            	}
-
-        	}
-
-    	}
-
-    }
-
     #vp {
 
     	position: absolute;
@@ -295,7 +240,6 @@ p {
     #toc {
 
         position: absolute;
-//         height: rem( 507px );
         left: rem( 900px );
         border-left: rem( 3px ) solid $border-color;
         z-index: 13;
@@ -369,19 +313,6 @@ p {
     	background-color: #006DCC;
     	@include border-radius( rem( 3px ) );
     	
-    	.sr-only:focus {
-        	
-        	top: 0;
-        	left: 0;
-        	width: 100%;
-        	height: 100%;
-        	padding: rem( 6px ) rem( 10px ) 0;
-        	background-color: #006DCC;
-        	@include border-radius( rem( 3px ) );
-        	@include box-sizing( border-box ); 
-        	
-    	}
-    	
     }
     
     .playBtn:focus {
@@ -393,7 +324,7 @@ p {
         	width: 100%;
         	height: 100%;
         	padding: rem( 6px ) rem( 10px ) 0;
-        	background-color: #006DCC;
+        	background-color: inherit;
         	@include border-radius( rem( 3px ) );
         	@include box-sizing( border-box ); 
         	
@@ -466,13 +397,6 @@ p {
             }
             
         }
-
-/*
-        .infoIcn:hover {
-            @include opacity( 1 );
-        	@include single-transition( opacity, ease-in, .3s );
-        }
-*/
 
         a, a:visited, a:hover {
             color: #fff;
@@ -555,36 +479,6 @@ p {
 
     } // #slide
 
-    // AUDIO PLAYER
-    #ap {
-
-    	display: none;
-    	position: absolute;
-        width: rem( 640px );
-    	height: rem( 30px );
-    	top: rem( 360px );
-    	background-color: #7e7e7e;
-
-    	.mejs-container {
-
-        	.mejs-controls {
-
-            	.mejs-time-rail {
-
-                	width: rem( 456px ) !important;
-
-                	.mejs-time-total {
-                    	width: rem( 446px ) !important;
-                	}
-
-            	}
-
-        	}
-
-    	}
-
-    }
-
     // VIDEO PLAYER
     #vp {
     	display: none;
@@ -593,6 +487,12 @@ p {
         left: rem( 1px );
     	width: rem( 640px );
     	height: rem( 360px );
+    }
+    
+    #ap {
+        
+        @extend #vp;
+        
     }
 
     // QUIZ
@@ -757,7 +657,7 @@ p {
         	line-height: rem( 55px );
         	color: #d4d4d4;
         	text-align: center;
-        	padding: rem( 20px ) 0 0 0;
+        	padding: rem( 40px ) 0 0 0;
         	cursor: default;
     	}
 
@@ -851,6 +751,7 @@ p {
     	}
 
     	#currentStatus {
+        	 
         	display: block;
         	width: 72%;
         	height: rem( 38px );
@@ -862,6 +763,7 @@ p {
         	float: left;
         	cursor: default;
         	@include box-sizing( "border-box" );
+        	@include user-select( none );
         }
 
         #magnifyBtn {
@@ -899,7 +801,7 @@ p {
 
 // TABLE OF CONTENT
 #toc {
-
+    
     position: relative;
 	width: rem( 258px );
 // 	height: rem( 546px );
@@ -914,7 +816,7 @@ p {
 	@include box-sizing( "border-box" );
 
 	* {
-//     	@include user-select(none);
+    	@include user-select(none);
 	}
 
     .toc_heading {
@@ -993,6 +895,31 @@ p {
             	@include opacity( 1 );
         	}
 
+        }
+        
+        .sectionBreak {
+            
+            position: relative;
+            padding-top: 0;
+            border-top: rem( 1px ) solid #e8e8e8;
+            
+        }
+        
+        .sectionBreak:before {
+            
+            display: block;
+            width: 100%;
+            margin-bottom: 8px;
+            height: rem( 24px );
+            font-size: rem( 10px );
+            line-height: normal;
+            color: #f7f7f7;
+            padding: 0 rem( 3px ) rem( 1px );
+            background-color: #f0f0f0;
+            border-bottom: rem( 1px ) solid #e8e8e8;
+            content: '';
+            cursor: default;
+            
         }
 
     } // #selectable
@@ -1116,7 +1043,7 @@ p {
             	@include transition-property( color, border, border-color, background-color );
             	@include transition-duration( .3s );
             	@include transition-timing-function( ease-out );
-            	
+            	@include user-select( none );
         	}
         	
         	a:focus {

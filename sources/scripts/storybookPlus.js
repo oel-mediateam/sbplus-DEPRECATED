@@ -3,8 +3,8 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.6.1
- * Released 8/4/2015
+ * @version: 2.7.0
+ * Released 8/25/2015
  *
  * @license: GNU GENERAL PUBLIC LICENSE v3
  *
@@ -27,7 +27,6 @@
  */
 
 /* global videojs */
-/* global MediaElementPlayer */
 /* global kWidget */
 
 // global variable declarations
@@ -40,8 +39,8 @@ var topicCount = 0,
     topicTitle,
     imgPath,
     slideImgFormat = "png",
+    accent = "",
     media = "Slide",
-    enabledNote = false,
     version,
     imgCaption;
 
@@ -53,11 +52,7 @@ var PROFILE,
     instructor,
     duration;
 
-var videoPlayer = null,
-    audioPlayer,
-    firstAudioLoad = false,
-    audioPlaying = false,
-    sources,
+var mediaPlayer = null,
     kalturaLoaded = 0;
 
 var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
@@ -121,6 +116,7 @@ $.fn.getLessonContent = function( file ) {
 /**
  * Parse the topic XML file for contents
  * @since 2.0.0
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  * @param string, the XML file
@@ -135,9 +131,9 @@ $.fn.parseContent = function( xml ) {
         LESSON = $.fn.stripScript( SETUP.find( "lesson" ).text() ),
         INSTRUCTOR = $.trim( SETUP.find( "instructor" ).text() ),
         LENGTH = $.fn.stripScript( SETUP.find( "length" ).text() ),
-        NOTE = $.fn.stripScript( SETUP.find( "note" ).text() ),
-        SLIDEFORMAT = $.fn.stripScript( SETUP.find('slideImgFormat').text() );
-
+        SLIDEFORMAT = $.fn.stripScript( SETUP.find('slideImgFormat').text() ),
+        ACCENT = $.fn.stripScript( SETUP.find('accent').text() );
+    
     PROFILE = $.fn.stripScript( XMLData.find( "profile" ).text() );
 
     lessonTitle = "Lesson name is not specified.";
@@ -159,22 +155,17 @@ $.fn.parseContent = function( xml ) {
         duration = LENGTH;
     }
 
-    // check note presence
-    if ( NOTE.length ) {
-
-        if ( NOTE === "yes" || NOTE === "y" ) {
-
-            enabledNote = true;
-
-        }
-
-    }
-
     // check image file format
     if ( SLIDEFORMAT.length ) {
 
         slideImgFormat = SLIDEFORMAT.toLowerCase();
 
+    }
+    
+    if ( ACCENT.length ) {
+        
+        accent = ACCENT;
+        
     }
 
     // assign values to variables
@@ -186,15 +177,23 @@ $.fn.parseContent = function( xml ) {
     // loop through each topic node to get lesson topics
     // display each topic to web page as well
     TOPIC.each( function() {
-
-        topicTitle[topicCount] = $.trim( $( this ).attr( 'title' ) );
-        topicSrc[topicCount] = $.trim( $( this ).attr( 'src' ) );
-
-        if ( enabledNote ) {
-
-            noteArray[topicCount] = $.fn.stripScript( $( this ).find( "note" ).text() );
-
+        
+        // look for section break point
+        var sectionBreak = $.trim( $( this ).attr( 'break' ) );
+        var breakPoint = "";
+        
+        // if found
+        if ( sectionBreak && 
+            ( sectionBreak === "1" || sectionBreak === "y" || sectionBreak === "yes" ) ) {
+            
+            // set break point indicator
+            breakPoint = "|";
+            
         }
+        
+        topicTitle[topicCount] = $.trim( $( this ).attr( 'title' ) + breakPoint );
+        topicSrc[topicCount] = $.trim( $( this ).attr( 'src' ) );
+        noteArray[topicCount] = $.fn.stripScript( $( this ).find( "note" ).text() );
 
         if ( topicSrc[topicCount] === "quiz" ) {
 
@@ -209,8 +208,6 @@ $.fn.parseContent = function( xml ) {
                 answerNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "answer" ).text() );
 
             var quiz = {};
-
-            quizDetected = true;
 
             quiz.id = topicCount;
             quiz.type = quizTypeAttr;
@@ -271,6 +268,12 @@ $.fn.parseContent = function( xml ) {
         ++topicCount;
 
     });
+    
+    if ( questions.length ) {
+        
+        quizDetected = true;
+        
+    }
 
     // call to setup the player
     $.fn.setupPlayer();
@@ -280,7 +283,7 @@ $.fn.parseContent = function( xml ) {
 /**
  * Set up the player
  * @since 2.0.0
- * @updated 2.6.1
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -315,56 +318,9 @@ $.fn.setupPlayer = function() {
 
 	} );
 
-    if ( enabledNote === false && quizDetected === false && version < 230 ) {
-
-        $( "#storybook_plus_wrapper" ).addClass( "noteDisabled" );
-
-    } else if ( ( enabledNote === false && quizDetected === true ) || version >= 230 ) {
-
-        var dir = $.fn.getProgramDirectory();
-
-        var logo = "<img src=\"" + ROOT_PATH +"img/uw_ex_ceoel_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning\" border=\"0\" />";
+    if ( quizDetected === true || version >= 230 ) {
 
         $( "#storybook_plus_wrapper" ).addClass( "withQuiz" );
-
-        switch( dir ) {
-
-                case "smgt":
-                case "msmgt":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_smgt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Sustainable Management\" border=\"0\" />";
-                break;
-
-                case "hwm":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_hwm_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health &amp; Wellness Management\" border=\"0\" />";
-                break;
-
-                case "himt":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_himt_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Health Information Management &amp; Technology\" border=\"0\" />";
-                break;
-
-                case "il":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_il_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Independent Learning\" border=\"0\" />";
-                break;
-
-                case "flx":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_flx_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Flexible Option\" border=\"0\" />";
-                break;
-
-                case "bps":
-                    logo = "<img src=\"" + ROOT_PATH + "img/uw_bps_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
-                break;
-                
-                case "ds":
-                    logo = "<img src=\"" + ROOT_PATH + "img/ds_logo.svg\" width=\"250\" height=\"108\" alt=\"University of Wisconsin Data Science\" border=\"0\" />";
-                break;
-
-        }
-
-        if ( enabledNote === false ) {
-            
-            $( "#note" ).addClass( "noNotes" ).attr("aria-label", "Notes area. No notes available.").html( "<div class=\"logo\" aria-hidden=\"true\">" + logo + "</div>" );
-            
-        }
 
     }
 
@@ -372,7 +328,9 @@ $.fn.setupPlayer = function() {
 	$( "#selectable" ).before( '<div class="toc_heading" tabindex="13">Table of Contents</div>' );
 
     $.each( topicTitle, function( i ) {
-
+        
+        var breakClass = "";
+        
 		if ( topicSrc[i] === "quiz" ) {
 
 		    selfAssessmentIcon = " <span class=\"icon-assessement light\"></span>";
@@ -382,14 +340,28 @@ $.fn.setupPlayer = function() {
     		selfAssessmentIcon = "";
 
 		}
-
-		$( "#selectable" ).append( "<li class=\"ui-widget-content\" role=\"menuitem\" title=\"" + topicTitle[i] + "\">" + "<div class=\"slideNum\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\">" + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
+        
+        if ( topicTitle[i].indexOf( "|" ) !== -1 ) {
+            
+            topicTitle[i] = topicTitle[i].replace( "|", "" );
+            breakClass = " sectionBreak";
+            
+        }
+        
+		$( "#selectable" ).append( "<li class=\"ui-widget-content" + breakClass + "\" role=\"menuitem\" title=\"" + topicTitle[i] + "\">" + "<div class=\"slideNum\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\">" + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
 
 	} );
 
 	// set up the splash screen
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
-    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" href=\"#\"><span tabindex=\"0\" class=\"sr-only\">Play</span></a>" );
+    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" href=\"#\"><span class=\"sr-only\">Play</span></a>" );
+    
+    // if accent tag from XML has value
+    if ( accent.length ) {
+        
+        $( ".playBtn" ).css( "background-color", accent );
+        
+    }
     
     // focus on the play button
     $( ".playBtn" ).focus();
@@ -410,7 +382,7 @@ $.fn.setupPlayer = function() {
 /**
  * Initialize the player
  * @since 2.0.0
- * @updated 2.6.1
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -491,15 +463,7 @@ $.fn.initializePlayer = function() {
     // bind left click event
     $( "#leftBtn" ).on( "click", function() {
 
-        counter--;
-
-        if ( counter < 0 ) {
-            counter = topicCount - 1;
-        }
-
-        $.fn.loadSlide( topicSrc[counter], counter );
-        previousIndex = counter;
-
+        $.fn.previousSlide();
         return false;
 
     } );
@@ -507,33 +471,17 @@ $.fn.initializePlayer = function() {
     // bind right click event
     $( "#rightBtn" ).on( "click", function() {
 
-        counter++;
-
-        if ( counter > topicCount - 1 ) {
-            counter = 0;
-        }
-
-        $.fn.loadSlide( topicSrc[counter], counter );
-        previousIndex = counter;
-
+        $.fn.nextSlide();
         return false;
 
     });
 
     // add the zoom boutton to the control after the slide status
-    if ( enabledNote === true || quizDetected === true || version >= 230 ) {
+    if ( quizDetected === true || version >= 230 ) {
 
         $( "#control" ).append( "<span role=\"button\" aria-label=\"expand or contract slide image\" tabindex=\"12\" id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
-
-        if ( $( "#storybook_plus_wrapper" ).hasClass( "withQuiz" ) ) {
-
-            $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-label=\"Toggle table of content\" tabindex=\"10\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
-
-        } else {
-
-            $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-label=\"toggle notes\" tabindex=\"11\"><span class=\"notes\" title=\"Toggle Notes\"></span></span><span id=\"tocBtn\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
-
-        }
+        $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-label=\"Toggle table of content\" tabindex=\"10\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+        $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-label=\"toggle notes\" tabindex=\"11\"><span class=\"notes\" title=\"Toggle Notes\"></span></span>" );
 
         $.fn.bindImgMagnify();
         $.fn.bindNoteSlideToggle();
@@ -549,12 +497,59 @@ $.fn.initializePlayer = function() {
 
     // display the player
     $( "#player" ).show();
+    
+    // listent to keyboard events
+    $.fn.listenToKeyboard();
 
 };
 
 /**
+ * back to previous slide
+ * @since 2.7.0
+ * @author Ethan S. Lin
+ *
+ * @param none
+ * @return void
+ *
+ */
+$.fn.previousSlide = function() {
+    
+    counter--;
+
+    if ( counter < 0 ) {
+        counter = topicCount - 1;
+    }
+
+    $.fn.loadSlide( topicSrc[counter], counter );
+    previousIndex = counter;
+    
+};
+
+/**
+ * advance to next slide
+ * @since 2.7.0
+ * @author Ethan S. Lin
+ *
+ * @param none
+ * @return void
+ *
+ */
+$.fn.nextSlide = function() {
+    
+    counter++;
+
+    if ( counter > topicCount - 1 ) {
+        counter = 0;
+    }
+
+    $.fn.loadSlide( topicSrc[counter], counter );
+    previousIndex = counter;
+    
+};
+
+/**
  * Check table of content position and scroll is out of view
- * @since 2.6.0
+ * @since 2.7.0
  *
  * @author Ethan S. Lin
  *
@@ -563,21 +558,12 @@ $.fn.initializePlayer = function() {
  *
  */
  $.fn.autoscroll = function() {
+ 
+    var currentItemPos = Math.floor( $( this ).position().top );
     
-    var visibleHeight = Math.floor( $("#selectable").height() );
-    var currentItemPos = Math.floor(  $( this ).position().top );
-    
-    if ( currentItemPos >= 488 ) {
-        
-        var scrolledHeight = ( visibleHeight / 2 ) + $("#selectable")[0].scrollTop;
-        $( "#selectable" ).animate( { scrollTop: scrolledHeight }, 500 );
-           
-    }
-    
-    if ( currentItemPos < 32 ) {
-        
-        var scrolledUp = $("#selectable")[0].scrollTop - ( visibleHeight / 2 );
-        $( "#selectable" ).animate( { scrollTop: scrolledUp }, 500 );
+    if ( currentItemPos < 32 || currentItemPos >= 488 ) {
+
+        $("#selectable").scrollTo( $(this), { duration: 500, offsetTop : ( $("#selectable")[0].clientHeight / 2 + $(this).height() ) } );
            
     }
 
@@ -586,7 +572,7 @@ $.fn.initializePlayer = function() {
 /**
  * Load current slide
  * @since 2.0.0
- * @updated 2.6.1
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  *
@@ -606,7 +592,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     }
 
     if ( slideSource !== 'video:' && slideSource !== 'kaltura:' && slideSource !== 'youtube:' && slideSource !== 'vimeo:' ) {
-        $( "#progressing" ).fadeIn();
+        $( "#progressing" ).fadeIn("fast");
+        srcName = srcName.toLowerCase();
 
     }
 
@@ -616,29 +603,15 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
 
-    if ( videoPlayer !== null ) {
+    if ( mediaPlayer !== null ) {
 
         $( '.vjs-control' ).blur();
         $( '.vjs-menu-item' ).blur();
 
-        videoPlayer.dispose();
-        videoPlayer = null;
+        mediaPlayer.dispose();
+        mediaPlayer = null;
         $( '#vp' ).empty().hide();
-
-    }
-
-    // if audio is playing
-    if ( audioPlaying ) {
-
-        try {
-
-            audioPlayer.pause();
-
-        } catch(e) { }
-
-        $( "#ap" ).hide();
-
-        audioPlaying = false;
+        $( '#ap' ).empty().hide();
 
     }
 
@@ -649,7 +622,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "image:":
 
             img = new Image();
-            srcName = srcName.toLowerCase();
 
             imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
             imgCaption = $( "#selectable li .title" ).get( sNum ).innerHTML;
@@ -677,98 +649,36 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         case "image-audio:":
 
-            img = new Image();
-            srcName = srcName.toLowerCase();
-
-            imgPath = "assets/slides/" + srcName + "." + slideImgFormat;
-            imgCaption = $( "#selectable li .title" ).get( sNum ).innerHTML;
-
-            $( img ).load( function() {
-
-                $( this ).hide();
-                $( "#slide" ).html( "<div id=\"img\"></div>" );
-                $( "#slide #img" ).html( img );
-                $( this ).fadeIn();
-                $( this ).focus();
-
-                if ( !audioPlaying ) {
-
-                    $.ajax( {
-
-                        url: 'assets/audio/' + srcName + '.mp3',
-                        type:'HEAD',
-                        error: function() {
-
-                            $.fn.displayErrorMsg( "audio file not found!", "Expected file: assets/audio/" + srcName + ".mp3" );
-
-                        },
-                        success: function() {
-
-                            $( "#ap" ).show();
-
-                            if (firstAudioLoad !== true) {
-
-                    		    $.fn.loadAudioPlayer( "#apc", srcName );
-                                firstAudioLoad = true;
-
-        					} else {
-
-        						sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-        						audioPlayer.setSrc( sources );
-
-        					}
-
-        					audioPlaying = true;
-
-                        }
-
-                    } );
-
-                }
-
-            } ).error( function() {
-
-                $.fn.displayErrorMsg( "image not found!", "Expected image: " + imgPath );
-
-            } ).attr( {
-
-                'src': imgPath,
-                'alt': imgCaption,
-                'border': 0,
-                'tabindex': 4
-
-            } );
+            $.fn.setupMediaPlayer( "audio", srcName );
 
         break;
 
         case "video:":
 
-            srcName = srcName.toLowerCase();
-            $.fn.setupVideoPlayer( 'video', srcName );
+            $.fn.setupMediaPlayer( 'video', srcName );
 
         break;
 
         case "youtube:":
-
-            $( "#slide" ).html( "<iframe id=\"youtube\" width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/" + srcName + "?modestbranding=1&theme=light&color=white&showinfo=0&autoplay=1&controls=2&fs=0&html5=1&autohide=1&rel=0&iv_load_policy=3\" frameborder=\"0\"></iframe>" ).promise().done(function() { $(this).find("#youtube").focus(); });
+            
+            $.fn.setupMediaPlayer( 'youtube', srcName );
 
         break;
 
         case "vimeo:":
 
-            $( "#slide" ).html( "<iframe id=\"vimeo\" width=\"640\" height=\"360\" src=\"//player.vimeo.com/video/" + srcName + "?portrait=0&color=ffffff&autoplay=1&fullscreen=0\" frameborder=\"0\"></iframe>" ).promise().done( function() { $(this).find("#vimeo").focus(); } );
+            $.fn.setupMediaPlayer( 'vimeo', srcName );
 
         break;
 
         case "kaltura:":
 
-            $.fn.setupVideoPlayer( 'kaltura', srcName );
+            $.fn.setupMediaPlayer( 'kaltura', srcName );
 
         break;
 
         case "swf:":
 
-            srcName = srcName.toLowerCase();
             $( "#slide" ).html( "<object width=\"640\" height=\"360\" type=\"application/x-shockwave-flash\" data=\"assets/swf/" + srcName + ".swf\"><param name=\"movie\" value=\"assets/swf/" + srcName + ".swf\" /><div id=\"errorMsg\"><p>Error: Adobe Flash Player is not enabled or installed!</p><p>Adobe Flash Player is required to view this slide. Please enable or <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">install Adobe Flash Player</a>.</p></div></object>" ).promise().done( function() {
 
             } );
@@ -790,24 +700,23 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
     
-    if ( enabledNote ) {
+    // load notes
+    $( this ).loadNote( sNum );
 
-        $( this ).loadNote( sNum );
-
-    }
-
+    // update slide number status
     $( this ).updateSlideNum( sNum );
 
     if ( $( "#progressing" ).length ) {
 
         $( "#progressing" ).promise().done( function() {
 
-            $(this).fadeOut();
+            $(this).fadeOut("fast");
 
         } );
 
     }
     
+    // listen to auto scroll
     $( ".ui-selected" ).autoscroll();
 
 };
@@ -815,7 +724,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * Setup videojs player
  * @since 2.4.0
- * @updated 2.6.0
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  *
@@ -823,15 +732,48 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  * @return void
  *
  */
- $.fn.setupVideoPlayer = function ( type, src ) {
+ $.fn.setupMediaPlayer = function ( type, src ) {
 
-     var playerID = "vpc";
+    var playerID = "";
+    var subtitle = "";
 
     switch( type ) {
+        
+        case "audio":
+        
+            playerID = "apc";
+            
+            $.get( 'assets/slides/' + src + '.' + slideImgFormat, function() {
+                
+                $( "#apc" ).attr( 'poster', 'assets/slides/' + src + '.' + slideImgFormat );
+                
+                $.get( 'assets/audio/' + src + '.vtt', function() {
+
+                    subtitle = "<track kind=\"subtitles\" src=\"assets/audio/" + src + ".vtt\" srclang=\"en\" label=\"English\">";
+    
+                } ).always( function() {
+    
+                    var audioSrc = "<source src=\"assets/audio/" + src + ".mp3\" type=\"audio/mp3\">";
+                    
+                    $( "#ap" ).html( "<audio id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + audioSrc + subtitle + "</audio>" ).promise().done( function() {
+
+                        $.fn.loadVideoJsPlayer( playerID, src );
+
+                    } );
+    
+                } );
+                
+            } ).fail( function() {
+                
+                $.fn.displayErrorMsg( "image not found!", "Expected image: assets/slides/" + src + "." + slideImgFormat );
+                
+            } );
+            
+        break;
 
         case "video":
-
-            var subtitle = "";
+            
+            playerID = "vpc";
 
             $.get( 'assets/video/' + src + '.vtt', function() {
 
@@ -839,7 +781,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
             } ).always( function() {
 
-                var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\" />";
+                var mp4Src = "<source src=\"assets/video/" + src + ".mp4\" type=\"video/mp4\">";
 
                 $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
 
@@ -852,8 +794,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         break;
 
         case "kaltura":
-
-
+            
+            playerID = "vpc";
+            
             if ( kalturaLoaded === 0 ) {
 
                 $.getScript( ROOT_PATH + '/scripts/mwembedloader.js', function() {
@@ -873,6 +816,28 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
             }
 
+        break;
+        
+        case "youtube":
+        
+            playerID = "ytb";
+            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\"></video>" ).promise().done( function() {
+
+                    $.fn.loadVideoJsPlayer(playerID, src);
+
+            } );
+        
+        break;
+        
+        case "vimeo":
+        
+            playerID = "vm";
+            $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\"></video>" ).promise().done( function() {
+
+                    $.fn.loadVideoJsPlayer(playerID, src);
+
+            } );
+        
         break;
 
         default:
@@ -981,14 +946,14 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * load videojs player
  * @since 2.4.1
- * @updated 2.6.1
+ * @updated 2.7.0
  * @author Ethan S. Lin
  *
  * @param strings, video element id
  * @return void
  *
  */
-$.fn.loadVideoJsPlayer = function( playerID ) {
+$.fn.loadVideoJsPlayer = function( playerID, src ) {
 
     var options = {
 
@@ -998,32 +963,89 @@ $.fn.loadVideoJsPlayer = function( playerID ) {
         "controls": true,
         "autoplay": true,
         "preload": "auto",
-        plugins: {
+        "plugins": {
             resolutionSelector: { default_res: 'normal' }
         }
 
     };
+    
+    switch ( playerID ) {
+        
+        case 'vpc':
+            
+            if ( $.fn.supportMp4() === false && $.fn.supportWebm() === false ) {
 
-    if ( $.fn.supportMp4() === false && $.fn.supportWebm() === false ) {
-
-        options.techOrder = ["flash", "html5"];
-        options.plugins = null;
-
+                options.techOrder = ["flash", "html5"];
+                options.plugins = null;
+        
+            }
+            
+            $( "#vp" ).fadeIn();
+            $( "#vpc" ).focus();
+            
+        break;
+        
+        case 'apc':
+            
+            options.poster = 'assets/slides/' + src + "." + slideImgFormat;
+            options.plugins = null;
+            $( "#ap" ).fadeIn();
+            $( "#apc" ).focus();
+            
+            $( "#apc" ).on('mouseenter', function() {
+                    
+                if ( $( this ).hasClass( 'vjs-user-inactive' ) ) {
+                    
+                    $( this ).removeClass( 'vjs-user-inactive' );
+                    $( this ).addClass( 'vjs-user-active' );
+                    
+                }
+                
+            } );
+            
+            $( "#apc" ).on('mouseleave', function() {
+                
+                if ( $( this ).hasClass( 'vjs-user-active' ) ) {
+                    
+                    $( this ).removeClass( 'vjs-user-active' );
+                    $( this ).addClass( 'vjs-user-inactive' );
+                    
+                }
+                
+            } );
+            
+        break;
+        
+        case 'ytb':
+        
+            options.techOrder = ["youtube"];
+            options.src = "https://www.youtube.com/watch?v=" + src;
+            options.plugins = null;
+            $( "#vp" ).fadeIn();
+            $( "#vp" ).focus();
+            
+        break;
+        
+        case 'vm':
+            
+            options.techOrder = ["vimeo"];
+            options.src = "https://vimeo.com/" + src;
+            options.plugins = null;
+            $( "#vp" ).fadeIn();
+            $( "#vp" ).focus();
+            
+        break;
+        
+        
     }
+    
+    mediaPlayer = videojs( playerID, options, function() {
 
-    $( "#vp" ).fadeIn();
-
-    videojs( playerID, options, function() {
-
-        videoPlayer = this;
         this.progressTips();
-        this.removeChild('FullscreenToggle');
 
     } );
 
     videojs.options.flash.swf = ROOT_PATH + "videoplayer/video-js.swf";
-    
-    $( "#vp" ).focus();
 
 };
 
@@ -1133,13 +1155,15 @@ $.fn.displayAnswerChoices = function( index ) {
 
         case "t/f":
 
-            $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
+            $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input tabindex=\"0\" id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input tabindex=\"0\" type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
+            $( "label:first-child" ).focus();
 
         break;
 
         case "fib":
 
             $( "#quiz" ).append( "<div class=\"answerArea\"><input type=\"text\" id=\"saAns\" /></div>" );
+            $( "#saAns" ).focus();
 
         break;
 
@@ -1178,12 +1202,14 @@ $.fn.displayAnswerChoices = function( index ) {
             }
 
             $( "#quiz" ).append( "</div>" );
+            $( "label:first-child" ).focus();
 
         break;
 
         case "sa":
 
             $( "#quiz" ).append( "<div class=\"answerArea\"><textarea id=\"saAns\"></textArea></div>" );
+            $( "#saAns" ).focus();
 
         break;
 
@@ -1381,6 +1407,7 @@ $.fn.displayAnswerChoices = function( index ) {
 /**
  * Display current self-assessment feedback
  * @since 2.0.0
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  *
@@ -1393,7 +1420,7 @@ $.fn.showFeedback = function( index ) {
     var questionImg = "";
     var audio = "";
 
-    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
+    $( "#slide" ).html( "<div tabindex=\"5\" id=\"quiz\"><div class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
 
     if ( questions[index].type !== "sa" ) {
 
@@ -1472,106 +1499,15 @@ $.fn.showFeedback = function( index ) {
         }
 
     }
-
-};
-
-/**
- * Load audio player
- * @since 2.1.0
- * @updated 2.5.1
- *
- * @author Ethan S. Lin
- * @param strings, id and source name
- * @return void
- *
- */
-$.fn.loadAudioPlayer = function( id, srcName ) {
-
-    var width = "100%", height = 30;
-
-    audioPlayer = new MediaElementPlayer( id, {
-
-		audioWidth: width,
-		audioHeight: height,
-		startVolume: 0.8,
-		loop: false,
-		enableAutosize: true,
-		iPadUseNativeControls: false,
-		iPhoneUseNativeControls: false,
-		AndroidUseNativeControls: false,
-		pauseOtherPlayers: true,
-		type: "audio/mpeg",
-		success: function( me ) {
-
-			sources = [{src: "assets/audio/" + srcName + ".mp3", type: "audio/mpeg"}];
-			me.setSrc( sources );
-			me.load();
-
-            me.addEventListener( "play", function() {
-
-                $.fn.bindAudioPlayerFadeInOut();
-
-            } );
-
-            me.addEventListener( "ended", function() {
-
-                $.fn.unbindAudioPlayerFadeInOut();
-
-            } );
-
-		}
-
-	} );
-
-};
-
-/**
- * Fade in and out audio player
- * @since 2.2.0
- *
- * @author Ethan S. Lin
- * @param none
- * @return void
- *
- */
-$.fn.bindAudioPlayerFadeInOut = function() {
-
-    $( "#ap" ).delay( 3000 ).fadeOut( "slow" );
-
-    $( "#img, #ap" ).on( "mouseenter", function() {
-
-        $( "#ap" ).stop(true,true).fadeIn( "slow" );
-
-    } );
-
-    $( "#img, #ap" ).on( "mouseleave", function() {
-
-        $( "#ap" ).stop(false,true).delay( 1000 ).fadeOut( "slow" );
-
-    } );
-
-};
-
-/**
- * Unbind audio player fade in and out
- * @since 2.5.1
- *
- * @author Ethan S. Lin
- * @param none
- * @return void
- *
- */
-$.fn.unbindAudioPlayerFadeInOut = function() {
-
-    $( "#ap" ).fadeIn( "fast" );
-    $( "#img, #ap" ).unbind( "mouseenter" );
-    $( "#img, #ap" ).unbind( "mouseleave" );
+    
+    $( "#quiz" ).focus();
 
 };
 
 /**
  * Load notes for the current slide
  * @since 2.1.0
+ * @update 2.7.0
  *
  * @author Ethan S. Lin
  * @param int, current topic number
@@ -1581,33 +1517,124 @@ $.fn.unbindAudioPlayerFadeInOut = function() {
 $.fn.loadNote = function( num ) {
 
     var note = noteArray[num];
+    
+    if ( note.length ) {
+        
+        $( "#note" ).removeClass( "noNotes" );
+        
+        $( "#note" ).html( note ).hide().fadeIn( "fast" );
+        
+        if ( $( "#note" ).find( "a" ).length ) {
 
-	if ( !$( "#slideNote" ).hasClass( "quizSlide" ) ) {
-
-    	$( "#note" ).html( note ).hide().fadeIn( "fast" );
-
-    	if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
-
-            $( "#notesBtn" ).show();
-
+    		$( "#note a" ).each( function() {
+    			$( this ).attr( "target", "_blank" );
+    
+            });
+    
         }
-
-	} else {
-    	
-    	$( "#notesBtn" ).hide();
-    	
-	}
-
-	if ( $( "#note" ).find( "a" ).length ) {
-
-		$( "#note a" ).each( function() {
-			$( this ).attr( "target", "_blank" );
-
-        });
-
+        
+    } else {
+        
+        $( "#note" ).addClass( "noNotes" );
+        $.fn.getProgramLogo();
+        
     }
+    
+    $.fn.displayNotesBtn();
 
 };
+
+/**
+ * Get the current program logo if no notes
+ * @since 2.7.0
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
+ $.fn.displayNotesBtn = function() {
+     
+     // display or hide the note button in magnified view
+    if ( $( "#storybook_plus_wrapper" ).hasClass( "magnified" ) ) {
+        
+        if ( $( "#note").hasClass( "noNotes" ) ) {
+                
+            $( "#currentStatus" ).addClass( "extendStatusWidth" );
+            $( "#notesBtn" ).hide();
+            
+        } else {
+            
+            $( "#currentStatus" ).removeClass( "extendStatusWidth" );
+            $( "#notesBtn" ).show();
+            
+        }
+        
+    }
+     
+ };
+
+/**
+ * Get the current program logo if no notes
+ * @since 2.7.0
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
+ $.fn.getProgramLogo = function() {
+     
+     var dir = $.fn.getProgramDirectory();
+     var logo = "uw_ex_ceoel_logo";
+     var alt = "University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning";
+     var img = "";
+
+    switch( dir ) {
+
+        case "smgt":
+        case "msmgt":
+            logo = "uw_smgt_logo";
+            alt = "University of Wisconsin Sustainable Management";
+        break;
+
+        case "hwm":
+            logo = "uw_hwm_logo";
+            alt = "University of Wisconsin Health &amp; Wellness Management";
+        break;
+
+        case "himt":
+            logo = "uw_himt_logo";
+            alt = "University of Wisconsin Health Information Management &amp; Technology";
+        break;
+
+        case "il":
+            logo = "uw_il_logo";
+            alt = "University of Wisconsin Independent Learning";
+        break;
+
+        case "flx":
+            logo = "uw_flx_logo";
+            alt = "University of Wisconsin Flexible Option";
+        break;
+
+        case "bps":
+            logo = "uw_bps_logo";
+            alt = "University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication";
+        break;
+        
+        case "ds":
+            logo = "ds_logo";
+            alt = "University of Wisconsin Data Science";
+        break;
+
+    }
+    
+    img = "<img src=\"" + ROOT_PATH + "img/" + logo + ".svg\" width=\"150\" height=\"65\" alt=\"" + alt + "\" border=\"0\" />";
+    
+    $( "#note" ).attr("aria-label", "Notes area. No notes available.").html( "<div class=\"logo\" aria-hidden=\"true\">" + img + "</div>" );
+     
+ };
 
 /**
  * Update the current slide number indicator
@@ -1637,7 +1664,7 @@ $.fn.updateSlideNum = function( num ) {
 /**
  * Magnify the current slide image and video
  * @since 2.0.0
- * @updated 2.6.0
+ * @updated 2.7.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -1667,24 +1694,20 @@ $.fn.bindImgMagnify = function() {
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
             $( this ).html( "<span class=\"icon-contract\" title=\"Contract\"></span>" );
             $( "#tocBtn" ).show();
+            $( "#currentStatus" ).addClass( "extendStatusWidth" );
             $( "#toc" ).hide();
-
-            if ( !$( "#slideNote" ).hasClass( "quizSlide" ) ) {
-
-                $( "#notesBtn" ).show();
-
-            }
-            
             $( "#slideNote img" ).focus();
 
         }
+        
+        $.fn.displayNotesBtn();
 
     } );
 
 };
 
 /**
- * Slide notes up and down in expanded mode
+ * Animate notes area up and down in expanded mode
  * @since 2.2.0
  *
  * @author Ethan S. Lin
@@ -1800,7 +1823,7 @@ $.fn.bindTocSlideToggle = function() {
 /**
  * Loading the instructor profile image
  * @since 2.0.0
- * @update 2.5.8
+ * @update 2.7.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -1934,6 +1957,62 @@ $.fn.displayGetLessonError = function( status, exception ) {
 
 };
 
+/**
+ * Handling Keyboard events
+ * @since 2.7.0
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
+ 
+ $.fn.listenToKeyboard = function() {
+     
+     //console.log( 'listening to keyboard' );
+     
+     $( document ).on( 'keypress', function( e ) {
+         
+         var code = e.which;
+         var key = '';
+         
+         if ( !$( 'input[type=text], textarea' ).is( ':focus' ) ) {
+             
+             switch ( code ) {
+             
+                 case 97:
+                    key = 'a'; // left
+                    $.fn.previousSlide();
+                 break;
+                 case 119:
+                    key = 'w'; // up
+                    $.fn.previousSlide();
+                 break;
+                 case 100:
+                    key = 'd'; // right
+                    $.fn.nextSlide();
+                 break;
+                 case 115:
+                    key = 's'; // down
+                    $.fn.nextSlide();
+                 break;
+                 case 99:
+                    key = 'c'; // caption toggle
+                break;
+                case 122:
+                    key = 'z'; // magnify toggle
+                break;    
+                 
+             }
+             
+         }
+         
+         //console.log( "key pressed: " + key );
+         
+     } );
+     
+ };
+
 /* MISC. HELPER FUNCTIONS
 ***************************************************************/
 
@@ -1985,31 +2064,6 @@ $.fn.getDirectory = function() {
 	src = src[src.length - 2];
 
 	return src;
-
-};
-
-/**
- * Parse the URL query parameter from the current page location
- * @since 2.0.0
- *
- * @author Ethan S. Lin
- * @param string, the parameter to parse
- * @return string, the value of the parameter
- *
- */
-$.fn.getParameterByName = function( param ) {
-
-    var regexS = "[\\?&]" + param + "=([^&#]*)",
-        regex = new RegExp( regexS ),
-        results = regex.exec( window.location.href );
-
-    param = param.replace( /[\[]/, "\\[" ).replace( /[\]]/, "\\]" );
-
-    if ( results === null ) {
-        return "";
-    } else {
-        return decodeURIComponent( results[1].replace( /\+/g, " " ) );
-    }
 
 };
 
@@ -2164,7 +2218,7 @@ $.fn.parseArrayImg = function( arr ) {
  };
 
 /**
- * Get for parent directory
+ * Get program directory name
  * @since 2.4.2
  * @updated 2.5.1
  *
@@ -2182,4 +2236,52 @@ $.fn.getProgramDirectory = function() {
 
     return url[4];
 
+};
+
+/**
+ * Scroll to target
+ * @since 2.7.0
+ *
+ * @author Ethan S. Lin
+ * @param object, object, function
+ * @return function
+ *
+ */
+
+$.fn.scrollTo = function( target, options, callback ) {
+     
+    if ( typeof options === 'function' && arguments.length === 2 ) {
+        
+        callback = options;
+        options = target;
+      
+    }
+    
+    var settings = $.extend( {
+        
+        scrollTarget  : target,
+        offsetTop     : 50,
+        duration      : 500,
+        easing        : 'swing'
+        
+    }, options );
+  
+  return this.each( function() {
+      
+    var scrollPane = $( this );
+    var scrollTarget = ( typeof settings.scrollTarget === "number" ) ? settings.scrollTarget : $( settings.scrollTarget );
+    var scrollY = ( typeof scrollTarget === "number" ) ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt( settings.offsetTop );
+    
+    scrollPane.animate({scrollTop : scrollY }, parseInt(settings.duration), settings.easing, function() {
+        
+        if ( typeof callback === 'function' ) {
+          
+          callback.call(this);
+          
+        }
+      
+    } );
+    
+  });
+  
 };
