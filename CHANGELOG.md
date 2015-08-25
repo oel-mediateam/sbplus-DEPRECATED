@@ -1,6 +1,10 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
+_none_
+
+---
+###2.7.0 (08-25-2015)
 * Added tab indexes/focus to HTML elements
 * Added WAI-ARIA markups for accessibility
 * Added WASD keyboard press events to traversing the slides
@@ -16,7 +20,6 @@
 * Improved autoscrolling in table of contents
 * Minor fixes and improvements
 
----
 ###2.6.1 (07-31-2015)
 * Uniform loading spinner
 * Fixed an issue with table of content scrolling all the way to the top
