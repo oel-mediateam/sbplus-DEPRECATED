@@ -549,7 +549,7 @@ $.fn.nextSlide = function() {
 
 /**
  * Check table of content position and scroll is out of view
- * @since 2.6.0
+ * @since 2.7.0
  *
  * @author Ethan S. Lin
  *
@@ -558,21 +558,12 @@ $.fn.nextSlide = function() {
  *
  */
  $.fn.autoscroll = function() {
+ 
+    var currentItemPos = Math.floor( $( this ).position().top );
+    
+    if ( currentItemPos < 32 || currentItemPos >= 488 ) {
 
-    var visibleHeight = Math.floor( $("#selectable").height() );
-    var currentItemPos = Math.floor(  $( this ).position().top );
-    
-    if ( currentItemPos >= 488 ) {
-        
-        var scrolledHeight = ( visibleHeight / 2 ) + $("#selectable")[0].scrollTop;
-        $( "#selectable" ).animate( { scrollTop: scrolledHeight }, 500 );
-           
-    }
-    
-    if ( currentItemPos < 32 ) {
-        
-        var scrolledUp = $("#selectable")[0].scrollTop - ( visibleHeight / 2 );
-        $( "#selectable" ).animate( { scrollTop: scrolledUp }, 500 );
+        $("#selectable").scrollTo( $(this), { duration: 500, offsetTop : ( $("#selectable")[0].clientHeight / 2 + $(this).height() ) } );
            
     }
 
@@ -2245,4 +2236,52 @@ $.fn.getProgramDirectory = function() {
 
     return url[4];
 
+};
+
+/**
+ * Scroll to target
+ * @since 2.7.0
+ *
+ * @author Ethan S. Lin
+ * @param object, object, function
+ * @return function
+ *
+ */
+
+$.fn.scrollTo = function( target, options, callback ) {
+     
+    if ( typeof options === 'function' && arguments.length === 2 ) {
+        
+        callback = options;
+        options = target;
+      
+    }
+    
+    var settings = $.extend( {
+        
+        scrollTarget  : target,
+        offsetTop     : 50,
+        duration      : 500,
+        easing        : 'swing'
+        
+    }, options );
+  
+  return this.each( function() {
+      
+    var scrollPane = $( this );
+    var scrollTarget = ( typeof settings.scrollTarget === "number" ) ? settings.scrollTarget : $( settings.scrollTarget );
+    var scrollY = ( typeof scrollTarget === "number" ) ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt( settings.offsetTop );
+    
+    scrollPane.animate({scrollTop : scrollY }, parseInt(settings.duration), settings.easing, function() {
+        
+        if ( typeof callback === 'function' ) {
+          
+          callback.call(this);
+          
+        }
+      
+    } );
+    
+  });
+  
 };
