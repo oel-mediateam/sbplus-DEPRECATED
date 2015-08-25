@@ -4,7 +4,6 @@
 _none_
 
 ---
-<<<<<<< HEAD
 ###2.7.0 (08-25-2015)
 * Added tab indexes/focus to HTML elements
 * Added WAI-ARIA markups for accessibility
@@ -21,10 +20,7 @@ _none_
 * Improved autoscrolling in table of contents
 * Minor fixes and improvements
 
-###2.6.1 (07-31-2015)
-=======
 ###2.6.1 (08-04-2015)
->>>>>>> master
 * Uniform loading spinner
 * Fixed an issue with table of content scrolling all the way to the top
 * Added Data Science
