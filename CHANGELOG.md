@@ -11,6 +11,7 @@ _none_
 * Updated the index file
 * Updated VideoJS to version 4.12.12
 * Removed MediaElementJS library; VideoJS will now serve audio as well.
+* Caption/subtitle supported on Firefox for audio. Set it up like video caption/subtitle.
 * Removed YouTube embed; VideoJS will now serve videos from YouTube.
 * Removed Vimeo embed; VideoJS will now serve videos from Vimeo.
 * Modified VideoJS audio playback controls to mimic video playback control.
