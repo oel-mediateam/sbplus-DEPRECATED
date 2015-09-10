@@ -31,7 +31,7 @@
 
 	<topic src="quiz" title="Fill-in-the-blank">
 		<quiz type="fib">
-			<question>_____ enables the operating system to automatically detect newly installed hardware.</question>
+			<question><![CDATA[<span aria-label="blank">_____</span> enables the operating system to automatically detect newly installed hardware.]]></question>
 			<choice />
 			<answer>PnP|Plug and Play</answer>
 			<wrongFeedback>What? Wrong! Please go over the presentation again.</wrongFeedback>

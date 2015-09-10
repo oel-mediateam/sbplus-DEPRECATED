@@ -28,10 +28,10 @@
 	<div id="player">
 
 	    <!-- black header bar -->
-        <header>
+        <header role="banner">
             <h1 tabindex="1" id="lessonTitle"></h1>
             <span id="instructorName"></span>
-            <a tabindex="3" role="button" aria-controltext="" id="info" class="infoIcn" href="#"><span class="sr-only">See Profile </span></a>
+            <a tabindex="1" role="button" aria-controltext="" id="info" class="infoIcn" href="#"><span class="sr-only">See Profile </span></a>
         </header>
 
 		<!-- content -->
@@ -40,17 +40,17 @@
 		    <!-- slide and note container -->
 			<div id="slideNote">
 
-				<div id="slide" tabindex="5"></div>
+				<div id="slide" tabindex="1"></div>
 
-				<div id="ap" tabindex="5"></div>
+				<div id="ap" tabindex="1"></div>
 
-				<div id="vp" tabindex="5"></div>
+				<div id="vp" tabindex="1"></div>
 
-				<div id="note" tabindex="6"></div>
+				<div id="note" tabindex="1"></div>
 
 				<div id="control" role="navigation">
-					<span id="leftBtn" tabindex="7" role="button" aria-label="Previous"></span>
-					<span id="rightBtn" tabindex="8" role="button" aria-label="Next"></span>
+					<span id="leftBtn" tabindex="1" role="button" aria-label="Previous"></span>
+					<span id="rightBtn" tabindex="1" role="button" aria-label="Next"></span>
 					<span id="currentStatus"></span>
 				</div>
 
@@ -58,7 +58,7 @@
 
 			<!-- table of content -->
 			<div id="toc">
-				<ol id="selectable" role="menu" tabindex="14"></ol>
+				<ol id="selectable" role="menu" aria-labelledby="leftnavheading" tabindex="3"></ol>
 			</div>
 
 		</div>
@@ -74,21 +74,25 @@
 
     <!-- download bar -->
 	<div id="download_bar">
-		<ul role="navigation"></ul>
+		<ul role="menu"></ul>
 	</div>
 
 </div>
 <!-- end #storybook_plus_wrapper div -->
 
+<!--
 <div id="qunit"></div>
 <div id='qunit-fixture'></div>
+-->
 
 <script src="../sources/scripts/jquery.min.js" type="text/javascript"></script>
 <script src="../sources/browserdetection/browser-detection.min.js" type="text/javascript"></script>
 <script src="../sources/videoplayer/combined.video.min.js" type="text/javascript"></script>
 <script src="../sources/scripts/storybookplus.min.js" type="text/javascript"></script>
 <!-- qunit test; remove on production -->
+<!--
 <script src="tests/qunit.js" type="text/javascript"></script>
 <script src="tests/tests.js" type="text/javascript"></script>
+-->
 </body>
 </html>
