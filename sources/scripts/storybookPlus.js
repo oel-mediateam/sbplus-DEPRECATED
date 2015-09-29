@@ -364,7 +364,7 @@ $.fn.setupPlayer = function() {
     }
     
     // focus on the play button
-    $( "#splash_screen" ).focus();
+    // $( "#splash_screen" ).focus();
 
     // bind click event to splash screen
     $( "#splash_screen, #playBtn" ).on( "click", function() {
@@ -1374,7 +1374,10 @@ $.fn.displayAnswerChoices = function( index ) {
 
                         } else {
 
-                            if ( stuAnswer === questions[index].answer[0] ) {
+                            var sa = $.fn.htmlEntities(stuAnswer);
+                            var qa = $.fn.htmlEntities(questions[index].answer[0]);
+                                
+                            if ( sa === qa ) {
 
                                 questions[index].correct = true;
 
@@ -1471,8 +1474,8 @@ $.fn.showFeedback = function( index ) {
 
     } else {
 
-        $( "#quiz" ).append( "<div tabindex=\"1\" class=\"result\"><p><strong>Your answer</strong>: " + $.fn.parseArray( questions[index].stuAnswer ) + "</p></div>" );
-        $('.result').append('<p><strong>Correct answer</strong>: ' + $.fn.parseArray( questions[index].answer ) + '</p>');
+        $( "#quiz" ).append( "<div tabindex=\"1\" class=\"result\"><p><strong>Your answer</strong>:<br />" + $.fn.parseArray( questions[index].stuAnswer ) + "</p></div>" );
+        $('.result').append('<p><strong>Correct answer</strong>:<br />' + $.fn.parseArray( questions[index].answer ) + '</p>');
 
     }
 
@@ -1482,7 +1485,7 @@ $.fn.showFeedback = function( index ) {
 
             if ( String( questions[index].correctFeedback ) !== "" ) {
 
-                $('.result').append('<p><strong>Feedback:</strong> ' + questions[index].correctFeedback + '</p>');
+                $('.result').append('<p><strong>Feedback:</strong><br />' + questions[index].correctFeedback + '</p>');
 
             }
 
@@ -1498,7 +1501,7 @@ $.fn.showFeedback = function( index ) {
 
                 if ( String( feedback ) !== "" ) {
 
-                    $('.result').append('<p><strong>Feedback:</strong> ' + feedback + '</p>');
+                    $('.result').append('<p><strong>Feedback:</strong><br />' + feedback + '</p>');
 
                 }
 
@@ -1506,7 +1509,7 @@ $.fn.showFeedback = function( index ) {
 
                 if ( String( questions[index].wrongFeedback ) !== "" ) {
 
-                    $('.result').append('<p><strong>Feedback:</strong> ' + questions[index].wrongFeedback + '</p>');
+                    $('.result').append('<p><strong>Feedback:</strong><br />' + questions[index].wrongFeedback + '</p>');
 
                 }
 
@@ -2301,4 +2304,8 @@ $.fn.scrollTo = function( target, options, callback ) {
     
   });
   
+};
+
+$.fn.htmlEntities = function( str ) {
+    return String(str).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 };
