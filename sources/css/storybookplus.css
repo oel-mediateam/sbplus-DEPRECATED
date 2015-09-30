@@ -380,10 +380,7 @@ p {
       margin: 1.07143rem 0; }
       #content #quiz .question img {
         display: block;
-        max-width: 25.71429rem;
-        padding-right: 1.07143rem;
-        height: auto;
-        float: left; }
+        margin: 1.07143rem 0; }
       #content #quiz .question small {
         display: block;
         font-size: 1rem;

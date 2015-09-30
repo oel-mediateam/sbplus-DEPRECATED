@@ -523,10 +523,11 @@ p {
 
         	img {
         	    display: block;
-            	max-width: rem( 360px );
-            	padding-right: rem( $gutter );
-            	height: auto;
-            	float: left;
+        	    margin: rem( $gutter ) 0;
+//             	max-width: rem( 360px );
+//             	padding-right: rem( $gutter );
+//             	height: auto;
+//             	float: left;
         	}
 
         	small {
