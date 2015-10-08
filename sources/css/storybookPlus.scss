@@ -74,6 +74,12 @@ p {
     
 }
 
+.math {
+                	
+	font-family: 'Cambria Math', 'Arial', sans-serif;
+	
+}
+
 // MOBILE DEVICE VIEW ON FULL SITE
 .mobile {
     width: rem( 450px );
@@ -866,13 +872,6 @@ p {
             	width: 86%;
             	padding: 0 1%;
             	float: left;
-            	
-            	.math {
-                	
-                	font-family: 'Cambria Math', 'Arial', sans-serif;
-                	
-            	}
-            	
         	}
 
     	}

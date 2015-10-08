@@ -348,7 +348,7 @@ $.fn.setupPlayer = function() {
             
         }
         
-		$( "#selectable" ).append( "<li class=\"ui-widget-content" + breakClass + "\" role=\"menuitem\" title=\"" + topicTitle[i] + "\">" + "<div class=\"slideNum\" aria-hidden=\"true\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\"><span class=\"sr-only\" aria-hidden=\"false\">Slide " + ( i + 1 ) + " of " + topicCount + ".</span> " + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
+		$( "#selectable" ).append( "<li class=\"ui-widget-content" + breakClass + "\" role=\"menuitem\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"slideNum\" aria-hidden=\"true\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\"><span class=\"sr-only\" aria-hidden=\"false\">Slide " + ( i + 1 ) + " of " + topicCount + ".</span> " + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
 
 	} );
 
@@ -1202,7 +1202,7 @@ $.fn.displayAnswerChoices = function( index ) {
 
                 for ( var i = 0; i < questions[index].choice.length; i++ ) {
 
-                    $( ".answerArea" ).append( "<label class=\"img_choice\" for=\"" + i + "\"><input role=\""+type+"\" id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + questions[index].choice[i] + "\" /> <img tabindex=\"1\" src=\"assets/img/" + questions[index].choice[i] + "\" /></label>" );
+                    $( ".answerArea" ).append( "<label class=\"img_choice\" for=\"" + i + "\"><input role=\""+type+"\" id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + $.fn.htmlEntities( questions[index].choice[i] ) + "\" /> <img tabindex=\"1\" src=\"assets/img/" + questions[index].choice[i] + "\" /></label>" );
 
                 }
 
@@ -1210,7 +1210,7 @@ $.fn.displayAnswerChoices = function( index ) {
 
                 for ( var j = 0; j < questions[index].choice.length; j++ ) {
 
-                    $( ".answerArea" ).append( "<label for=\"" + j + "\"><input role=\""+type+"\" tabindex=\"1\" id=\"" + j + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + questions[index].choice[j] + "\" /> " + questions[index].choice[j] + "</label>" );
+                    $( ".answerArea" ).append( "<label for=\"" + j + "\"><input role=\""+type+"\" tabindex=\"1\" id=\"" + j + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + $.fn.htmlEntities( questions[index].choice[j] ) + "\" /> " + questions[index].choice[j] + "</label>" );
 
                 }
 
