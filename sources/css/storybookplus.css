@@ -631,6 +631,8 @@ p {
         width: 86%;
         padding: 0 1%;
         float: left; }
+        #toc #selectable li .title .math {
+          font-family: 'Cambria Math', 'Arial', sans-serif; }
     #toc #selectable li:hover {
       background-color: #59a8dc;
       color: #fff; }
