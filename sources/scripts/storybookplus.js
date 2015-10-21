@@ -3,8 +3,8 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.7.0
- * Released 8/25/2015
+ * @version: 2.7.1
+ * Released MM/DD/2015
  *
  * @license: GNU GENERAL PUBLIC LICENSE v3
  *
@@ -283,7 +283,7 @@ $.fn.parseContent = function( xml ) {
 /**
  * Set up the player
  * @since 2.0.0
- * @updated 2.7.0
+ * @updated 2.7.1
  *
  * @author Ethan S. Lin
  * @return void
@@ -362,9 +362,6 @@ $.fn.setupPlayer = function() {
         $( ".playBtn" ).css( "background-color", accent );
         
     }
-    
-    // focus on the play button
-    // $( "#splash_screen" ).focus();
 
     // bind click event to splash screen
     $( "#splash_screen, #playBtn" ).on( "click", function() {
@@ -417,23 +414,14 @@ $.fn.initializePlayer = function() {
         
             $( "#profile" ).fadeOut( 300, function(){
                 
-                $( "#content" ).fadeIn( "fast", function() {
-                    
-                    // focus on the lesson header
-                    $( "#selectable" ).focus();
-                    
-                } );
+                $( "#content" ).fadeIn( "fast" );
                 
             } );
             
 
         } else {
 
-            $( "#profile" ).fadeIn( 300, function() {
-                
-                $( ".bio" ).focus();
-                
-            } );
+            $( "#profile" ).fadeIn( 300 );
             $( "#content" ).hide();
 
         }
@@ -490,19 +478,13 @@ $.fn.initializePlayer = function() {
     }
 
     // call to load the first slide
-    $.fn.loadSlide( topicSrc[0], counter, true );
+    $.fn.loadSlide( topicSrc[0], counter );
 
     // load and set the instructor picture
     $.fn.loadProfilePhoto();
 
     // display the player
     $( "#player" ).fadeIn( 'fast' );
-    
-    // focus on the table of content
-    $( "#selectable" ).focus();
-    
-    // listent to keyboard events
-    // $.fn.listenToKeyboard();
 
 };
 
@@ -575,7 +557,7 @@ $.fn.nextSlide = function() {
 /**
  * Load current slide
  * @since 2.0.0
- * @updated 2.7.0
+ * @updated 2.7.1
  *
  * @author Ethan S. Lin
  *
@@ -583,9 +565,7 @@ $.fn.nextSlide = function() {
  * @return void
  *
  */
-$.fn.loadSlide = function( slideSource, sNum, inital ) {
-    
-    inital = typeof inital !== 'undefined' ? inital : false;
+$.fn.loadSlide = function( slideSource, sNum ) {
 
     var img;
     var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 );
@@ -638,12 +618,6 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
                 $( "#slide" ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
                 $( this ).fadeIn();
-                
-                if ( inital === false ) {
-                    
-                    $( this ).focus();
-                    
-                }
 
             } ).error( function() {
 
@@ -1243,8 +1217,6 @@ $.fn.displayAnswerChoices = function( index ) {
 
         // give the quiz a second to build up
         $( "#quiz" ).hide().fadeIn();
-        
-        $( "#slide" ).focus();
 
         // click event to check answer
         $( "#check" ).on( "click", function() {
@@ -1518,8 +1490,6 @@ $.fn.showFeedback = function( index ) {
         }
 
     }
-    
-    $( "#slide" ).focus();
 
 };
 
@@ -1976,62 +1946,6 @@ $.fn.displayGetLessonError = function( status, exception ) {
     $('#errorMsg').html('<p>' + statusMsg + '</p><p>' + exceptionMsg + '</p>');
 
 };
-
-/**
- * Handling Keyboard events
- * @since 2.7.0
- *
- * @author Ethan S. Lin
- * @param none
- * @return void
- *
- */
- 
- $.fn.listenToKeyboard = function() {
-     
-     //console.log( 'listening to keyboard' );
-     
-     $( document ).on( 'keypress', function( e ) {
-         
-         var code = e.which;
-         var key = '';
-         
-         if ( !$( 'input[type=text], textarea' ).is( ':focus' ) ) {
-             
-             switch ( code ) {
-             
-                 case 97:
-                    key = 'a'; // left
-                    $.fn.previousSlide();
-                 break;
-                 case 119:
-                    key = 'w'; // up
-                    $.fn.previousSlide();
-                 break;
-                 case 100:
-                    key = 'd'; // right
-                    $.fn.nextSlide();
-                 break;
-                 case 115:
-                    key = 's'; // down
-                    $.fn.nextSlide();
-                 break;
-                 case 99:
-                    key = 'c'; // caption toggle
-                break;
-                case 122:
-                    key = 'z'; // magnify toggle
-                break;    
-                 
-             }
-             
-         }
-         
-         //console.log( "key pressed: " + key );
-         
-     } );
-     
- };
 
 /* MISC. HELPER FUNCTIONS
 ***************************************************************/

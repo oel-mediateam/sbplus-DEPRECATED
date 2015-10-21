@@ -1,6 +1,8 @@
 #Storybook Plus (SB+)
-**_version 2.7.0_**  
+**_version 2.7.1_**  
+<!---
 [![Build Status](https://travis-ci.org/oel-mediateam/sbplus.svg?branch=master)](https://travis-ci.org/oel-mediateam/sbplus)
+-->
 
 ---
 ###Web Browser Requirements
@@ -17,11 +19,11 @@ SB+ may not function properly with beta or pre-released version of web browsers.
 
 ---
 ###Documentation
-For more details and how to setup a SB+ presentation, please visit the [Storybook Plus Documentation](https://media.uwex.edu/resources/documentation/storybook-plus-v2/).
+For more details and how to setup a SB+ presentation, please visit the [SB+ Documentation](https://media.uwex.edu/resources/documentation/storybook-plus-v2/).
 
 ---
 ###Bug Reporting and Questions
-If any bugs/glitches are found in the Storybook Plus, please report them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub. When reporting a bug, please write the report as detailed and specifically as possible. Note the steps to reproduce the bug and include screen captures if possible.
+If any bugs/glitches are found in the SB+, please report them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub. When reporting a bug, please write the report as detailed and specifically as possible. Note the steps to reproduce the bug and include screen captures if possible.
 
 For questions, please also post them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub.
 
