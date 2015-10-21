@@ -1,6 +1,6 @@
 {
 "CodeKitInfo": "This is a CodeKit 2.x project configuration file. It is designed to sync project settings across multiple machines. MODIFYING THE CONTENTS OF THIS FILE IS A POOR LIFE DECISION. If you do so, you will likely cause CodeKit to crash. This file is not useful unless accompanied by the project that created it in CodeKit 2. This file is not backwards-compatible with CodeKit 1.x. For more information, see: http:\/\/incident57.com\/codekit",
-"creatorBuild": "19051",
+"creatorBuild": "19076",
 "files": {
 	"\/build\/assets\/img\/lugia.png": {
 		"fileType": 32768,
@@ -205,8 +205,8 @@
 		"enableSmartQuotes": 1,
 		"escapeLineBreaks": 0,
 		"fileType": 4096,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/CHANGELOG.md",
 		"maskEmailAddresses": 1,
 		"outputAbbreviatedPath": "\/CHANGELOG.html",
@@ -282,8 +282,8 @@
 		},
 	"\/sources\/browserdetection\/browser-detection.js": {
 		"fileType": 64,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/sources\/browserdetection\/browser-detection.js",
 		"outputAbbreviatedPath": "\/sources\/browserdetection\/min\/browser-detection-min.js",
 		"outputPathIsOutsideProject": 0,
@@ -302,8 +302,8 @@
 		},
 	"\/sources\/browserdetection\/browser-detection.min.js": {
 		"fileType": 64,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/sources\/browserdetection\/browser-detection.min.js",
 		"outputAbbreviatedPath": "\/sources\/browserdetection\/min\/browser-detection.min-min.js",
 		"outputPathIsOutsideProject": 0,
@@ -358,65 +358,21 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/sources\/css\/storybookPlus.scss": {
+	"\/sources\/css\/storybookplus.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/sources\/css\/storybookPlus.scss",
-		"outputAbbreviatedPath": "\/sources\/css\/storybookPlus.css",
+		"inputAbbreviatedPath": "\/sources\/css\/storybookplus.scss",
+		"outputAbbreviatedPath": "\/sources\/css\/storybookplus.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
 		"useLibsass": 0
-		},
-	"\/sources\/img\/profile.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 3246,
-		"inputAbbreviatedPath": "\/sources\/img\/profile.png",
-		"outputAbbreviatedPath": "\/sources\/img\/profile.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/sources\/img\/quiz_bg.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 99747,
-		"inputAbbreviatedPath": "\/sources\/img\/quiz_bg.png",
-		"outputAbbreviatedPath": "\/sources\/img\/quiz_bg.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/sources\/img\/spinner.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 808,
-		"inputAbbreviatedPath": "\/sources\/img\/spinner.png",
-		"outputAbbreviatedPath": "\/sources\/img\/spinner.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/sources\/img\/view_on_full_site.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 10933,
-		"inputAbbreviatedPath": "\/sources\/img\/view_on_full_site.png",
-		"outputAbbreviatedPath": "\/sources\/img\/view_on_full_site.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
 		},
 	"\/sources\/scripts\/jquery-ui.min.js": {
 		"fileType": 64,
@@ -462,12 +418,12 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 0
 		},
-	"\/sources\/scripts\/mwEmbedLoader.js": {
+	"\/sources\/scripts\/mwembedloader.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/sources\/scripts\/mwEmbedLoader.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/mwEmbedLoader-min.js",
+		"inputAbbreviatedPath": "\/sources\/scripts\/mwembedloader.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/min\/mwembedloader-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -1231,7 +1187,7 @@
 	"sassUseLibsass": 0,
 	"shouldRunAutoprefixer": 0,
 	"shouldRunBless": 0,
-	"skippedItemsString": "_cache, logs, \/sources\/videoplayer\/lang, _logs, cache, .git, log, node_modules, .svn, .hg",
+	"skippedItemsString": "node_modules, \/sources\/videoplayer\/lang, _logs, .hg, \/sources\/fonts, _cache, log, logs, cache, \/sources\/img, .svn, .git, \/sources\/videoplayer\/font",
 	"slimAutoOutputPathEnabled": 1,
 	"slimAutoOutputPathFilenamePattern": "*.html",
 	"slimAutoOutputPathRelativePath": "",
@@ -1262,7 +1218,9 @@
 	"typescriptAutoOutputPathStyle": 2,
 	"typescriptCreateDeclarationFile": 0,
 	"typescriptCreateSourceMap": 0,
+	"typescriptJSXMode": 0,
 	"typescriptMinifyOutput": 0,
+	"typescriptModuleResolutionType": 0,
 	"typescriptModuleType": 0,
 	"typescriptNoImplicitAny": 0,
 	"typescriptPreserveConstEnums": 0,
