@@ -32,10 +32,12 @@
     content: "\e363";
 }
 
+/*
 .playBtn:before {
     @extend .defaultFontSettings;
     content: "\e385";
 }
+*/
 
 #leftBtn:before {
     @extend .defaultFontSettings;

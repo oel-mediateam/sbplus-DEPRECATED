@@ -8,7 +8,7 @@
 <link href="../sources/videoplayer/video-js.min.css" rel="stylesheet" />
 </head>
 <body>
-<!-- updated on 8/26/2015 -->
+<!-- updated on 10/21/2015 -->
 <!-- display when javascript is disabled -->
 <noscript>
 <h1>JavaScript is disabled!</h1>
@@ -16,7 +16,7 @@
 </noscript>
 
 <!-- player wrapper -->
-<div data-version="2.7.0" id="storybook_plus_wrapper">
+<div data-version="2.7.1" id="storybook_plus_wrapper">
 
 	<!-- display when there is an error -->
 	<div id="errorMsg"></div>
@@ -29,28 +29,28 @@
 
 	    <!-- black header bar -->
         <header role="banner">
-            <h1 tabindex="1" id="lessonTitle"></h1>
+            <h1 id="lessonTitle"></h1>
             <span id="instructorName"></span>
-            <a tabindex="1" role="button" aria-controltext="" id="info" class="infoIcn" href="#"><span class="sr-only">See Profile </span></a>
+            <a role="button" aria-controltext="Toggle Profile" id="info" class="infoIcn" href="#"></a>
         </header>
 
 		<!-- content -->
-		<div id="content">
+		<div id="content" role="main">
 
 		    <!-- slide and note container -->
 			<div id="slideNote">
 
-				<div id="slide" tabindex="1"></div>
+				<div id="slide"></div>
 
-				<div id="ap" tabindex="1"></div>
+				<div id="ap"></div>
 
-				<div id="vp" tabindex="1"></div>
+				<div id="vp"></div>
 
-				<div id="note" tabindex="1"></div>
+				<div id="note"></div>
 
-				<div id="control" role="navigation">
-					<span id="leftBtn" tabindex="1" role="button" aria-label="Previous"></span>
-					<span id="rightBtn" tabindex="1" role="button" aria-label="Next"></span>
+				<div id="control" role="menu">
+					<span id="leftBtn" role="menuitem" aria-label="Previous"></span>
+					<span id="rightBtn" role="menuitem" aria-label="Next"></span>
 					<span id="currentStatus"></span>
 				</div>
 
@@ -58,7 +58,7 @@
 
 			<!-- table of content -->
 			<div id="toc">
-				<ol id="selectable" role="menu" aria-labelledby="leftnavheading" tabindex="3"></ol>
+				<ol id="selectable" role="menu"></ol>
 			</div>
 
 		</div>
@@ -69,7 +69,7 @@
 	<!-- profile panel -->
 	<div id="profile" role="complementary">
 		<div class="photo"></div>
-		<div class="bio" tabindex="5"></div>
+		<div class="bio"></div>
 	</div>
 
     <!-- download bar -->
@@ -85,6 +85,10 @@
     <ul>
         <li>Removed all forced/hard focus</li>
         <li>Removed WASD keyboard press events to traversing the slides</li>
+        <li>Removed all tab indexes</li>
+        <li>Updated sr-only elements</li>
+        <li>Display "OPEN" word on the splash screen rather than a play icon</li>
+        <li>Changed schematic of "play" to "open"</li>
     </ul> 
 </div>
 

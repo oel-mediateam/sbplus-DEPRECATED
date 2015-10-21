@@ -325,7 +325,7 @@ $.fn.setupPlayer = function() {
     }
 
 	// loop to populate the table of contents
-	$( "#selectable" ).before( '<div id="toc_heading" class="toc_heading" tabindex="3">Table of Contents</div>' );
+	$( "#selectable" ).before( '<div id="toc_heading" class="toc_heading">Table of Contents</div>' );
 
     $.each( topicTitle, function( i ) {
         
@@ -348,13 +348,13 @@ $.fn.setupPlayer = function() {
             
         }
         
-		$( "#selectable" ).append( "<li class=\"ui-widget-content" + breakClass + "\" role=\"menuitem\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"slideNum\" aria-hidden=\"true\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\"><span class=\"sr-only\" aria-hidden=\"false\">Slide " + ( i + 1 ) + " of " + topicCount + ".</span> " + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
+		$( "#selectable" ).append( "<li class=\"ui-widget-content" + breakClass + "\" role=\"menuitem\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"slideNum\" aria-hidden=\"true\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\"><span class=\"sr-only\" aria-hidden=\"false\">Slide " + ( i + 1 ) + "</span> " + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
 
 	} );
 
 	// set up the splash screen
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
-    $( "#splash_screen" ).append( "<p tabindex=\"1\"><span class=\"sr-only\">Storybook Plus presentation.</span>" + lessonTitle + "</p><p tabindex=\"1\">" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p tabindex=\"1\"><small>" + duration + "</small></p>" : "" ) + "<a tabindex=\"1\" role=\"button\" class=\"playBtn\" href=\"#\"><span class=\"sr-only\">Play</span></a>" );
+    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" href=\"#\">OPEN</a>" );
     
     // if accent tag from XML has value
     if ( accent.length ) {
@@ -394,10 +394,10 @@ $.fn.initializePlayer = function() {
     $( "#lessonTitle" ).attr( "title", lessonTitle );
     $( "#lessonTitle" ).html( lessonTitle );
 
-    $( "#instructorName" ).html( "<a tabindex=\"1\" role=\"button\" class=\"instructorName\" href=\"#\">" + instructor + "</a>" );
+    $( "#instructorName" ).html( "<a role=\"button\" aria-controltext=\"Toggle Profile\" class=\"instructorName\" href=\"#\">" + instructor + "</a>" );
 
     // setup profile panel
-    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a tabindex=\"4\" role=\"button\" id=\"profileClose\" href=\"#\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">close</span></a></div>" );
+    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a role=\"button\" aria-controltext=\"Close Profile\" id=\"profileClose\" href=\"#\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">close</span></a></div>" );
     $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
 
 
@@ -467,9 +467,9 @@ $.fn.initializePlayer = function() {
     // add the zoom boutton to the control after the slide status
     if ( quizDetected === true || version >= 230 ) {
 
-        $( "#control" ).append( "<span role=\"button\" aria-label=\"expand or contract slide image\" tabindex=\"2\" id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
-        $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-label=\"Toggle table of content\" tabindex=\"3\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
-        $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-label=\"toggle notes\" tabindex=\"3\"><span class=\"notes\" title=\"Toggle Notes\"></span></span>" );
+        $( "#control" ).append( "<span role=\"button\" aria-label=\"expand or contract slide image\" id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
+        $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-label=\"Toggle table of content\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+        $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-label=\"toggle notes\"><span class=\"notes\" title=\"Toggle Notes\"></span></span>" );
 
         $.fn.bindImgMagnify();
         $.fn.bindNoteSlideToggle();
@@ -1059,7 +1059,7 @@ $.fn.setupQuiz = function( num ) {
     }
 
     // build the question
-    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\" aria-label=\"Self-Assessment\" tabindex=\"1\"><span class=\"icon-assessement\"></span> Self-Assessment</div>" );
+    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\" aria-label=\"Self-Assessment\"><span class=\"icon-assessement\"></span> Self-Assessment</div>" );
 
     if ( !questions[index].taken ) {
 
@@ -1078,7 +1078,7 @@ $.fn.setupQuiz = function( num ) {
 
                 if ( questions[index].audio !== "") {
 
-                    audio = "<audio controls tabindex=\"1\"><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
+                    audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
                     $( "#quiz" ).append( audio );
 
                 }
@@ -1092,8 +1092,7 @@ $.fn.setupQuiz = function( num ) {
             } ).attr( {
                 'src': imgPath,
                 'alt': questions[index].question,
-                'border': 0,
-                'tabIndex': 1
+                'border': 0
             } );
 
         } else {
@@ -1101,7 +1100,7 @@ $.fn.setupQuiz = function( num ) {
             var audio = "";
 
             if ( questions[index].audio !== "") {
-                audio = "<audio controls tabindex=\"1\"><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
+                audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
             }
 
             $( "#quiz" ).append( "<div id=\"quiz_quest\" class=\"question\">" + questions[index].question + audio + "</div>" );
@@ -1137,15 +1136,14 @@ $.fn.displayAnswerChoices = function( index ) {
         case "t/f":
         
             $( '#quiz .header' ).append( ': True or False' );
-            $( '#quiz_quest' ).attr( 'tabindex', 1 );
-            $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input role=\"radio\" tabindex=\"1\" id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input role=\"radio\" tabindex=\"1\" type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
+            $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input role=\"radio\" id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input role=\"radio\" type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
 
         break;
 
         case "fib":
             
             $( '#quiz .header' ).append( ': Fill In The Blank' );
-            $( "#quiz" ).append( "<div class=\"answerArea\"><input tabindex=\"1\" role=\"input\" aria-required=\"true\" type=\"text\" aria-describedby=\"quiz_quest\" id=\"saAns\" /></div>" );
+            $( "#quiz" ).append( "<div class=\"answerArea\"><input role=\"input\" aria-required=\"true\" type=\"text\" aria-describedby=\"quiz_quest\" id=\"saAns\" /></div>" );
 
         break;
 
@@ -1153,8 +1151,6 @@ $.fn.displayAnswerChoices = function( index ) {
             
             var type = "radio";
             var name = "mc";
-            
-            $( '#quiz_quest' ).attr( 'tabindex', 1 );
             
             answerLength = questions[index].answer.length;
 
@@ -1176,7 +1172,7 @@ $.fn.displayAnswerChoices = function( index ) {
 
                 for ( var i = 0; i < questions[index].choice.length; i++ ) {
 
-                    $( ".answerArea" ).append( "<label class=\"img_choice\" for=\"" + i + "\"><input role=\""+type+"\" id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + $.fn.htmlEntities( questions[index].choice[i] ) + "\" /> <img tabindex=\"1\" src=\"assets/img/" + questions[index].choice[i] + "\" /></label>" );
+                    $( ".answerArea" ).append( "<label class=\"img_choice\" for=\"" + i + "\"><input role=\""+type+"\" id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + $.fn.htmlEntities( questions[index].choice[i] ) + "\" /> <img src=\"assets/img/" + questions[index].choice[i] + "\" /></label>" );
 
                 }
 
@@ -1184,7 +1180,7 @@ $.fn.displayAnswerChoices = function( index ) {
 
                 for ( var j = 0; j < questions[index].choice.length; j++ ) {
 
-                    $( ".answerArea" ).append( "<label for=\"" + j + "\"><input role=\""+type+"\" tabindex=\"1\" id=\"" + j + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + $.fn.htmlEntities( questions[index].choice[j] ) + "\" /> " + questions[index].choice[j] + "</label>" );
+                    $( ".answerArea" ).append( "<label for=\"" + j + "\"><input role=\""+type+"\" id=\"" + j + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + $.fn.htmlEntities( questions[index].choice[j] ) + "\" /> " + questions[index].choice[j] + "</label>" );
 
                 }
 
@@ -1197,7 +1193,7 @@ $.fn.displayAnswerChoices = function( index ) {
         case "sa":
             
             $( '#quiz .header' ).append( ': Short Answer' );
-            $( "#quiz" ).append( "<div class=\"answerArea\"><textarea role=\"textbox\" aria-describedby=\"quiz_quest\" aria-multiline=\"true\" aria-required=\"true\" tabindex=\"1\" id=\"saAns\"></textArea></div>" );
+            $( "#quiz" ).append( "<div class=\"answerArea\"><textarea role=\"textbox\" aria-describedby=\"quiz_quest\" aria-multiline=\"true\" aria-required=\"true\" id=\"saAns\"></textArea></div>" );
 
         break;
 
@@ -1212,7 +1208,7 @@ $.fn.displayAnswerChoices = function( index ) {
 
     if ( !quizError ) {
 
-        $( "#quiz" ).append( "<div class=\"submitArea\"><a tabindex=\"1\" role=\"button\" id=\"check\" rel=\"" + index + "\" href=\"#\">SUBMIT</a></div>" );
+        $( "#quiz" ).append( "<div class=\"submitArea\"><a role=\"button\" id=\"check\" rel=\"" + index + "\" href=\"#\">SUBMIT</a></div>" );
         $( "#slide" ).append( "</div>" );
 
         // give the quiz a second to build up
@@ -1378,7 +1374,7 @@ $.fn.displayAnswerChoices = function( index ) {
 
             } else {
 
-                $( ".question" ).before( "<p tabindex=\"1\" class=\"quizIncorrect\"><span class=\"icon-notification\"></span> Please answer the question before submitting!</p>" );
+                $( ".question" ).before( "<p class=\"quizIncorrect\"><span class=\"icon-notification\"></span> Please answer the question before submitting!</p>" );
                 $( ".quizIncorrect" ).delay( 6000 ).slideUp( "slow", function() {
 
                     $( ".question" ).prev().remove();
@@ -1411,17 +1407,17 @@ $.fn.showFeedback = function( index ) {
     var questionImg = "";
     var audio = "";
 
-    $( "#slide" ).html( "<div id=\"quiz\"><div tabindex=\"1\" aria-label=\"Self-Assessment Feedback\" class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
+    $( "#slide" ).html( "<div id=\"quiz\"><div aria-label=\"Self-Assessment Feedback\" class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
 
     if ( questions[index].type !== "sa" ) {
 
         if ( questions[index].correct ) {
 
-            $( "#quiz" ).append( "<p tabindex=\"1\" class=\"quizCorrect\"><span class=\"icon-checkmark\"></span> CORRECT</p>" );
+            $( "#quiz" ).append( "<p class=\"quizCorrect\"><span class=\"icon-checkmark\"></span> CORRECT</p>" );
 
         } else {
 
-            $( "#quiz" ).append( "<p tabindex=\"1\" class=\"quizIncorrect\"><span class=\"icon-notification\"></span> INCORRECT</p>" );
+            $( "#quiz" ).append( "<p class=\"quizIncorrect\"><span class=\"icon-notification\"></span> INCORRECT</p>" );
 
         }
 
@@ -1429,24 +1425,24 @@ $.fn.showFeedback = function( index ) {
 
     if ( questions[index].img !== "" ) {
 
-        questionImg = "<img tabindex=\"1\" src=\"assets/img/" + questions[index].img + "\" alt=\"" + questions[index].question + "\" border=\"0\" />";
+        questionImg = "<img src=\"assets/img/" + questions[index].img + "\" alt=\"" + questions[index].question + "\" border=\"0\" />";
 
     }
 
     if ( questions[index].audio !== "") {
-        audio = "<audio controls tabindex=\"1\"><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
+        audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
     }
 
-    $( "#quiz" ).append( "<div class=\"question\" tabindex=\"1\">" + questions[index].question + questionImg + audio + "</div>" );
+    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + questionImg + audio + "</div>" );
 
     if ( questions[index].choiceImg === "true" ) {
 
-        $( "#quiz" ).append( "<div class=\"result\" tabindex=\"1\"><p><strong>Your answer</strong>:<br />" + $.fn.parseArrayImg( questions[index].stuAnswer ) + "</p></div>" );
+        $( "#quiz" ).append( "<div class=\"result\"><p><strong>Your answer</strong>:<br />" + $.fn.parseArrayImg( questions[index].stuAnswer ) + "</p></div>" );
         $('.result').append('<p><strong>Correct answer</strong>:<br />' + $.fn.parseArrayImg( questions[index].answer ) + '</p>');
 
     } else {
 
-        $( "#quiz" ).append( "<div tabindex=\"1\" class=\"result\"><p><strong>Your answer</strong>:<br />" + $.fn.parseArray( questions[index].stuAnswer ) + "</p></div>" );
+        $( "#quiz" ).append( "<div class=\"result\"><p><strong>Your answer</strong>:<br />" + $.fn.parseArray( questions[index].stuAnswer ) + "</p></div>" );
         $('.result').append('<p><strong>Correct answer</strong>:<br />' + $.fn.parseArray( questions[index].answer ) + '</p>');
 
     }
@@ -1646,7 +1642,7 @@ $.fn.updateSlideNum = function( num ) {
     } );
 
     $( "#selectable li:nth-child(" + currentNum + ")" ).addClass( "ui-selected" );
-    $( "#currentStatus" ).html( "<span aria-label=\"" + status + "\" tabindex=\"1\" >" + status + "</span>" );
+    $( "#currentStatus" ).html( "<span>" + status + "</span>" );
 
 };
 
@@ -1822,11 +1818,11 @@ $.fn.loadProfilePhoto = function() {
 
     $( img ).load( function() {
 
-        $( "#profile .photo" ).html( "<img tabindex=\"4\" src=\"" + imgPath + "\" border=\"0\" alt=\"An photo of the instructor\" />" );
+        $( "#profile .photo" ).html( "<img src=\"" + imgPath + "\" border=\"0\" alt=\"An photo of the instructor\" />" );
 
     } ).error( function() {
 
-        $( "#profile .photo" ).html( "<img tabindex=\"4\" src=\"" + ROOT_PATH + "img/profile.png\" width=\"200\" height=\"300\" alt=\"No instructor photo\" border=\"0\" />" );
+        $( "#profile .photo" ).html( "<img src=\"" + ROOT_PATH + "img/profile.png\" width=\"200\" height=\"300\" alt=\"No instructor photo\" border=\"0\" />" );
 
     } ).attr( {
 
@@ -1858,25 +1854,25 @@ $.fn.getDownloadableFiles = function() {
 	// get transcript first
 	$.get( url + '.pdf', function() {
 
-    	downloadBar.append("<li><a download role=\"menuitem\" href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Transcript</a></li>");
+    	downloadBar.append("<li><a download role=\"menuitem\" href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">download</span> Transcript</a></li>");
 
 	} ).always( function() {
 
     	// get audio file
     	$.get( url + '.mp3', function() {
 
-        	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Audio</a></li>");
+        	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">download</span> Audio</a></li>");
 
     	} ).always( function() {
 
         	// get package/zip file
         	$.get( url + '.zip', function() {
 
-            	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".zip\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Supplement</a></li>");
+            	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".zip\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">download</span> Supplement</a></li>");
 
         	} ).always( function() {
             	
-            	downloadBar.after( '<span class=\"sr-only\">Click anywhere in the Storybook Plus screen area to play the presentation.</span>' );
+            	downloadBar.after( '<span class=\"sr-only\">Click anywhere on the Storybook Plus screen area to open the presentation.</span>' );
             	
         	} );
 

@@ -66,6 +66,7 @@ p {
 .sr-only {
     
     position:absolute;
+    visibility: hidden;
     left:-10000px;
     top:auto;
     width:1px;
@@ -308,34 +309,17 @@ p {
     	
     	position: relative;
     	display: block;
-    	width: rem( 25px );
+    	width: rem( 80px );
     	font-size: rem( 26px );
     	line-height: rem( 26px );
     	color: #fff;
     	text-align: center;
     	text-decoration: none;
     	margin: 0 auto;
-    	padding: rem( 10px ) rem( 40px ) rem( 5px );
+    	padding: rem( 10px );
     	background-color: #006DCC;
     	@include border-radius( rem( 3px ) );
     	
-    }
-    
-    .playBtn:focus {
-        
-        .sr-only {
-        	
-        	top: 0;
-        	left: 0;
-        	width: 100%;
-        	height: 100%;
-        	padding: rem( 6px ) rem( 10px ) 0;
-        	background-color: inherit;
-        	@include border-radius( rem( 3px ) );
-        	@include box-sizing( border-box ); 
-        	
-    	}
-        
     }
 
 } // #splase_screen
@@ -380,28 +364,6 @@ p {
         .infoIcn {
             position: relative;
         	display: inline-block;
-/*
-        	@include opacity( .75 );
-        	@include single-transition( opacity, ease-out, .3s );
-*/
-        	
-        }
-        
-        .infoIcn:focus {
-            
-            .sr-only {
-    
-                font-size: rem( 10px );
-                top: rem( -3px );
-                left: 0;
-                width: 30px;
-                height: auto;
-                line-height: normal;
-                z-index: 10;
-                background-color: black;
-                
-            }
-            
         }
 
         a, a:visited, a:hover {
@@ -530,10 +492,6 @@ p {
         	img {
         	    display: block;
         	    margin: rem( $gutter ) 0;
-//             	max-width: rem( 360px );
-//             	padding-right: rem( $gutter );
-//             	height: auto;
-//             	float: left;
         	}
 
         	small {
@@ -547,7 +505,6 @@ p {
         	audio {
             	display: block;
             	margin: rem( $gutter ) 0;
-//             	outline: none;
         	}
 
     	}
@@ -588,7 +545,6 @@ p {
             	font-size: rem( $font-size );
             	color: #000;
             	resize: none;
-//             	outline: none;
             	@include box-sizing( border-box );
         	}
 
@@ -717,10 +673,6 @@ p {
     	background-color: #f7f7f7;
     	float: left;
 
-    	* {
-//         	@include user-select(none);
-    	}
-
     	.btn {
         	display: block;
             width: 10%;
@@ -811,15 +763,11 @@ p {
     
     position: relative;
 	width: rem( 258px );
-// 	height: rem( 546px );
 	border-bottom: rem( 1px ) solid $border-color;
 	border-right: rem( 1px ) solid $border-color;
 	background-color: #fff;
 	float: left;
-/*
-	overflow-x: hidden;
-	overflow-y: auto;
-*/
+	
 	@include box-sizing( "border-box" );
 
 	* {
@@ -937,7 +885,6 @@ p {
 #profile {
 
 	display: none;
-// 	position: absolute;
 	width: 100%;
 	height: rem( 546px );
 	padding: rem( 20px );
@@ -945,10 +892,8 @@ p {
 	background-color: #fafafa;
 	border: rem( 1px ) solid $border-color;
 	padding-top: rem( 30px );
-// 	left: 0;
 	@include clear;
 	@include box-sizing( border-box );
-// 	z-index: 20;
 
 	.photo {
 
@@ -1000,20 +945,6 @@ p {
             line-height: rem( 32px );
             
         }
-        
-        a:focus {
-            
-            .sr-only {
-                
-                width: rem( 32px );
-                height: auto;
-                font-size: rem( 12px );
-                top: rem( 15px );
-                left: rem( -6px );
-                
-            }
-            
-        }
 
     }
 
@@ -1051,21 +982,6 @@ p {
             	@include transition-duration( .3s );
             	@include transition-timing-function( ease-out );
             	@include user-select( none );
-        	}
-        	
-        	a:focus {
-            	
-            	.sr-only {
-                	
-                	width: rem( 50px );
-                	height: auto;
-                	font-size: rem( 10px );
-                	text-align: left;
-                	left: 0;
-                	top: rem( -14px );
-                	
-            	}
-            	
         	}
 
         	a:hover {
