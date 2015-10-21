@@ -325,7 +325,7 @@ $.fn.setupPlayer = function() {
     }
 
 	// loop to populate the table of contents
-	$( "#selectable" ).before( '<div id="toc_heading" class="toc_heading">Table of Contents</div>' );
+	$( "#selectable" ).before( '<div id="toc_heading" class="toc_heading">Table of Contents <span class="sr-only">Total of ' + topicTitle.length + ' ' + media.toLowerCase() + 's</span></div>' );
 
     $.each( topicTitle, function( i ) {
         
@@ -333,7 +333,7 @@ $.fn.setupPlayer = function() {
         
 		if ( topicSrc[i] === "quiz" ) {
 
-		    selfAssessmentIcon = " <span class=\"icon-assessement light\"></span>";
+		    selfAssessmentIcon = " <span class=\"icon-assessement light\"><span class=\"sr-only\">Self Assessement</span></span>";
 
 		} else {
 
@@ -348,13 +348,13 @@ $.fn.setupPlayer = function() {
             
         }
         
-		$( "#selectable" ).append( "<li class=\"ui-widget-content" + breakClass + "\" role=\"menuitem\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"slideNum\" aria-hidden=\"true\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\"><span class=\"sr-only\" aria-hidden=\"false\">Slide " + ( i + 1 ) + "</span> " + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
+		$( "#selectable" ).append( "<li class=\"ui-widget-content" + breakClass + "\" role=\"menuitem\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"slideNum\"><span class=\"sr-only\">" + media + "</span> <span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span>.</div><div class=\"title\">" + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
 
 	} );
 
 	// set up the splash screen
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
-    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" href=\"#\">OPEN</a>" );
+    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" aria-label=\"Start Presentation\" href=\"#\">START</a>" );
     
     // if accent tag from XML has value
     if ( accent.length ) {
@@ -394,10 +394,10 @@ $.fn.initializePlayer = function() {
     $( "#lessonTitle" ).attr( "title", lessonTitle );
     $( "#lessonTitle" ).html( lessonTitle );
 
-    $( "#instructorName" ).html( "<a role=\"button\" aria-controltext=\"Toggle Profile\" class=\"instructorName\" href=\"#\">" + instructor + "</a>" );
+    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#\">" + instructor + "</a>" );
 
     // setup profile panel
-    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a role=\"button\" aria-controltext=\"Close Profile\" id=\"profileClose\" href=\"#\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">close</span></a></div>" );
+    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a role=\"button\" aria-label=\"Close Profile\" id=\"profileClose\" href=\"#\"><span aria-hidden=\"true\">&times;</span></a></div>" );
     $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
 
 
@@ -437,7 +437,7 @@ $.fn.initializePlayer = function() {
     $( "#selectable" ).selectable( "option", "appendTo", "#toc" );
     $( "#selectable" ).on( "selectablestop", function() {
 
-        tocIndex = Number( $( ".ui-selected .slideNum" ).html().replace(".","") ) - 1;
+        tocIndex = Number( $( ".ui-selected .slideNum .selectedNum" ).html() ) - 1;
 
         if ( tocIndex !== previousIndex ) {
 
@@ -1617,7 +1617,7 @@ $.fn.loadNote = function( num ) {
     
     img = "<img src=\"" + ROOT_PATH + "img/" + logo + ".svg\" width=\"150\" height=\"65\" alt=\"" + alt + "\" border=\"0\" />";
     
-    $( "#note" ).attr("aria-label", "Notes area. No notes available.").html( "<div class=\"logo\" aria-hidden=\"true\">" + img + "</div>" );
+    $( "#note" ).attr( "aria-label", "No notes available." ).attr( "role", "" ).html( "<div class=\"logo\" aria-hidden=\"true\">" + img + "</div>" );
      
  };
 
@@ -1854,26 +1854,22 @@ $.fn.getDownloadableFiles = function() {
 	// get transcript first
 	$.get( url + '.pdf', function() {
 
-    	downloadBar.append("<li><a download role=\"menuitem\" href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">download</span> Transcript</a></li>");
+    	downloadBar.append("<li><a download role=\"menuitem\" href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Transcript</a></li>");
 
 	} ).always( function() {
 
     	// get audio file
     	$.get( url + '.mp3', function() {
 
-        	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">download</span> Audio</a></li>");
+        	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Audio</a></li>");
 
     	} ).always( function() {
 
         	// get package/zip file
         	$.get( url + '.zip', function() {
 
-            	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".zip\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">download</span> Supplement</a></li>");
+            	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".zip\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Supplement</a></li>");
 
-        	} ).always( function() {
-            	
-            	downloadBar.after( '<span class=\"sr-only\">Click anywhere on the Storybook Plus screen area to open the presentation.</span>' );
-            	
         	} );
 
     	} );

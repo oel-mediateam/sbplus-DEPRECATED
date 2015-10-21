@@ -29,36 +29,36 @@
 
 	    <!-- black header bar -->
         <header role="banner">
-            <h1 id="lessonTitle"></h1>
-            <span id="instructorName"></span>
-            <a role="button" aria-controltext="Toggle Profile" id="info" class="infoIcn" href="#"></a>
+            <h1 id="lessonTitle" tabindex="2"></h1>
+            <span id="instructorName" tabindex="2"></span>
+            <a role="button" aria-label="Toggle Profile" id="info" class="infoIcn" href="#" tabindex="2"></a>
         </header>
 
 		<!-- content -->
-		<div id="content" role="main">
+		<div id="content">
 
 		    <!-- slide and note container -->
 			<div id="slideNote">
 
-				<div id="slide"></div>
+				<div id="slide" role="main" tabindex="1"></div>
 
-				<div id="ap"></div>
+				<div id="ap" role="main" tabindex="1"></div>
 
-				<div id="vp"></div>
+				<div id="vp" role="main" tabindex="1"></div>
 
-				<div id="note"></div>
+				<div id="note" role="complementary" aria-label="Notes" tabindex="1"></div>
 
-				<div id="control" role="menu">
-					<span id="leftBtn" role="menuitem" aria-label="Previous"></span>
-					<span id="rightBtn" role="menuitem" aria-label="Next"></span>
-					<span id="currentStatus"></span>
+				<div id="control" role="navigation" tabindex="1">
+					<span id="leftBtn" role="button" aria-label="Previous"></span>
+					<span id="rightBtn" role="button" aria-label="Next"></span>
+					<span id="currentStatus" aria-hidden="true"></span>
 				</div>
 
 			</div>
 
 			<!-- table of content -->
 			<div id="toc">
-				<ol id="selectable" role="menu"></ol>
+				<ol id="selectable" role="menu" aria-labelledby="toc_heading" tabindex="1"></ol>
 			</div>
 
 		</div>
@@ -74,21 +74,23 @@
 
     <!-- download bar -->
 	<div id="download_bar">
-		<ul role="menu"></ul>
+		<ul role="menu" aria-label="Download Files" tabindex="1"></ul>
 	</div>
 
 </div>
 <!-- end #storybook_plus_wrapper div -->
 
-<div class="dev_notes">
+<div class="dev_notes" aria-hidden="true">
     <h4>2.7.1 Build 1 Dev Notes:</h4>
     <ul>
+        <li>Updated index file</li>
         <li>Removed all forced/hard focus</li>
         <li>Removed WASD keyboard press events to traversing the slides</li>
-        <li>Removed all tab indexes</li>
+        <li>Updated all tab indexes</li>
         <li>Updated sr-only elements</li>
-        <li>Display "OPEN" word on the splash screen rather than a play icon</li>
-        <li>Changed schematic of "play" to "open"</li>
+        <li>Display "START" word on the splash screen rather than a play icon</li>
+        <li>Changed semantic of "play" to "start"</li>
+        <li>Fixed the trailing/scrolling empty area on page</li>
     </ul> 
 </div>
 

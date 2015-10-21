@@ -64,14 +64,12 @@ p {
 }
 
 .sr-only {
-    
-    position:absolute;
-    visibility: hidden;
-    left:-10000px;
-    top:auto;
-    width:1px;
-    height:1px;
-    overflow:hidden;
+
+    position: absolute !important;
+    height: 1px;
+    width: 1px; 
+    overflow: hidden;
+    clip: rect( 1px, 1px, 1px, 1px );
     
 }
 
@@ -310,7 +308,7 @@ p {
     	position: relative;
     	display: block;
     	width: rem( 80px );
-    	font-size: rem( 26px );
+    	font-size: rem( 24px );
     	line-height: rem( 26px );
     	color: #fff;
     	text-align: center;

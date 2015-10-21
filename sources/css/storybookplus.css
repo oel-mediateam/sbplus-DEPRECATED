@@ -95,13 +95,11 @@ p {
   margin: 1rem 0; }
 
 .sr-only {
-  position: absolute;
-  visibility: hidden;
-  left: -10000px;
-  top: auto;
-  width: 1px;
+  position: absolute !important;
   height: 1px;
-  overflow: hidden; }
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px); }
 
 .math {
   font-family: 'Cambria Math', 'Arial', sans-serif; }
@@ -232,7 +230,7 @@ p {
     position: relative;
     display: block;
     width: 5.71429rem;
-    font-size: 1.85714rem;
+    font-size: 1.71429rem;
     line-height: 1.85714rem;
     color: #fff;
     text-align: center;
