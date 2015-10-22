@@ -8,11 +8,10 @@
 ###Web Browser Requirements
 
 ####Minimum
-* Internet Explorer 9+
-* Mozilla Firefox 35+
-* Google Chrome 33+
-* Apple Safari 5+
-* Opera 20+
+* Internet Explorer 10+
+* Mozilla Firefox 38+
+* Google Chrome 40+
+* Apple Safari 6+
 
 *Latest stable version of the web browser is highly recommended.  
 SB+ may not function properly with beta or pre-released version of web browsers. Please use the latest stable version for the best experience.*
