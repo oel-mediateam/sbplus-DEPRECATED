@@ -464,7 +464,7 @@
 		},
 	"\/sources\/videoplayer\/combined.video.min.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/combined.video.min.js",
 		"outputAbbreviatedPath": "\/sources\/videoplayer\/combined.video.min.min.js",
@@ -602,7 +602,7 @@
 	"iconImageName": "harddrive_yellow"
 	},
 "projectSettings": {
-	"alwaysUseExternalServer": 0,
+	"alwaysUseExternalServer": 1,
 	"animateCSSInjections": 1,
 	"autoApplyPSLanguageSettingsStyle": 0,
 	"autoprefixerBrowserString": "> 1%, last 2 versions, Firefox ESR, Opera 12.1",
@@ -744,8 +744,8 @@
 	"coffeeMinifyOutput": 1,
 	"coffeeOutputStyle": 0,
 	"coffeeSyntaxCheckerStyle": 1,
-	"externalServerAddress": "http:\/\/localhost:8888",
-	"externalServerPreviewPathAddition": "",
+	"externalServerAddress": "http:\/\/localhost\/sbplus\/",
+	"externalServerPreviewPathAddition": "build",
 	"genericWebpageFileExtensionsString": "html, htm, shtml, shtm, xhtml, php, jsp, asp, aspx, erb, ctp",
 	"hamlAutoOutputPathEnabled": 1,
 	"hamlAutoOutputPathFilenamePattern": "*.html",

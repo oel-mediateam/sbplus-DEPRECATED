@@ -31,7 +31,7 @@ if( ! window.kWidget ){
 			'action' : 'list',
 			'filter:entryIdEqual' : settings.entryId
 		}], function( result ){ // API result
-
+            
 			var ks = sourceApi.ks;
 			var ipadAdaptiveFlavors = [];
 			var iphoneAdaptiveFlavors = [];

@@ -846,13 +846,13 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  $.fn.requestKalturaAPI = function( playerID, src ) {
 
     var entryId, captionId, captionExt, captionLang, flavors = {}, video;
-
+    
     kWidget.getSources( {
 
         'partnerId': 1660872,
         'entryId': src,
         'callback': function( data ) {
-
+            
             entryId = data.entryId;
             captionId = data.captionId;
             captionExt = data.captionExt;
@@ -889,7 +889,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             } // end for loop
 
             // video element opening tag
-            video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
+            video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" crossorigin=\"anonymous\">";
 
             // set low res vid if available
             if ( flavors.low !== undefined ) {
