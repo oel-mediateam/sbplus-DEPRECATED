@@ -426,7 +426,7 @@
 		"outputAbbreviatedPath": "\/sources\/scripts\/mwembedloader.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
+		"outputStyle": 0,
 		"syntaxCheckerStyle": 0
 		},
 	"\/sources\/scripts\/storybookplus.js": {

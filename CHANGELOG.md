@@ -9,6 +9,7 @@
 * Display the "START" word on the splash screen rather than a play icon
 * Changed semantic of the word "play" to "start"
 * Fixed the trailing/scrolling empty area on page
+* Updated Kaltura API to version 2.36
 
 ---
 ###2.7.0 (08-25-2015)

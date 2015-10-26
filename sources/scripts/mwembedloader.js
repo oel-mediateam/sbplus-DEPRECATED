@@ -94,9 +94,9 @@ subParamKey]);}}else{param[requestInx+':'+paramKey]=this.parseParam(requestObjec
 mw.setConfig('Mw.XmlProxyUrl', 'http://cdnapi.kaltura.com/html5/html5lib/v2.36/simplePhpXMLProxy.php' );
 mw.setConfig('Kaltura.UseManifestUrls', true );
 mw.setConfig('Kaltura.Protocol', 'https' );
-mw.setConfig('Kaltura.ServiceUrl', 'https://cdnapi.kaltura.com' );
+mw.setConfig('Kaltura.ServiceUrl', 'https://www.kaltura.com' );
 mw.setConfig('Kaltura.ServiceBase', '/api_v3/index.php?service=' );
-mw.setConfig('Kaltura.CdnUrl', 'http://cdnbakmi.kaltura.com' );
+mw.setConfig('Kaltura.CdnUrl', 'https://cdnbakmi.kaltura.com' );
 mw.setConfig('Kaltura.StatsServiceUrl', 'http://stats.kaltura.com' );
 mw.setConfig('Kaltura.LiveStatsServiceUrl', 'http://livestats.kaltura.com' );
 mw.setConfig('Kaltura.IframeRewrite', true );

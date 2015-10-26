@@ -56,6 +56,7 @@ var mediaPlayer = null,
     kalturaLoaded = 0;
 
 var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
+ROOT_PATH = "../sources";
 
 // var tech = navigator.userAgent;
 // var IS_CHROME = (/Chrome/i).test( tech );
