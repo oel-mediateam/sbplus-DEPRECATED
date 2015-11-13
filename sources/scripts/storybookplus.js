@@ -56,7 +56,7 @@ var mediaPlayer = null,
     kalturaLoaded = 0;
 
 var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
-ROOT_PATH = "../sources";
+//ROOT_PATH = "../sources";
 
 // var tech = navigator.userAgent;
 // var IS_CHROME = (/Chrome/i).test( tech );
@@ -837,6 +837,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  * Requesting data from Kaltura API, construct src,
  * and call loadVideoJSPlayer
  * @since 2.6.0
+ * @updated 2.7.1
  *
  * @author Ethan S. Lin
  *
@@ -846,18 +847,19 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  */
  $.fn.requestKalturaAPI = function( playerID, src ) {
 
-    var entryId, captionId, captionExt, captionLang, flavors = {}, video;
+    var entryId, captionId, captionExt, captionLang, flavors = {}, video, duration;
     
     kWidget.getSources( {
 
         'partnerId': 1660872,
         'entryId': src,
         'callback': function( data ) {
-            
+
             entryId = data.entryId;
             captionId = data.captionId;
             captionExt = data.captionExt;
             captionLang = data.captionLang;
+            duration = data.duration;
 
             for( var i in data.sources ) {
 
@@ -911,7 +913,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
             // set caption track if available
             if ( captionId !== null ) {
-                video += "<track kind=\"subtitles\" src=\"https://cdnapisec.kaltura.com/api_v3/index.php/service/caption_captionAsset/action/serve/captionAssetId/" + captionId + "\" srclang=\"en\" label=\"English\">";
+                video += "<track kind=\"subtitles\" src=\"https://www.kaltura.com/api_v3/?service=caption_captionasset&action=servewebvtt&captionAssetId="+captionId+"&segmentDuration="+duration+"&segmentIndex=1\" srclang=\"en\" label=\"English\">";
             }
 
             // closing video tag
