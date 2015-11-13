@@ -10,6 +10,7 @@
 * Changed semantic of the word "play" to "start"
 * Fixed the trailing/scrolling empty area on page
 * Updated Kaltura API to version 2.36
+* Fixed caption not showing up for videos from Kalutra. SB+ will now request Kaltura server to return a dynamic WebVTT file with the uploaded SRT file. Cause: VideoJS dropped (unofficial) support for SRT and officially supports WebVTT. 
 
 ---
 ###2.7.0 (08-25-2015)
