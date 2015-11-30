@@ -34,8 +34,7 @@
   -moz-osx-font-smoothing: grayscale; }
 
 .light {
-  display: inline-block;
-  margin-top: -0.14286rem;
+  padding: 0 3px 0 2px;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
   opacity: 0.4; }
 
@@ -111,7 +110,7 @@ p {
 
 #storybook_plus_wrapper {
   position: relative;
-  width: 64.28571rem;
+  width: 64.35714rem;
   float: left;
   clear: both; }
 
@@ -596,16 +595,18 @@ p {
       padding: 0.57143rem 0;
       cursor: pointer;
       float: left;
-      clear: both; }
-      #toc #selectable li .slideNum {
-        width: 10%;
-        padding: 0 1%;
-        text-align: right;
-        float: left; }
+      clear: both;
+      /*
+              	.slideNum {
+                  	width: 10%;
+                  	padding: 0 1%;
+                  	text-align: right;
+                  	float: left;
+              	}
+      */ }
       #toc #selectable li .title {
-        width: 86%;
-        padding: 0 1%;
-        float: left; }
+        padding: 0 0.71429rem 0 2.14286rem;
+        text-indent: -1.64286rem; }
     #toc #selectable li:hover {
       background-color: #59a8dc;
       color: #fff; }

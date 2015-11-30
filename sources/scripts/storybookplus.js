@@ -326,15 +326,16 @@ $.fn.setupPlayer = function() {
     }
 
 	// loop to populate the table of contents
-	$( "#selectable" ).before( '<div id="toc_heading" class="toc_heading">Table of Contents <span class="sr-only">Total of ' + topicTitle.length + ' ' + media.toLowerCase() + 's</span></div>' );
+	$( "#selectable" ).before( '<div id="toc_heading" class="toc_heading" aria-hidden="true">Table of Contents</div>' );
 
     $.each( topicTitle, function( i ) {
         
         var breakClass = "";
+        var menuItem = "";
         
 		if ( topicSrc[i] === "quiz" ) {
 
-		    selfAssessmentIcon = " <span class=\"icon-assessement light\"><span class=\"sr-only\">Self Assessement</span></span>";
+		    selfAssessmentIcon = "<span class=\"icon-assessement light\"><span class=\"sr-only\">Self Assessement.</span></span> ";
 
 		} else {
 
@@ -349,13 +350,23 @@ $.fn.setupPlayer = function() {
             
         }
         
-		$( "#selectable" ).append( "<li class=\"ui-widget-content" + breakClass + "\" role=\"menuitem\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"slideNum\"><span class=\"sr-only\">" + media + "</span> <span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span>.</div><div class=\"title\">" + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
+        if ( selfAssessmentIcon ) {
+            
+            menuItem = "<li class=\"ui-widget-content" + breakClass + "\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"title\"><span class=\"sr-only\">" + media + "<span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span>. </span> " + selfAssessmentIcon + topicTitle[i] + "</div></li>";
+            
+        } else {
+            
+            menuItem = "<li class=\"ui-widget-content" + breakClass + "\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"title\"><span class=\"sr-only\">" + media + "</span> <span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span>. " + topicTitle[i] + "</div></li>";
+            
+        }
+        
+		$( "#selectable" ).append( menuItem );
 
 	} );
 
 	// set up the splash screen
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
-    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" class=\"playBtn\" aria-label=\"Start Presentation\" href=\"#\">START</a>" );
+    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" tabindex=\"1\" class=\"playBtn\" aria-label=\"Start Presentation\" href=\"#\">START</a>" );
     
     // if accent tag from XML has value
     if ( accent.length ) {
@@ -438,10 +449,10 @@ $.fn.initializePlayer = function() {
     $( "#selectable" ).selectable( "option", "appendTo", "#toc" );
     $( "#selectable" ).on( "selectablestop", function() {
 
-        tocIndex = Number( $( ".ui-selected .slideNum .selectedNum" ).html() ) - 1;
+        tocIndex = Number( $( ".ui-selected .selectedNum" ).html() ) - 1;
 
         if ( tocIndex !== previousIndex ) {
-
+            
             $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
             previousIndex = tocIndex;
 
@@ -469,8 +480,8 @@ $.fn.initializePlayer = function() {
     if ( quizDetected === true || version >= 230 ) {
 
         $( "#control" ).append( "<span role=\"button\" aria-label=\"expand or contract slide image\" id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
-        $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-label=\"Toggle table of content\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
-        $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-label=\"toggle notes\"><span class=\"notes\" title=\"Toggle Notes\"></span></span>" );
+        $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-hidden=\"true\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+        $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-hidden=\"true\"><span class=\"notes\" title=\"Toggle Notes\"></span></span>" );
 
         $.fn.bindImgMagnify();
         $.fn.bindNoteSlideToggle();
@@ -567,10 +578,10 @@ $.fn.nextSlide = function() {
  *
  */
 $.fn.loadSlide = function( slideSource, sNum ) {
-
+    
     var img;
     var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 );
-
+    
     if ( slideSource !== "quiz" ) {
 
         slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 );
@@ -1549,12 +1560,20 @@ $.fn.loadNote = function( num ) {
         if ( $( "#note").hasClass( "noNotes" ) ) {
                 
             $( "#currentStatus" ).addClass( "extendStatusWidth" );
-            $( "#notesBtn" ).hide();
+            $( "#notesBtn" ).hide( function() {
+                
+                $( this ).attr( 'aria-label', '' ).attr( 'aria-hidden', true );
+                
+            } );
             
         } else {
             
             $( "#currentStatus" ).removeClass( "extendStatusWidth" );
-            $( "#notesBtn" ).show();
+            $( "#notesBtn" ).show( function() {
+                
+                $( this ).attr( 'aria-label', 'toggle notes' ).attr( 'aria-hidden', false );
+                
+            } );
             
         }
         
@@ -1666,7 +1685,11 @@ $.fn.bindImgMagnify = function() {
 
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"icon-expand\" title=\"Expand\"></span>" );
-            $( "#notesBtn, #tocBtn" ).hide();
+            $( "#notesBtn, #tocBtn" ).hide( function() {
+                
+                $( this ).attr( 'aria-label', '' ).attr( 'aria-hidden', true );
+                
+            } );
             $( "#toc" ).css( 'left', '' ).show();
 
             if ( $( "#tocBtn" ).hasClass( 'active' ) ) {
@@ -1679,7 +1702,11 @@ $.fn.bindImgMagnify = function() {
 
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
             $( this ).html( "<span class=\"icon-contract\" title=\"Contract\"></span>" );
-            $( "#tocBtn" ).show();
+            $( "#tocBtn" ).show( function() {
+                
+                $( this ).attr( 'aria-label', 'toggle table of contents' ).attr( 'aria-hidden', false );
+                
+            } );
             $( "#currentStatus" ).addClass( "extendStatusWidth" );
             $( "#toc" ).hide();
 

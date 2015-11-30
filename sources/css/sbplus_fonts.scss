@@ -22,8 +22,7 @@
 }
 
 .light {
-    display: inline-block;
-    margin-top: rem( -2px );
+    padding: 0 3px 0 2px;
     @include opacity( .4 );
 }
 

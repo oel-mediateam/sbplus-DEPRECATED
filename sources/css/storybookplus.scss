@@ -89,7 +89,7 @@ p {
 // PLAYER WRAPPER
 #storybook_plus_wrapper {
     position: relative;
-	width: rem( 900px );
+	width: rem( 901px );
 	@include clear;
 	
 }
@@ -807,17 +807,19 @@ p {
         	cursor: pointer;
         	@include clear;
 
+/*
         	.slideNum {
             	width: 10%;
             	padding: 0 1%;
             	text-align: right;
             	float: left;
         	}
+*/
 
         	.title {
-            	width: 86%;
-            	padding: 0 1%;
-            	float: left;
+            	padding: 0 rem( 10px ) 0 rem( 30px );
+                text-indent: rem( -23px );
+//             	float: left;
         	}
 
     	}
