@@ -412,7 +412,6 @@ $.fn.initializePlayer = function() {
     $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a role=\"button\" aria-label=\"Close Profile\" id=\"profileClose\" href=\"#\"><span aria-hidden=\"true\">&times;</span></a></div>" );
     $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
 
-
     if ( media !== 'Video' ) {
 
         $( "#player" ).append( "<div id=\"progressing\"></div>" );
@@ -441,6 +440,9 @@ $.fn.initializePlayer = function() {
         return false;
 
     } );
+    
+    // add hidded next and previou button
+    $( '#slide' ).before( "<div class=\"sr-only\"><button tabindex=\"1\" class=\"hidden-pre-btn\">Previous</button><button tabindex=\"1\" class=\"hidden-next-btn\">Next</button></div>" );
 
 	// setup toc selectable items
 	$( "#selectable li:first" ).addClass( "ui-selected" );
@@ -461,7 +463,7 @@ $.fn.initializePlayer = function() {
     } );
 
     // bind left click event
-    $( "#leftBtn" ).on( "click", function() {
+    $( "#leftBtn, .hidden-pre-btn" ).on( "click", function() {
 
         $.fn.previousSlide();
         return false;
@@ -469,7 +471,7 @@ $.fn.initializePlayer = function() {
     } );
 
     // bind right click event
-    $( "#rightBtn" ).on( "click", function() {
+    $( "#rightBtn, .hidden-next-btn" ).on( "click", function() {
 
         $.fn.nextSlide();
         return false;
