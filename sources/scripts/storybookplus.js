@@ -333,6 +333,8 @@ $.fn.setupPlayer = function() {
         var breakClass = "";
         var menuItem = "";
         
+        var type = topicSrc[i].substring( 0, topicSrc[i].indexOf( ":" ) );
+        
 		if ( topicSrc[i] === "quiz" ) {
 
 		    selfAssessmentIcon = "<span class=\"icon-assessement light\"><span class=\"sr-only\">Self Assessement.</span></span> ";
@@ -356,7 +358,7 @@ $.fn.setupPlayer = function() {
             
         } else {
             
-            menuItem = "<li class=\"ui-widget-content" + breakClass + "\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"title\"><span class=\"sr-only\">" + media + "</span> <span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span>. " + topicTitle[i] + "</div></li>";
+            menuItem = "<li class=\"ui-widget-content" + breakClass + "\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"title\"><span class=\"sr-only\">" + media + "</span> <span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span>. <span class=\"sr-only\">"+type+"</span> " + topicTitle[i] + "</div></li>";
             
         }
         
