@@ -953,7 +953,7 @@ p {
 // DOWNLOAD BAR
 #download_bar {
 
-	width: 100%;
+	width: rem( 900px );
 	margin: rem( 10px ) 0;
 	text-align: right;
 	@include clear;
