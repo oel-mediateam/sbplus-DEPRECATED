@@ -53,6 +53,8 @@ var PROFILE,
     duration;
 
 var mediaPlayer = null,
+    isKaltura = false,
+    flavors = {},
     kalturaLoaded = 0;
 
 var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
@@ -617,9 +619,11 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     }
 
     $( "#slide" ).html( "" );
-
+    
+    isKaltura = false;
+    
     switch ( slideSource ) {
-
+        
         case "image:":
             
             img = new Image();
@@ -674,6 +678,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         case "kaltura:":
 
             $.fn.setupMediaPlayer( 'kaltura', srcName );
+            isKaltura = true;
 
         break;
 
@@ -862,7 +867,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  */
  $.fn.requestKalturaAPI = function( playerID, src ) {
 
-    var entryId, captionId, captionExt, captionLang, flavors = {}, video, duration;
+    var entryId, captionId, captionExt, captionLang, video, duration;
     
     kWidget.getSources( {
 
@@ -909,19 +914,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             // video element opening tag
             video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" crossorigin=\"anonymous\">";
 
-            // set low res vid if available
-            if ( flavors.low !== undefined ) {
-                video += "<source src=\"" + flavors.low + "\" type=\"video/mp4\" data-res=\"low\" />";
-            }
-
-            // set normal res vid
-            video += "<source src=\"" + flavors.normal + "\" type=\"video/mp4\" data-res=\"normal\" data-default=\"true\" />";
-
-            // set high res vid if available
-            if ( flavors.low !== undefined ) {
-                video += "<source src=\"" + flavors.high + "\" type=\"video/mp4\" data-res=\"high\" />";
-            }
-
             if ( flavors.webm !== undefined && $.fn.supportWebm() ) {
                 video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" />";
             }
@@ -965,9 +957,7 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
         "controls": true,
         "autoplay": true,
         "preload": "auto",
-        "plugins": {
-            resolutionSelector: { default_res: 'normal' }
-        }
+        "plugins": {}
 
     };
     
@@ -980,6 +970,12 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
                 options.techOrder = ["flash", "html5"];
                 options.plugins = null;
         
+            }
+            
+            if ( isKaltura ) {
+                
+                options.plugins = { videoJsResolutionSwitcher: { 'default': 720 } };
+                
             }
             
             $( "#vp" ).fadeIn();
@@ -1019,8 +1015,8 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
         case 'ytb':
         
             options.techOrder = ["youtube"];
-            options.src = "https://www.youtube.com/watch?v=" + src;
-            options.plugins = null;
+            options.sources = [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=" + src }];
+            options.plugins = { videoJsResolutionSwitcher: { 'default': 720 } };
             $( "#vp" ).fadeIn();
             
         break;
@@ -1028,7 +1024,7 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
         case 'vm':
             
             options.techOrder = ["vimeo"];
-            options.src = "https://vimeo.com/" + src;
+            options.sources = [{ "type": "video/vimeo", "src": "https://vimeo.com/" + src }];
             options.plugins = null;
             $( "#vp" ).fadeIn();
             
@@ -1039,7 +1035,43 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
     
     mediaPlayer = videojs( playerID, options, function() {
 
-        this.progressTips();
+        if ( options.techOrder[0] === "vimeo" ) {
+
+            this.play();
+            
+        }
+        
+        if ( isKaltura ) {
+        			
+			this.updateSrc( [
+    			
+    			{
+        			
+        			src: flavors.low,
+        			type: "video/mp4",
+        			label: "low",
+        			res: '360'
+        			
+    			},
+    			{
+        			
+        			src: flavors.normal,
+        			type: "video/mp4",
+        			label: "normal",
+        			res: '720'
+        			
+    			},
+    			{
+        			
+        			src: flavors.high,
+        			type: "video/mp4",
+        			label: "high",
+        			res: '1080'
+        			
+    			}
+    			
+			] );
+		}
 
     } );
 

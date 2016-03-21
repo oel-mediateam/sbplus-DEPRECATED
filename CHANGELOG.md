@@ -1,6 +1,7 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
+* Updated VideoJS to version 5.8.5
 * Updated index file
 * Removed all forced/hard focus due to undesired experience for non-disabled users.
 * Removed WASD keyboard press events to traversing the slides from v2.7.0 as they were conflicting with screen reader keyboard events.
