@@ -88,9 +88,16 @@ p {
 
 // PLAYER WRAPPER
 #storybook_plus_wrapper {
+    
     position: relative;
 	width: rem( 901px );
 	@include clear;
+	
+	*:focus {
+    
+        outline: 1px dashed #888;
+        
+    }
 	
 }
 
@@ -286,7 +293,6 @@ p {
 	background-color: #fff;
 	background-position: left bottom;
 	background-repeat: no-repeat;
-	cursor: pointer;
 	@include box-sizing( "border-box" );
 
 	p {
@@ -953,7 +959,7 @@ p {
 // DOWNLOAD BAR
 #download_bar {
 
-	width: 100%;
+	width: rem( 900px );
 	margin: rem( 10px ) 0;
 	text-align: right;
 	@include clear;
