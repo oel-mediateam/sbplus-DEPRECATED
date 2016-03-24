@@ -328,7 +328,7 @@ $.fn.setupPlayer = function() {
     }
 
 	// loop to populate the table of contents
-	$( "#selectable" ).before( '<div id="toc_heading" class="toc_heading" aria-hidden="true">Table of Contents</div>' );
+	$( "#selectable" ).before( '<div id="toc_heading" class="toc_heading" aria-hidden="true" tabindex="-1">Table of Contents</div>' );
 
     $.each( topicTitle, function( i ) {
         
@@ -370,7 +370,7 @@ $.fn.setupPlayer = function() {
 
 	// set up the splash screen
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
-    $( "#splash_screen" ).append( "<p>" + lessonTitle + "</p><p>" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p><small>" + duration + "</small></p>" : "" ) + "<a role=\"button\" tabindex=\"1\" class=\"playBtn\" aria-label=\"Start Presentation\" href=\"#\">START</a>" );
+    $( "#splash_screen" ).append( "<p tabindex=\"1\">" + lessonTitle + "</p><p tabindex=\"1\">" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p tabindex=\"1\"><small>" + duration + "</small></p>" : "" ) + "<a tabindex=\"1\" role=\"button\" class=\"playBtn\" aria-label=\"Start Presentation\" href=\"#\">START</a>" );
     
     // if accent tag from XML has value
     if ( accent.length ) {
@@ -380,7 +380,7 @@ $.fn.setupPlayer = function() {
     }
 
     // bind click event to splash screen
-    $( "#splash_screen, #playBtn" ).on( "click", function() {
+    $( ".playBtn" ).on( "click", function() {
 
         $.fn.initializePlayer();
         return false;
@@ -410,7 +410,7 @@ $.fn.initializePlayer = function() {
     $( "#lessonTitle" ).attr( "title", lessonTitle );
     $( "#lessonTitle" ).html( lessonTitle );
 
-    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#\">" + instructor + "</a>" );
+    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#\" tabindex=\"-1\">" + instructor + "</a>" );
 
     // setup profile panel
     $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a role=\"button\" aria-label=\"Close Profile\" id=\"profileClose\" href=\"#\"><span aria-hidden=\"true\">&times;</span></a></div>" );
@@ -444,9 +444,6 @@ $.fn.initializePlayer = function() {
         return false;
 
     } );
-    
-    // add hidded next and previou button
-    $( '#slide' ).before( "<div class=\"sr-only\"><button tabindex=\"1\" class=\"hidden-pre-btn\">Previous</button><button tabindex=\"1\" class=\"hidden-next-btn\">Next</button></div>" );
 
 	// setup toc selectable items
 	$( "#selectable li:first" ).addClass( "ui-selected" );
@@ -465,7 +462,7 @@ $.fn.initializePlayer = function() {
         }
 
     } );
-
+    
     // bind left click event
     $( "#leftBtn, .hidden-pre-btn" ).on( "click", function() {
 
@@ -485,9 +482,9 @@ $.fn.initializePlayer = function() {
     // add the zoom boutton to the control after the slide status
     if ( quizDetected === true || version >= 230 ) {
 
-        $( "#control" ).append( "<span role=\"button\" aria-label=\"expand or contract slide image\" id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
-        $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-hidden=\"true\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
-        $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-hidden=\"true\"><span class=\"notes\" title=\"Toggle Notes\"></span></span>" );
+        $( "#control" ).append( "<span tabindex=\"-1\" id=\"magnifyBtn\" aria-hidden=\"true\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
+        $( "#magnifyBtn" ).before( "<span tabindex=\"-1\" id=\"tocBtn\" aria-hidden=\"true\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+        $( "#magnifyBtn" ).before( "<span tabindex=\"-1\" id=\"notesBtn\" aria-hidden=\"true\"><span class=\"notes\" title=\"Toggle Notes\"></span></span>" );
 
         $.fn.bindImgMagnify();
         $.fn.bindNoteSlideToggle();
@@ -595,6 +592,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     }
 
     if ( slideSource !== 'video:' && slideSource !== 'kaltura:' && slideSource !== 'youtube:' && slideSource !== 'vimeo:' ) {
+        
         $( "#progressing" ).fadeIn("fast");
         srcName = srcName.toLowerCase();
 
@@ -1475,15 +1473,15 @@ $.fn.showFeedback = function( index ) {
 
     if ( questions[index].img !== "" ) {
 
-        questionImg = "<img src=\"assets/img/" + questions[index].img + "\" alt=\"" + questions[index].question + "\" border=\"0\" />";
+        questionImg = "<img aria-hidden=\"true\" src=\"assets/img/" + questions[index].img + "\" alt=\"" + questions[index].question + "\" border=\"0\" />";
 
     }
 
     if ( questions[index].audio !== "") {
-        audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
+        audio = "<audio controls aria-hidden=\"true\"><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
     }
 
-    $( "#quiz" ).append( "<div class=\"question\">" + questions[index].question + questionImg + audio + "</div>" );
+    $( "#quiz" ).append( "<div class=\"question\" aria-hidden=\"true\">" + questions[index].question + questionImg + audio + "</div>" );
 
     if ( questions[index].choiceImg === "true" ) {
 
@@ -1691,7 +1689,7 @@ $.fn.loadNote = function( num ) {
 $.fn.updateSlideNum = function( num ) {
 
     var currentNum = num + 1;
-    var status = media + " " + currentNum + " of " + topicCount;
+    var status = "<span class=\"sr-only\">You are currently on </span>" + media + " " + currentNum + " of " + topicCount;
     
     counter = num;
 
@@ -1701,6 +1699,8 @@ $.fn.updateSlideNum = function( num ) {
 
     $( "#selectable li:nth-child(" + currentNum + ")" ).addClass( "ui-selected" );
     $( "#currentStatus" ).html( "<span>" + status + "</span>" );
+    // add screen reader only hidden element
+    $( "#currentSlide" ).html( "You are currenly on slide " + currentNum  + "of " + topicCount + ". " + $( ".ui-selected" ).attr( "title" ) );
 
 };
 
@@ -1912,31 +1912,37 @@ $.fn.loadProfilePhoto = function() {
 $.fn.getDownloadableFiles = function() {
 
     var directory = $.fn.getDirectory();
-    var downloadBar = $( "#download_bar ul" );
+    var downloadBar = $( "#download_bar" );
     var url = window.location.href;
+    var result = "";
 
 	url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ) + directory;
+	downloadBar.html( "Loading downloadable items..." );
 
 	// get transcript first
 	$.get( url + '.pdf', function() {
 
-    	downloadBar.append("<li><a download role=\"menuitem\" href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Transcript</a></li>");
+    	result += "<div class=\"download_item\"><a role=\"button\" download href=\"" + url + ".pdf\" target=\"_blank\" tabindex=\"1\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Transcript <span class=\"sr-only\">file</span></a></div>";
 
 	} ).always( function() {
 
     	// get audio file
     	$.get( url + '.mp3', function() {
 
-        	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Audio</a></li>");
+        	result += "<div class=\"download_item\"><a role=\"button\" download href=\"" + url + ".mp3\" target=\"_blank\" tabindex=\"1\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Audio <span class=\"sr-only\">file</span></a></div>";
 
     	} ).always( function() {
 
         	// get package/zip file
         	$.get( url + '.zip', function() {
 
-            	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".zip\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Supplement</a></li>");
+            	result += "<div class=\"download_item\"><a role=\"button\" download href=\"" + url + ".zip\" target=\"_blank\" tabindex=\"1\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Supplement <span class=\"sr-only\">file</span></a></div>";
 
-        	} );
+        	} ).always( function() {
+            	
+            	downloadBar.html( result ).hide().fadeIn( 1000 );
+            	
+        	});
 
     	} );
 

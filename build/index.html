@@ -8,7 +8,7 @@
 <link href="../sources/videoplayer/video-js.min.css" rel="stylesheet" />
 </head>
 <body>
-<!-- updated on 10/21/2015 -->
+<!-- updated on 0x/xx/2016 -->
 <!-- display when javascript is disabled -->
 <noscript>
 <h1>JavaScript is disabled!</h1>
@@ -28,10 +28,10 @@
 	<div id="player">
 
 	    <!-- black header bar -->
-        <header role="banner">
-            <h1 id="lessonTitle" tabindex="2"></h1>
-            <span id="instructorName" tabindex="2"></span>
-            <a role="button" aria-label="Toggle Profile" id="info" class="infoIcn" href="#" tabindex="2"></a>
+        <header>
+            <h1 id="lessonTitle" aria-hidden="true" tabindex="-1"></h1>
+            <span id="instructorName" aria-hidden="true"></span>
+            <a role="button" aria-label="Toggle Profile" id="info" class="infoIcn" href="#" tabindex="1"></a>
         </header>
 
 		<!-- content -->
@@ -39,8 +39,10 @@
 
 		    <!-- slide and note container -->
 			<div id="slideNote">
-
-				<div id="slide" role="main" tabindex="1"></div>
+                
+                <div id="currentSlide" class="sr-only" aria-live="assertive" tabindex="1"></div>
+                
+				<div id="slide" role="main" tabindex="1" aria-live="polite"></div>
 
 				<div id="ap" role="main" tabindex="1"></div>
 
@@ -49,16 +51,16 @@
 				<div id="note" role="complementary" aria-label="Notes" tabindex="1"></div>
 
 				<div id="control" role="navigation" tabindex="1">
-					<span id="leftBtn" role="button" aria-label="Previous"></span>
-					<span id="rightBtn" role="button" aria-label="Next"></span>
-					<span id="currentStatus" aria-hidden="true"></span>
+					<span id="leftBtn" role="button" aria-label="Previous" aria-controls="currentSlide slide" tabindex="1"></span>
+					<span id="rightBtn" role="button" aria-label="Next" aria-controls="currentSlide slide" tabindex="1"></span>
+					<span id="currentStatus" tabindex="1"></span>
 				</div>
 
 			</div>
 
 			<!-- table of content -->
-			<div id="toc" role="navigation" aria-labelledby="toc_heading" tabindex="1">
-				<ol id="selectable"></ol>
+			<div id="toc">
+				<ol id="selectable" role="navigation" aria-labelledby="toc_heading" tabindex="1"></ol>
 			</div>
 
 		</div>
@@ -73,9 +75,7 @@
 	</div>
 
     <!-- download bar -->
-	<div id="download_bar">
-		<ul role="menu" aria-label="Download Files" tabindex="1"></ul>
-	</div>
+	<div id="download_bar"></div>
 
 </div>
 <!-- end #storybook_plus_wrapper div -->
