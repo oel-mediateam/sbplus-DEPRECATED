@@ -500,6 +500,9 @@ $.fn.initializePlayer = function() {
 
     // display the player
     $( "#player" ).fadeIn( 'fast' );
+    
+    // listen to global keyboard event
+    $.fn.keyboardEvents();
 
 };
 
@@ -726,7 +729,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * Setup videojs player
  * @since 2.4.0
- * @updated 2.7.0
+ * @updated 2.7.3
  *
  * @author Ethan S. Lin
  *
@@ -952,6 +955,7 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
         "controls": true,
         "autoplay": true,
         "preload": "auto",
+        "playbackRates": [0.5, 1, 1.5, 2],
         "plugins": {}
 
     };
@@ -2261,4 +2265,36 @@ $.fn.scrollTo = function( target, options, callback ) {
 
 $.fn.htmlEntities = function( str ) {
     return String(str).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+};
+
+$.fn.keyboardEvents = function() {
+
+    $( document ).keypress( function(e) {
+        
+        if ( mediaPlayer !== null ) {
+            
+            switch ( e.which ) {
+                
+                case 32:
+                
+                if ( mediaPlayer.paused() ) {
+                    
+                    mediaPlayer.play();
+                    
+                } else {
+                    
+                    mediaPlayer.pause();
+                    
+                }
+                
+                e.preventDefault();
+                
+                break;
+                
+            }
+        
+        }
+        
+    } );
+    
 };
