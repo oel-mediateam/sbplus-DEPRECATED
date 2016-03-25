@@ -57,8 +57,8 @@ var mediaPlayer = null,
     flavors = {},
     kalturaLoaded = 0;
 
-var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
-//ROOT_PATH = "../sources";
+//var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
+var ROOT_PATH = "../sources";
 
 // var tech = navigator.userAgent;
 // var IS_CHROME = (/Chrome/i).test( tech );
@@ -603,11 +603,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         $( "#slideNote" ).removeClass( "quizSlide" );
 
     }
-
+    
+    // dispose existing VideoJS instance
     if ( mediaPlayer !== null ) {
-
-        $( '.vjs-control' ).blur();
-        $( '.vjs-menu-item' ).blur();
 
         mediaPlayer.dispose();
         mediaPlayer = null;
@@ -615,8 +613,9 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         $( '#ap' ).empty().hide();
 
     }
-
-    $( "#slide" ).html( "" );
+    
+    // clear the slide area
+    $( "#slide" ).empty();
     
     isKaltura = false;
     
@@ -697,7 +696,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
         default:
 
-            $.fn.displayErrorMsg( "unknow slide type!", "Please double check the XML file." );
+            $.fn.displayErrorMsg( "Unknow slide type!", "Please double check the XML file." );
 
         break;
 
@@ -748,8 +747,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             
             $.get( 'assets/slides/' + src + '.' + slideImgFormat, function() {
                 
-                $( "#apc" ).attr( 'poster', 'assets/slides/' + src + '.' + slideImgFormat );
-                
                 $.get( 'assets/audio/' + src + '.vtt', function() {
 
                     subtitle = "<track kind=\"subtitles\" src=\"assets/audio/" + src + ".vtt\" srclang=\"en\" label=\"English\">";
@@ -758,7 +755,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     
                     var audioSrc = "<source src=\"assets/audio/" + src + ".mp3\" type=\"audio/mp3\">";
                     
-                    $( "#ap" ).html( "<audio id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + audioSrc + subtitle + "</audio>" ).promise().done( function() {
+                    $( "#ap" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" poster=\"assets/slides/"+src+"."+slideImgFormat+"\">" + audioSrc + subtitle + "</video>" ).promise().done( function() {
 
                         $.fn.loadVideoJsPlayer( playerID, src );
 
@@ -768,7 +765,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
                 
             } ).fail( function() {
                 
-                $.fn.displayErrorMsg( "image not found!", "Expected image: assets/slides/" + src + "." + slideImgFormat );
+                $.fn.displayErrorMsg( "Image not found!", "Expected image: assets/slides/" + src + "." + slideImgFormat );
                 
             } );
             
@@ -985,28 +982,6 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
             options.poster = 'assets/slides/' + src + "." + slideImgFormat;
             options.plugins = null;
             $( "#ap" ).fadeIn();
-            
-            $( "#apc" ).on('mouseenter', function() {
-                    
-                if ( $( this ).hasClass( 'vjs-user-inactive' ) ) {
-                    
-                    $( this ).removeClass( 'vjs-user-inactive' );
-                    $( this ).addClass( 'vjs-user-active' );
-                    
-                }
-                
-            } );
-            
-            $( "#apc" ).on('mouseleave', function() {
-                
-                if ( $( this ).hasClass( 'vjs-user-active' ) ) {
-                    
-                    $( this ).removeClass( 'vjs-user-active' );
-                    $( this ).addClass( 'vjs-user-inactive' );
-                    
-                }
-                
-            } );
             
         break;
         
