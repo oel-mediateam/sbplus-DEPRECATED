@@ -58,7 +58,7 @@ var mediaPlayer = null,
     kalturaLoaded = 0;
 
 //var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
-var ROOT_PATH = "../sources";
+var ROOT_PATH = "../sources/";
 
 // var tech = navigator.userAgent;
 // var IS_CHROME = (/Chrome/i).test( tech );
@@ -1680,6 +1680,16 @@ $.fn.updateSlideNum = function( num ) {
     $( "#currentStatus" ).html( "<span>" + status + "</span>" );
     // add screen reader only hidden element
     $( "#currentSlide" ).html( "You are currenly on slide " + currentNum  + "of " + topicCount + ". " + $( ".ui-selected" ).attr( "title" ) );
+    
+    if ( currentNum === topicCount ) {
+        
+        $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + ".");
+        
+    } else {
+        
+        $( "#endPresentation" ).empty();
+        
+    }
 
 };
 
@@ -1904,7 +1914,7 @@ $.fn.getDownloadableFiles = function() {
     	result += "<div class=\"download_item\"><a role=\"button\" download href=\"" + url + ".pdf\" target=\"_blank\" tabindex=\"1\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Transcript <span class=\"sr-only\">file</span></a></div>";
 
 	} ).always( function() {
-
+        
     	// get audio file
     	$.get( url + '.mp3', function() {
 
@@ -2267,6 +2277,8 @@ $.fn.htmlEntities = function( str ) {
     return String(str).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 };
 
+
+// global keyboard events
 $.fn.keyboardEvents = function() {
 
     $( document ).keypress( function(e) {
