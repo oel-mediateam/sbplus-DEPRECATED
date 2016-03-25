@@ -1683,7 +1683,26 @@ $.fn.updateSlideNum = function( num ) {
     
     if ( currentNum === topicCount ) {
         
-        $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + ".");
+        setTimeout(function() {
+            
+            console.log(mediaPlayer);
+            
+            if ( mediaPlayer !== null ) {
+            
+                mediaPlayer.on( "ended", function() {
+                    
+                    $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + ".");
+                    
+                });
+                
+            } else {
+                
+                $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + ".");
+                
+            }
+            
+            
+        }, 3000);
         
     } else {
         
