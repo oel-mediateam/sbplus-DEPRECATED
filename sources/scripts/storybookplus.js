@@ -3,13 +3,13 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.7.1
- * Released MM/DD/2015
+ * @version: 2.8.0
+ * Released MM/DD/2016
  *
  * @license: GNU GENERAL PUBLIC LICENSE v3
  *
     Storybook Plus is an web application that serves multimedia contents.
-    Copyright (C) 2013-2015  Ethan S. Lin, UWEX CEOEL Media Services
+    Copyright (C) 2013-2016  Ethan S. Lin, UWEX CEOEL Media Services
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -286,7 +286,7 @@ $.fn.parseContent = function( xml ) {
 /**
  * Set up the player
  * @since 2.0.0
- * @updated 2.7.1
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -335,8 +335,6 @@ $.fn.setupPlayer = function() {
         var breakClass = "";
         var menuItem = "";
         
-        var type = topicSrc[i].substring( 0, topicSrc[i].indexOf( ":" ) );
-        
 		if ( topicSrc[i] === "quiz" ) {
 
 		    selfAssessmentIcon = "<span class=\"icon-assessement light\"><span class=\"sr-only\">Self Assessement.</span></span> ";
@@ -356,11 +354,11 @@ $.fn.setupPlayer = function() {
         
         if ( selfAssessmentIcon ) {
             
-            menuItem = "<li class=\"ui-widget-content" + breakClass + "\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"title\"><span class=\"sr-only\">" + media + "<span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span>. </span> " + selfAssessmentIcon + topicTitle[i] + "</div></li>";
+            menuItem = "<li class=\"ui-widget-content" + breakClass + "\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"title\"><span class=\"sr-only\">" + media + " <span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span> of " + topicCount + ".</span> " + selfAssessmentIcon + topicTitle[i] + "</div></li>";
             
         } else {
             
-            menuItem = "<li class=\"ui-widget-content" + breakClass + "\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"title\"><span class=\"sr-only\">" + media + "</span> <span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span>. <span class=\"sr-only\">"+type+"</span> " + topicTitle[i] + "</div></li>";
+            menuItem = "<li class=\"ui-widget-content" + breakClass + "\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"title\"><span class=\"sr-only\">" + media + "</span> <span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span><span class=\"sr-only\">of " + topicCount + "</span>. " + topicTitle[i] + "<span class=\"sr-only\">.</span></div></li>";
             
         }
         
@@ -395,7 +393,7 @@ $.fn.setupPlayer = function() {
 /**
  * Initialize the player
  * @since 2.0.0
- * @updated 2.7.1
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -575,7 +573,7 @@ $.fn.nextSlide = function() {
 /**
  * Load current slide
  * @since 2.0.0
- * @updated 2.7.1
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  *
@@ -705,12 +703,13 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
     
-    // load notes
-    $( this ).loadNote( sNum );
-
     // update slide number status
     $( this ).updateSlideNum( sNum );
-
+    
+    // load notes
+    $( this ).loadNote( sNum );
+    
+    // hide the progressing spinning quick
     if ( $( "#progressing" ).length ) {
 
         $( "#progressing" ).promise().done( function() {
@@ -729,7 +728,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * Setup videojs player
  * @since 2.4.0
- * @updated 2.7.3
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  *
@@ -855,7 +854,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
  * Requesting data from Kaltura API, construct src,
  * and call loadVideoJSPlayer
  * @since 2.6.0
- * @updated 2.7.1
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  *
@@ -938,7 +937,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 /**
  * load videojs player
  * @since 2.4.1
- * @updated 2.7.0
+ * @updated 2.8.0
  * @author Ethan S. Lin
  *
  * @param strings, video element id
@@ -1086,7 +1085,7 @@ $.fn.setupQuiz = function( num ) {
     }
 
     // build the question
-    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\" aria-label=\"Self-Assessment\"><span class=\"icon-assessement\"></span> Self-Assessment</div>" );
+    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\" aria-label=\"Self Assessment\"><span class=\"icon-assessement\"></span> Self Assessment</div>" );
 
     if ( !questions[index].taken ) {
 
@@ -1144,7 +1143,7 @@ $.fn.setupQuiz = function( num ) {
 };
 
 /**
- * Display current self-assessment answer choice or types
+ * Display current self assessment answer choice or types
  * @since 2.1.0
  *
  * @author Ethan S. Lin
@@ -1419,7 +1418,7 @@ $.fn.displayAnswerChoices = function( index ) {
 };
 
 /**
- * Display current self-assessment feedback
+ * Display current self assessment feedback
  * @since 2.0.0
  * @updated 2.7.0
  *
@@ -1434,7 +1433,7 @@ $.fn.showFeedback = function( index ) {
     var questionImg = "";
     var audio = "";
 
-    $( "#slide" ).html( "<div id=\"quiz\"><div aria-label=\"Self-Assessment Feedback\" class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
+    $( "#slide" ).html( "<div id=\"quiz\"><div aria-label=\"Self Assessment Feedback\" class=\"header\"><span class=\"icon-assessement\"></span> Self Assessment Feedback</div>" );
 
     if ( questions[index].type !== "sa" ) {
 
@@ -1519,7 +1518,7 @@ $.fn.showFeedback = function( index ) {
 /**
  * Load notes for the current slide
  * @since 2.1.0
- * @update 2.7.0
+ * @update 2.8.0
  *
  * @author Ethan S. Lin
  * @param int, current topic number
@@ -1532,9 +1531,12 @@ $.fn.loadNote = function( num ) {
     
     if ( note.length ) {
         
-        $( "#note" ).removeClass( "noNotes" );
-        
-        $( "#note" ).html( note ).hide().fadeIn( "fast" );
+        $( "#note" ).removeClass( "noNotes" )
+                    .removeAttr( "aria-hidden" )
+                    .attr( { "tabindex": 1, "role": "complementary", "aria-label": "Notes" } )
+                    .html( note ).hide().fadeIn( "fast" );
+                    
+        $( "#currentSlide" ).append( "This " + media + " contains notes." );
         
         if ( $( "#note" ).find( "a" ).length ) {
 
@@ -1547,7 +1549,11 @@ $.fn.loadNote = function( num ) {
         
     } else {
         
-        $( "#note" ).addClass( "noNotes" );
+        $( "#note" ).addClass( "noNotes" )
+                    .removeAttr( "role" )
+                    .removeAttr( "aria-label" )
+                    .attr( { "tabindex": -1, "aria-hidden": true } );
+                    
         $.fn.getProgramLogo();
         
     }
@@ -1652,7 +1658,7 @@ $.fn.loadNote = function( num ) {
     
     img = "<img src=\"" + ROOT_PATH + "img/" + logo + ".svg\" width=\"150\" height=\"65\" alt=\"" + alt + "\" border=\"0\" />";
     
-    $( "#note" ).attr( "aria-label", "No notes available." ).attr( "role", "" ).html( "<div class=\"logo\" aria-hidden=\"true\">" + img + "</div>" );
+    $( "#note" ).html( "<div class=\"logo\" tabindex=\"-1\" aria-hidden=\"true\">" + img + "</div>" );
      
  };
 
@@ -1668,7 +1674,7 @@ $.fn.loadNote = function( num ) {
 $.fn.updateSlideNum = function( num ) {
 
     var currentNum = num + 1;
-    var status = "<span class=\"sr-only\">You are currently on </span>" + media + " " + currentNum + " of " + topicCount;
+    var status = media + " " + currentNum + " of " + topicCount;
     
     counter = num;
 
@@ -1678,14 +1684,13 @@ $.fn.updateSlideNum = function( num ) {
 
     $( "#selectable li:nth-child(" + currentNum + ")" ).addClass( "ui-selected" );
     $( "#currentStatus" ).html( "<span>" + status + "</span>" );
+    
     // add screen reader only hidden element
-    $( "#currentSlide" ).html( "You are currenly on slide " + currentNum  + "of " + topicCount + ". " + $( ".ui-selected" ).attr( "title" ) );
+    $( "#currentSlide" ).html( "You are currently on " + media.toLowerCase() + " " + currentNum  + " of " + topicCount + ". " + $( ".ui-selected" ).attr( "title" ) + ". " );
     
     if ( currentNum === topicCount ) {
         
         setTimeout(function() {
-            
-            console.log(mediaPlayer);
             
             if ( mediaPlayer !== null ) {
             
@@ -2292,10 +2297,10 @@ $.fn.scrollTo = function( target, options, callback ) {
   
 };
 
+// replace specail character with html entities
 $.fn.htmlEntities = function( str ) {
     return String(str).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 };
-
 
 // global keyboard events
 $.fn.keyboardEvents = function() {

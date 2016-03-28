@@ -1,5 +1,5 @@
 #Storybook Plus (SB+)
-**_version 2.7.1_**  
+**_version 2.8.0_**  
 <!---
 [![Build Status](https://travis-ci.org/oel-mediateam/sbplus.svg?branch=master)](https://travis-ci.org/oel-mediateam/sbplus)
 -->
@@ -32,4 +32,4 @@ All updates, fixes, changes, improvements, and new features are listed on the [c
 
 ---
 ###License
-Storybook Plus (SB+) is licensed under [GNU v3](https://github.com/oel-mediateam/sbplus/blob/master/LICENSE) license. Copyright (c) 2013-2015 Ethan S. Lin, [University of Wisconsin-Extension, Division of Continuing Education, Outreach & E-Learning](http://ce.uwex.edu/)
+Storybook Plus (SB+) is licensed under [GNU v3](https://github.com/oel-mediateam/sbplus/blob/master/LICENSE) license. Copyright (c) 2013-2016 Ethan S. Lin, [University of Wisconsin-Extension, Division of Continuing Education, Outreach & E-Learning](http://ce.uwex.edu/)

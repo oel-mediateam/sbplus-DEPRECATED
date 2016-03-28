@@ -16,7 +16,7 @@
 </noscript>
 
 <!-- player wrapper -->
-<div data-version="2.7.1" id="storybook_plus_wrapper">
+<div data-version="2.8.0" id="storybook_plus_wrapper">
 
 	<!-- display when there is an error -->
 	<div id="errorMsg"></div>
@@ -40,7 +40,7 @@
 		    <!-- slide and note container -->
 			<div id="slideNote">
                 
-                <div class="sr-only" tabindex="1"></div>
+                <div id="currentSlide" class="sr-only" tabindex="1"></div>
                 
 				<div id="slide" role="main" tabindex="1" aria-live="polite"></div>
 
@@ -50,12 +50,12 @@
 				
 				<div id="endPresentation" class="sr-only" aria-live="polite" aria-relevant="additions" tabindex="-1"></div>
 
-				<div id="note" role="complementary" aria-label="Notes" tabindex="1"></div>
+				<div id="note" role="complementary" aria-label="Notes"></div>
 
 				<div id="control" role="navigation" tabindex="1">
 					<span id="leftBtn" role="button" aria-label="Previous" aria-controls="slide" tabindex="1"></span>
 					<span id="rightBtn" role="button" aria-label="Next" aria-controls="slide" tabindex="1"></span>
-					<span id="currentStatus" tabindex="1"></span>
+					<span id="currentStatus" tabindex="-1" aria-hidden="true"></span>
 				</div>
 
 			</div>
