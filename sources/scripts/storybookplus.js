@@ -615,8 +615,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     }
     
-    // clear the slide area
-    $( "#slide" ).empty();
+    // reset areas
+    $( "#slide" ).removeAttr("role").empty().hide();
     
     isKaltura = false;
     
@@ -633,7 +633,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             $( img ).load( function() {
 
                 $( this ).hide();
-                $( "#slide" ).html( "<div id=\"img\"></div>" );
+                $( "#slide" ).attr( "role", "main" ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
                 $( this ).fadeIn();
 
