@@ -337,7 +337,8 @@ p {
     top: 2.14286rem;
     left: 0.07143rem;
     width: 45.71429rem;
-    height: 25.71429rem; }
+    height: 25.71429rem;
+    background-color: #000; }
   #content #quiz {
     height: 40rem;
     background-color: #ebebeb;

@@ -616,7 +616,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     }
     
     // reset areas
-    $( "#slide" ).removeAttr("role").empty().hide();
+    $( "#slide" ).removeAttr("role").attr("tabindex",-1).empty();
     
     isKaltura = false;
     
@@ -633,7 +633,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             $( img ).load( function() {
 
                 $( this ).hide();
-                $( "#slide" ).attr( "role", "main" ).html( "<div id=\"img\"></div>" );
+                $( "#slide" ).attr( { "role": "main", "tabindex": 1} ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
                 $( this ).fadeIn();
 
@@ -1085,7 +1085,8 @@ $.fn.setupQuiz = function( num ) {
     }
 
     // build the question
-    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\" aria-label=\"Self Assessment\"><span class=\"icon-assessement\"></span> Self Assessment</div>" );
+    $( "#slide" ).attr( { "role": "main", "tabindex": 1} )
+                 .html( "<div id=\"quiz\"><div class=\"header\" aria-label=\"Self Assessment\"><span class=\"icon-assessement\"></span> Self Assessment</div>" );
 
     if ( !questions[index].taken ) {
 
@@ -1536,7 +1537,7 @@ $.fn.loadNote = function( num ) {
                     .attr( { "tabindex": 1, "role": "complementary", "aria-label": "Notes" } )
                     .html( note ).hide().fadeIn( "fast" );
                     
-        $( "#currentSlide" ).append( "This " + media + " contains notes." );
+        $( "#currentSlide" ).append( "This " + media.toLowerCase() + " contains notes." );
         
         if ( $( "#note" ).find( "a" ).length ) {
 
@@ -1547,12 +1548,31 @@ $.fn.loadNote = function( num ) {
     
         }
         
+        setTimeout(function() {
+            
+            if ( mediaPlayer !== null ) {
+            
+                mediaPlayer.on( "ended", function() {
+                    
+                    $( "#hasNote" ).html("This " + media.toLowerCase() + " contains notes.  Please navigate to the notes area with your keyboard.");
+                    
+                });
+                
+            } else {
+                
+                $( "#hasNote" ).html("This " + media.toLowerCase() + " contains notes. Please navigate to the notes area with your keyboard.");
+                
+            }
+            
+        }, 3000);
+        
     } else {
         
         $( "#note" ).addClass( "noNotes" )
                     .removeAttr( "role" )
                     .removeAttr( "aria-label" )
                     .attr( { "tabindex": -1, "aria-hidden": true } );
+        $( "#hasNote" ).empty();
                     
         $.fn.getProgramLogo();
         
@@ -1696,11 +1716,23 @@ $.fn.updateSlideNum = function( num ) {
             
                 mediaPlayer.on( "ended", function() {
                     
+                    if ( $( "#note" ).hasClass( "noNote" ) === false ) {
+                        
+                        $( "#hasNote" ).html("This " + media + " contains notes.");
+                        
+                    }
+                    
                     $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + ".");
                     
                 });
                 
             } else {
+                
+                if ( $( "#note" ).hasClass( "noNote" ) === false ) {
+                        
+                    $( "#hasNote" ).html("This " + media + " contains notes.");
+                    
+                }
                 
                 $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + ".");
                 
@@ -2305,7 +2337,7 @@ $.fn.htmlEntities = function( str ) {
 // global keyboard events
 $.fn.keyboardEvents = function() {
 
-    $( document ).keypress( function(e) {
+    $( document ).keydown( function(e) {
         
         if ( mediaPlayer !== null ) {
             
