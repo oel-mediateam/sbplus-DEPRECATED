@@ -395,6 +395,22 @@ p {
         @include animation-properties( (animation-iteration-count: infinite) );
         @include transform-origin(center, center);
     }
+    
+    @keyframes spin {
+        
+        from {
+            
+            @include rotate( 0deg );
+            
+        }
+        
+        to {
+            
+            @include rotate( 360deg );
+            
+        }
+        
+    }
 
 } // #player
 

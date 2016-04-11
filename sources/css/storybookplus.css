@@ -304,7 +304,17 @@ p {
     -ms-transform-origin: center center;
     -webkit-transform-origin: center center;
     transform-origin: center center; }
-
+@keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  to {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
 #content {
   width: 100%;
   float: left;

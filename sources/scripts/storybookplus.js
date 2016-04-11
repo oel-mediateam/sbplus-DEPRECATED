@@ -200,52 +200,26 @@ $.fn.parseContent = function( xml ) {
         noteArray[topicCount] = $.fn.stripScript( $( this ).find( "note" ).text() );
 
         if ( topicSrc[topicCount] === "quiz" ) {
-
-            var questionNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).text() ),
-                questionImg = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).attr( "img" ) ),
-                questionAudio = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).attr( "audio" ) ),
-                choiceNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).text() ),
-                choiceImg = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).attr( "useImg" ) ),
-                wrongFeedbackNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "wrongFeedback" ).text() ),
-                correctFeedbackNode = $.fn.stripScript( XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('correctFeedback').text() ),
-                quizTypeAttr = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).attr( "type" ) ),
-                answerNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "answer" ).text() );
+            
+            var quizNode = XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" );
+            
+            var questionNode        = $.fn.stripScript( quizNode.find( "question" ).text() ),
+                questionImg         = $.trim( quizNode.find( "question" ).attr( "img" ) ),
+                questionAudio       = $.trim( quizNode.find( "question" ).attr( "audio" ) ),
+                choiceNode          = $.fn.stripScript( quizNode.find( "choice" ).text() ),
+                choiceImg           = $.trim( quizNode.find( "choice" ).attr( "useImg" ) ),
+                wrongFeedbackNode   = $.fn.stripScript( quizNode.find( "wrongFeedback" ).text() ),
+                correctFeedbackNode = $.fn.stripScript( quizNode.find( "correctFeedback" ).text() ),
+                quizTypeAttr        = $.trim( quizNode.attr( "type" ) ),
+                answerNode          = $.fn.stripScript( quizNode.find( "answer" ).text() );
 
             var quiz = {};
-
             quiz.id = topicCount;
             quiz.type = quizTypeAttr;
             quiz.question = questionNode;
-
-            if ( questionImg !== "" ) {
-
-                quiz.img = questionImg;
-
-            } else {
-
-                quiz.img = "";
-
-            }
-
-            if ( questionAudio !== "" ) {
-
-                quiz.audio = questionAudio;
-
-            } else {
-
-                quiz.audio = "";
-
-            }
-
-            if ( choiceImg !== "" ) {
-
-                quiz.choiceImg = choiceImg;
-
-            } else {
-
-                quiz.choiceImg = "";
-
-            }
+            quiz.img = ( questionImg !== "" ) ? questionImg : "";
+            quiz.audio = ( questionAudio !== "" ) ? questionAudio : "";
+            quiz.choiceImg = ( choiceImg !== "" ) ? choiceImg : "";
 
             if ( choiceNode ) {
 
@@ -577,6 +551,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     
     var img;
     var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 );
+    var loader;
     
     if ( slideSource !== "quiz" ) {
 
@@ -586,7 +561,12 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
     if ( slideSource !== 'video:' && slideSource !== 'kaltura:' && slideSource !== 'youtube:' && slideSource !== 'vimeo:' ) {
         
-        $( "#progressing" ).fadeIn("fast");
+        loader = setTimeout( function() {
+            
+            $( "#progressing" ).fadeIn("fast");
+            
+        }, 3000 );
+        
         srcName = srcName.toLowerCase();
 
     }
@@ -701,16 +681,8 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     // load notes
     $( this ).loadNote( sNum );
     
-    // hide the progressing spinning quick
-    if ( $( "#progressing" ).length ) {
-
-        $( "#progressing" ).promise().done( function() {
-
-            $(this).fadeOut("fast");
-
-        } );
-
-    }
+    // hide the progressing spinning
+    clearTimeout( loader );
 
 };
 
@@ -776,7 +748,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
 
                 $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
 
-                    $.fn.loadVideoJsPlayer(playerID, src);
+                    $.fn.loadVideoJsPlayer( playerID, src );
 
                 } );
 
@@ -814,7 +786,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             playerID = "ytb";
             $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\"></video>" ).promise().done( function() {
 
-                    $.fn.loadVideoJsPlayer(playerID, src);
+                    $.fn.loadVideoJsPlayer( playerID, src );
 
             } );
         
@@ -825,7 +797,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
             playerID = "vm";
             $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\"></video>" ).promise().done( function() {
 
-                    $.fn.loadVideoJsPlayer(playerID, src);
+                    $.fn.loadVideoJsPlayer( playerID, src );
 
             } );
         
@@ -1358,8 +1330,8 @@ $.fn.displayAnswerChoices = function( index ) {
 
                         } else {
 
-                            var sa = $.fn.htmlEntities(stuAnswer);
-                            var qa = $.fn.htmlEntities(questions[index].answer[0]);
+                            var sa = $.fn.htmlEntities( stuAnswer );
+                            var qa = $.fn.htmlEntities( questions[index].answer[0] );
                                 
                             if ( sa === qa ) {
 
@@ -1543,17 +1515,17 @@ $.fn.loadNote = function( num ) {
             
                 mediaPlayer.on( "ended", function() {
                     
-                    $( "#hasNote" ).html("This " + media.toLowerCase() + " contains notes.  Please navigate to the notes area with your keyboard.");
+                    $( "#hasNote" ).html("This " + media.toLowerCase() + " contains notes. Please navigate to the notes area with your keyboard." );
                     
                 });
                 
             } else {
                 
-                $( "#hasNote" ).html("This " + media.toLowerCase() + " contains notes. Please navigate to the notes area with your keyboard.");
+                $( "#hasNote" ).html("This " + media.toLowerCase() + " contains notes. Please navigate to the notes area with your keyboard." );
                 
             }
             
-        }, 3000);
+        }, 3000 );
         
     } else {
         
@@ -1561,6 +1533,7 @@ $.fn.loadNote = function( num ) {
                     .removeAttr( "role" )
                     .removeAttr( "aria-label" )
                     .attr( { "tabindex": -1, "aria-hidden": true } );
+                    
         $( "#hasNote" ).empty();
                     
         $.fn.getProgramLogo();
@@ -1709,11 +1682,11 @@ $.fn.updateSlideNum = function( num ) {
                     
                     if ( $( "#note" ).hasClass( "noNote" ) === false ) {
                         
-                        $( "#hasNote" ).html("This " + media + " contains notes.");
+                        $( "#hasNote" ).html( "This " + media + " contains notes." );
                         
                     }
                     
-                    $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + ".");
+                    $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + "." );
                     
                 });
                 
@@ -1721,16 +1694,16 @@ $.fn.updateSlideNum = function( num ) {
                 
                 if ( $( "#note" ).hasClass( "noNote" ) === false ) {
                         
-                    $( "#hasNote" ).html("This " + media + " contains notes.");
+                    $( "#hasNote" ).html( "This " + media + " contains notes." );
                     
                 }
                 
-                $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + ".");
+                $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + "." );
                 
             }
             
             
-        }, 3000);
+        }, 3000 );
         
     } else {
         
@@ -1738,7 +1711,7 @@ $.fn.updateSlideNum = function( num ) {
         
     }
     
-    // listen to auto scroll
+    // listen to table of content auto scroll
     $( ".ui-selected" ).autoscroll();
 
 };
@@ -1760,11 +1733,13 @@ $.fn.bindImgMagnify = function() {
 
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"icon-expand\" title=\"Expand\"></span>" );
+            
             $( "#notesBtn, #tocBtn" ).hide( function() {
                 
                 $( this ).attr( 'aria-label', '' ).attr( 'aria-hidden', true );
                 
             } );
+            
             $( "#toc" ).css( 'left', '' ).show();
 
             if ( $( "#tocBtn" ).hasClass( 'active' ) ) {
@@ -2064,8 +2039,7 @@ $.fn.displayGetLessonError = function( status, exception ) {
  */
 $.fn.splitSelections = function( arg ) {
 
-    var selectionArray = arg.split("|");
-    return selectionArray;
+    return arg.split("|");
 
 };
 
