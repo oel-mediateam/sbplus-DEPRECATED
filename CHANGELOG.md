@@ -21,6 +21,7 @@
 * Added University Learning Store logo
 * Updated jQuery to version 2.2.3
 * "Disabled" multiple selection on Table of Contents
+* Slide loading spinner will not immediately show (or flicker) on slide load. Will show after 3 second of elapse.
 * Minor update, fixes, and improvements
 
 ---
