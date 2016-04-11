@@ -402,8 +402,8 @@
 		"outputAbbreviatedPath": "\/sources\/scripts\/jquery.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 0
 		},
 	"\/sources\/scripts\/jquery.min.js": {
 		"fileType": 64,
