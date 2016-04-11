@@ -34,6 +34,7 @@ var topicCount = 0,
     counter = 0,
     previousIndex = 0,
     tocIndex = 0,
+    tocClick = false,
     noteArray,
     topicSrc,
     topicTitle,
@@ -444,21 +445,34 @@ $.fn.initializePlayer = function() {
     } );
 
 	// setup toc selectable items
-	$( "#selectable li:first" ).addClass( "ui-selected" );
-
-    $( "#selectable" ).selectable();
-    $( "#selectable" ).selectable( "option", "appendTo", "#toc" );
-    $( "#selectable" ).on( "selectablestop", function() {
-
-        tocIndex = Number( $( ".ui-selected .selectedNum" ).html() ) - 1;
-
-        if ( tocIndex !== previousIndex ) {
+    $( "#selectable" ).selectable( {
+        
+        appendTo: "#toc",
+        autoRefresh: false,
+        selecting: function( event, ui ) {
             
-            $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
-            previousIndex = tocIndex;
+            if( $( ".ui-selected, .ui-selecting" ).length > 1) {
+                
+                $( ui.selecting ).removeClass( "ui-selecting" );
+              
+            }
+            
+        },
+        
+        stop: function() {
+            
+            tocClick = true;
+            tocIndex = Number( $( ".ui-selected .selectedNum" ).html() ) - 1;
 
+            if ( tocIndex !== previousIndex ) {
+                
+                $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
+                previousIndex = tocIndex;
+    
+            }
+            
         }
-
+        
     } );
     
     // bind left click event
@@ -547,28 +561,6 @@ $.fn.nextSlide = function() {
     previousIndex = counter;
     
 };
-
-/**
- * Check table of content position and scroll is out of view
- * @since 2.7.0
- *
- * @author Ethan S. Lin
- *
- * @param none
- * @return void
- *
- */
- $.fn.autoscroll = function() {
- 
-    var currentItemPos = Math.floor( $( this ).position().top );
-    
-    if ( currentItemPos < 32 || currentItemPos >= 488 ) {
-
-        $("#selectable").scrollTo( $(this), { duration: 500, offsetTop : ( $("#selectable")[0].clientHeight / 2 + $(this).height() ) } );
-           
-    }
-
- };
 
 /**
  * Load current slide
@@ -719,9 +711,6 @@ $.fn.loadSlide = function( slideSource, sNum ) {
         } );
 
     }
-    
-    // listen to auto scroll
-    $( ".ui-selected" ).autoscroll();
 
 };
 
@@ -1673,6 +1662,11 @@ $.fn.loadNote = function( num ) {
             logo = "ds_logo";
             alt = "University of Wisconsin Data Science";
         break;
+        
+        case "learning_store":
+            logo = "uls_logo";
+            alt = "University Learning Store";
+        break;
 
     }
     
@@ -1685,6 +1679,7 @@ $.fn.loadNote = function( num ) {
 /**
  * Update the current slide number indicator
  * @since 2.1.0
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  * @param int, current topic number
@@ -1697,12 +1692,8 @@ $.fn.updateSlideNum = function( num ) {
     var status = media + " " + currentNum + " of " + topicCount;
     
     counter = num;
-
-    $( "#selectable li" ).each( function() {
-        $( this ).removeClass( "ui-selected" );
-    } );
-
-    $( "#selectable li:nth-child(" + currentNum + ")" ).addClass( "ui-selected" );
+    
+    $( "#selectable" ).selectable( "refresh" ).selectItem( "li:nth-child(" + currentNum + ")" );
     $( "#currentStatus" ).html( "<span>" + status + "</span>" );
     
     // add screen reader only hidden element
@@ -1746,6 +1737,9 @@ $.fn.updateSlideNum = function( num ) {
         $( "#endPresentation" ).empty();
         
     }
+    
+    // listen to auto scroll
+    $( ".ui-selected" ).autoscroll();
 
 };
 
@@ -2282,6 +2276,28 @@ $.fn.getProgramDirectory = function() {
 };
 
 /**
+ * Check table of content position and scroll is out of view
+ * @since 2.7.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param none
+ * @return void
+ *
+ */
+ $.fn.autoscroll = function() {
+ 
+    var currentItemPos = Math.floor( $( this ).position().top );
+    
+    if ( currentItemPos < 32 || currentItemPos >= 488 ) {
+
+        $("#selectable").scrollTo( $(this), { duration: 500, offsetTop : ( $("#selectable")[0].clientHeight / 2 + $(this).height() ) } );
+           
+    }
+
+ };
+
+/**
  * Scroll to target
  * @since 2.7.0
  *
@@ -2290,7 +2306,6 @@ $.fn.getProgramDirectory = function() {
  * @return function
  *
  */
-
 $.fn.scrollTo = function( target, options, callback ) {
      
     if ( typeof options === 'function' && arguments.length === 2 ) {
@@ -2329,12 +2344,54 @@ $.fn.scrollTo = function( target, options, callback ) {
   
 };
 
-// replace specail character with html entities
-$.fn.htmlEntities = function( str ) {
-    return String(str).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+/**
+ * Select the item the table of content via button click
+ * @since 2.8.0
+ *
+ * @author Ethan S. Lin
+ * @param obj
+ * @return void
+ *
+ */
+$.fn.selectItem = function ( itemToSelect ) {
+    
+    if ( !tocClick ) {
+        
+        $( ".ui-selected", this ).not( itemToSelect ).removeClass( "ui-selected" ).addClass( "ui-unselecting" );
+        $( itemToSelect ).not( ".ui-selected" ).addClass( "ui-selected" );
+        
+    } else {
+        
+        tocClick = false;
+        
+    }
+    
 };
 
-// global keyboard events
+/**
+ * convert special character to html entities
+ * @since 2.8.0
+ *
+ * @author Ethan S. Lin
+ * @param str
+ * @return str
+ *
+ */
+$.fn.htmlEntities = function( str ) {
+    
+    return String(str).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    
+};
+
+/**
+ * Listen to globla keyboard event
+ * @since 2.8.0
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
 $.fn.keyboardEvents = function() {
 
     $( document ).keydown( function(e) {
