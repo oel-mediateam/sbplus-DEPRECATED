@@ -386,7 +386,7 @@ $.fn.initializePlayer = function() {
     $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#\" tabindex=\"-1\">" + instructor + "</a>" );
 
     // setup profile panel
-    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a role=\"button\" aria-label=\"Close Profile\" id=\"profileClose\" href=\"#\"><span aria-hidden=\"true\">&times;</span></a></div>" );
+    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a role=\"button\" id=\"profileClose\" href=\"#\" aria-label=\"Close Profile\" aria-controls=\"profile\" aria-expanded=\"true\" tabindex=\"1\"><span aria-hidden=\"true\">&times;</span></a></div>" );
     $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
 
     if ( media !== 'Video' ) {
@@ -400,17 +400,19 @@ $.fn.initializePlayer = function() {
 
         if ( $( "#profile" ).is(":visible") ) {
         
-            $( "#profile" ).fadeOut( 300, function(){
+            $( "#profile" ).fadeOut( "fast", function(){
                 
                 $( "#content" ).fadeIn( "fast" );
                 
-            } );
+            } ).attr( "aria-expanded", "false" );
             
+            $( "#info, a.instructorName, #profileClose" ).attr( 'aria-expanded', 'false' );
 
         } else {
 
-            $( "#profile" ).fadeIn( 300 );
+            $( "#profile" ).fadeIn( "fast" ).attr( "aria-expanded", "true" );
             $( "#content" ).hide();
+            $( "#info, a.instructorName, #profileClose" ).attr( 'aria-expanded', 'true' );
 
         }
 
@@ -1570,11 +1572,7 @@ $.fn.loadNote = function( num ) {
         } else {
             
             $( "#currentStatus" ).removeClass( "extendStatusWidth" );
-            $( "#notesBtn" ).show( function() {
-                
-                $( this ).attr( 'aria-label', 'toggle notes' ).attr( 'aria-hidden', false );
-                
-            } );
+            $( "#notesBtn" ).show();
             
         }
         
@@ -1752,11 +1750,7 @@ $.fn.bindImgMagnify = function() {
 
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
             $( this ).html( "<span class=\"icon-contract\" title=\"Contract\"></span>" );
-            $( "#tocBtn" ).show( function() {
-                
-                $( this ).attr( 'aria-label', 'toggle table of contents' ).attr( 'aria-hidden', false );
-                
-            } );
+            $( "#tocBtn" ).show();
             $( "#currentStatus" ).addClass( "extendStatusWidth" );
             $( "#toc" ).hide();
 

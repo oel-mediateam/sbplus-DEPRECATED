@@ -38,8 +38,8 @@
             <!-- black header bar -->
             <header>
                 <h1 id="lessonTitle" aria-hidden="true" tabindex="-1"></h1>
-                <span id="instructorName" aria-hidden="true"></span>
-                <a role="button" aria-label="Toggle Profile" id="info" class="infoIcn" href="#" tabindex="1"></a>
+                <span id="instructorName" aria-hidden="true" aria-expanded="false" aria-controls="profile"></span>
+                <a id="info" role="button" class="infoIcn" href="#" aria-label="Toggle Profile" aria-expanded="false" aria-controls="profile" tabindex="1"></a>
             </header>
 
             <!-- content -->
@@ -66,7 +66,7 @@
         </div>
 
         <!-- profile panel -->
-        <div id="profile" role="complementary">
+        <div id="profile" role="complementary" aria-expanded="false">
             <div class="photo"></div>
             <div class="bio"></div>
         </div>
