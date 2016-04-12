@@ -1563,16 +1563,12 @@ $.fn.loadNote = function( num ) {
         if ( $( "#note").hasClass( "noNotes" ) ) {
                 
             $( "#currentStatus" ).addClass( "extendStatusWidth" );
-            $( "#notesBtn" ).hide( function() {
-                
-                $( this ).attr( 'aria-label', '' ).attr( 'aria-hidden', true );
-                
-            } );
+            $( "#notesBtn" ).fadeOut(0);
             
         } else {
             
             $( "#currentStatus" ).removeClass( "extendStatusWidth" );
-            $( "#notesBtn" ).show();
+            $( "#notesBtn" ).fadeIn(0);
             
         }
         
@@ -1732,11 +1728,7 @@ $.fn.bindImgMagnify = function() {
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"icon-expand\" title=\"Expand\"></span>" );
             
-            $( "#notesBtn, #tocBtn" ).hide( function() {
-                
-                $( this ).attr( 'aria-label', '' ).attr( 'aria-hidden', true );
-                
-            } );
+            $( "#notesBtn, #tocBtn" ).fadeOut(0);
             
             $( "#toc" ).css( 'left', '' ).show();
 
@@ -1750,7 +1742,7 @@ $.fn.bindImgMagnify = function() {
 
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
             $( this ).html( "<span class=\"icon-contract\" title=\"Contract\"></span>" );
-            $( "#tocBtn" ).show();
+            $( "#tocBtn" ).fadeIn(0);
             $( "#currentStatus" ).addClass( "extendStatusWidth" );
             $( "#toc" ).hide();
 
