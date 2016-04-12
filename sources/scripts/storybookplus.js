@@ -1929,7 +1929,7 @@ $.fn.getDownloadableFiles = function() {
     var downloadBar = $( "#download_bar" );
     var url = window.location.href;
     var result = "";
-
+    
 	url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ) + directory;
 	downloadBar.html( "Loading downloadable items..." );
 
