@@ -1198,7 +1198,7 @@ $.fn.displayAnswerChoices = function( index ) {
 
     if ( !quizError ) {
 
-        $( "#quiz" ).append( "<div class=\"submitArea\"><a role=\"button\" id=\"check\" rel=\"" + index + "\" href=\"#\">SUBMIT</a></div>" );
+        $( "#quiz" ).append( "<div class=\"submitArea\"><a role=\"button\" id=\"check\" rel=\"" + index + "\" href=\"#\">SUBMIT</a></div><div class=\"sr-only\">. Please navigate to the self assessment area to answer the question.</div>" );
         $( "#slide" ).append( "</div>" );
 
         // give the quiz a second to build up
@@ -1500,7 +1500,7 @@ $.fn.loadNote = function( num ) {
                     .attr( { "tabindex": 1, "role": "complementary", "aria-label": "Notes" } )
                     .html( note ).hide().fadeIn( "fast" );
                     
-        $( "#currentSlide" ).append( "This " + media.toLowerCase() + " contains notes." );
+        $( "#currentSlide" ).append( " This " + media.toLowerCase() + " contains notes." );
         
         if ( $( "#note" ).find( "a" ).length ) {
 
@@ -1511,32 +1511,12 @@ $.fn.loadNote = function( num ) {
     
         }
         
-        setTimeout(function() {
-            
-            if ( mediaPlayer !== null ) {
-            
-                mediaPlayer.on( "ended", function() {
-                    
-                    $( "#hasNote" ).html("This " + media.toLowerCase() + " contains notes. Please navigate to the notes area with your keyboard." );
-                    
-                });
-                
-            } else {
-                
-                $( "#hasNote" ).html("This " + media.toLowerCase() + " contains notes. Please navigate to the notes area with your keyboard." );
-                
-            }
-            
-        }, 3000 );
-        
     } else {
         
         $( "#note" ).addClass( "noNotes" )
                     .removeAttr( "role" )
                     .removeAttr( "aria-label" )
                     .attr( { "tabindex": -1, "aria-hidden": true } );
-                    
-        $( "#hasNote" ).empty();
                     
         $.fn.getProgramLogo();
         
@@ -1663,57 +1643,72 @@ $.fn.updateSlideNum = function( num ) {
     $( "#selectable" ).selectable( "refresh" ).selectItem( "li:nth-child(" + currentNum + ")" );
     $( "#currentStatus" ).html( "<span>" + status + "</span>" );
     
-    // add screen reader only hidden element
-    $( "#currentSlide" ).html( "You are currently on " + media.toLowerCase() + " " + currentNum  + " of " + topicCount + ". " + $( ".ui-selected" ).attr( "title" ) + ". " );
+    // resets
+    $( "#hasNote" ).empty();
     
-    if ( currentNum === topicCount ) {
+    // add screen reader only hidden element
+    $( "#currentSlide" ).html( "You are currently on " + media.toLowerCase() + " " + currentNum  + " of " + topicCount + ". " + $( ".ui-selected" ).attr( "title" ) + "." );
         
-        setTimeout(function() {
-            
-            if ( mediaPlayer !== null ) {
-            
-                mediaPlayer.on( "ended", function() {
-                    
-                    if ( $( "#note" ).hasClass( "noNote" ) === false ) {
-                        
-                        $( "#hasNote" ).html( "This " + media + " contains notes." );
-                        
-                    }
-                    
-                    $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + "." );
-                    
-                });
+    // listen to table of content auto scroll
+    $( ".ui-selected" ).autoscroll();
+    
+    // set SR statuse after 3 seconds
+    setTimeout(function() {
+        
+        if ( mediaPlayer !== null ) {
+        
+            mediaPlayer.on( "ended", function() {
                 
-            } else {
-                
-                if ( $( "#note" ).hasClass( "noNote" ) === false ) {
-                        
-                    $( "#hasNote" ).html( "This " + media + " contains notes." );
+                $.fn.setSRStatus( currentNum, topicCount );
+                 
+            });
+            
+        } else {
+            
+            $.fn.setSRStatus( currentNum, topicCount );
+            
+        }
+        
+    }, 3000 );
+
+};
+
+/**
+ * Set hidden status message for screen reader elements
+ * @since 2.8.0
+ *
+ * @author Ethan S. Lin
+ * @param int, int
+ * @return void
+ *
+ */
+$.fn.setSRStatus = function( current, total ) {
+    
+    var notesMessage = "This " + media.toLowerCase() + " contains notes. Please navigate to the notes area.";
+    var endMessage = "End of presentation. Next button will take you back to the first " + media + ".";
+    
+    if ( $( "#note" ).hasClass( "noNotes" ) === false ) {
                     
-                }
-                
-                $( "#endPresentation" ).html("End of presentation. Next button will take you back to the first " + media + "." );
-                
-            }
-            
-            
-        }, 3000 );
+        $( "#hasNote" ).html( notesMessage );
+        
+    }
+    
+    if ( current === total ) {
+        
+        $( "#endPresentation" ).html( endMessage );
         
     } else {
-        
+    
         $( "#endPresentation" ).empty();
         
     }
     
-    // listen to table of content auto scroll
-    $( ".ui-selected" ).autoscroll();
-
 };
 
 /**
  * Magnify the current slide image and video
  * @since 2.0.0
- * @updated 2.7.0
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  * @return void
