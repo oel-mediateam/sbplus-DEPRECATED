@@ -1048,8 +1048,7 @@ $.fn.setupQuiz = function( num ) {
     }
 
     // build the question
-    $( "#slide" ).attr( { "role": "main", "tabindex": 1} )
-                 .html( "<div id=\"quiz\"><div class=\"header\" aria-label=\"Self Assessment\"><span class=\"icon-assessement\"></span> Self Assessment</div>" );
+    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\" aria-label=\"Self Assessment\"><span class=\"icon-assessement\"></span> Question for Self Assessment</div>" );
 
     if ( !questions[index].taken ) {
 
@@ -1202,7 +1201,7 @@ $.fn.displayAnswerChoices = function( index ) {
         $( "#slide" ).append( "</div>" );
 
         // give the quiz a second to build up
-        $( "#quiz" ).hide().fadeIn();
+        //$( "#quiz" ).hide().fadeIn();
 
         // click event to check answer
         $( "#check" ).on( "click", function() {
@@ -1397,7 +1396,7 @@ $.fn.showFeedback = function( index ) {
     var questionImg = "";
     var audio = "";
 
-    $( "#slide" ).html( "<div id=\"quiz\"><div aria-label=\"Self Assessment Feedback\" class=\"header\"><span class=\"icon-assessement\"></span> Self Assessment Feedback</div>" );
+    $( "#slide" ).html( "<div id=\"quiz\"><div aria-label=\"Self Assessment Feedback\" class=\"header\"><span class=\"icon-assessement\"></span> Feedback for Self Assessment</div>" );
 
     if ( questions[index].type !== "sa" ) {
 
