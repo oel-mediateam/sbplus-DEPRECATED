@@ -4,7 +4,7 @@
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
  * @version: 2.8.0
- * Released MM/DD/2016
+ * Released 06/06/2016
  *
  * @license: GNU GENERAL PUBLIC LICENSE v3
  *
@@ -377,7 +377,7 @@ $.fn.setupPlayer = function() {
 $.fn.initializePlayer = function() {
 
     // hide the error msg and splash screen
-    $( "#splash_screen" ).hide();
+    $( "#splash_screen" ).remove();
 
     // setup up player header
     $( "#lessonTitle" ).attr( "title", lessonTitle );
@@ -400,18 +400,13 @@ $.fn.initializePlayer = function() {
 
         if ( $( "#profile" ).is(":visible") ) {
         
-            $( "#profile" ).fadeOut( "fast", function(){
-                
-                $( "#content" ).fadeIn( "fast" );
-                
-            } ).attr( "aria-expanded", "false" );
+            $( "#profile" ).fadeOut( "fast" ).attr( "aria-expanded", "false" );
             
             $( "#info, a.instructorName, #profileClose" ).attr( 'aria-expanded', 'false' );
 
         } else {
 
             $( "#profile" ).fadeIn( "fast" ).attr( "aria-expanded", "true" );
-            $( "#content" ).hide();
             $( "#info, a.instructorName, #profileClose" ).attr( 'aria-expanded', 'true' );
 
         }
@@ -487,7 +482,7 @@ $.fn.initializePlayer = function() {
     $.fn.loadProfilePhoto();
 
     // display the player
-    $( "#player" ).fadeIn( 'fast' );
+    //$( "#player" ).fadeIn( 'fast' );
     
     // listen to global keyboard event
     $.fn.keyboardEvents();
