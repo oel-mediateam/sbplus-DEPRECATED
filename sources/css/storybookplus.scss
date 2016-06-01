@@ -1,7 +1,15 @@
-/*
-
+/*!
+ * Storybook Plus
+ *
+ * @author: Ethan Lin
+ * @url: https://github.com/oel-mediateam/sbplus
+ * @version: 2.8.0
+ * Released 06/06/2016
+ *
+ * @license: GNU GENERAL PUBLIC LICENSE v3
+ *
     Storybook Plus is an web application that serves multimedia contents.
-    Copyright (C) 2013-2015  Ethan S. Lin, UWEX CEOEL Media Services
+    Copyright (C) 2013-2016  Ethan S. Lin, UWEX CEOEL Media Services
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,7 +23,8 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *
+ */
 // variables
 $font-size: 14px;
 $gutter: 15px;
@@ -46,17 +55,16 @@ $border-color: #ccc;
 // GENERAL
 html {
     font-size: $font-size;
-    margin: 0;
-    padding: 0;
 }
 
 body {
-    @extend html;
+    font-size: rem( $font-size );
 	line-height: rem( 16px );
 	font-family: Arial, Helvetica, sans-serif;
 	color: #000;
 	background-color: transparent;
-	@include clear;
+	margin: 0;
+    padding: 0;
 }
 
 p {
@@ -88,10 +96,23 @@ p {
 
 // PLAYER WRAPPER
 #storybook_plus_wrapper {
+    
     position: relative;
-	width: rem( 901px );
-	@include clear;
 	
+	*:focus {
+    
+        outline: 1px dashed #888;
+        
+    }
+	
+}
+
+#storybook_plus_wrapper:after {
+    
+    content: "";
+    display: table;
+    clear: both;
+    
 }
 
 #storybook_plus_wrapper.withQuiz {
@@ -278,7 +299,8 @@ p {
 
 // SPLASH SCREEN
 #splash_screen {
-
+    
+    position: absolute;
 	width: rem( 900px );
 	height: rem( 576px );
 	padding: rem( 180px ) rem( 200px ) rem( 200px );
@@ -286,7 +308,7 @@ p {
 	background-color: #fff;
 	background-position: left bottom;
 	background-repeat: no-repeat;
-	cursor: pointer;
+	z-index: 99;
 	@include box-sizing( "border-box" );
 
 	p {
@@ -324,9 +346,8 @@ p {
 
 // PLAYER
 #player {
-
-	display: none;
-	@include clear;
+    
+    width: rem( 900px );
 
 	// HEADER (TOP BLACK) BAR
     header {
@@ -338,6 +359,7 @@ p {
     	font-weight: bold;
     	padding: rem( 7px ) rem( $gutter ) 0;
     	background-color: #131313;
+    	@include clear;
 
     	#lessonTitle {
         	display: inline-block;
@@ -389,6 +411,22 @@ p {
         @include animation-properties( (animation-iteration-count: infinite) );
         @include transform-origin(center, center);
     }
+    
+    @keyframes spin {
+        
+        from {
+            
+            @include rotate( 0deg );
+            
+        }
+        
+        to {
+            
+            @include rotate( 360deg );
+            
+        }
+        
+    }
 
 } // #player
 
@@ -396,8 +434,8 @@ p {
 // PLAYER CONTENT
 #content {
 
-    width: 100%;
-	@include clear;
+    width: rem( 902px );
+    overflow: hidden;
 
 	// SLIDE NOTE AREA
     #slideNote {
@@ -426,7 +464,7 @@ p {
 	// SLIDE
     #slide {
 
-    	width: 100%;
+    	width: rem( 640px );
     	height: rem( 360px );
     	background: #fff;
     	overflow: hidden;
@@ -453,6 +491,7 @@ p {
         left: rem( 1px );
     	width: rem( 640px );
     	height: rem( 360px );
+    	background-color: #000;
     }
     
     #ap {
@@ -885,13 +924,16 @@ p {
 #profile {
 
 	display: none;
-	width: 100%;
+	position: absolute;
+	width: rem( 900px );
 	height: rem( 546px );
 	padding: rem( 20px );
 	color: #fff;
 	background-color: #fafafa;
 	border: rem( 1px ) solid $border-color;
 	padding-top: rem( 30px );
+	top: rem( 30px );
+	z-index: 99;
 	@include clear;
 	@include box-sizing( border-box );
 
@@ -931,8 +973,8 @@ p {
         position: absolute;
         font-size: rem( 12px );
         line-height: rem( 12px );
-        top: rem( 35px );
-        right: rem( 16px );
+        top: rem( 5px );
+        right: rem( 10px );
         @include clear;
 
         a, a:link, a:visited, a:hover {
@@ -958,44 +1000,41 @@ p {
 	text-align: right;
 	@include clear;
 
-	ul {
+	.download_item {
 
-	    display: inline-block;
-    	margin: 0 0 0 rem( 30px );
-    	padding: 0;
-    	list-style: none;
+    	display: inline-block;
+    	margin-left: rem( 8px );
 
-    	li {
+    	a, a:visited {
+        	position: relative;
+        	display: block;
+        	color: #818181;
+        	text-decoration: none;
+        	padding: rem( 5px ) rem( 10px ) rem( 5px ) rem( 8px );
+        	border: #939393 solid rem( 1px );
+        	background-color: #fdfdfd;
+        	@include transition-property( color, border, border-color, background-color );
+        	@include transition-duration( .3s );
+        	@include transition-timing-function( ease-out );
+        	@include user-select( none );
+    	}
 
-        	display: inline-block;
-        	margin-left: rem( 10px );
-
-        	a, a:visited {
-            	position: relative;
-            	display: block;
-            	color: #818181;
-            	text-decoration: none;
-            	padding: rem( 5px ) rem( 10px ) rem( 5px ) rem( 8px );
-            	border: #939393 solid rem( 1px );
-            	background-color: #fdfdfd;
-            	@include transition-property( color, border, border-color, background-color );
-            	@include transition-duration( .3s );
-            	@include transition-timing-function( ease-out );
-            	@include user-select( none );
-        	}
-
-        	a:hover {
-        	    color: #333;
-            	border-color: #333;
-            	background-color: #FFF;
-            	@include transition-property( color, border, border-color, background-color );
-            	@include transition-duration( .3s );
-            	@include transition-timing-function( ease-in );
-            }
-
+    	a:hover {
+    	    color: #333;
+        	border-color: #333;
+        	background-color: #FFF;
+        	@include transition-property( color, border, border-color, background-color );
+        	@include transition-duration( .3s );
+        	@include transition-timing-function( ease-in );
         }
 
-    } // ul
+    }
+    
+    .download_item:first-child {
+
+    	margin-left: 0;
+
+    }
 
 } // #download_bar
 
