@@ -9,8 +9,8 @@
 		"enableSmartQuotes": 1,
 		"escapeLineBreaks": 0,
 		"fileType": 4096,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/CHANGELOG.md",
 		"maskEmailAddresses": 1,
 		"outputAbbreviatedPath": "\/CHANGELOG.html",
@@ -213,8 +213,8 @@
 		"enableSmartQuotes": 1,
 		"escapeLineBreaks": 0,
 		"fileType": 4096,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/README.md",
 		"maskEmailAddresses": 1,
 		"outputAbbreviatedPath": "\/README.html",
@@ -325,7 +325,7 @@
 		"outputAbbreviatedPath": "\/sources\/css\/storybookplus.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
+		"outputStyle": 3,
 		"shouldRunAutoprefixer": 0,
 		"shouldRunBless": 0,
 		"useLibsass": 0
@@ -390,11 +390,11 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/scripts\/jquery.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/jquery-min.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/jquery.min.js",
 		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
+		"outputPathIsSetByUser": 1,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 0
 		},
 	"\/sources\/scripts\/jquery.min.js": {
 		"fileType": 64,
@@ -409,8 +409,8 @@
 		},
 	"\/sources\/scripts\/kwidgetgetsources.js": {
 		"fileType": 64,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/sources\/scripts\/kwidgetgetsources.js",
 		"outputAbbreviatedPath": "\/sources\/scripts\/min\/kwidgetgetsources-min.js",
 		"outputPathIsOutsideProject": 0,
@@ -420,8 +420,8 @@
 		},
 	"\/sources\/scripts\/mwembedloader.js": {
 		"fileType": 64,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/sources\/scripts\/mwembedloader.js",
 		"outputAbbreviatedPath": "\/sources\/scripts\/min\/mwembedloader-min.js",
 		"outputPathIsOutsideProject": 0,
@@ -456,9 +456,9 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/combined.video.js",
-		"outputAbbreviatedPath": "\/sources\/videoplayer\/min\/combined.video-min.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/combined.video.min.js",
 		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
+		"outputPathIsSetByUser": 1,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
@@ -794,36 +794,36 @@
 		},
 	"\/sources\/videoplayer\/plugins\/resolution\/videojs-resolution-switcher.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/videojs-resolution-switcher.js",
 		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/min\/videojs-resolution-switcher-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 0
 		},
 	"\/sources\/videoplayer\/plugins\/vimeo\/vimeo.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/vimeo.js",
 		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/min\/vimeo-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 0
 		},
 	"\/sources\/videoplayer\/plugins\/youtube\/youtube.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.js",
 		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/min\/youtube-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 0
 		},
 	"\/sources\/videoplayer\/video-js.min.css": {
 		"fileType": 16,
@@ -839,6 +839,34 @@
 	],
 "lastSavedByUser": "Ethan Lin",
 "manualImportLinks": {
+	"\/sources\/scripts\/jquery.js": [
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/sources\/scripts\/jquery-ui.min.js",
+			"position": 0,
+			"type": 1
+			}
+		],
+	"\/sources\/videoplayer\/combined.video.js": [
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/videojs-resolution-switcher.js",
+			"position": 0,
+			"type": 1
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.js",
+			"position": 1,
+			"type": 1
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/vimeo.js",
+			"position": 2,
+			"type": 1
+			}
+		]
 	},
 "projectAttributes": {
 	"bowerAbbreviatedPath": "",
@@ -1444,7 +1472,7 @@
 	"sassUseLibsass": 0,
 	"shouldRunAutoprefixer": 0,
 	"shouldRunBless": 0,
-	"skippedItemsString": ".svn, .git, .hg, log, _logs, _cache, cache, logs, node_modules",
+	"skippedItemsString": "_cache, logs, _logs, cache, .git, log, node_modules, .svn, .hg",
 	"slimAutoOutputPathEnabled": 1,
 	"slimAutoOutputPathFilenamePattern": "*.html",
 	"slimAutoOutputPathRelativePath": "",
