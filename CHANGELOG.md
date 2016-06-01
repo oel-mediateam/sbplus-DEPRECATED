@@ -1,7 +1,32 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
-_none_
+**none at the moment**
+
+---
+###2.8.0 (06-06-2016)
+* Video and audio player now have a new button: playback rate
+* Changed download button to a group of buttons rather a list of buttons for screen reader sake
+* Video and audio caption now show up on all browsers
+* Updated VideoJS to version 5.8.5
+* Updated index file
+* Removed all forced/hard focus due to undesired experience for non-disabled users.
+* Removed WASD keyboard press events to traversing the slides from v2.7.0 as they were conflicting with screen reader keyboard events.
+* Added a global keyboard press event the SPACE key to toggle play/pause of the VideoJS
+* Updated all tab indexes
+* Updated sr-only elements
+* Added ARIA live regions to announce player status
+* Display the "START" word on the splash screen rather than a play icon
+* The "START" button on splash screen is now the only clickable element
+* Changed semantic of the word "play" to "start"
+* Fixed the trailing/scrolling empty area on page
+* Updated Kaltura API to version 2.36
+* Fixed caption not showing up for videos from Kalutra. SB+ will now request Kaltura server to return a dynamic WebVTT file with the uploaded SRT file. Cause: VideoJS dropped (unofficial) support for SRT and officially supports WebVTT.
+* Added University Learning Store logo
+* Updated jQuery to version 2.2.3
+* "Disabled" multiple selection on Table of Contents
+* Slide loading spinner will not immediately show (or flicker) on slide load. Will show after 3 second of elapse.
+* Minor update, fixes, and improvements
 
 ---
 ###2.7.0 (08-25-2015)

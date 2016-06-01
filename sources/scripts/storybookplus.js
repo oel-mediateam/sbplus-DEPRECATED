@@ -3,13 +3,13 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.7.0
- * Released 8/25/2015
+ * @version: 2.8.0
+ * Released 06/06/2016
  *
  * @license: GNU GENERAL PUBLIC LICENSE v3
  *
     Storybook Plus is an web application that serves multimedia contents.
-    Copyright (C) 2013-2015  Ethan S. Lin, UWEX CEOEL Media Services
+    Copyright (C) 2013-2016  Ethan S. Lin, UWEX CEOEL Media Services
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ var topicCount = 0,
     counter = 0,
     previousIndex = 0,
     tocIndex = 0,
+    tocClick = false,
     noteArray,
     topicSrc,
     topicTitle,
@@ -53,9 +54,12 @@ var PROFILE,
     duration;
 
 var mediaPlayer = null,
+    isKaltura = false,
+    flavors = {},
     kalturaLoaded = 0;
 
-var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
+//var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
+var ROOT_PATH = "../sources/";
 
 // var tech = navigator.userAgent;
 // var IS_CHROME = (/Chrome/i).test( tech );
@@ -196,52 +200,26 @@ $.fn.parseContent = function( xml ) {
         noteArray[topicCount] = $.fn.stripScript( $( this ).find( "note" ).text() );
 
         if ( topicSrc[topicCount] === "quiz" ) {
-
-            var questionNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).text() ),
-                questionImg = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).attr( "img" ) ),
-                questionAudio = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "question" ).attr( "audio" ) ),
-                choiceNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).text() ),
-                choiceImg = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "choice" ).attr( "useImg" ) ),
-                wrongFeedbackNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "wrongFeedback" ).text() ),
-                correctFeedbackNode = $.fn.stripScript( XMLData.find('topic:eq(' + topicCount + ')').find('quiz').find('correctFeedback').text() ),
-                quizTypeAttr = $.trim( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).attr( "type" ) ),
-                answerNode = $.fn.stripScript( XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" ).find( "answer" ).text() );
+            
+            var quizNode = XMLData.find( "topic:eq(" + topicCount + ")" ).find( "quiz" );
+            
+            var questionNode        = $.fn.stripScript( quizNode.find( "question" ).text() ),
+                questionImg         = $.trim( quizNode.find( "question" ).attr( "img" ) ),
+                questionAudio       = $.trim( quizNode.find( "question" ).attr( "audio" ) ),
+                choiceNode          = $.fn.stripScript( quizNode.find( "choice" ).text() ),
+                choiceImg           = $.trim( quizNode.find( "choice" ).attr( "useImg" ) ),
+                wrongFeedbackNode   = $.fn.stripScript( quizNode.find( "wrongFeedback" ).text() ),
+                correctFeedbackNode = $.fn.stripScript( quizNode.find( "correctFeedback" ).text() ),
+                quizTypeAttr        = $.trim( quizNode.attr( "type" ) ),
+                answerNode          = $.fn.stripScript( quizNode.find( "answer" ).text() );
 
             var quiz = {};
-
             quiz.id = topicCount;
             quiz.type = quizTypeAttr;
             quiz.question = questionNode;
-
-            if ( questionImg !== "" ) {
-
-                quiz.img = questionImg;
-
-            } else {
-
-                quiz.img = "";
-
-            }
-
-            if ( questionAudio !== "" ) {
-
-                quiz.audio = questionAudio;
-
-            } else {
-
-                quiz.audio = "";
-
-            }
-
-            if ( choiceImg !== "" ) {
-
-                quiz.choiceImg = choiceImg;
-
-            } else {
-
-                quiz.choiceImg = "";
-
-            }
+            quiz.img = ( questionImg !== "" ) ? questionImg : "";
+            quiz.audio = ( questionAudio !== "" ) ? questionAudio : "";
+            quiz.choiceImg = ( choiceImg !== "" ) ? choiceImg : "";
 
             if ( choiceNode ) {
 
@@ -283,7 +261,7 @@ $.fn.parseContent = function( xml ) {
 /**
  * Set up the player
  * @since 2.0.0
- * @updated 2.7.0
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -325,15 +303,16 @@ $.fn.setupPlayer = function() {
     }
 
 	// loop to populate the table of contents
-	$( "#selectable" ).before( '<div id="toc_heading" class="toc_heading" tabindex="3">Table of Contents</div>' );
+	$( "#selectable" ).before( '<div id="toc_heading" class="toc_heading" aria-hidden="true" tabindex="-1">Table of Contents</div>' );
 
     $.each( topicTitle, function( i ) {
         
         var breakClass = "";
+        var menuItem = "";
         
 		if ( topicSrc[i] === "quiz" ) {
 
-		    selfAssessmentIcon = " <span class=\"icon-assessement light\"></span>";
+		    selfAssessmentIcon = "<span class=\"icon-assessement light\"><span class=\"sr-only\">Self Assessement.</span></span> ";
 
 		} else {
 
@@ -348,13 +327,23 @@ $.fn.setupPlayer = function() {
             
         }
         
-		$( "#selectable" ).append( "<li class=\"ui-widget-content" + breakClass + "\" role=\"menuitem\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"slideNum\" aria-hidden=\"true\">" + $.fn.addLeadingZero( i + 1 ) + ".</div><div class=\"title\"><span class=\"sr-only\" aria-hidden=\"false\">Slide " + ( i + 1 ) + " of " + topicCount + ".</span> " + topicTitle[i] + selfAssessmentIcon + "</div></li>" );
+        if ( selfAssessmentIcon ) {
+            
+            menuItem = "<li class=\"ui-widget-content" + breakClass + "\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"title\"><span class=\"sr-only\">" + media + " <span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span> of " + topicCount + ".</span> " + selfAssessmentIcon + topicTitle[i] + "</div></li>";
+            
+        } else {
+            
+            menuItem = "<li class=\"ui-widget-content" + breakClass + "\" title=\"" + $.fn.htmlEntities( topicTitle[i] ) + "\">" + "<div class=\"title\"><span class=\"sr-only\">" + media + "</span> <span class=\"selectedNum\">" + $.fn.addLeadingZero( i + 1 ) + "</span><span class=\"sr-only\">of " + topicCount + "</span>. " + topicTitle[i] + "<span class=\"sr-only\">.</span></div></li>";
+            
+        }
+        
+		$( "#selectable" ).append( menuItem );
 
 	} );
 
 	// set up the splash screen
     $( "#splash_screen" ).css( "background-image", "url(assets/splash.jpg)" );
-    $( "#splash_screen" ).append( "<p tabindex=\"1\"><span class=\"sr-only\">Storybook Plus presentation.</span>" + lessonTitle + "</p><p tabindex=\"1\">" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p tabindex=\"1\"><small>" + duration + "</small></p>" : "" ) + "<a tabindex=\"1\" role=\"button\" class=\"playBtn\" href=\"#\"><span class=\"sr-only\">Play</span></a>" );
+    $( "#splash_screen" ).append( "<p tabindex=\"1\">" + lessonTitle + "</p><p tabindex=\"1\">" + instructor + "</p>" + ( ( duration !== 0 ) ? "<p tabindex=\"1\"><small>" + duration + "</small></p>" : "" ) + "<a tabindex=\"1\" role=\"button\" class=\"playBtn\" aria-label=\"Start Presentation\" href=\"#\">START</a>" );
     
     // if accent tag from XML has value
     if ( accent.length ) {
@@ -362,12 +351,9 @@ $.fn.setupPlayer = function() {
         $( ".playBtn" ).css( "background-color", accent );
         
     }
-    
-    // focus on the play button
-    // $( "#splash_screen" ).focus();
 
     // bind click event to splash screen
-    $( "#splash_screen, #playBtn" ).on( "click", function() {
+    $( ".playBtn" ).on( "click", function() {
 
         $.fn.initializePlayer();
         return false;
@@ -382,7 +368,7 @@ $.fn.setupPlayer = function() {
 /**
  * Initialize the player
  * @since 2.0.0
- * @updated 2.7.1
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -391,18 +377,17 @@ $.fn.setupPlayer = function() {
 $.fn.initializePlayer = function() {
 
     // hide the error msg and splash screen
-    $( "#splash_screen" ).hide();
+    $( "#splash_screen" ).remove();
 
     // setup up player header
     $( "#lessonTitle" ).attr( "title", lessonTitle );
     $( "#lessonTitle" ).html( lessonTitle );
 
-    $( "#instructorName" ).html( "<a tabindex=\"1\" role=\"button\" class=\"instructorName\" href=\"#\">" + instructor + "</a>" );
+    $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#\" tabindex=\"-1\">" + instructor + "</a>" );
 
     // setup profile panel
-    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a tabindex=\"4\" role=\"button\" id=\"profileClose\" href=\"#\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">close</span></a></div>" );
+    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a role=\"button\" id=\"profileClose\" href=\"#\" aria-label=\"Close Profile\" aria-controls=\"profile\" aria-expanded=\"true\" tabindex=\"1\"><span aria-hidden=\"true\">&times;</span></a></div>" );
     $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
-
 
     if ( media !== 'Video' ) {
 
@@ -415,26 +400,14 @@ $.fn.initializePlayer = function() {
 
         if ( $( "#profile" ).is(":visible") ) {
         
-            $( "#profile" ).fadeOut( 300, function(){
-                
-                $( "#content" ).fadeIn( "fast", function() {
-                    
-                    // focus on the lesson header
-                    $( "#selectable" ).focus();
-                    
-                } );
-                
-            } );
+            $( "#profile" ).fadeOut( "fast" ).attr( "aria-expanded", "false" );
             
+            $( "#info, a.instructorName, #profileClose" ).attr( 'aria-expanded', 'false' );
 
         } else {
 
-            $( "#profile" ).fadeIn( 300, function() {
-                
-                $( ".bio" ).focus();
-                
-            } );
-            $( "#content" ).hide();
+            $( "#profile" ).fadeIn( "fast" ).attr( "aria-expanded", "true" );
+            $( "#info, a.instructorName, #profileClose" ).attr( 'aria-expanded', 'true' );
 
         }
 
@@ -443,25 +416,38 @@ $.fn.initializePlayer = function() {
     } );
 
 	// setup toc selectable items
-	$( "#selectable li:first" ).addClass( "ui-selected" );
+    $( "#selectable" ).selectable( {
+        
+        appendTo: "#toc",
+        autoRefresh: false,
+        selecting: function( event, ui ) {
+            
+            if( $( ".ui-selected, .ui-selecting" ).length > 1) {
+                
+                $( ui.selecting ).removeClass( "ui-selecting" );
+              
+            }
+            
+        },
+        
+        stop: function() {
+            
+            tocClick = true;
+            tocIndex = Number( $( ".ui-selected .selectedNum" ).html() ) - 1;
 
-    $( "#selectable" ).selectable();
-    $( "#selectable" ).selectable( "option", "appendTo", "#toc" );
-    $( "#selectable" ).on( "selectablestop", function() {
-
-        tocIndex = Number( $( ".ui-selected .slideNum" ).html().replace(".","") ) - 1;
-
-        if ( tocIndex !== previousIndex ) {
-
-            $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
-            previousIndex = tocIndex;
-
+            if ( tocIndex !== previousIndex ) {
+                
+                $.fn.loadSlide( topicSrc[tocIndex], tocIndex );
+                previousIndex = tocIndex;
+    
+            }
+            
         }
-
+        
     } );
-
+    
     // bind left click event
-    $( "#leftBtn" ).on( "click", function() {
+    $( "#leftBtn, .hidden-pre-btn" ).on( "click", function() {
 
         $.fn.previousSlide();
         return false;
@@ -469,7 +455,7 @@ $.fn.initializePlayer = function() {
     } );
 
     // bind right click event
-    $( "#rightBtn" ).on( "click", function() {
+    $( "#rightBtn, .hidden-next-btn" ).on( "click", function() {
 
         $.fn.nextSlide();
         return false;
@@ -479,9 +465,9 @@ $.fn.initializePlayer = function() {
     // add the zoom boutton to the control after the slide status
     if ( quizDetected === true || version >= 230 ) {
 
-        $( "#control" ).append( "<span role=\"button\" aria-label=\"expand or contract slide image\" tabindex=\"2\" id=\"magnifyBtn\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
-        $( "#magnifyBtn" ).before( "<span role=\"button\" id=\"tocBtn\" aria-label=\"Toggle table of content\" tabindex=\"3\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
-        $( "#magnifyBtn" ).before( "<span id=\"notesBtn\" role=\"button\" aria-label=\"toggle notes\" tabindex=\"3\"><span class=\"notes\" title=\"Toggle Notes\"></span></span>" );
+        $( "#control" ).append( "<span tabindex=\"-1\" id=\"magnifyBtn\" aria-hidden=\"true\"><span class=\"icon-expand\" title=\"Expand\"></span></span>" );
+        $( "#magnifyBtn" ).before( "<span tabindex=\"-1\" id=\"tocBtn\" aria-hidden=\"true\"><span class=\"toc\" title=\"Toggle Table of Contents\"></span></span>" );
+        $( "#magnifyBtn" ).before( "<span tabindex=\"-1\" id=\"notesBtn\" aria-hidden=\"true\"><span class=\"notes\" title=\"Toggle Notes\"></span></span>" );
 
         $.fn.bindImgMagnify();
         $.fn.bindNoteSlideToggle();
@@ -490,19 +476,16 @@ $.fn.initializePlayer = function() {
     }
 
     // call to load the first slide
-    $.fn.loadSlide( topicSrc[0], counter, true );
+    $.fn.loadSlide( topicSrc[0], counter );
 
     // load and set the instructor picture
     $.fn.loadProfilePhoto();
 
     // display the player
-    $( "#player" ).fadeIn( 'fast' );
+    //$( "#player" ).fadeIn( 'fast' );
     
-    // focus on the table of content
-    $( "#selectable" ).focus();
-    
-    // listent to keyboard events
-    // $.fn.listenToKeyboard();
+    // listen to global keyboard event
+    $.fn.keyboardEvents();
 
 };
 
@@ -551,31 +534,9 @@ $.fn.nextSlide = function() {
 };
 
 /**
- * Check table of content position and scroll is out of view
- * @since 2.7.0
- *
- * @author Ethan S. Lin
- *
- * @param none
- * @return void
- *
- */
- $.fn.autoscroll = function() {
- 
-    var currentItemPos = Math.floor( $( this ).position().top );
-    
-    if ( currentItemPos < 32 || currentItemPos >= 488 ) {
-
-        $("#selectable").scrollTo( $(this), { duration: 500, offsetTop : ( $("#selectable")[0].clientHeight / 2 + $(this).height() ) } );
-           
-    }
-
- };
-
-/**
  * Load current slide
  * @since 2.0.0
- * @updated 2.7.0
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  *
@@ -583,13 +544,12 @@ $.fn.nextSlide = function() {
  * @return void
  *
  */
-$.fn.loadSlide = function( slideSource, sNum, inital ) {
+$.fn.loadSlide = function( slideSource, sNum ) {
     
-    inital = typeof inital !== 'undefined' ? inital : false;
-
     var img;
     var srcName = slideSource.substring( slideSource.indexOf( ":" ) + 1 );
-
+    var loader;
+    
     if ( slideSource !== "quiz" ) {
 
         slideSource = slideSource.substring( 0, slideSource.indexOf( ":" ) + 1 );
@@ -597,7 +557,13 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
     }
 
     if ( slideSource !== 'video:' && slideSource !== 'kaltura:' && slideSource !== 'youtube:' && slideSource !== 'vimeo:' ) {
-        $( "#progressing" ).fadeIn("fast");
+        
+        loader = setTimeout( function() {
+            
+            $( "#progressing" ).fadeIn("fast");
+            
+        }, 3000 );
+        
         srcName = srcName.toLowerCase();
 
     }
@@ -607,11 +573,9 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
         $( "#slideNote" ).removeClass( "quizSlide" );
 
     }
-
+    
+    // dispose existing VideoJS instance
     if ( mediaPlayer !== null ) {
-
-        $( '.vjs-control' ).blur();
-        $( '.vjs-menu-item' ).blur();
 
         mediaPlayer.dispose();
         mediaPlayer = null;
@@ -619,11 +583,14 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
         $( '#ap' ).empty().hide();
 
     }
-
-    $( "#slide" ).html( "" );
-
+    
+    // reset areas
+    $( "#slide" ).removeAttr("role").empty();
+    
+    isKaltura = false;
+    
     switch ( slideSource ) {
-
+        
         case "image:":
             
             img = new Image();
@@ -635,15 +602,9 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
             $( img ).load( function() {
 
                 $( this ).hide();
-                $( "#slide" ).html( "<div id=\"img\"></div>" );
+                $( "#slide" ).attr( { "role": "main", "tabindex": 1} ).html( "<div id=\"img\"></div>" );
                 $( "#slide #img" ).html( img );
                 $( this ).fadeIn();
-                
-                if ( inital === false ) {
-                    
-                    $( this ).focus();
-                    
-                }
 
             } ).error( function() {
 
@@ -684,6 +645,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
         case "kaltura:":
 
             $.fn.setupMediaPlayer( 'kaltura', srcName );
+            isKaltura = true;
 
         break;
 
@@ -704,37 +666,27 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
 
         default:
 
-            $.fn.displayErrorMsg( "unknow slide type!", "Please double check the XML file." );
+            $.fn.displayErrorMsg( "Unknow slide type!", "Please double check the XML file." );
 
         break;
 
     }
     
-    // load notes
-    $( this ).loadNote( sNum );
-
     // update slide number status
     $( this ).updateSlideNum( sNum );
-
-    if ( $( "#progressing" ).length ) {
-
-        $( "#progressing" ).promise().done( function() {
-
-            $(this).fadeOut("fast");
-
-        } );
-
-    }
     
-    // listen to auto scroll
-    $( ".ui-selected" ).autoscroll();
+    // load notes
+    $( this ).loadNote( sNum );
+    
+    // hide the progressing spinning
+    clearTimeout( loader );
 
 };
 
 /**
  * Setup videojs player
  * @since 2.4.0
- * @updated 2.7.0
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  *
@@ -755,8 +707,6 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
             
             $.get( 'assets/slides/' + src + '.' + slideImgFormat, function() {
                 
-                $( "#apc" ).attr( 'poster', 'assets/slides/' + src + '.' + slideImgFormat );
-                
                 $.get( 'assets/audio/' + src + '.vtt', function() {
 
                     subtitle = "<track kind=\"subtitles\" src=\"assets/audio/" + src + ".vtt\" srclang=\"en\" label=\"English\">";
@@ -765,7 +715,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
     
                     var audioSrc = "<source src=\"assets/audio/" + src + ".mp3\" type=\"audio/mp3\">";
                     
-                    $( "#ap" ).html( "<audio id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + audioSrc + subtitle + "</audio>" ).promise().done( function() {
+                    $( "#ap" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" poster=\"assets/slides/"+src+"."+slideImgFormat+"\">" + audioSrc + subtitle + "</video>" ).promise().done( function() {
 
                         $.fn.loadVideoJsPlayer( playerID, src );
 
@@ -775,7 +725,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
                 
             } ).fail( function() {
                 
-                $.fn.displayErrorMsg( "image not found!", "Expected image: assets/slides/" + src + "." + slideImgFormat );
+                $.fn.displayErrorMsg( "Image not found!", "Expected image: assets/slides/" + src + "." + slideImgFormat );
                 
             } );
             
@@ -795,7 +745,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
 
                 $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">" + mp4Src + subtitle + "</video>" ).promise().done( function() {
 
-                    $.fn.loadVideoJsPlayer(playerID, src);
+                    $.fn.loadVideoJsPlayer( playerID, src );
 
                 } );
 
@@ -833,7 +783,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
             playerID = "ytb";
             $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\"></video>" ).promise().done( function() {
 
-                    $.fn.loadVideoJsPlayer(playerID, src);
+                    $.fn.loadVideoJsPlayer( playerID, src );
 
             } );
         
@@ -844,7 +794,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
             playerID = "vm";
             $( "#vp" ).html( "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\"></video>" ).promise().done( function() {
 
-                    $.fn.loadVideoJsPlayer(playerID, src);
+                    $.fn.loadVideoJsPlayer( playerID, src );
 
             } );
         
@@ -862,6 +812,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
  * Requesting data from Kaltura API, construct src,
  * and call loadVideoJSPlayer
  * @since 2.6.0
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  *
@@ -871,8 +822,8 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
  */
  $.fn.requestKalturaAPI = function( playerID, src ) {
 
-    var entryId, captionId, captionExt, captionLang, flavors = {}, video;
-
+    var entryId, captionId, captionExt, captionLang, video, duration;
+    
     kWidget.getSources( {
 
         'partnerId': 1660872,
@@ -883,6 +834,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
             captionId = data.captionId;
             captionExt = data.captionExt;
             captionLang = data.captionLang;
+            duration = data.duration;
 
             for( var i in data.sources ) {
 
@@ -915,20 +867,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
             } // end for loop
 
             // video element opening tag
-            video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\">";
-
-            // set low res vid if available
-            if ( flavors.low !== undefined ) {
-                video += "<source src=\"" + flavors.low + "\" type=\"video/mp4\" data-res=\"low\" />";
-            }
-
-            // set normal res vid
-            video += "<source src=\"" + flavors.normal + "\" type=\"video/mp4\" data-res=\"normal\" data-default=\"true\" />";
-
-            // set high res vid if available
-            if ( flavors.low !== undefined ) {
-                video += "<source src=\"" + flavors.high + "\" type=\"video/mp4\" data-res=\"high\" />";
-            }
+            video = "<video id=\"" + playerID + "\" class=\"video-js vjs-default-skin\" crossorigin=\"anonymous\">";
 
             if ( flavors.webm !== undefined && $.fn.supportWebm() ) {
                 video += "<source src=\"" + flavors.webm + "\" type=\"video/webm\" />";
@@ -936,7 +875,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
 
             // set caption track if available
             if ( captionId !== null ) {
-                video += "<track kind=\"subtitles\" src=\"https://cdnapisec.kaltura.com/api_v3/index.php/service/caption_captionAsset/action/serve/captionAssetId/" + captionId + "\" srclang=\"en\" label=\"English\">";
+                video += "<track kind=\"subtitles\" src=\"https://www.kaltura.com/api_v3/?service=caption_captionasset&action=servewebvtt&captionAssetId="+captionId+"&segmentDuration="+duration+"&segmentIndex=1\" srclang=\"en\" label=\"English\">";
             }
 
             // closing video tag
@@ -956,7 +895,7 @@ $.fn.loadSlide = function( slideSource, sNum, inital ) {
 /**
  * load videojs player
  * @since 2.4.1
- * @updated 2.7.0
+ * @updated 2.8.0
  * @author Ethan S. Lin
  *
  * @param strings, video element id
@@ -973,9 +912,8 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
         "controls": true,
         "autoplay": true,
         "preload": "auto",
-        "plugins": {
-            resolutionSelector: { default_res: 'normal' }
-        }
+        "playbackRates": [0.5, 1, 1.5, 2],
+        "plugins": {}
 
     };
     
@@ -990,6 +928,12 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
         
             }
             
+            if ( isKaltura ) {
+                
+                options.plugins = { videoJsResolutionSwitcher: { 'default': 720 } };
+                
+            }
+            
             $( "#vp" ).fadeIn();
             
         break;
@@ -1000,35 +944,13 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
             options.plugins = null;
             $( "#ap" ).fadeIn();
             
-            $( "#apc" ).on('mouseenter', function() {
-                    
-                if ( $( this ).hasClass( 'vjs-user-inactive' ) ) {
-                    
-                    $( this ).removeClass( 'vjs-user-inactive' );
-                    $( this ).addClass( 'vjs-user-active' );
-                    
-                }
-                
-            } );
-            
-            $( "#apc" ).on('mouseleave', function() {
-                
-                if ( $( this ).hasClass( 'vjs-user-active' ) ) {
-                    
-                    $( this ).removeClass( 'vjs-user-active' );
-                    $( this ).addClass( 'vjs-user-inactive' );
-                    
-                }
-                
-            } );
-            
         break;
         
         case 'ytb':
         
             options.techOrder = ["youtube"];
-            options.src = "https://www.youtube.com/watch?v=" + src;
-            options.plugins = null;
+            options.sources = [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=" + src }];
+            options.plugins = { videoJsResolutionSwitcher: { 'default': 720 } };
             $( "#vp" ).fadeIn();
             
         break;
@@ -1036,7 +958,7 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
         case 'vm':
             
             options.techOrder = ["vimeo"];
-            options.src = "https://vimeo.com/" + src;
+            options.sources = [{ "type": "video/vimeo", "src": "https://vimeo.com/" + src }];
             options.plugins = null;
             $( "#vp" ).fadeIn();
             
@@ -1047,7 +969,43 @@ $.fn.loadVideoJsPlayer = function( playerID, src ) {
     
     mediaPlayer = videojs( playerID, options, function() {
 
-        this.progressTips();
+        if ( options.techOrder[0] === "vimeo" ) {
+
+            this.play();
+            
+        }
+        
+        if ( isKaltura ) {
+        			
+			this.updateSrc( [
+    			
+    			{
+        			
+        			src: flavors.low,
+        			type: "video/mp4",
+        			label: "low",
+        			res: '360'
+        			
+    			},
+    			{
+        			
+        			src: flavors.normal,
+        			type: "video/mp4",
+        			label: "normal",
+        			res: '720'
+        			
+    			},
+    			{
+        			
+        			src: flavors.high,
+        			type: "video/mp4",
+        			label: "high",
+        			res: '1080'
+        			
+    			}
+    			
+			] );
+		}
 
     } );
 
@@ -1085,7 +1043,7 @@ $.fn.setupQuiz = function( num ) {
     }
 
     // build the question
-    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\" aria-label=\"Self-Assessment\" tabindex=\"1\"><span class=\"icon-assessement\"></span> Self-Assessment</div>" );
+    $( "#slide" ).html( "<div id=\"quiz\"><div class=\"header\" aria-label=\"Self Assessment\"><span class=\"icon-assessement\"></span> Question for Self Assessment</div>" );
 
     if ( !questions[index].taken ) {
 
@@ -1104,7 +1062,7 @@ $.fn.setupQuiz = function( num ) {
 
                 if ( questions[index].audio !== "") {
 
-                    audio = "<audio controls tabindex=\"1\"><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
+                    audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
                     $( "#quiz" ).append( audio );
 
                 }
@@ -1118,8 +1076,7 @@ $.fn.setupQuiz = function( num ) {
             } ).attr( {
                 'src': imgPath,
                 'alt': questions[index].question,
-                'border': 0,
-                'tabIndex': 1
+                'border': 0
             } );
 
         } else {
@@ -1127,7 +1084,7 @@ $.fn.setupQuiz = function( num ) {
             var audio = "";
 
             if ( questions[index].audio !== "") {
-                audio = "<audio controls tabindex=\"1\"><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
+                audio = "<audio controls><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
             }
 
             $( "#quiz" ).append( "<div id=\"quiz_quest\" class=\"question\">" + questions[index].question + audio + "</div>" );
@@ -1144,7 +1101,7 @@ $.fn.setupQuiz = function( num ) {
 };
 
 /**
- * Display current self-assessment answer choice or types
+ * Display current self assessment answer choice or types
  * @since 2.1.0
  *
  * @author Ethan S. Lin
@@ -1163,15 +1120,14 @@ $.fn.displayAnswerChoices = function( index ) {
         case "t/f":
         
             $( '#quiz .header' ).append( ': True or False' );
-            $( '#quiz_quest' ).attr( 'tabindex', 1 );
-            $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input role=\"radio\" tabindex=\"1\" id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input role=\"radio\" tabindex=\"1\" type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
+            $( "#quiz" ).append( "<div class=\"answerArea\"><label for=\"t\"><input role=\"radio\" id=\"t\" type=\"radio\" name=\"tf\" value=\"true\" /> True</label><label for=\"f\"><input role=\"radio\" type=\"radio\" id=\"f\" name=\"tf\" value=\"false\" /> False</label></div>" );
 
         break;
 
         case "fib":
             
             $( '#quiz .header' ).append( ': Fill In The Blank' );
-            $( "#quiz" ).append( "<div class=\"answerArea\"><input tabindex=\"1\" role=\"input\" aria-required=\"true\" type=\"text\" aria-describedby=\"quiz_quest\" id=\"saAns\" /></div>" );
+            $( "#quiz" ).append( "<div class=\"answerArea\"><input role=\"input\" aria-required=\"true\" type=\"text\" aria-describedby=\"quiz_quest\" id=\"saAns\" /></div>" );
 
         break;
 
@@ -1179,8 +1135,6 @@ $.fn.displayAnswerChoices = function( index ) {
             
             var type = "radio";
             var name = "mc";
-            
-            $( '#quiz_quest' ).attr( 'tabindex', 1 );
             
             answerLength = questions[index].answer.length;
 
@@ -1202,7 +1156,7 @@ $.fn.displayAnswerChoices = function( index ) {
 
                 for ( var i = 0; i < questions[index].choice.length; i++ ) {
 
-                    $( ".answerArea" ).append( "<label class=\"img_choice\" for=\"" + i + "\"><input role=\""+type+"\" id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + $.fn.htmlEntities( questions[index].choice[i] ) + "\" /> <img tabindex=\"1\" src=\"assets/img/" + questions[index].choice[i] + "\" /></label>" );
+                    $( ".answerArea" ).append( "<label class=\"img_choice\" for=\"" + i + "\"><input role=\""+type+"\" id=\"" + i + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + $.fn.htmlEntities( questions[index].choice[i] ) + "\" /> <img src=\"assets/img/" + questions[index].choice[i] + "\" /></label>" );
 
                 }
 
@@ -1210,7 +1164,7 @@ $.fn.displayAnswerChoices = function( index ) {
 
                 for ( var j = 0; j < questions[index].choice.length; j++ ) {
 
-                    $( ".answerArea" ).append( "<label for=\"" + j + "\"><input role=\""+type+"\" tabindex=\"1\" id=\"" + j + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + $.fn.htmlEntities( questions[index].choice[j] ) + "\" /> " + questions[index].choice[j] + "</label>" );
+                    $( ".answerArea" ).append( "<label for=\"" + j + "\"><input role=\""+type+"\" id=\"" + j + "\" type=\"" + type  + "\" name=\"" + name + "" + "\" value=\"" + $.fn.htmlEntities( questions[index].choice[j] ) + "\" /> " + questions[index].choice[j] + "</label>" );
 
                 }
 
@@ -1223,7 +1177,7 @@ $.fn.displayAnswerChoices = function( index ) {
         case "sa":
             
             $( '#quiz .header' ).append( ': Short Answer' );
-            $( "#quiz" ).append( "<div class=\"answerArea\"><textarea role=\"textbox\" aria-describedby=\"quiz_quest\" aria-multiline=\"true\" aria-required=\"true\" tabindex=\"1\" id=\"saAns\"></textArea></div>" );
+            $( "#quiz" ).append( "<div class=\"answerArea\"><textarea role=\"textbox\" aria-describedby=\"quiz_quest\" aria-multiline=\"true\" aria-required=\"true\" id=\"saAns\"></textArea></div>" );
 
         break;
 
@@ -1238,13 +1192,11 @@ $.fn.displayAnswerChoices = function( index ) {
 
     if ( !quizError ) {
 
-        $( "#quiz" ).append( "<div class=\"submitArea\"><a tabindex=\"1\" role=\"button\" id=\"check\" rel=\"" + index + "\" href=\"#\">SUBMIT</a></div>" );
+        $( "#quiz" ).append( "<div class=\"submitArea\"><a role=\"button\" id=\"check\" rel=\"" + index + "\" href=\"#\">SUBMIT</a></div><div class=\"sr-only\">. Please navigate to the self assessment area to answer the question.</div>" );
         $( "#slide" ).append( "</div>" );
 
         // give the quiz a second to build up
-        $( "#quiz" ).hide().fadeIn();
-        
-        $( "#slide" ).focus();
+        //$( "#quiz" ).hide().fadeIn();
 
         // click event to check answer
         $( "#check" ).on( "click", function() {
@@ -1374,8 +1326,8 @@ $.fn.displayAnswerChoices = function( index ) {
 
                         } else {
 
-                            var sa = $.fn.htmlEntities(stuAnswer);
-                            var qa = $.fn.htmlEntities(questions[index].answer[0]);
+                            var sa = $.fn.htmlEntities( stuAnswer );
+                            var qa = $.fn.htmlEntities( questions[index].answer[0] );
                                 
                             if ( sa === qa ) {
 
@@ -1406,7 +1358,7 @@ $.fn.displayAnswerChoices = function( index ) {
 
             } else {
 
-                $( ".question" ).before( "<p tabindex=\"1\" class=\"quizIncorrect\"><span class=\"icon-notification\"></span> Please answer the question before submitting!</p>" );
+                $( ".question" ).before( "<p class=\"quizIncorrect\"><span class=\"icon-notification\"></span> Please answer the question before submitting!</p>" );
                 $( ".quizIncorrect" ).delay( 6000 ).slideUp( "slow", function() {
 
                     $( ".question" ).prev().remove();
@@ -1424,7 +1376,7 @@ $.fn.displayAnswerChoices = function( index ) {
 };
 
 /**
- * Display current self-assessment feedback
+ * Display current self assessment feedback
  * @since 2.0.0
  * @updated 2.7.0
  *
@@ -1439,17 +1391,17 @@ $.fn.showFeedback = function( index ) {
     var questionImg = "";
     var audio = "";
 
-    $( "#slide" ).html( "<div id=\"quiz\"><div tabindex=\"1\" aria-label=\"Self-Assessment Feedback\" class=\"header\"><span class=\"icon-assessement\"></span> Self-Assessment Feedback</div>" );
+    $( "#slide" ).html( "<div id=\"quiz\"><div aria-label=\"Self Assessment Feedback\" class=\"header\"><span class=\"icon-assessement\"></span> Feedback for Self Assessment</div>" );
 
     if ( questions[index].type !== "sa" ) {
 
         if ( questions[index].correct ) {
 
-            $( "#quiz" ).append( "<p tabindex=\"1\" class=\"quizCorrect\"><span class=\"icon-checkmark\"></span> CORRECT</p>" );
+            $( "#quiz" ).append( "<p class=\"quizCorrect\"><span class=\"icon-checkmark\"></span> CORRECT</p>" );
 
         } else {
 
-            $( "#quiz" ).append( "<p tabindex=\"1\" class=\"quizIncorrect\"><span class=\"icon-notification\"></span> INCORRECT</p>" );
+            $( "#quiz" ).append( "<p class=\"quizIncorrect\"><span class=\"icon-notification\"></span> INCORRECT</p>" );
 
         }
 
@@ -1457,24 +1409,24 @@ $.fn.showFeedback = function( index ) {
 
     if ( questions[index].img !== "" ) {
 
-        questionImg = "<img tabindex=\"1\" src=\"assets/img/" + questions[index].img + "\" alt=\"" + questions[index].question + "\" border=\"0\" />";
+        questionImg = "<img aria-hidden=\"true\" src=\"assets/img/" + questions[index].img + "\" alt=\"" + questions[index].question + "\" border=\"0\" />";
 
     }
 
     if ( questions[index].audio !== "") {
-        audio = "<audio controls tabindex=\"1\"><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
+        audio = "<audio controls aria-hidden=\"true\"><source src=\"assets/audio/" + questions[index].audio + ".mp3\" type=\"audio/mpeg\" /></audio>";
     }
 
-    $( "#quiz" ).append( "<div class=\"question\" tabindex=\"1\">" + questions[index].question + questionImg + audio + "</div>" );
+    $( "#quiz" ).append( "<div class=\"question\" aria-hidden=\"true\">" + questions[index].question + questionImg + audio + "</div>" );
 
     if ( questions[index].choiceImg === "true" ) {
 
-        $( "#quiz" ).append( "<div class=\"result\" tabindex=\"1\"><p><strong>Your answer</strong>:<br />" + $.fn.parseArrayImg( questions[index].stuAnswer ) + "</p></div>" );
+        $( "#quiz" ).append( "<div class=\"result\"><p><strong>Your answer</strong>:<br />" + $.fn.parseArrayImg( questions[index].stuAnswer ) + "</p></div>" );
         $('.result').append('<p><strong>Correct answer</strong>:<br />' + $.fn.parseArrayImg( questions[index].answer ) + '</p>');
 
     } else {
 
-        $( "#quiz" ).append( "<div tabindex=\"1\" class=\"result\"><p><strong>Your answer</strong>:<br />" + $.fn.parseArray( questions[index].stuAnswer ) + "</p></div>" );
+        $( "#quiz" ).append( "<div class=\"result\"><p><strong>Your answer</strong>:<br />" + $.fn.parseArray( questions[index].stuAnswer ) + "</p></div>" );
         $('.result').append('<p><strong>Correct answer</strong>:<br />' + $.fn.parseArray( questions[index].answer ) + '</p>');
 
     }
@@ -1518,15 +1470,13 @@ $.fn.showFeedback = function( index ) {
         }
 
     }
-    
-    $( "#slide" ).focus();
 
 };
 
 /**
  * Load notes for the current slide
  * @since 2.1.0
- * @update 2.7.0
+ * @update 2.8.0
  *
  * @author Ethan S. Lin
  * @param int, current topic number
@@ -1539,9 +1489,12 @@ $.fn.loadNote = function( num ) {
     
     if ( note.length ) {
         
-        $( "#note" ).removeClass( "noNotes" );
-        
-        $( "#note" ).html( note ).hide().fadeIn( "fast" );
+        $( "#note" ).removeClass( "noNotes" )
+                    .removeAttr( "aria-hidden" )
+                    .attr( { "tabindex": 1, "role": "complementary", "aria-label": "Notes" } )
+                    .html( note ).hide().fadeIn( "fast" );
+                    
+        $( "#currentSlide" ).append( " This " + media.toLowerCase() + " contains notes." );
         
         if ( $( "#note" ).find( "a" ).length ) {
 
@@ -1554,7 +1507,11 @@ $.fn.loadNote = function( num ) {
         
     } else {
         
-        $( "#note" ).addClass( "noNotes" );
+        $( "#note" ).addClass( "noNotes" )
+                    .removeAttr( "role" )
+                    .removeAttr( "aria-label" )
+                    .attr( { "tabindex": -1, "aria-hidden": true } );
+                    
         $.fn.getProgramLogo();
         
     }
@@ -1580,12 +1537,12 @@ $.fn.loadNote = function( num ) {
         if ( $( "#note").hasClass( "noNotes" ) ) {
                 
             $( "#currentStatus" ).addClass( "extendStatusWidth" );
-            $( "#notesBtn" ).hide();
+            $( "#notesBtn" ).fadeOut(0);
             
         } else {
             
             $( "#currentStatus" ).removeClass( "extendStatusWidth" );
-            $( "#notesBtn" ).show();
+            $( "#notesBtn" ).fadeIn(0);
             
         }
         
@@ -1646,18 +1603,24 @@ $.fn.loadNote = function( num ) {
             logo = "ds_logo";
             alt = "University of Wisconsin Data Science";
         break;
+        
+        case "learning_store":
+            logo = "uls_logo";
+            alt = "University Learning Store";
+        break;
 
     }
     
     img = "<img src=\"" + ROOT_PATH + "img/" + logo + ".svg\" width=\"150\" height=\"65\" alt=\"" + alt + "\" border=\"0\" />";
     
-    $( "#note" ).attr("aria-label", "Notes area. No notes available.").html( "<div class=\"logo\" aria-hidden=\"true\">" + img + "</div>" );
+    $( "#note" ).html( "<div class=\"logo\" tabindex=\"-1\" aria-hidden=\"true\">" + img + "</div>" );
      
  };
 
 /**
  * Update the current slide number indicator
  * @since 2.1.0
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  * @param int, current topic number
@@ -1670,20 +1633,76 @@ $.fn.updateSlideNum = function( num ) {
     var status = media + " " + currentNum + " of " + topicCount;
     
     counter = num;
+    
+    $( "#selectable" ).selectable( "refresh" ).selectItem( "li:nth-child(" + currentNum + ")" );
+    $( "#currentStatus" ).html( "<span>" + status + "</span>" );
+    
+    // resets
+    $( "#hasNote" ).empty();
+    
+    // add screen reader only hidden element
+    $( "#currentSlide" ).html( "You are currently on " + media.toLowerCase() + " " + currentNum  + " of " + topicCount + ". " + $( ".ui-selected" ).attr( "title" ) + "." );
+        
+    // listen to table of content auto scroll
+    $( ".ui-selected" ).autoscroll();
+    
+    // set SR statuse after 3 seconds
+    setTimeout(function() {
+        
+        if ( mediaPlayer !== null ) {
+        
+            mediaPlayer.on( "ended", function() {
+                
+                $.fn.setSRStatus( currentNum, topicCount );
+                 
+            });
+            
+        } else {
+            
+            $.fn.setSRStatus( currentNum, topicCount );
+            
+        }
+        
+    }, 3000 );
 
-    $( "#selectable li" ).each( function() {
-        $( this ).removeClass( "ui-selected" );
-    } );
+};
 
-    $( "#selectable li:nth-child(" + currentNum + ")" ).addClass( "ui-selected" );
-    $( "#currentStatus" ).html( "<span aria-label=\"" + status + "\" tabindex=\"1\" >" + status + "</span>" );
-
+/**
+ * Set hidden status message for screen reader elements
+ * @since 2.8.0
+ *
+ * @author Ethan S. Lin
+ * @param int, int
+ * @return void
+ *
+ */
+$.fn.setSRStatus = function( current, total ) {
+    
+    var notesMessage = "This " + media.toLowerCase() + " contains notes. Please navigate to the notes area.";
+    var endMessage = "End of presentation. Next button will take you back to the first " + media + ".";
+    
+    if ( $( "#note" ).hasClass( "noNotes" ) === false ) {
+                    
+        $( "#hasNote" ).html( notesMessage );
+        
+    }
+    
+    if ( current === total ) {
+        
+        $( "#endPresentation" ).html( endMessage );
+        
+    } else {
+    
+        $( "#endPresentation" ).empty();
+        
+    }
+    
 };
 
 /**
  * Magnify the current slide image and video
  * @since 2.0.0
- * @updated 2.7.0
+ * @updated 2.8.0
  *
  * @author Ethan S. Lin
  * @return void
@@ -1697,7 +1716,9 @@ $.fn.bindImgMagnify = function() {
 
             $( "#storybook_plus_wrapper" ).removeClass( "magnified" );
             $( this ).html( "<span class=\"icon-expand\" title=\"Expand\"></span>" );
-            $( "#notesBtn, #tocBtn" ).hide();
+            
+            $( "#notesBtn, #tocBtn" ).fadeOut(0);
+            
             $( "#toc" ).css( 'left', '' ).show();
 
             if ( $( "#tocBtn" ).hasClass( 'active' ) ) {
@@ -1710,7 +1731,7 @@ $.fn.bindImgMagnify = function() {
 
             $( "#storybook_plus_wrapper" ).addClass( "magnified" );
             $( this ).html( "<span class=\"icon-contract\" title=\"Contract\"></span>" );
-            $( "#tocBtn" ).show();
+            $( "#tocBtn" ).fadeIn(0);
             $( "#currentStatus" ).addClass( "extendStatusWidth" );
             $( "#toc" ).hide();
 
@@ -1852,11 +1873,11 @@ $.fn.loadProfilePhoto = function() {
 
     $( img ).load( function() {
 
-        $( "#profile .photo" ).html( "<img tabindex=\"4\" src=\"" + imgPath + "\" border=\"0\" alt=\"An photo of the instructor\" />" );
+        $( "#profile .photo" ).html( "<img src=\"" + imgPath + "\" border=\"0\" alt=\"An photo of the instructor\" />" );
 
     } ).error( function() {
 
-        $( "#profile .photo" ).html( "<img tabindex=\"4\" src=\"" + ROOT_PATH + "img/profile.png\" width=\"200\" height=\"300\" alt=\"No instructor photo\" border=\"0\" />" );
+        $( "#profile .photo" ).html( "<img src=\"" + ROOT_PATH + "img/profile.png\" width=\"200\" height=\"300\" alt=\"No instructor photo\" border=\"0\" />" );
 
     } ).attr( {
 
@@ -1880,35 +1901,37 @@ $.fn.loadProfilePhoto = function() {
 $.fn.getDownloadableFiles = function() {
 
     var directory = $.fn.getDirectory();
-    var downloadBar = $( "#download_bar ul" );
+    var downloadBar = $( "#download_bar" );
     var url = window.location.href;
-
+    var result = "";
+    
 	url = url.substr( 0, url.lastIndexOf( "/" ) + 1 ) + directory;
+	downloadBar.html( "Loading downloadable items..." );
 
 	// get transcript first
 	$.get( url + '.pdf', function() {
 
-    	downloadBar.append("<li><a download role=\"menuitem\" href=\"" + url + ".pdf\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Transcript</a></li>");
+    	result += "<div class=\"download_item\"><a role=\"button\" download href=\"" + url + ".pdf\" target=\"_blank\" tabindex=\"1\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Transcript <span class=\"sr-only\">file</span></a></div>";
 
 	} ).always( function() {
-
+        
     	// get audio file
     	$.get( url + '.mp3', function() {
 
-        	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".mp3\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Audio</a></li>");
+        	result += "<div class=\"download_item\"><a role=\"button\" download href=\"" + url + ".mp3\" target=\"_blank\" tabindex=\"1\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Audio <span class=\"sr-only\">file</span></a></div>";
 
     	} ).always( function() {
 
         	// get package/zip file
         	$.get( url + '.zip', function() {
 
-            	downloadBar.append("<li><a role=\"menuitem\" download href=\"" + url + ".zip\" target=\"_blank\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Supplement</a></li>");
+            	result += "<div class=\"download_item\"><a role=\"button\" download href=\"" + url + ".zip\" target=\"_blank\" tabindex=\"1\"><span class=\"icon-arrow-down\"><span><span class=\"sr-only\">Download</span> Supplement <span class=\"sr-only\">file</span></a></div>";
 
         	} ).always( function() {
             	
-            	downloadBar.after( '<span class=\"sr-only\">Click anywhere in the Storybook Plus screen area to play the presentation.</span>' );
+            	downloadBar.html( result ).hide().fadeIn( 1000 );
             	
-        	} );
+        	});
 
     	} );
 
@@ -1977,62 +2000,6 @@ $.fn.displayGetLessonError = function( status, exception ) {
 
 };
 
-/**
- * Handling Keyboard events
- * @since 2.7.0
- *
- * @author Ethan S. Lin
- * @param none
- * @return void
- *
- */
- 
- $.fn.listenToKeyboard = function() {
-     
-     //console.log( 'listening to keyboard' );
-     
-     $( document ).on( 'keypress', function( e ) {
-         
-         var code = e.which;
-         var key = '';
-         
-         if ( !$( 'input[type=text], textarea' ).is( ':focus' ) ) {
-             
-             switch ( code ) {
-             
-                 case 97:
-                    key = 'a'; // left
-                    $.fn.previousSlide();
-                 break;
-                 case 119:
-                    key = 'w'; // up
-                    $.fn.previousSlide();
-                 break;
-                 case 100:
-                    key = 'd'; // right
-                    $.fn.nextSlide();
-                 break;
-                 case 115:
-                    key = 's'; // down
-                    $.fn.nextSlide();
-                 break;
-                 case 99:
-                    key = 'c'; // caption toggle
-                break;
-                case 122:
-                    key = 'z'; // magnify toggle
-                break;    
-                 
-             }
-             
-         }
-         
-         //console.log( "key pressed: " + key );
-         
-     } );
-     
- };
-
 /* MISC. HELPER FUNCTIONS
 ***************************************************************/
 
@@ -2047,8 +2014,7 @@ $.fn.displayGetLessonError = function( status, exception ) {
  */
 $.fn.splitSelections = function( arg ) {
 
-    var selectionArray = arg.split("|");
-    return selectionArray;
+    return arg.split("|");
 
 };
 
@@ -2259,6 +2225,28 @@ $.fn.getProgramDirectory = function() {
 };
 
 /**
+ * Check table of content position and scroll is out of view
+ * @since 2.7.0
+ *
+ * @author Ethan S. Lin
+ *
+ * @param none
+ * @return void
+ *
+ */
+ $.fn.autoscroll = function() {
+ 
+    var currentItemPos = Math.floor( $( this ).position().top );
+    
+    if ( currentItemPos < 32 || currentItemPos >= 488 ) {
+
+        $("#selectable").scrollTo( $(this), { duration: 500, offsetTop : ( $("#selectable")[0].clientHeight / 2 + $(this).height() ) } );
+           
+    }
+
+ };
+
+/**
  * Scroll to target
  * @since 2.7.0
  *
@@ -2267,7 +2255,6 @@ $.fn.getProgramDirectory = function() {
  * @return function
  *
  */
-
 $.fn.scrollTo = function( target, options, callback ) {
      
     if ( typeof options === 'function' && arguments.length === 2 ) {
@@ -2306,6 +2293,82 @@ $.fn.scrollTo = function( target, options, callback ) {
   
 };
 
+/**
+ * Select the item the table of content via button click
+ * @since 2.8.0
+ *
+ * @author Ethan S. Lin
+ * @param obj
+ * @return void
+ *
+ */
+$.fn.selectItem = function ( itemToSelect ) {
+    
+    if ( !tocClick ) {
+        
+        $( ".ui-selected", this ).not( itemToSelect ).removeClass( "ui-selected" ).addClass( "ui-unselecting" );
+        $( itemToSelect ).not( ".ui-selected" ).addClass( "ui-selected" );
+        
+    } else {
+        
+        tocClick = false;
+        
+    }
+    
+};
+
+/**
+ * convert special character to html entities
+ * @since 2.8.0
+ *
+ * @author Ethan S. Lin
+ * @param str
+ * @return str
+ *
+ */
 $.fn.htmlEntities = function( str ) {
+    
     return String(str).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    
+};
+
+/**
+ * Listen to globla keyboard event
+ * @since 2.8.0
+ *
+ * @author Ethan S. Lin
+ * @param none
+ * @return void
+ *
+ */
+$.fn.keyboardEvents = function() {
+
+    $( document ).keydown( function(e) {
+        
+        if ( mediaPlayer !== null ) {
+            
+            switch ( e.which ) {
+                
+                case 32:
+                
+                if ( mediaPlayer.paused() ) {
+                    
+                    mediaPlayer.play();
+                    
+                } else {
+                    
+                    mediaPlayer.pause();
+                    
+                }
+                
+                e.preventDefault();
+                
+                break;
+                
+            }
+        
+        }
+        
+    } );
+    
 };
