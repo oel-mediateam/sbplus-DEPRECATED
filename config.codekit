@@ -1,6 +1,6 @@
 {
 "CodeKitInfo": "This is a CodeKit 2.x project configuration file. It is designed to sync project settings across multiple machines. MODIFYING THE CONTENTS OF THIS FILE IS A POOR LIFE DECISION. If you do so, you will likely cause CodeKit to crash. This file is not useful unless accompanied by the project that created it in CodeKit 2. This file is not backwards-compatible with CodeKit 1.x. For more information, see: http:\/\/incident57.com\/codekit",
-"creatorBuild": "19076",
+"creatorBuild": "19127",
 "files": {
 	"\/build\/assets\/img\/lugia.png": {
 		"fileType": 32768,
@@ -178,25 +178,25 @@
 		},
 	"\/build\/tests\/qunit.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/build\/tests\/qunit.js",
-		"outputAbbreviatedPath": "\/build\/tests\/min\/qunit-min.js",
+		"outputAbbreviatedPath": "\/build\/tests\/qunit.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
-		"syntaxCheckerStyle": 0
+		"syntaxCheckerStyle": 1
 		},
 	"\/build\/tests\/tests.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/build\/tests\/tests.js",
-		"outputAbbreviatedPath": "\/build\/tests\/min\/tests-min.js",
+		"outputAbbreviatedPath": "\/build\/tests\/tests.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
-		"syntaxCheckerStyle": 0
+		"syntaxCheckerStyle": 1
 		},
 	"\/CHANGELOG.md": {
 		"criticStyle": 0,
@@ -205,8 +205,8 @@
 		"enableSmartQuotes": 1,
 		"escapeLineBreaks": 0,
 		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/CHANGELOG.md",
 		"maskEmailAddresses": 1,
 		"outputAbbreviatedPath": "\/CHANGELOG.html",
@@ -230,14 +230,14 @@
 		},
 	"\/Gruntfile.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/Gruntfile.js",
-		"outputAbbreviatedPath": "\/min\/Gruntfile-min.js",
+		"outputAbbreviatedPath": "\/Gruntfile.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
-		"syntaxCheckerStyle": 0
+		"syntaxCheckerStyle": 1
 		},
 	"\/package.json": {
 		"fileType": 524288,
@@ -257,8 +257,8 @@
 		"enableSmartQuotes": 1,
 		"escapeLineBreaks": 0,
 		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/README.md",
 		"maskEmailAddresses": 1,
 		"outputAbbreviatedPath": "\/README.html",
@@ -282,10 +282,10 @@
 		},
 	"\/sources\/browserdetection\/browser-detection.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/browserdetection\/browser-detection.js",
-		"outputAbbreviatedPath": "\/sources\/browserdetection\/min\/browser-detection-min.js",
+		"outputAbbreviatedPath": "\/sources\/browserdetection\/browser-detection.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -303,9 +303,9 @@
 	"\/sources\/browserdetection\/browser-detection.min.js": {
 		"fileType": 64,
 		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/browserdetection\/browser-detection.min.js",
-		"outputAbbreviatedPath": "\/sources\/browserdetection\/min\/browser-detection.min-min.js",
+		"outputAbbreviatedPath": "\/sources\/browserdetection\/browser-detection.min.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -379,7 +379,7 @@
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/sources\/scripts\/jquery-ui.min.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/jquery-ui.min-min.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/jquery-ui.min.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -390,7 +390,7 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/scripts\/jquery.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/jquery-min.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/jquery.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -399,42 +399,42 @@
 	"\/sources\/scripts\/jquery.min.js": {
 		"fileType": 64,
 		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/scripts\/jquery.min.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/jquery.min-min.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/jquery.min.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
-		"syntaxCheckerStyle": 0
+		"syntaxCheckerStyle": 1
 		},
 	"\/sources\/scripts\/kwidgetgetsources.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/scripts\/kwidgetgetsources.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/kwidgetgetsources-min.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/kwidgetgetsources.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
-		"syntaxCheckerStyle": 0
+		"syntaxCheckerStyle": 1
 		},
-	"\/sources\/scripts\/mwembedloader.js": {
+	"\/sources\/scripts\/mwEmbedLoader.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/sources\/scripts\/mwembedloader.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/mwembedloader-min.js",
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/sources\/scripts\/mwEmbedLoader.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/mwEmbedLoader.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
-		"syntaxCheckerStyle": 0
+		"syntaxCheckerStyle": 1
 		},
 	"\/sources\/scripts\/storybookplus.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/scripts\/storybookplus.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/storybookplus-min.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/storybookplus.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -443,9 +443,9 @@
 	"\/sources\/scripts\/storybookplus.min.js": {
 		"fileType": 64,
 		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/scripts\/storybookplus.min.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/storybookplus.min-min.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/storybookplus.min.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -458,16 +458,16 @@
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/combined.video.js",
 		"outputAbbreviatedPath": "\/sources\/videoplayer\/combined.video.min.js",
 		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 1,
+		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
 	"\/sources\/videoplayer\/combined.video.min.js": {
 		"fileType": 64,
 		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/combined.video.min.js",
-		"outputAbbreviatedPath": "\/sources\/videoplayer\/min\/combined.video.min-min.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/combined.video.min.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -484,10 +484,10 @@
 		},
 	"\/sources\/videoplayer\/plugins\/progress_tooltips\/videojs.progresstips.min.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/progress_tooltips\/videojs.progresstips.min.js",
-		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/progress_tooltips\/min\/videojs.progresstips.min-min.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/progress_tooltips\/videojs.progresstips.min.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -504,21 +504,21 @@
 		},
 	"\/sources\/videoplayer\/plugins\/resolution\/video-quality-selector.js": {
 		"fileType": 64,
-		"ignore": 1,
+		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/video-quality-selector.js",
-		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/min\/video-quality-selector-min.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/video-quality-selector.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
-		"syntaxCheckerStyle": 0
+		"syntaxCheckerStyle": 1
 		},
 	"\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.js",
-		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/min\/media.vimeo-min.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -526,10 +526,10 @@
 		},
 	"\/sources\/videoplayer\/plugins\/youtube\/youtube.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.js",
-		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/min\/youtube-min.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -546,10 +546,10 @@
 		},
 	"\/sources\/videoplayer\/video.novtt.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/video.novtt.js",
-		"outputAbbreviatedPath": "\/sources\/videoplayer\/min\/video.novtt-min.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/video.novtt.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -560,40 +560,6 @@
 	],
 "lastSavedByUser": "Ethan Lin",
 "manualImportLinks": {
-	"\/sources\/scripts\/jquery.js": [
-		{
-			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/sources\/scripts\/jquery-ui.min.js",
-			"position": 0,
-			"type": 1
-			}
-		],
-	"\/sources\/videoplayer\/combined.video.js": [
-		{
-			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/progress_tooltips\/videojs.progresstips.min.js",
-			"position": 0,
-			"type": 1
-			},
-		{
-			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/video-quality-selector.js",
-			"position": 1,
-			"type": 1
-			},
-		{
-			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.js",
-			"position": 2,
-			"type": 1
-			},
-		{
-			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.js",
-			"position": 3,
-			"type": 1
-			}
-		]
 	},
 "projectAttributes": {
 	"bowerAbbreviatedPath": "",
@@ -602,7 +568,7 @@
 	"iconImageName": "harddrive_yellow"
 	},
 "projectSettings": {
-	"alwaysUseExternalServer": 0,
+	"alwaysUseExternalServer": 1,
 	"animateCSSInjections": 1,
 	"autoApplyPSLanguageSettingsStyle": 0,
 	"autoprefixerBrowserString": "> 1%, last 2 versions, Firefox ESR, Opera 12.1",
@@ -692,8 +658,16 @@
 			"active": 0,
 			"flagValue": -1
 			},
+		"no_nested_string_interpolation": {
+			"active": 1,
+			"flagValue": -1
+			},
 		"no_plusplus": {
 			"active": 0,
+			"flagValue": -1
+			},
+		"no_private_function_fat_arrows": {
+			"active": 1,
 			"flagValue": -1
 			},
 		"no_stand_alone_at": {
@@ -702,6 +676,10 @@
 			},
 		"no_tabs": {
 			"active": 1,
+			"flagValue": -1
+			},
+		"no_this": {
+			"active": 0,
 			"flagValue": -1
 			},
 		"no_throwing_strings": {
@@ -744,8 +722,8 @@
 	"coffeeMinifyOutput": 1,
 	"coffeeOutputStyle": 0,
 	"coffeeSyntaxCheckerStyle": 1,
-	"externalServerAddress": "http:\/\/localhost:8888",
-	"externalServerPreviewPathAddition": "",
+	"externalServerAddress": "http:\/\/localhost\/sbplus\/",
+	"externalServerPreviewPathAddition": "build",
 	"genericWebpageFileExtensionsString": "html, htm, shtml, shtm, xhtml, php, jsp, asp, aspx, erb, ctp",
 	"hamlAutoOutputPathEnabled": 1,
 	"hamlAutoOutputPathFilenamePattern": "*.html",
@@ -769,11 +747,11 @@
 	"jadeCompileDebug": 1,
 	"jadeOutputStyle": 0,
 	"javascriptAutoOutputPathEnabled": 1,
-	"javascriptAutoOutputPathFilenamePattern": "*-min.js",
+	"javascriptAutoOutputPathFilenamePattern": "*.min.js",
 	"javascriptAutoOutputPathRelativePath": "\/min",
 	"javascriptAutoOutputPathReplace1": "",
 	"javascriptAutoOutputPathReplace2": "",
-	"javascriptAutoOutputPathStyle": 2,
+	"javascriptAutoOutputPathStyle": 0,
 	"javascriptCreateSourceMap": 1,
 	"javascriptOutputStyle": 1,
 	"javascriptSyntaxCheckerStyle": 1,
