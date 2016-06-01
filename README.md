@@ -6,7 +6,7 @@
 
 Storybook Plus is a web application utilizing HTML5, JavaScript, CSS3, and Cookie. As with any other web applications, the choice of web browsers is the most critical rather than the operation systems. JavaScript must be enabled no matter which web browser is utilized. Cookie is not needed for full viewing experience.
 
-####Minimum web browser requirements for desktop/laptop:
+**Minimum web browser requirements for desktop/laptop:**
 * Internet Explorer 10/11 (in non-Compatibility View mode)
 * Microsoft Edge (version 12+)
 * Mozilla Firefox (version 45+)
@@ -14,7 +14,7 @@ Storybook Plus is a web application utilizing HTML5, JavaScript, CSS3, and Cooki
 * Apple Safari (version 6.1+)
 * Opera (version 12.1+)
 
-####Minimum web browser requirements for mobile/smart device:
+**Minimum web browser requirements for mobile/smart device:**
 * iOS Safari (version 7.1+)
 * Opera Mobile (version 12.1+)
 * Android Browser (version 4.4+)
@@ -23,13 +23,13 @@ Storybook Plus is a web application utilizing HTML5, JavaScript, CSS3, and Cooki
 * Mozilla Firefox for Android (version 46)
 * Internet Explorer Mobile (version 11)
 
-####Recommended (latest stable version) web browsers in order:
+**Recommended (latest stable version) web browsers in order:**
 * Mozilla Firefox
 * Google Chrome
 * Apple Safari
 * Microsoft Edge
 
-####System Requirement and Recommendations for accessibilities:
+**Requirement and Recommendations for accessibilities:**
 * Windows OS (check screen reader requirements for additional details)
 * Mozilla Firefox or Google Chrome
 * JAWS (version 16+)
@@ -39,7 +39,7 @@ Storybook Plus is a web application utilizing HTML5, JavaScript, CSS3, and Cooki
 
 Notes: most visually impaired users started out using screen reader with Internet Explorer prepackaged. However, and unfortunately, Microsoft stops supporting accessibilities as newer version of Internet Explorer were released. Storybook Plus will cause additional restrictions for screen reader due to Microsoft’s non-existent accessibility supports for HTML5 on Internet Explorer including their latest web browser application: Microsoft Edge. Based on our user testing results, visually impaired users are moving toward Mozilla Firefox or Google Chrome.
 
-*SB+ may not function properly with beta or pre-released version of web browsers. Please use the latest stable version for the best experience.*
+SB+ may not function properly with beta or pre-released version of web browsers. Please use the latest stable version for the best experience.
 
 ---
 ###Documentation
