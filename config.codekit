@@ -2,6 +2,202 @@
 "CodeKitInfo": "This is a CodeKit 2.x project configuration file. It is designed to sync project settings across multiple machines. MODIFYING THE CONTENTS OF THIS FILE IS A POOR LIFE DECISION. If you do so, you will likely cause CodeKit to crash. This file is not useful unless accompanied by the project that created it in CodeKit 2. This file is not backwards-compatible with CodeKit 1.x. For more information, see: http:\/\/incident57.com\/codekit",
 "creatorBuild": "19127",
 "files": {
+	"\/build\/assets\/img\/lugia.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 158705,
+		"inputAbbreviatedPath": "\/build\/assets\/img\/lugia.png",
+		"outputAbbreviatedPath": "\/build\/assets\/img\/lugia.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/img\/mrmime.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 61118,
+		"inputAbbreviatedPath": "\/build\/assets\/img\/mrmime.png",
+		"outputAbbreviatedPath": "\/build\/assets\/img\/mrmime.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/pic.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 43550,
+		"inputAbbreviatedPath": "\/build\/assets\/pic.jpg",
+		"outputAbbreviatedPath": "\/build\/assets\/pic.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide01.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 208664,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide01.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide01.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide02.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 95268,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide02.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide02.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide03.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 117324,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide03.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide03.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide04.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 660511,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide04.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide04.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide05.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 129707,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide05.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide05.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide06.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 125769,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide06.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide06.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide07.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 115402,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide07.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide07.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide08.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 130985,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide08.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide08.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide09.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 122172,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide09.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide09.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide10.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 113382,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide10.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide10.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/slides\/slide21.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 130985,
+		"inputAbbreviatedPath": "\/build\/assets\/slides\/slide21.png",
+		"outputAbbreviatedPath": "\/build\/assets\/slides\/slide21.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/assets\/splash.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 30280,
+		"inputAbbreviatedPath": "\/build\/assets\/splash.jpg",
+		"outputAbbreviatedPath": "\/build\/assets\/splash.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/build\/index.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/build\/index.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/build\/tests\/qunit.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/build\/tests\/qunit.js",
+		"outputAbbreviatedPath": "\/build\/tests\/qunit.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 0
+		},
+	"\/build\/tests\/tests.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/build\/tests\/tests.js",
+		"outputAbbreviatedPath": "\/build\/tests\/tests.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 0
+		},
 	"\/CHANGELOG.md": {
 		"criticStyle": 0,
 		"enableFootnotes": 1,
@@ -32,179 +228,27 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/example\/assets\/img\/lugia.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 158705,
-		"inputAbbreviatedPath": "\/example\/assets\/img\/lugia.png",
-		"outputAbbreviatedPath": "\/example\/assets\/img\/lugia.png",
+	"\/Gruntfile.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/Gruntfile.js",
+		"outputAbbreviatedPath": "\/Gruntfile.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 0
 		},
-	"\/example\/assets\/img\/mrmime.png": {
-		"fileType": 32768,
-		"ignore": 0,
+	"\/package.json": {
+		"fileType": 524288,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 61118,
-		"inputAbbreviatedPath": "\/example\/assets\/img\/mrmime.png",
-		"outputAbbreviatedPath": "\/example\/assets\/img\/mrmime.png",
+		"inputAbbreviatedPath": "\/package.json",
+		"orderOutput": 0,
+		"outputAbbreviatedPath": "\/package-min.json",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/pic.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 43550,
-		"inputAbbreviatedPath": "\/example\/assets\/pic.jpg",
-		"outputAbbreviatedPath": "\/example\/assets\/pic.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide01.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 208664,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide01.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide01.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide02.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 95268,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide02.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide02.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide03.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 117324,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide03.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide03.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide04.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 660511,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide04.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide04.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide05.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 129707,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide05.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide05.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide06.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 125769,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide06.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide06.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide07.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 115402,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide07.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide07.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide08.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 130985,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide08.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide08.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide09.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 122172,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide09.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide09.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide10.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 113382,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide10.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide10.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/slides\/slide21.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 130985,
-		"inputAbbreviatedPath": "\/example\/assets\/slides\/slide21.png",
-		"outputAbbreviatedPath": "\/example\/assets\/slides\/slide21.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/assets\/splash.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 30280,
-		"inputAbbreviatedPath": "\/example\/assets\/splash.jpg",
-		"outputAbbreviatedPath": "\/example\/assets\/splash.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/example\/index.html": {
-		"fileType": 8192,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/example\/index.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
+		"outputStyle": 1
 		},
 	"\/README.md": {
 		"criticStyle": 0,
@@ -349,8 +393,8 @@
 		"outputAbbreviatedPath": "\/sources\/scripts\/jquery.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"syntaxCheckerStyle": 0
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
 		},
 	"\/sources\/scripts\/jquery.min.js": {
 		"fileType": 64,
@@ -414,9 +458,9 @@
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/combined.video.js",
 		"outputAbbreviatedPath": "\/sources\/videoplayer\/combined.video.min.js",
 		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
+		"outputPathIsSetByUser": 1,
 		"outputStyle": 1,
-		"syntaxCheckerStyle": 0
+		"syntaxCheckerStyle": 1
 		},
 	"\/sources\/videoplayer\/combined.video.min.js": {
 		"fileType": 64,
@@ -429,38 +473,67 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/sources\/videoplayer\/plugins\/resolution\/videojs-resolution-switcher.js": {
+	"\/sources\/videoplayer\/plugins\/progress_tooltips\/videojs.progresstips.min.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/progress_tooltips\/videojs.progresstips.min.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/sources\/videoplayer\/plugins\/progress_tooltips\/videojs.progresstips.min.js": {
 		"fileType": 64,
 		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/progress_tooltips\/videojs.progresstips.min.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/progress_tooltips\/videojs.progresstips.min.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/sources\/videoplayer\/plugins\/resolution\/button-styles.css": {
+		"fileType": 16,
+		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/videojs-resolution-switcher.js",
-		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/videojs-resolution-switcher.min.js",
+		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/button-styles.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/sources\/videoplayer\/plugins\/resolution\/video-quality-selector.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/video-quality-selector.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/video-quality-selector.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 0
 		},
-	"\/sources\/videoplayer\/plugins\/vimeo\/vimeo.js": {
+	"\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/vimeo.js",
-		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/vimeo.min.js",
+		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
-		"syntaxCheckerStyle": 0
+		"syntaxCheckerStyle": 1
 		},
 	"\/sources\/videoplayer\/plugins\/youtube\/youtube.js": {
 		"fileType": 64,
 		"ignore": 1,
-		"ignoreWasSetByUser": 0,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.js",
 		"outputAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
-		"syntaxCheckerStyle": 0
+		"syntaxCheckerStyle": 1
 		},
 	"\/sources\/videoplayer\/video-js.min.css": {
 		"fileType": 16,
@@ -470,6 +543,17 @@
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
+		},
+	"\/sources\/videoplayer\/video.novtt.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/sources\/videoplayer\/video.novtt.js",
+		"outputAbbreviatedPath": "\/sources\/videoplayer\/video.novtt.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
 		}
 	},
 "hooks": [
@@ -487,20 +571,26 @@
 	"\/sources\/videoplayer\/combined.video.js": [
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/videojs-resolution-switcher.js",
+			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/progress_tooltips\/videojs.progresstips.min.js",
 			"position": 0,
 			"type": 1
 			},
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.js",
+			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/resolution\/video-quality-selector.js",
 			"position": 1,
 			"type": 1
 			},
 		{
 			"followForSyntaxChecking": 1,
-			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/vimeo.js",
+			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/youtube\/youtube.js",
 			"position": 2,
+			"type": 1
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/sources\/videoplayer\/plugins\/vimeo\/media.vimeo.js",
+			"position": 3,
 			"type": 1
 			}
 		]
@@ -512,7 +602,7 @@
 	"iconImageName": "harddrive_yellow"
 	},
 "projectSettings": {
-	"alwaysUseExternalServer": 0,
+	"alwaysUseExternalServer": 1,
 	"animateCSSInjections": 1,
 	"autoApplyPSLanguageSettingsStyle": 0,
 	"autoprefixerBrowserString": "> 1%, last 2 versions, Firefox ESR, Opera 12.1",
