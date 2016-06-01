@@ -1,6 +1,10 @@
 #SB+ Version Change Log
 
 ###Unreleased/pending:
+**none at the moment**
+
+---
+###2.8.0 (06-06-2016)
 * Video and audio player now have a new button: playback rate
 * Changed download button to a group of buttons rather a list of buttons for screen reader sake
 * Video and audio caption now show up on all browsers
