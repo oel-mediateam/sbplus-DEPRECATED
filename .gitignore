@@ -5,6 +5,3 @@ bower_components/
 # ingore SASS cache hidden directory
 .sass-cache
 **/.sass-cache
-
-# ingore grunt generated directory
-node_modules/
