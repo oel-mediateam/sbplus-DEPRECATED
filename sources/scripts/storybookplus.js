@@ -585,7 +585,7 @@ $.fn.loadSlide = function( slideSource, sNum ) {
     }
     
     // reset areas
-    $( "#slide" ).removeAttr("role").attr("tabindex",-1).empty();
+    $( "#slide" ).removeAttr("role").empty();
     
     isKaltura = false;
     
