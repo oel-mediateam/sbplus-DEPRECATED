@@ -434,9 +434,9 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/sources\/scripts\/storybookplus.js",
-		"outputAbbreviatedPath": "\/sources\/scripts\/min\/storybookplus-min.js",
+		"outputAbbreviatedPath": "\/sources\/scripts\/storybookplus.min.js",
 		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
+		"outputPathIsSetByUser": 1,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
