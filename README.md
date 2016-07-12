@@ -2,7 +2,16 @@
 **_version 2.8.0-BPS_**
 
 ---
-###Setup
+###Setup Information
+Storybook Plus (SB+) is built with jQuery, CSS, HTML5, and VideoJS. The whole project is managed with the use of [CodeKit](https://incident57.com/codekit/) to validate and minify scripts and using [SASS](http://sass-lang.com/) for CSS.
+
+*Getting the Source Files*
+1. Download the source files from [BPS branch of the sbplus repository](https://github.com/oel-mediateam/sbplus/tree/bps) from the [oel-mediateam GitHub account](https://github.com/oel-mediateam). The download button is green and labeled with "Clone or download".
+2. Upload everything in the `sources` folder to the web host. It is recommended to create a directory named `sbplus` in the web host, and upload the source files into that directory.
+3. Inside the `example` folder, an example of the file structure is presented for a SB+ presentation project. See the [SB+ Documentation](https://media.uwex.edu/resources/documentation/storybook-plus-v2/) for details on setting up a SB+ presentation project.
+..* Do not upload this folder to the web host.
+
+*Editing the `index.html` file*
 
 
 ---
@@ -11,7 +20,7 @@ For more details and how to setup a SB+ presentation, please visit the [SB+ Docu
 
 ---
 ###System Requirements
-For details on system requirements, please see the SYSTEMREQ.md file.
+For details on system requirements, please see the [SYSTEMREQ.md file](https://github.com/oel-mediateam/sbplus/blob/bps/SYSTEMREQ.md).
 
 ---
 ###Bug Reporting and Questions

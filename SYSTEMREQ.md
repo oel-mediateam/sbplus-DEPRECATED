@@ -1,4 +1,4 @@
-#Requirements
+#System Requirements
 
 Storybook Plus is a web application utilizing HTML5, JavaScript, CSS3, and Cookie. As with any other web applications, the choice of web browsers is the most critical rather than the operation systems. JavaScript must be enabled no matter which web browser is utilized. Cookie is not needed for full viewing experience.
 
