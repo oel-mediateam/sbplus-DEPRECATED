@@ -58,17 +58,15 @@ var mediaPlayer = null,
     flavors = {},
     kalturaLoaded = 0;
 
-var ROOT_PATH = "https://media.uwex.edu/app/storybook_plus_v2/";
-//var ROOT_PATH = "../sources/";
-
-// var tech = navigator.userAgent;
-// var IS_CHROME = (/Chrome/i).test( tech );
-// var IS_WINDOWS = (/Windows/i).test( tech );
-// var IS_CHROME_39 = (/chrome\/[3][9]/i).test( tech );
+var ROOT_PATH = "../sources/";
 
 // when document finished loading and ready
 $( document ).ready( function() {
-
+    
+    if ( $.trim($( '#storybook_plus_wrapper' ).data('root')) !== '' ) {
+        ROOT_PATH = $( '#storybook_plus_wrapper' ).data('root');
+    }
+    
     $.fn.getLessonContent( "assets/topic.xml" );
 
 });
@@ -1561,57 +1559,7 @@ $.fn.loadNote = function( num ) {
  */
  $.fn.getProgramLogo = function() {
      
-     var dir = $.fn.getProgramDirectory();
-     var logo = "uw_ex_ceoel_logo";
-     var alt = "University of Wisconsin-Extension Division of Continuing Education, Outreach &amp; E-Learning";
-     var img = "";
-
-    switch( dir ) {
-
-        case "smgt":
-        case "msmgt":
-            logo = "uw_smgt_logo";
-            alt = "University of Wisconsin Sustainable Management";
-        break;
-
-        case "hwm":
-            logo = "uw_hwm_logo";
-            alt = "University of Wisconsin Health &amp; Wellness Management";
-        break;
-
-        case "himt":
-            logo = "uw_himt_logo";
-            alt = "University of Wisconsin Health Information Management &amp; Technology";
-        break;
-
-        case "il":
-            logo = "uw_il_logo";
-            alt = "University of Wisconsin Independent Learning";
-        break;
-
-        case "flx":
-            logo = "uw_flx_logo";
-            alt = "University of Wisconsin Flexible Option";
-        break;
-
-        case "bps":
-            logo = "uw_bps_logo";
-            alt = "University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication";
-        break;
-        
-        case "ds":
-            logo = "ds_logo";
-            alt = "University of Wisconsin Data Science";
-        break;
-        
-        case "learning_store":
-            logo = "uls_logo";
-            alt = "University Learning Store";
-        break;
-
-    }
-    
-    img = "<img src=\"" + ROOT_PATH + "img/" + logo + ".svg\" width=\"150\" height=\"65\" alt=\"" + alt + "\" border=\"0\" />";
+     var img = "<img src=\"" + ROOT_PATH + "img/uw_bps_logo.svg\" width=\"150\" height=\"65\" alt=\"University of Wisconsin Bachelor of Professional Studies in Organization Leadership and Communication\" border=\"0\" />";
     
     $( "#note" ).html( "<div class=\"logo\" tabindex=\"-1\" aria-hidden=\"true\">" + img + "</div>" );
      
