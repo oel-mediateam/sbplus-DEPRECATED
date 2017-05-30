@@ -1,3 +1,5 @@
+# *DEPRECATED: No longer in active development. Minor fixes.*
+
 #Storybook Plus (SB+)
 **_version 2.8.0_**
 
