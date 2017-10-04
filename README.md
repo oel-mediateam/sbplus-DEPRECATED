@@ -1,10 +1,10 @@
 # *DEPRECATED: No longer in active development. Minor fixes.*
 
-#Storybook Plus (SB+)
-**_version 2.8.0_**
+# Storybook Plus (SB+)
+**_version 2.8.1_**
 
 ---
-###Requirements
+### Requirements
 
 Storybook Plus is a web application utilizing HTML5, JavaScript, CSS3, and Cookie. As with any other web applications, the choice of web browsers is the most critical rather than the operation systems. JavaScript must be enabled no matter which web browser is utilized. Cookie is not needed for full viewing experience.
 
@@ -44,19 +44,19 @@ Notes: most visually impaired users started out using screen reader with Interne
 SB+ may not function properly with beta or pre-released version of web browsers. Please use the latest stable version for the best experience.
 
 ---
-###Documentation
+### Documentation
 For more details and how to setup a SB+ presentation, please visit the [SB+ Documentation](https://media.uwex.edu/resources/documentation/storybook-plus-v2/).
 
 ---
-###Bug Reporting and Questions
+### Bug Reporting and Questions
 If any bugs/glitches are found in the SB+, please report them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub. When reporting a bug, please write the report as detailed and specifically as possible. Note the steps to reproduce the bug and include screen captures if possible.
 
 For questions, please also post them under the "**[Issues](https://github.com/oel-mediateam/sbplus/issues)**" page on GitHub.
 
 ---
-###Version Change Log
+### Version Change Log
 All updates, fixes, changes, improvements, and new features are listed on the [change log](https://github.com/oel-mediateam/sbplus/blob/master/CHANGELOG.md) page.
 
 ---
-###License
-Storybook Plus (SB+) is licensed under [GNU v3](https://github.com/oel-mediateam/sbplus/blob/master/LICENSE) license. Copyright (c) 2013-2016 Ethan S. Lin, [University of Wisconsin-Extension, Division of Continuing Education, Outreach & E-Learning](http://ce.uwex.edu/)
+### License
+Storybook Plus (SB+) is licensed under [GNU v3](https://github.com/oel-mediateam/sbplus/blob/master/LICENSE) license. Copyright (c) 2013-2017 Ethan S. Lin, [University of Wisconsin-Extension, Division of Continuing Education, Outreach & E-Learning](http://ce.uwex.edu/)
