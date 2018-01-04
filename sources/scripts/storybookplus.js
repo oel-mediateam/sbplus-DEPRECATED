@@ -3,13 +3,13 @@
  *
  * @author: Ethan Lin
  * @url: https://github.com/oel-mediateam/sbplus
- * @version: 2.8.1
- * Released 10/04/2017
+ * @version: 2.8.2
+ * Released 01/04/2018
  *
  * @license: GNU GENERAL PUBLIC LICENSE v3
  *
     Storybook Plus is an web application that serves multimedia contents.
-    Copyright (C) 2013-2017  Ethan S. Lin, UWEX CEOEL Media Services
+    Copyright (C) 2013-2018  Ethan S. Lin, UWEX CEOEL Media Services
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -385,10 +385,6 @@ $.fn.initializePlayer = function() {
 
     $( "#instructorName" ).html( "<a class=\"instructorName\" href=\"#\" tabindex=\"-1\">" + instructor + "</a>" );
 
-    // setup profile panel
-    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a role=\"button\" id=\"profileClose\" href=\"#\" aria-label=\"Close Profile\" aria-controls=\"profile\" aria-expanded=\"true\" tabindex=\"1\"><span aria-hidden=\"true\">&times;</span></a></div>" );
-    $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
-
     if ( media !== 'Video' ) {
 
         $( "#player" ).append( "<div id=\"progressing\"></div>" );
@@ -414,7 +410,7 @@ $.fn.initializePlayer = function() {
         return false;
 
     } );
-
+    
 	// setup toc selectable items
     $( "#selectable" ).selectable( {
         
@@ -423,7 +419,7 @@ $.fn.initializePlayer = function() {
         selecting: function( event, ui ) {
             
             if( $( ".ui-selected, .ui-selecting" ).length > 1) {
-                
+
                 $( ui.selecting ).removeClass( "ui-selecting" );
               
             }
@@ -474,12 +470,16 @@ $.fn.initializePlayer = function() {
         $.fn.bindTocSlideToggle();
 
     }
+    
+    // load and set the instructor picture
+    $.fn.loadProfilePhoto();
+    
+    // setup profile panel
+    $( "#profile .photo" ).before( "<div class=\"profileCloseBtn\"><a role=\"button\" id=\"profileClose\" href=\"#\" aria-label=\"Close Profile\" aria-controls=\"profile\" aria-expanded=\"true\" tabindex=\"1\"><span aria-hidden=\"true\">&times;</span></a></div>" );
+    $( "#profile .bio" ).html( "<h2>" + instructor + "</h2>" + PROFILE );
 
     // call to load the first slide
     $.fn.loadSlide( topicSrc[0], counter );
-
-    // load and set the instructor picture
-    $.fn.loadProfilePhoto();
 
     // display the player
     //$( "#player" ).fadeIn( 'fast' );
@@ -1634,7 +1634,7 @@ $.fn.updateSlideNum = function( num ) {
     
     counter = num;
     
-    $( "#selectable" ).selectable( "refresh" ).selectItem( "li:nth-child(" + currentNum + ")" );
+    $( "#selectable" ).selectable( "refresh" ).selectItem( "#selectable > li:nth-child(" + currentNum + ")" );
     $( "#currentStatus" ).html( "<span>" + status + "</span>" );
     
     // resets

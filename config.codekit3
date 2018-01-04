@@ -7,19 +7,20 @@
 		"uuidString": "420CDBA6-5B0D-4ECB-800B-97659BABF7E9"
 		}
 	],
-"creatorBuild": "25900",
+"creatorBuild": "26148",
 "files": {
 	"\/.gitignore": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/.gitignore",
 		"oF": 0
 		},
 	"\/CHANGELOG.md": {
+		"cB": 0,
 		"cS": 0,
 		"eF": 1,
 		"eL": 1,
-		"eLB": 0,
 		"ema": 1,
 		"eSQ": 1,
 		"ft": 4096,
@@ -34,30 +35,35 @@
 		"uCM": 0
 		},
 	"\/config.rb": {
-		"ft": 131072,
+		"cB": 0,
+		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/config.rb",
 		"oF": 0
 		},
 	"\/example\/assets\/audio\/lugia.mp3": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/assets\/audio\/lugia.mp3",
 		"oF": 0
 		},
 	"\/example\/assets\/audio\/slide04.mp3": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/assets\/audio\/slide04.mp3",
 		"oF": 0
 		},
 	"\/example\/assets\/audio\/slide04.vtt": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/assets\/audio\/slide04.vtt",
 		"oF": 0
 		},
 	"\/example\/assets\/audio\/slide21.mp3": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/assets\/audio\/slide21.mp3",
@@ -275,76 +281,87 @@
 		"q": 100
 		},
 	"\/example\/assets\/swf\/animations.swf": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/assets\/swf\/animations.swf",
 		"oF": 0
 		},
 	"\/example\/assets\/swf\/interactive.swf": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/assets\/swf\/interactive.swf",
 		"oF": 0
 		},
 	"\/example\/assets\/topic.xml": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/assets\/topic.xml",
 		"oF": 0
 		},
 	"\/example\/assets\/video\/smgt370_course_intro.mp4": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/assets\/video\/smgt370_course_intro.mp4",
 		"oF": 0
 		},
 	"\/example\/assets\/video\/smgt370_course_intro.vtt": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/assets\/video\/smgt370_course_intro.vtt",
 		"oF": 0
 		},
 	"\/example\/assets\/video\/smgt370_course_intro.webm": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/assets\/video\/smgt370_course_intro.webm",
 		"oF": 0
 		},
 	"\/example\/example.mp3": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/example.mp3",
 		"oF": 0
 		},
 	"\/example\/example.pdf": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/example.pdf",
 		"oF": 0
 		},
 	"\/example\/example.zip": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/example\/example.zip",
 		"oF": 0
 		},
 	"\/example\/index.html": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 0,
 		"oAP": "\/example\/index.html",
 		"oF": 0
 		},
 	"\/LICENSE": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/LICENSE",
 		"oF": 0
 		},
 	"\/README.md": {
+		"cB": 0,
 		"cS": 0,
 		"eF": 1,
 		"eL": 1,
-		"eLB": 0,
 		"ema": 1,
 		"eSQ": 1,
 		"ft": 4096,
@@ -489,6 +506,7 @@
 		"uL": 1
 		},
 	"\/sources\/fonts\/sbplus.eot": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sources\/fonts\/sbplus.eot",
@@ -505,12 +523,14 @@
 		"prP": 0
 		},
 	"\/sources\/fonts\/sbplus.ttf": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sources\/fonts\/sbplus.ttf",
 		"oF": 0
 		},
 	"\/sources\/fonts\/sbplus.woff": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sources\/fonts\/sbplus.woff",
@@ -741,6 +761,7 @@
 		"tS": 0
 		},
 	"\/sources\/videoplayer\/font\/VideoJS.eot": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sources\/videoplayer\/font\/VideoJS.eot",
@@ -757,12 +778,14 @@
 		"prP": 0
 		},
 	"\/sources\/videoplayer\/font\/VideoJS.ttf": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sources\/videoplayer\/font\/VideoJS.ttf",
 		"oF": 0
 		},
 	"\/sources\/videoplayer\/font\/VideoJS.woff": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sources\/videoplayer\/font\/VideoJS.woff",
@@ -1099,12 +1122,14 @@
 		"oS": 3
 		},
 	"\/sources\/videoplayer\/video-js.swf": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sources\/videoplayer\/video-js.swf",
 		"oF": 0
 		},
 	"\/sources\/videoplayer\/video.js.map": {
+		"cB": 0,
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/sources\/videoplayer\/video.js.map",
@@ -1683,6 +1708,10 @@
 			"active": 0,
 			"optionString": "'expression'"
 			},
+		"function-paren-newline": {
+			"active": 0,
+			"optionString": "'multiline'"
+			},
 		"generator-star-spacing": {
 			"active": 0,
 			"optionString": "{'before': true, 'after': false}"
@@ -1747,9 +1776,9 @@
 			"active": 0,
 			"optionString": "{'beforeBlockComment': true}"
 			},
-		"lines-around-directive": {
+		"lines-between-class-members": {
 			"active": 0,
-			"optionString": "{'before': 'always', 'after': 'always'}"
+			"optionString": "'always', {exceptAfterSingleLine: false}"
 			},
 		"max-depth": {
 			"active": 0,
@@ -1779,6 +1808,10 @@
 			"active": 0,
 			"optionString": "{'max': 1}"
 			},
+		"multiline-comment-style": {
+			"active": 0,
+			"optionString": "'starred-block'"
+			},
 		"multiline-ternary": {
 			"active": 0,
 			"optionString": "'always'"
@@ -1788,14 +1821,6 @@
 			"optionString": "{'newIsCap': true, 'capIsNew': true, 'newIsCapExceptions': [], 'capIsNewExceptions': ['Array', 'Boolean', 'Date', 'Error', 'Function', 'Number', 'Object', 'RegExp', 'String', 'Symbol'], 'properties': true}"
 			},
 		"new-parens": {
-			"active": 0,
-			"optionString": ""
-			},
-		"newline-after-var": {
-			"active": 0,
-			"optionString": "'always'"
-			},
-		"newline-before-return": {
 			"active": 0,
 			"optionString": ""
 			},
@@ -2899,7 +2924,8 @@
 		"createSourceMap": 0,
 		"minifyOutput": 1,
 		"outputStyle": 0,
-		"syntaxCheckerStyle": 1
+		"syntaxCheckerStyle": 1,
+		"transpilerStyle": 1
 		},
 	"languageDefaultsCSS": {
 		"autoOutputAction": 0,
@@ -2932,6 +2958,7 @@
 		"noEscapeInAttributes": 0,
 		"outputFormat": 2,
 		"outputStyle": 0,
+		"shouldRunCacheBuster": 0,
 		"useCDATA": 0,
 		"useDoubleQuotes": 0,
 		"useUnixNewlines": 0
@@ -2973,7 +3000,8 @@
 		"autoOutputPathRelativePath": "",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 0
+		"autoOutputPathStyle": 0,
+		"shouldRunCacheBuster": 0
 		},
 	"languageDefaultsLESS": {
 		"allowInsecureImports": 0,
@@ -3005,13 +3033,13 @@
 		"enableFootnotes": 1,
 		"enableLabels": 1,
 		"enableSmartQuotes": 1,
-		"escapeLineBreaks": 0,
 		"maskEmailAddresses": 1,
 		"outputFormat": 0,
 		"outputStyle": 0,
 		"parseMetadata": 1,
 		"processHTML": 0,
 		"randomFootnoteNumbers": 0,
+		"shouldRunCacheBuster": 0,
 		"useCompatibilityMode": 0
 		},
 	"languageDefaultsOTHER": {
@@ -3020,7 +3048,8 @@
 		"autoOutputPathRelativePath": "",
 		"autoOutputPathReplace1": "",
 		"autoOutputPathReplace2": "",
-		"autoOutputPathStyle": 0
+		"autoOutputPathStyle": 0,
+		"shouldRunCacheBuster": 0
 		},
 	"languageDefaultsPNG": {
 		"autoOutputAction": 0,
@@ -3040,7 +3069,8 @@
 		"autoOutputPathReplace2": "",
 		"autoOutputPathStyle": 0,
 		"compileDebug": 1,
-		"outputStyle": 0
+		"outputStyle": 0,
+		"shouldRunCacheBuster": 0
 		},
 	"languageDefaultsSASS": {
 		"autoOutputAction": 0,
@@ -3068,7 +3098,8 @@
 		"logicless": 0,
 		"outputFormat": 0,
 		"outputStyle": 1,
-		"railsCompatible": 0
+		"railsCompatible": 0,
+		"shouldRunCacheBuster": 0
 		},
 	"languageDefaultsSTYLUS": {
 		"autoOutputAction": 0,
