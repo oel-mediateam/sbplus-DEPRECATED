@@ -7,7 +7,6 @@
 ### 2.8.2 (01-04-2018)
 * Fixed an issue where list element in profile broke table of contents
 
----
 ### 2.8.1 (10-04-2017)
 * Updated Kaltura video flavor IDs
 
